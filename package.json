@@ -1,10 +1,10 @@
 {
-  "name": "vue3-router-pinia-tailwind-template",
+  "name": "sigma-client",
   "version": "1.0.0",
-  "description": "Vue 3 w/ Vue-Router, Pinia & Tailwind CSS template",
+  "description": "Sigma Client",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vircoding/vue3-router-pinia-tailwind-template"
+    "url": "https://github.com/vircoding/sigma-client"
   },
   "author": "vircoding",
   "license": "MIT",
@@ -33,4 +33,3 @@
     "vite": "^4.0.0"
   }
 }
-
