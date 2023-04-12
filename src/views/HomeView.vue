@@ -10,7 +10,7 @@ import SigmaIcon from "../components/icons/SigmaIcon.vue";
       <SigmaIcon
         class="fill-sgray-100 absolute bg-logo h-full -top-5 lg:left-[53vw] xl:left-[60vw] 2xl:left-[65vw]"
       />
-      <NavBar class="z-10" />
+      <NavBar />
     </div>
   </header>
   <main>

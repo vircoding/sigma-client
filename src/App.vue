@@ -4,6 +4,6 @@ import { RouterView } from "vue-router";
 
 <template>
   <div class="p-[10px]">
-    <RouterView class="overflow-hidden" />
+    <RouterView />
   </div>
 </template>
