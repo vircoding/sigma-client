@@ -41,6 +41,8 @@ import { RouterLink } from "vue-router";
 }
 
 .nav-link {
+  position: relative;
+  top: 2px;
   transition: all 0.2s ease-in-out;
 }
 
