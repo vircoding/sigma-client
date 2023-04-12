@@ -10,6 +10,7 @@ export default {
     extend: {
       colors: {
         sigma: "#1183ea",
+        background: "#ededed",
         salert: "#aa1530",
         solive: {
           100: "#edf5d4",
