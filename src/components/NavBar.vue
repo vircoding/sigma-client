@@ -7,7 +7,7 @@
 
 <template>
   <nav
-    class="top-0 z-10 flex w-full items-center justify-between px-14 py-4 font-poppins font-semibold text-sgray-400"
+    class="top-0 flex w-full items-center justify-between px-14 py-4 font-poppins font-semibold text-sgray-400"
   >
     <RouterLink to="/">
       <SigmaIcon
