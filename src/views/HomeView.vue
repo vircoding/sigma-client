@@ -11,7 +11,7 @@
       <SigmaIcon
         class="absolute -top-5 h-full fill-sgray-100 lg:left-[53vw] xl:left-[60vw] 2xl:left-[65vw] min-[1921px]:hidden"
       />
-      <NavBar class="z-10" />
+      <NavBar class="z-20" />
       <HeaderHero class="z-10 grow" />
     </div>
   </header>

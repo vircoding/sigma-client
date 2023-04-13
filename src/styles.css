@@ -13,3 +13,7 @@
     @apply relative top-1 flex h-8 w-44 items-center justify-center rounded text-center transition-[filter,_color,_background-color,_box-shadow] duration-200 ease-out hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.1)];
   }
 }
+/* 
+* {
+  color: rgb(51, 51, 51)
+} */

@@ -12,7 +12,7 @@
       <ul class="w-full space-y-2 text-left font-archivo">
         <li>
           <div class="flex h-6 items-center gap-2">
-            <img src="../assets/check-icon.svg" />
+            <img src="../assets/check-icon.svg" class="fill-red-500" />
             <span>Realiza búsquedas personalizadas...</span>
           </div>
         </li>
