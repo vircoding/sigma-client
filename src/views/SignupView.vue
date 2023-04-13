@@ -1,3 +1,3 @@
 <template>
-  <h1>Login View</h1>
+  <h1>Signup View</h1>
 </template>

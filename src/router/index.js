@@ -8,6 +8,41 @@ const router = createRouter({
       name: "home",
       component: () => import("../views/HomeView.vue"),
     },
+    {
+      path: "/support/help",
+      name: "help",
+      component: () => import("../views/HelpView.vue"),
+    },
+    {
+      path: "/support/contact",
+      name: "contact",
+      component: () => import("../views/ContactView.vue"),
+    },
+    {
+      path: "/auth/signup",
+      name: "contact",
+      component: () => import("../views/SignupView.vue"),
+    },
+    {
+      path: "/auth/login",
+      name: "contact",
+      component: () => import("../views/LoginView.vue"),
+    },
+    {
+      path: "/find",
+      name: "find",
+      component: () => import("../views/FindView.vue"),
+    },
+    {
+      path: "/insert",
+      name: "insert",
+      component: () => import("../views/InsertView.vue"),
+    },
+    {
+      path: "/account",
+      name: "account",
+      component: () => import("../views/AccountView.vue"),
+    },
   ],
 });
 
