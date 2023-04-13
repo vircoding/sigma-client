@@ -30,6 +30,12 @@
         </li>
       </ul>
     </div>
-    <div class="w-full"></div>
+    <div class="flex w-full items-center justify-center">
+      <div
+        class="relative top-[-48px] flex h-[450px] w-full items-center justify-center rounded-xl bg-white"
+      >
+        <span class="text-5xl font-extrabold">DEMO CARD</span>
+      </div>
+    </div>
   </div>
 </template>
