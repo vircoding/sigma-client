@@ -3,3 +3,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .nav-link {
+    @apply relative top-1 drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.1)] transition-[color,_filter] duration-200 ease-out after:block after:h-0.5 after:w-0 after:bg-black after:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] after:transition-[width] after:duration-200 after:ease-in-out hover:text-black hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] hover:after:w-full;
+  }
+
+  .nav-cta {
+    @apply relative top-1 flex h-8 w-44 items-center justify-center rounded text-center transition-[filter,_color,_background-color,_box-shadow] duration-200 ease-out hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.1)];
+  }
+}

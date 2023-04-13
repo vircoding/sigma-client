@@ -1,27 +1,19 @@
 <script setup>
-import SigmaIcon from "./icons/SigmaIcon.vue";
-import NavList from "./NavList.vue";
-import { RouterLink } from "vue-router";
+  import { RouterLink } from "vue-router";
+
+  import SigmaIcon from "./icons/SigmaIcon.vue";
+  import NavList from "./NavList.vue";
 </script>
 
 <template>
   <nav
-    class="font-poppins font-semibold text-sgray-400 py-4 px-14 flex justify-between items-center w-full top-0 z-10"
+    class="top-0 z-10 flex w-full items-center justify-between px-14 py-4 font-poppins font-semibold text-sgray-400"
   >
     <RouterLink to="/">
-      <SigmaIcon class="h-9 fill-sgray-400 hover:fill-black nav-logo" />
+      <SigmaIcon
+        class="h-9 fill-sgray-400 drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.15)] transition-[fill,_filter] duration-200 ease-out hover:fill-black hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.5)]"
+      />
     </RouterLink>
     <NavList />
   </nav>
 </template>
-
-<style scoped>
-.nav-logo {
-  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.15));
-  transition: filter 0.2s ease-out, fill 0.2s ease-out;
-}
-
-.nav-logo:hover {
-  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
-}
-</style>
