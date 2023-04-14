@@ -1,5 +1,3 @@
-import SigmaIcon from './icons/SigmaIcon.vue';
-
 <script setup>
   import AuthInput from "./AuthInput.vue";
   import SigmaVerticalIcon from "./icons/SigmaVerticalIcon.vue";
