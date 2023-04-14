@@ -1,7 +1,9 @@
 <template>
   <div class="flex space-x-24 px-[10%]">
-    <div class="relative -top-12 flex w-full flex-col items-center justify-center space-y-10">
-      <h1 class="font w-full text-5xl font-extrabold uppercase">
+    <div
+      class="text-shadow relative -top-12 flex w-full flex-col items-center justify-center space-y-10"
+    >
+      <h1 class="w-full text-5xl font-extrabold uppercase">
         Sigma te <span class="text-sigma">ayuda</span> a
         <span class="text-sigma">encontrar</span> tu casa <span class="text-sigma">ideal</span>
       </h1>
@@ -13,19 +15,19 @@
         <li>
           <div class="flex h-6 items-center gap-2">
             <img src="../assets/check-icon.svg" class="fill-red-500" />
-            <span>Realiza búsquedas personalizadas...</span>
+            <span>Realiza búsquedas personalizadas.</span>
           </div>
         </li>
         <li>
           <div class="flex items-center gap-2">
             <img src="../assets/check-icon.svg" />
-            <span>Ponte en contacto con agentes profesionales...</span>
+            <span>Ponte en contacto con agentes profesionales.</span>
           </div>
         </li>
         <li>
           <div class="flex items-center gap-2">
             <img src="../assets/check-icon.svg" />
-            <span>Vende o renta tu casa con unos pocos clicks...</span>
+            <span>Vende o renta tu casa con unos pocos clicks.</span>
           </div>
         </li>
       </ul>
@@ -34,7 +36,7 @@
       <div
         class="relative top-[-48px] flex h-[450px] w-full items-center justify-center rounded-xl bg-white"
       >
-        <span class="text-5xl font-extrabold">DEMO CARD</span>
+        <span class="text-shadow text-5xl font-extrabold">DEMO CARD</span>
       </div>
     </div>
   </div>

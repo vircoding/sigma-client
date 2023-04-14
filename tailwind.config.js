@@ -11,7 +11,7 @@ export default {
       colors: {
         sigma: "#1183ea",
         background: "#ededed",
-        salert: "#aa1530",
+        alert: "#aa1530",
         solive: {
           100: "#edf5d4",
           200: "#c2d199",
@@ -42,6 +42,9 @@ export default {
           300: "#595959",
           400: "#333333",
         },
+      },
+      gridTemplateColumns: {
+        16: "repeat(16, minmax(0, 1fr))",
       },
     },
   },

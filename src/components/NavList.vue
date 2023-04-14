@@ -8,17 +8,17 @@
 <template>
   <ul v-if="!userStore.logedState" class="flex space-x-8 text-lg">
     <li>
-      <RouterLink to="/support/help" class="nav-link">Ayuda</RouterLink>
+      <RouterLink to="/support/help" class="nav-link text-shadow">Ayuda</RouterLink>
     </li>
     <li>
-      <RouterLink to="/support/contact" class="nav-link">Contáctanos</RouterLink>
+      <RouterLink to="/support/contact" class="nav-link text-shadow">Contáctanos</RouterLink>
     </li>
   </ul>
   <ul v-if="!userStore.logedState" class="flex items-center space-x-2 text-lg">
     <li>
       <RouterLink
         to="/auth/signup"
-        class="nav-cta bg-transparent hover:bg-transparent hover:text-black hover:shadow-[0_2px_10px_rgba(0,_0,_0,_0.2)]"
+        class="nav-cta text-shadow bg-transparent hover:bg-transparent hover:text-black hover:shadow-[0_2px_10px_rgba(0,_0,_0,_0.2)]"
       >
         Registrarse
       </RouterLink>
@@ -34,19 +34,19 @@
   </ul>
   <ul v-if="userStore.logedState" class="flex space-x-8 text-lg">
     <li>
-      <RouterLink to="/find" class="nav-link">Compra</RouterLink>
+      <RouterLink to="/find" class="nav-link text-shadow">Compra</RouterLink>
     </li>
     <li>
-      <RouterLink to="/find" class="nav-link">Renta</RouterLink>
+      <RouterLink to="/find" class="nav-link text-shadow">Renta</RouterLink>
     </li>
     <li>
-      <RouterLink to="/insert" class="nav-link">Vende</RouterLink>
+      <RouterLink to="/insert" class="nav-link text-shadow">Vende</RouterLink>
     </li>
     <li>
-      <RouterLink to="/support/help" class="nav-link">Ayuda</RouterLink>
+      <RouterLink to="/support/help" class="nav-link text-shadow">Ayuda</RouterLink>
     </li>
     <li>
-      <RouterLink to="/account" class="nav-link">Mi Cuenta</RouterLink>
+      <RouterLink to="/account" class="nav-link text-shadow">Mi Cuenta</RouterLink>
     </li>
   </ul>
 </template>
