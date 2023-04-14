@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="p-2.5 text-sgray-400">
+  <div class="p-2.5 font-poppins text-sgray-400">
     <RouterView />
   </div>
 </template>

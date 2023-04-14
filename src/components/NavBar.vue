@@ -6,9 +6,7 @@
 </script>
 
 <template>
-  <nav
-    class="top-0 flex w-full items-center justify-between px-14 py-4 font-poppins font-semibold text-sgray-400"
-  >
+  <nav class="top-0 flex w-full items-center justify-between px-14 py-4 font-semibold">
     <RouterLink to="/">
       <SigmaIcon
         class="h-9 fill-sgray-400 drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.15)] transition-[fill,_filter] duration-200 ease-out hover:fill-black hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.5)]"

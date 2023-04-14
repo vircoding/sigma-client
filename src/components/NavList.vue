@@ -18,7 +18,7 @@
     <li>
       <RouterLink
         to="/auth/signup"
-        class="nav-cta bg-transparent text-sgray-400 hover:bg-transparent hover:text-black hover:shadow-[0_2px_10px_rgba(0,_0,_0,_0.2)]"
+        class="nav-cta bg-transparent hover:bg-transparent hover:text-black hover:shadow-[0_2px_10px_rgba(0,_0,_0,_0.2)]"
       >
         Registrarse
       </RouterLink>

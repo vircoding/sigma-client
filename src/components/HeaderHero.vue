@@ -1,7 +1,7 @@
 <template>
   <div class="flex space-x-24 px-[10%]">
     <div class="relative -top-12 flex w-full flex-col items-center justify-center space-y-10">
-      <h1 class="font w-full font-poppins text-5xl font-extrabold uppercase">
+      <h1 class="font w-full text-5xl font-extrabold uppercase">
         Sigma te <span class="text-sigma">ayuda</span> a
         <span class="text-sigma">encontrar</span> tu casa <span class="text-sigma">ideal</span>
       </h1>
