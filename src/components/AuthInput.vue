@@ -32,7 +32,7 @@
           ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
           : ''
       "
-      :placeholder="placeholders[type]"
+      placeholder="Correo Electrónico"
     />
     <span
       class="text-shadow px-4 font-archivo text-sm italic text-alert"

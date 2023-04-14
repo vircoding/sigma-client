@@ -5,11 +5,13 @@
   const user = ref({
     email: "",
     password: "",
+    repassword: "",
   });
 
   const errors = ref({
     email: false,
     password: false,
+    repassword: false,
     credentials: false,
   });
 </script>
@@ -17,6 +19,7 @@
 <template>
   <p>{{ user.email }}</p>
   <p>{{ user.password }}</p>
+  <p>{{ user.repassword }}</p>
   <div class="relative -top-6 grid h-full w-full grid-cols-16 place-items-center px-32">
     <SigmaVerticalIcon
       class="text-shadow col-span-6"
@@ -65,6 +68,25 @@
           <span
             class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
             :class="errors.password ? 'visible' : 'invisible'"
+            >Error Message</span
+          >
+        </div>
+        <!-- Repassword -->
+        <div class="flex flex-col">
+          <input
+            type="password"
+            v-model="user.repassword"
+            class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 text-lg font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1"
+            :class="
+              errors.repassword
+                ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
+                : 'ring-sigma'
+            "
+            placeholder="Repite La Contraseña"
+          />
+          <span
+            class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
+            :class="errors.repassword ? 'visible' : 'invisible'"
             >Error Message</span
           >
         </div>
