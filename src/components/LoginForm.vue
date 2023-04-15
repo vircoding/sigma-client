@@ -1,6 +1,9 @@
 <script setup>
   import { ref } from "vue";
+  import { useUserStore } from "../stores/user.js";
   import SigmaVerticalIcon from "./icons/SigmaVerticalIcon.vue";
+
+  const userStore = useUserStore();
 
   const user = ref({
     email: "",
@@ -12,11 +15,14 @@
     password: false,
     credentials: false,
   });
+
+  const formSubmit = async () => {
+    const res = await userStore.loginUserAction(user.value);
+    console.log(res);
+  };
 </script>
 
 <template>
-  <p>{{ user.email }}</p>
-  <p>{{ user.password }}</p>
   <div class="relative -top-6 grid h-full w-full grid-cols-16 place-items-center px-32">
     <SigmaVerticalIcon
       class="text-shadow col-span-6"
@@ -24,7 +30,7 @@
     />
     <div class="invisible h-3/5 w-[1px] bg-sgray-100"></div>
     <!-- Form -->
-    <form class="col-span-8 flex w-full flex-col gap-7">
+    <form @submit.prevent="formSubmit" novalidate class="col-span-8 flex w-full flex-col gap-7">
       <div class="text-shadow">
         <h1 class="text-4xl font-extrabold">Bienvenido de nuevo!</h1>
         <span class="text-lg text-sgray-300">Inicia sesión para continuar</span>

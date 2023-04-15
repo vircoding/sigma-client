@@ -1,8 +1,23 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import userServices from "../services/user.js";
 
 export const useUserStore = defineStore("user", () => {
+  // States
   const logedState = ref(false);
 
-  return { logedState };
+  // Actions
+  const loginUserAction = async (user) => {
+    try {
+      const res = await userServices.loginUser(user);
+      console.log(res.data);
+
+      logedState.value = true;
+      return true;
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
+  return { logedState, loginUserAction };
 });
