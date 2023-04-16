@@ -7,4 +7,8 @@ export default {
       password: user.password,
     });
   },
+
+  refreshToken() {
+    return api().get("/auth/refresh");
+  },
 };

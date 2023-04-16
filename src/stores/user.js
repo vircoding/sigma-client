@@ -19,5 +19,18 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  return { logedState, loginUserAction };
+  const refreshTokenAction = async () => {
+    try {
+      const res = await userServices.refreshToken();
+      console.log(res.data);
+
+      logedState.value = true;
+      return true;
+    } catch (error) {
+      if (error.response.data.error === "There's no token") return false;
+      console.log(error.response.data);
+    }
+  };
+
+  return { logedState, loginUserAction, refreshTokenAction };
 });

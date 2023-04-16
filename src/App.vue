@@ -1,5 +1,15 @@
 <script setup>
   import { RouterView } from "vue-router";
+  import { useUserStore } from "./stores/user.js";
+
+  const userStore = useUserStore();
+
+  const refreshToken = async () => {
+    const res = await userStore.refreshTokenAction();
+    console.log(res);
+  };
+
+  refreshToken();
 </script>
 
 <template>
