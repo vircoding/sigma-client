@@ -52,7 +52,9 @@
 </script>
 
 <template>
-  <div class="relative -top-6 grid h-full w-full grid-cols-16 place-items-center px-32">
+  <div
+    class="relative -top-6 grid h-full w-full grid-cols-16 place-items-center px-24 xl:px-32 2xl:px-44"
+  >
     <div class="text-shadow col-span-6">
       <SigmaVerticalIcon class="w-full" />
     </div>
