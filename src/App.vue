@@ -6,7 +6,6 @@
 
   const refreshToken = async () => {
     const res = await userStore.refreshTokenAction();
-    console.log(res);
   };
 
   refreshToken();

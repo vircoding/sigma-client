@@ -14,26 +14,54 @@
     email: false,
     password: false,
     credentials: false,
+    server: false,
   });
 
   const formSubmit = async () => {
-    const res = await userStore.loginUserAction(user.value);
-    console.log(res);
+    try {
+      errors.value.email = false;
+      errors.value.password = false;
+      errors.value.credentials = false;
+      errors.value.server = false;
+
+      await userStore.loginUserAction(user.value);
+
+      user.value.email = "";
+      user.value.password = "";
+    } catch (error) {
+      if (error.message === "Email error") {
+        errors.value.email = true;
+      }
+      if (error.message === "Password error") {
+        errors.value.password = true;
+      }
+      if (error.message === "Email and Password error") {
+        errors.value.email = true;
+        errors.value.password = true;
+      }
+      if (error.message === "Invalid credentials") {
+        // logoAlertMessage.value = "El correo electrónico o la contraseña no son válidos";
+        errors.value.credentials = true;
+      }
+      if (error.message === "Server Error") {
+        // logoAlertMessage.value = "Error de servidor, por favor recargue el sitio";
+        errors.value.server = true;
+      }
+    }
   };
 </script>
 
 <template>
   <div class="relative -top-6 grid h-full w-full grid-cols-16 place-items-center px-32">
-    <SigmaVerticalIcon
-      class="text-shadow col-span-6"
-      :class="errors.credentials ? 'fill-alert' : 'fill-sgray-200'"
-    />
+    <div class="text-shadow col-span-6">
+      <SigmaVerticalIcon class="w-full" />
+    </div>
     <div class="invisible h-3/5 w-[1px] bg-sgray-100"></div>
     <!-- Form -->
     <form @submit.prevent="formSubmit" novalidate class="col-span-8 flex w-full flex-col gap-7">
       <div class="text-shadow">
         <h1 class="text-4xl font-extrabold">Bienvenido de nuevo!</h1>
-        <span class="text-lg text-sgray-300">Inicia sesión para continuar</span>
+        <span class="block text-lg text-sgray-300">Inicia sesión para continuar</span>
       </div>
       <div class="flex flex-col gap-2">
         <!-- Email -->
