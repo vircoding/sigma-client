@@ -16,8 +16,8 @@ export const useUserStore = defineStore("user", () => {
     try {
       const res = await userServices.loginUser(user);
 
-      tokenState.value.token = await res.data.token;
-      tokenState.value.expiresIn = await res.data.expiresIn;
+      tokenState.value.token = res.data.token;
+      tokenState.value.expiresIn = res.data.expiresIn;
 
       logedState.value = true;
     } catch (error) {
@@ -37,31 +37,56 @@ export const useUserStore = defineStore("user", () => {
         throw new Error("Invalid credentials");
       }
       if (error.response.status === 500) {
-        console.error("Server Error");
+        throw new Error("Server Error");
       }
     }
+    refreshTimeAction();
+  };
+
+  const registerUserAction = async (user) => {
+    try {
+      const res = await userServices.registerUser(user);
+
+      tokenState.value.token = res.data.token;
+      tokenState.value.expiresIn = res.data.expiresIn;
+
+      logedState.value = true;
+    } catch (error) {
+      if (error.response.status === 400) {
+        throw new Error("Request Error");
+      } else if (error.response.status === 403) {
+        throw new Error("User Exists Already");
+      } else if (error.response.status === 500) {
+        throw new Error("Server Error");
+      } else {
+        throw new Error("Untracked Error");
+      }
+    }
+    refreshTimeAction();
   };
 
   const refreshTimeAction = () => {
     setTimeout(() => {
-      console.log(`Token Refreshed: ${new Date()}`);
       refreshTokenAction();
-    }, tokenState.value.expiresIn * 1000 - 6000);
+      console.log("Token Refreshed");
+    }, tokenState.value.expiresIn * 1000 - 60000);
   };
 
   const refreshTokenAction = async () => {
     try {
       const res = await userServices.refreshToken();
 
+      tokenState.value.token = res.data.token;
+      tokenState.value.expiresIn = res.data.expiresIn;
+
       logedState.value = true;
 
       refreshTimeAction();
-      return true;
     } catch (error) {
       if (error.response.data.error === "There's no token") return false;
       console.log(error.response.data);
     }
   };
 
-  return { logedState, loginUserAction, refreshTokenAction };
+  return { logedState, loginUserAction, registerUserAction, refreshTokenAction };
 });

@@ -8,6 +8,15 @@ export default {
     });
   },
 
+  registerUser(user) {
+    return api().post("/auth/register", {
+      username: user.username,
+      email: user.email,
+      password: user.password,
+      repassword: user.repassword,
+    });
+  },
+
   refreshToken() {
     return api().get("/auth/refresh");
   },
