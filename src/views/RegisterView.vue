@@ -1,6 +1,6 @@
 <script setup>
   import NavBar from "../components/NavBar.vue";
-  import SignupForm from "../components/SignupForm.vue";
+  import RegisterForm from "../components/RegisterForm.vue";
 </script>
 
 <template>
@@ -11,7 +11,7 @@
       </div>
     </header>
     <main class="grow bg-background">
-      <SignupForm />
+      <RegisterForm />
     </main>
   </div>
 </template>

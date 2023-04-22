@@ -1,56 +1,49 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import userServices from "../services/user.js";
 
 export const useUserStore = defineStore("user", () => {
-  // States
-  const logedState = ref(false);
+  // State
+  const token = ref("");
+  const tokenExpiration = ref(null);
 
-  const tokenState = ref({
-    token: undefined,
-    expiresIn: 3600,
-  });
+  // Getters
+  const isLoggedIn = computed(() => !!token.value);
 
   // Actions
   const loginUserAction = async (user) => {
     try {
       const res = await userServices.loginUser(user);
 
-      tokenState.value.token = res.data.token;
-      tokenState.value.expiresIn = res.data.expiresIn;
-
-      logedState.value = true;
+      token.value = res.data.token;
+      tokenExpiration.value = new Date();
+      tokenExpiration.value.setSeconds(tokenExpiration.value.getSeconds() + res.data.expiresIn);
+      setInterval(() => {
+        refreshToken();
+      }, 2 * 60 * 1000); // 2 Minutes
     } catch (error) {
       if (error.response.status === 400) {
-        if (error.response.data.error.length === 2) {
-          throw new Error("Email and Password error");
-        } else {
-          if (error.response.data.error[0].msg === "Invalid Email") {
-            throw new Error("Email error");
-          }
-          if (error.response.data.error[0].msg === "Invalid Password") {
-            throw new Error("Password error");
-          }
-        }
-      }
-      if (error.response.status === 403) {
-        throw new Error("Invalid credentials");
-      }
-      if (error.response.status === 500) {
+        throw new Error("Request Error");
+      } else if (error.response.status === 403) {
+        throw new Error("Invalid Credentials");
+      } else if (error.response.status === 500) {
         throw new Error("Server Error");
+      } else {
+        throw new Error("Untracked Error");
       }
     }
-    refreshTimeAction();
   };
 
   const registerUserAction = async (user) => {
     try {
       const res = await userServices.registerUser(user);
 
-      tokenState.value.token = res.data.token;
-      tokenState.value.expiresIn = res.data.expiresIn;
-
-      logedState.value = true;
+      token.value = res.data.token;
+      tokenExpiration.value = new Date();
+      tokenExpiration.value.setSeconds(tokenExpiration.value.getSeconds() + res.data.expiresIn);
+      setInterval(() => {
+        refreshToken();
+      }, 2 * 60 * 1000); // 2 Minutes
     } catch (error) {
       if (error.response.status === 400) {
         throw new Error("Request Error");
@@ -62,31 +55,43 @@ export const useUserStore = defineStore("user", () => {
         throw new Error("Untracked Error");
       }
     }
-    refreshTimeAction();
   };
 
-  const refreshTimeAction = () => {
-    setTimeout(() => {
-      refreshTokenAction();
-      console.log("Token Refreshed");
-    }, tokenState.value.expiresIn * 1000 - 60000);
-  };
-
-  const refreshTokenAction = async () => {
-    try {
-      const res = await userServices.refreshToken();
-
-      tokenState.value.token = res.data.token;
-      tokenState.value.expiresIn = res.data.expiresIn;
-
-      logedState.value = true;
-
-      refreshTimeAction();
-    } catch (error) {
-      if (error.response.data.error === "There's no token") return false;
-      console.log(error.response.data);
+  const checkTokenExpiration = () => {
+    const now = new Date();
+    if (tokenExpiration.value && now >= tokenExpiration.value) {
+      refreshToken();
     }
   };
 
-  return { logedState, loginUserAction, registerUserAction, refreshTokenAction };
+  const refreshToken = async () => {
+    try {
+      const res = await userServices.refreshToken();
+      token.value = res.data.token;
+      tokenExpiration.value = new Date();
+      tokenExpiration.value.setSeconds(tokenExpiration.value.getSeconds() + res.data.expiresIn);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Extra Functions
+  onMounted(async () => {
+    await refreshToken();
+    if (isLoggedIn.value) {
+      setInterval(() => {
+        refreshToken();
+      }, 2 * 60 * 1000); // 2 Minutes
+    }
+  });
+
+  return {
+    token,
+    tokenExpiration,
+    isLoggedIn,
+    loginUserAction,
+    registerUserAction,
+    checkTokenExpiration,
+    refreshToken,
+  };
 });

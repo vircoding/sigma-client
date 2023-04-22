@@ -6,7 +6,7 @@
 </script>
 
 <template>
-  <ul v-if="!userStore.logedState" class="flex space-x-8 text-lg">
+  <ul v-if="!userStore.isLoggedIn" class="flex space-x-8 text-lg">
     <li>
       <RouterLink to="/support/help" class="nav-link text-shadow">Ayuda</RouterLink>
     </li>
@@ -14,10 +14,10 @@
       <RouterLink to="/support/contact" class="nav-link text-shadow">Contáctanos</RouterLink>
     </li>
   </ul>
-  <ul v-if="!userStore.logedState" class="flex items-center space-x-2 text-lg">
+  <ul v-if="!userStore.isLoggedIn" class="flex items-center space-x-2 text-lg">
     <li>
       <RouterLink
-        to="/auth/signup"
+        to="/auth/register"
         class="nav-cta text-shadow bg-transparent hover:bg-transparent hover:text-black hover:shadow-[0_2px_10px_rgba(0,_0,_0,_0.2)]"
       >
         Registrarse
@@ -32,7 +32,7 @@
       </RouterLink>
     </li>
   </ul>
-  <ul v-if="userStore.logedState" class="flex space-x-8 text-lg">
+  <ul v-if="userStore.isLoggedIn" class="flex space-x-8 text-lg">
     <li>
       <RouterLink to="/find" class="nav-link text-shadow">Compra</RouterLink>
     </li>
