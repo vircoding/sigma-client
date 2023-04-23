@@ -20,4 +20,8 @@ export default {
   refreshToken() {
     return api().get("/auth/refresh");
   },
+
+  logoutUser() {
+    return api().get("/auth/logout");
+  },
 };

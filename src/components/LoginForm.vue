@@ -61,7 +61,7 @@
 
   const formSubmit = async () => {
     try {
-      await userStore.loginUserAction(user.value);
+      await userStore.loginUser(user.value);
 
       user.value.email = "";
       user.value.password = "";

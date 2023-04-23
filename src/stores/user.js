@@ -11,7 +11,7 @@ export const useUserStore = defineStore("user", () => {
   const isLoggedIn = computed(() => !!token.value);
 
   // Actions
-  const loginUserAction = async (user) => {
+  const loginUser = async (user) => {
     try {
       const res = await userServices.loginUser(user);
 
@@ -34,7 +34,7 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const registerUserAction = async (user) => {
+  const registerUser = async (user) => {
     try {
       const res = await userServices.registerUser(user);
 
@@ -66,8 +66,30 @@ export const useUserStore = defineStore("user", () => {
     } catch (error) {
       if (error.response.status === 401) {
         console.log("User not logged in");
+      } else if (error.response.status === 500) {
+        console.log("Server Error");
+      } else {
+        console.log("Untracked Error");
       }
     }
+  };
+
+  const logoutUser = async () => {
+    try {
+      await userServices.logoutUser();
+      $reset();
+    } catch (error) {
+      if (error.response.status === 500) {
+        throw new Error("Server Error");
+      } else {
+        throw new Error("Untracked Error");
+      }
+    }
+  };
+
+  const $reset = () => {
+    token.value = "";
+    tokenExpiration.value = null;
   };
 
   // Extra Functions
@@ -84,8 +106,9 @@ export const useUserStore = defineStore("user", () => {
     token,
     tokenExpiration,
     isLoggedIn,
-    loginUserAction,
-    registerUserAction,
+    loginUser,
+    registerUser,
     refreshToken,
+    logoutUser,
   };
 });

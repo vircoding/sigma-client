@@ -91,7 +91,7 @@
 
   const formSubmit = async () => {
     try {
-      await userStore.registerUserAction(user.value);
+      await userStore.registerUser(user.value);
 
       user.value.username = "";
       user.value.email = "";
