@@ -57,13 +57,6 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const checkTokenExpiration = () => {
-    const now = new Date();
-    if (tokenExpiration.value && now >= tokenExpiration.value) {
-      refreshToken();
-    }
-  };
-
   const refreshToken = async () => {
     try {
       const res = await userServices.refreshToken();
@@ -71,7 +64,9 @@ export const useUserStore = defineStore("user", () => {
       tokenExpiration.value = new Date();
       tokenExpiration.value.setSeconds(tokenExpiration.value.getSeconds() + res.data.expiresIn);
     } catch (error) {
-      console.log(error);
+      if (error.response.status === 401) {
+        console.log("User not logged in");
+      }
     }
   };
 
@@ -91,7 +86,6 @@ export const useUserStore = defineStore("user", () => {
     isLoggedIn,
     loginUserAction,
     registerUserAction,
-    checkTokenExpiration,
     refreshToken,
   };
 });
