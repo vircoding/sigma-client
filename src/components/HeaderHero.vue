@@ -1,5 +1,5 @@
 <template>
-  <div class="flex space-x-24 px-[10%]">
+  <div class="flex space-x-10 px-[6%] xl:space-x-24 xl:px-[10%] 2xl:space-x-32">
     <div
       class="text-shadow relative -top-12 flex w-full flex-col items-center justify-center space-y-10"
     >
@@ -14,7 +14,7 @@
       <ul class="w-full space-y-2 text-left font-archivo">
         <li>
           <div class="flex h-6 items-center gap-2">
-            <img src="../assets/check-icon.svg" class="fill-red-500" />
+            <img src="../assets/check-icon.svg" />
             <span>Realiza búsquedas personalizadas.</span>
           </div>
         </li>

@@ -27,13 +27,17 @@
           </p>
         </div>
 
-        <div class="grid h-full w-full grid-cols-3 gap-14 bg-sigma px-24 py-20 xl:px-32 2xl:px-44">
+        <div
+          class="grid h-full w-full grid-cols-3 gap-10 bg-sigma px-24 py-20 xl:gap-14 xl:px-32 2xl:px-44"
+        >
           <div
             class="flex h-[362px] w-full flex-col items-center justify-center gap-4 rounded-2xl bg-white p-5 text-center"
           >
-            <img src="../assets/house-icon.svg" class="text-shadow w-20" />
-            <h3 class="text-shadow text-3xl font-extrabold">Publica Tu Casa</h3>
-            <p class="text-shadow mb-3 font-archivo tracking-tight text-sgray-200">
+            <img src="../assets/house-icon.svg" class="text-shadow w-16 xl:w-20" />
+            <h3 class="text-shadow text-2xl font-extrabold xl:text-3xl">Publica Tu Casa</h3>
+            <p
+              class="text-shadow mb-3 font-archivo text-sm tracking-tight text-sgray-200 xl:text-base"
+            >
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi, recusandae magni.
               Laudantium deserunt molestias suscipit.
             </p>
@@ -46,9 +50,11 @@
           <div
             class="flex h-[362px] w-full flex-col items-center justify-center gap-4 rounded-2xl bg-white p-5 text-center"
           >
-            <img src="../assets/credit-icon.svg" class="text-shadow w-20" />
-            <h3 class="text-shadow text-3xl font-extrabold">Descubre Casas</h3>
-            <p class="text-shadow mb-3 font-archivo tracking-tight text-sgray-200">
+            <img src="../assets/credit-icon.svg" class="text-shadow w-16 xl:w-20" />
+            <h3 class="text-shadow text-2xl font-extrabold xl:text-3xl">Descubre Casas</h3>
+            <p
+              class="text-shadow mb-3 font-archivo text-sm tracking-tight text-sgray-200 xl:text-base"
+            >
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi, recusandae magni.
               Laudantium deserunt molestias suscipit.
             </p>
@@ -61,9 +67,11 @@
           <div
             class="flex h-[362px] w-full flex-col items-center justify-center gap-4 rounded-2xl bg-white p-5 text-center"
           >
-            <img src="../assets/bed-icon.svg" class="text-shadow w-20" />
-            <h3 class="text-shadow text-3xl font-extrabold">Consigue Renta</h3>
-            <p class="text-shadow mb-3 font-archivo tracking-tight text-sgray-200">
+            <img src="../assets/bed-icon.svg" class="text-shadow w-16 xl:w-20" />
+            <h3 class="text-shadow text-2xl font-extrabold xl:text-3xl">Consigue Renta</h3>
+            <p
+              class="text-shadow mb-3 font-archivo text-sm tracking-tight text-sgray-200 xl:text-base"
+            >
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi, recusandae magni.
               Laudantium deserunt molestias suscipit.
             </p>
