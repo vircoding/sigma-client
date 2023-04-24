@@ -3,6 +3,8 @@
   import NavBar from "../components/NavBar.vue";
   import HeaderHero from "../components/HeaderHero.vue";
   import Wave from "../components/Wave.vue";
+  import PopularSection from "../components/PopularSection.vue";
+  import FooterSection from "../components/FooterSection.vue";
 </script>
 
 <template>
@@ -17,7 +19,7 @@
       </div>
     </header>
     <main>
-      <section class="relative bg-sigma pb-12 pt-32">
+      <section class="relative mb-[10px] bg-sigma pb-12 pt-24">
         <Wave class="absolute bottom-full translate-y-[-10px] fill-white" />
         <Wave class="absolute bottom-full fill-sigma" />
         <div class="text-shadow flex w-full flex-col items-center justify-center gap-4 text-white">
@@ -83,6 +85,49 @@
           </div>
         </div>
       </section>
+      <section class="first-gradient mb-[10px] w-full pb-12 pt-28">
+        <PopularSection :buy="true" />
+      </section>
+      <section class="second-gradient w-full pb-12 pt-28">
+        <PopularSection />
+      </section>
     </main>
+    <footer>
+      <FooterSection />
+    </footer>
   </div>
 </template>
+
+<style scoped>
+  .first-gradient {
+    background: rgb(237, 237, 237);
+    background: -moz-linear-gradient(
+      180deg,
+      rgba(237, 237, 237, 1) 30%,
+      rgba(255, 255, 255, 1) 100%
+    );
+    background: -webkit-linear-gradient(
+      180deg,
+      rgba(237, 237, 237, 1) 30%,
+      rgba(255, 255, 255, 1) 100%
+    );
+    background: linear-gradient(180deg, rgba(237, 237, 237, 1) 30%, rgba(255, 255, 255, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ededed",endColorstr="#ffffff",GradientType=1);
+  }
+
+  .second-gradient {
+    background: rgb(255, 255, 255);
+    background: -moz-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 1) 30%,
+      rgba(237, 237, 237, 1) 100%
+    );
+    background: -webkit-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 1) 30%,
+      rgba(237, 237, 237, 1) 100%
+    );
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 30%, rgba(237, 237, 237, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#ededed",GradientType=1);
+  }
+</style>
