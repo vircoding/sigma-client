@@ -17,10 +17,62 @@
       </div>
     </header>
     <main>
-      <section class="relative h-[500px] bg-sigma">
-        <div class="absolute w-full translate-y-[-8vw]">
-          <Wave class="absolute fill-white" />
-          <Wave class="translate-y-[10px] fill-sigma" />
+      <section class="relative bg-sigma pb-12 pt-32">
+        <Wave class="absolute bottom-full translate-y-[-10px] fill-white" />
+        <Wave class="absolute bottom-full fill-sigma" />
+        <div class="text-shadow flex w-full flex-col items-center justify-center gap-4 text-white">
+          <h2 class="text-4xl font-extrabold uppercase">Comienza Por Aquí</h2>
+          <p class="font-archivo">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, necessitatibus!
+          </p>
+        </div>
+
+        <div class="grid h-full w-full grid-cols-3 gap-14 bg-sigma px-24 py-20 xl:px-32 2xl:px-44">
+          <div
+            class="flex h-[362px] w-full flex-col items-center justify-center gap-4 rounded-2xl bg-white p-5 text-center"
+          >
+            <img src="../assets/house-icon.svg" class="text-shadow w-20" />
+            <h3 class="text-shadow text-3xl font-extrabold">Publica Tu Casa</h3>
+            <p class="text-shadow mb-3 font-archivo tracking-tight text-sgray-200">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi, recusandae magni.
+              Laudantium deserunt molestias suscipit.
+            </p>
+            <RouterLink
+              to="/insert"
+              class="text-shadow rounded-md border border-sigma px-5 py-2 hover:text-black"
+              >Adelante</RouterLink
+            >
+          </div>
+          <div
+            class="flex h-[362px] w-full flex-col items-center justify-center gap-4 rounded-2xl bg-white p-5 text-center"
+          >
+            <img src="../assets/credit-icon.svg" class="text-shadow w-20" />
+            <h3 class="text-shadow text-3xl font-extrabold">Descubre Casas</h3>
+            <p class="text-shadow mb-3 font-archivo tracking-tight text-sgray-200">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi, recusandae magni.
+              Laudantium deserunt molestias suscipit.
+            </p>
+            <RouterLink
+              to="/find"
+              class="text-shadow rounded-md border border-sigma px-5 py-2 hover:text-black"
+              >Adelante</RouterLink
+            >
+          </div>
+          <div
+            class="flex h-[362px] w-full flex-col items-center justify-center gap-4 rounded-2xl bg-white p-5 text-center"
+          >
+            <img src="../assets/bed-icon.svg" class="text-shadow w-20" />
+            <h3 class="text-shadow text-3xl font-extrabold">Consigue Renta</h3>
+            <p class="text-shadow mb-3 font-archivo tracking-tight text-sgray-200">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi, recusandae magni.
+              Laudantium deserunt molestias suscipit.
+            </p>
+            <RouterLink
+              to="/find"
+              class="text-shadow rounded-md border border-sigma px-5 py-2 hover:text-black"
+              >Adelante</RouterLink
+            >
+          </div>
         </div>
       </section>
     </main>

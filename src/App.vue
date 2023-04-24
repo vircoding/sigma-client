@@ -6,7 +6,6 @@
 </script>
 
 <template>
-  <p>{{ userStore.isLoggedIn }}</p>
   <div class="font-poppins text-sgray-400">
     <RouterView />
   </div>
