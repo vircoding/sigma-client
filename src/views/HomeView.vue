@@ -18,7 +18,7 @@
         <HeaderHero class="z-10 grow" />
       </div>
     </header>
-    <main>
+    <main class="mb-[10px]">
       <section class="relative mb-[10px] bg-sigma pb-12 pt-24">
         <Wave class="absolute bottom-full translate-y-[-10px] fill-white" />
         <Wave class="absolute bottom-full fill-sigma" />
@@ -85,10 +85,10 @@
           </div>
         </div>
       </section>
-      <section class="first-gradient mb-[10px] w-full pb-12 pt-28">
+      <section class="first-gradient mb-[10px] w-full pt-28">
         <PopularSection :buy="true" />
       </section>
-      <section class="second-gradient w-full pb-12 pt-28">
+      <section class="second-gradient w-full pb-12 pt-10">
         <PopularSection />
       </section>
     </main>
