@@ -23,9 +23,15 @@ const routes = [
     component: () => import("../views/AboutView.vue"),
   },
   {
-    path: "/auth/register",
-    name: "register",
-    component: () => import("../views/RegisterView.vue"),
+    path: "/auth/register/client",
+    name: "register-client",
+    component: () => import("../views/RegisterClientView.vue"),
+    meta: { requiresAuth: false },
+  },
+  {
+    path: "/auth/register/agent",
+    name: "register-agent",
+    component: () => import("../views/RegisterAgentView.vue"),
     meta: { requiresAuth: false },
   },
   {

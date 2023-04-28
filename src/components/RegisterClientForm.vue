@@ -91,7 +91,7 @@
 
   const formSubmit = async () => {
     try {
-      await userStore.registerUser(user.value);
+      await userStore.registerClient(user.value);
 
       user.value.username = "";
       user.value.email = "";
@@ -214,10 +214,10 @@
         >
           Registrarse
         </button>
-        <a
-          href="#"
+        <RouterLink
+          to="/auth/register/agent"
           class="text-shadow transition-all duration-200 after:block after:h-px after:w-0 after:bg-black after:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] after:transition-[width] after:duration-200 after:ease-in-out hover:text-black hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] hover:after:w-full"
-          >Eres agente?</a
+          >Eres agente?</RouterLink
         >
       </div>
       <span class="relative -top-5 block text-xs text-sgray-300"

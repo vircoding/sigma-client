@@ -5,7 +5,7 @@
 </script>
 
 <template>
-  <div class="bg-sigma px-7 pb-12 pt-10 font-archivo text-sm lg:text-lg">
+  <div class="bg-sigma px-7 py-16 font-archivo text-sm lg:text-lg">
     <SigmaIcon class="lg:mb- mx-auto mb-8 w-36 fill-white lg:w-56" />
     <div class="scoped-width mx-auto mb-8 lg:mb-5 lg:grid lg:grid-cols-2">
       <div class="mb-3 flex flex-col">

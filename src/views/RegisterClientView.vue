@@ -1,6 +1,6 @@
 <script setup>
   import NavBar from "../components/NavBar.vue";
-  import LoginForm from "../components/LoginForm.vue";
+  import RegisterClientForm from "../components/RegisterClientForm.vue";
   import FooterSection from "../components/FooterSection.vue";
 </script>
 
@@ -13,7 +13,7 @@
         </div>
       </header>
       <main class="grow bg-background">
-        <LoginForm />
+        <RegisterClientForm />
       </main>
     </div>
     <footer class="mb-2.5">

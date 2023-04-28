@@ -34,9 +34,9 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const registerUser = async (user) => {
+  const registerClient = async (user) => {
     try {
-      const res = await userServices.registerUser(user);
+      const res = await userServices.registerClient(user);
 
       token.value = res.data.token;
       tokenExpiration.value = new Date();
@@ -45,6 +45,33 @@ export const useUserStore = defineStore("user", () => {
         refreshToken();
       }, 2 * 60 * 1000); // 2 Minutes
     } catch (error) {
+      if (error.response.status === 400) {
+        throw new Error("Request Error");
+      } else if (error.response.status === 403) {
+        throw new Error("User Exists Already");
+      } else if (error.response.status === 500) {
+        throw new Error("Server Error");
+      } else {
+        throw new Error("Untracked Error");
+      }
+    }
+  };
+
+  const registerAgent = async (user) => {
+    console.log(user);
+    try {
+      const res = await userServices.registerAgent(user);
+
+      console.log(res);
+
+      token.value = res.data.token;
+      tokenExpiration.value = new Date();
+      tokenExpiration.value.setSeconds(tokenExpiration.value.getSeconds() + res.data.expiresIn);
+      setInterval(() => {
+        refreshToken();
+      }, 2 * 60 * 1000); // 2 Minutes
+    } catch (error) {
+      console.log(error);
       if (error.response.status === 400) {
         throw new Error("Request Error");
       } else if (error.response.status === 403) {
@@ -107,7 +134,8 @@ export const useUserStore = defineStore("user", () => {
     tokenExpiration,
     isLoggedIn,
     loginUser,
-    registerUser,
+    registerClient,
+    registerAgent,
     refreshToken,
     logoutUser,
   };

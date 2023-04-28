@@ -17,7 +17,7 @@
   <ul v-if="!userStore.isLoggedIn" class="flex items-center space-x-2 text-lg">
     <li>
       <RouterLink
-        to="/auth/register"
+        to="/auth/register/client"
         class="nav-cta text-shadow bg-transparent hover:bg-transparent hover:text-black hover:shadow-[0_2px_10px_rgba(0,_0,_0,_0.2)]"
       >
         Registrarse

@@ -8,12 +8,25 @@ export default {
     });
   },
 
-  registerUser(user) {
-    return api().post("/auth/register", {
+  registerClient(user) {
+    return api().post("/auth/register/client", {
       username: user.username,
       email: user.email,
       password: user.password,
       repassword: user.repassword,
+    });
+  },
+
+  registerAgent(user) {
+    return api().post("/auth/register/agent", {
+      email: user.email,
+      password: user.password,
+      repassword: user.repassword,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      phone: "5354017747",
+      bio: user.bio,
+      public_email: user.public_email,
     });
   },
 

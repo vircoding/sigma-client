@@ -8,7 +8,9 @@
 
 <template>
   <div class="text-shadow flex w-full flex-col items-center justify-center gap-4">
-    <h2 class="text-4xl font-extrabold uppercase">Descubre nuestras casas en venta</h2>
+    <h2 class="text-4xl font-extrabold uppercase">
+      Descubre nuestras casas en {{ buy ? "venta" : "renta" }}
+    </h2>
     <p class="font-archivo">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, necessitatibus!
     </p>
