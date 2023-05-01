@@ -2,6 +2,7 @@
   import { computed, ref } from "vue";
   import { useUserStore } from "../stores/user.js";
   import router from "../router";
+  import countriesServices from "../services/countries.js";
 
   const userStore = useUserStore();
 
@@ -16,12 +17,21 @@
     bio: "",
   });
 
+  const countries = ref([]);
+  const phoneInput = ref("");
+  const callCodeInput = ref("+53");
+
+  const formattedPhone = computed(() => {
+    return callCodeInput.value + phoneInput.value;
+  });
+
   const editedInputs = ref({
     email: false,
     password: false,
     repassword: false,
     firstname: false,
     lastname: false,
+    code: false,
     phone: false,
     public_email: false,
   });
@@ -43,6 +53,9 @@
           break;
         case "lastname":
           editedInputs.value.lastname = true;
+          break;
+        case "code":
+          editedInputs.value.code = true;
           break;
         case "phone":
           editedInputs.value.phone = true;
@@ -90,12 +103,13 @@
     return false;
   });
 
+  const codeError = computed(() => {
+    // TODO: formattedPhone Validations
+    return false;
+  });
+
   const phoneError = computed(() => {
-    if (
-      editedInputs.value.phone &&
-      !(user.value.phone.length >= 10 && user.value.phone.length >= 12)
-    )
-      return true;
+    // TODO: formattedPhone Validations
     return false;
   });
 
@@ -115,6 +129,7 @@
       !editedInputs.value.repassword ||
       !editedInputs.value.firstname ||
       !editedInputs.value.lastname ||
+      !editedInputs.value.code ||
       !editedInputs.value.phone ||
       !editedInputs.value.public_email
     ) {
@@ -126,6 +141,7 @@
       repasswordError.value ||
       firstnameError.value ||
       lastnameError.value ||
+      codeError.value ||
       phoneError.value ||
       public_emailError.value
     ) {
@@ -135,8 +151,14 @@
   });
 
   const formSubmit = async () => {
+    user.value.phone = formattedPhone.value;
+    // Just for testing
+    console.log(user.value.phone);
     try {
       await userStore.registerAgent(user.value);
+
+      phoneInput.value = "";
+      callCodeInput.value = "";
 
       user.value.email = "";
       user.value.password = "";
@@ -152,6 +174,7 @@
       editedInputs.value.repassword = false;
       editedInputs.value.firstname = false;
       editedInputs.value.lastname = false;
+      editedInputs.value.code = false;
       editedInputs.value.phone = false;
       editedInputs.value.public_email = false;
 
@@ -160,9 +183,23 @@
       console.log(error);
     }
   };
+
+  const getCountries = async () => {
+    try {
+      const res = await countriesServices.getCountries();
+      res.data.forEach((item) => {
+        countries.value.push(item);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getCountries();
 </script>
 
 <template>
+  <!-- <p>{{ formattedPhone }}</p> -->
   <div class="flex h-full flex-col justify-center gap-7 px-24 xl:px-32 2xl:px-44">
     <div class="text-shadow">
       <h1 class="text-4xl font-extrabold">Bienvenido a Sigma!</h1>
@@ -274,19 +311,34 @@
         >
       </div>
       <!-- Phone -->
-      <div class="col-start-2 row-start-3 flex flex-col">
-        <input
-          @focus="editInput('phone')"
-          type="text"
-          v-model.trim="user.phone"
-          class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 text-lg font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1"
-          :class="
-            phoneError
-              ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
-              : 'ring-sigma'
-          "
-          placeholder="Número De Teléfono"
-        />
+      <div class="relative col-start-2 row-start-3 flex flex-col">
+        <div class="flex w-full items-center gap-4">
+          <input
+            @focus="editInput('code')"
+            type="text"
+            v-model.trim="callCodeInput"
+            class="inline-block w-[70px] rounded-md border border-sgray-100 bg-transparent py-2 text-center text-lg font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1"
+            :class="
+              codeError
+                ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
+                : 'ring-sigma'
+            "
+            placeholder="+53"
+          />
+          <!-- Phone Number -->
+          <input
+            @focus="editInput('phone')"
+            type="tel"
+            v-model.trim="phoneInput"
+            class="grow rounded-md border border-sgray-100 bg-transparent px-4 py-2 text-lg font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1"
+            :class="
+              phoneError
+                ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
+                : 'ring-sigma'
+            "
+            placeholder="Número De Teléfono"
+          />
+        </div>
         <span
           class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
           :class="phoneError ? 'visible' : 'invisible'"
