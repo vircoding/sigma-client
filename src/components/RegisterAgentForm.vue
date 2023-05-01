@@ -1,8 +1,9 @@
 <script setup>
-  import { computed, ref } from "vue";
+  import { computed, ref, watch } from "vue";
   import { useUserStore } from "../stores/user.js";
   import router from "../router";
   import countriesServices from "../services/countries.js";
+  import parsePhoneNumber from "libphonenumber-js";
 
   const userStore = useUserStore();
 
@@ -23,6 +24,21 @@
 
   const formattedPhone = computed(() => {
     return callCodeInput.value + phoneInput.value;
+  });
+
+  const invalidPhone = ref(true);
+
+  watch(phoneInput, () => {
+    try {
+      const parsedPhoneNumber = parsePhoneNumber(formattedPhone.value);
+      if (!parsedPhoneNumber.isValid()) {
+        throw new Error("Non-valid Phone Number");
+      } else {
+        invalidPhone.value = false;
+      }
+    } catch (error) {
+      invalidPhone.value = true;
+    }
   });
 
   const editedInputs = ref({
@@ -104,12 +120,16 @@
   });
 
   const codeError = computed(() => {
-    // TODO: formattedPhone Validations
+    if (
+      editedInputs.value.code &&
+      (!/^\+\d+$/.test(callCodeInput.value) || !(callCodeInput.value.length <= 4))
+    )
+      return true;
     return false;
   });
 
   const phoneError = computed(() => {
-    // TODO: formattedPhone Validations
+    if (editedInputs.value.phone && invalidPhone.value) return true;
     return false;
   });
 
@@ -129,9 +149,7 @@
       !editedInputs.value.repassword ||
       !editedInputs.value.firstname ||
       !editedInputs.value.lastname ||
-      !editedInputs.value.code ||
-      !editedInputs.value.phone ||
-      !editedInputs.value.public_email
+      !editedInputs.value.phone
     ) {
       return true;
     }
@@ -152,13 +170,12 @@
 
   const formSubmit = async () => {
     user.value.phone = formattedPhone.value;
-    // Just for testing
-    console.log(user.value.phone);
     try {
       await userStore.registerAgent(user.value);
 
       phoneInput.value = "";
-      callCodeInput.value = "";
+      callCodeInput.value = "+53";
+      invalidPhone.value = true;
 
       user.value.email = "";
       user.value.password = "";
@@ -199,7 +216,6 @@
 </script>
 
 <template>
-  <!-- <p>{{ formattedPhone }}</p> -->
   <div class="flex h-full flex-col justify-center gap-7 px-24 xl:px-32 2xl:px-44">
     <div class="text-shadow">
       <h1 class="text-4xl font-extrabold">Bienvenido a Sigma!</h1>

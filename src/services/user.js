@@ -24,7 +24,7 @@ export default {
       repassword: user.repassword,
       firstname: user.firstname,
       lastname: user.lastname,
-      phone: "5354017747",
+      phone: user.phone,
       bio: user.bio,
       public_email: user.public_email,
     });

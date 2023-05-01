@@ -59,6 +59,7 @@ export const useUserStore = defineStore("user", () => {
 
   const registerAgent = async (user) => {
     console.log(user);
+    console.log(typeof user.phone);
     try {
       const res = await userServices.registerAgent(user);
 
