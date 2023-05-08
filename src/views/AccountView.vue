@@ -15,5 +15,5 @@
 </script>
 
 <template>
-  <button @click="logoutEvent">Logout</button>
+  <button class="ml-10 mt-10 bg-black text-white" @click="logoutEvent">Logout</button>
 </template>

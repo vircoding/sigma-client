@@ -140,11 +140,18 @@
         >
           Ingresar
         </button>
-        <a
-          href="#"
-          class="text-shadow transition-all duration-200 after:block after:h-px after:w-0 after:bg-black after:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] after:transition-[width] after:duration-200 after:ease-in-out hover:text-black hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] hover:after:w-full"
-          >Olvidaste tu contraseña?</a
-        >
+        <div class="flex flex-col gap-1">
+          <a
+            href="#"
+            class="text-shadow transition-all duration-200 after:block after:h-px after:w-0 after:bg-black after:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] after:transition-[width] after:duration-200 after:ease-in-out hover:text-black hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] hover:after:w-full"
+            >Olvidaste tu contraseña?</a
+          >
+          <RouterLink
+            to="/auth/register/client"
+            class="text-shadow transition-all duration-200 after:block after:h-px after:w-0 after:bg-black after:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] after:transition-[width] after:duration-200 after:ease-in-out hover:text-black hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] hover:after:w-full"
+            >Aún no tienes cuenta?</RouterLink
+          >
+        </div>
       </div>
     </form>
   </div>

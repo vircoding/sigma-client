@@ -218,13 +218,15 @@
 <template>
   <div class="flex h-full flex-col justify-center gap-7 px-24 xl:px-32 2xl:px-44">
     <div class="text-shadow">
-      <h1 class="text-4xl font-extrabold">Bienvenido a Sigma!</h1>
-      <span class="block text-lg text-sgray-300">Crea un nuevo usuario para continuar</span>
+      <h1 class="text-4xl font-extrabold">Sé parte de Sigma!</h1>
+      <span class="block text-lg text-sgray-300"
+        >Crea una cuenta de agente y obtén todos los privilegios</span
+      >
     </div>
     <form
       @submit.prevent="formSubmit"
       novalidate
-      class="grid w-full grid-cols-2 grid-rows-5 gap-x-8 gap-y-2"
+      class="grid w-full grid-cols-2 grid-rows-6 gap-x-8 gap-y-2"
     >
       <!-- Email -->
       <div class="col-start-1 row-start-1 flex flex-col">
@@ -404,11 +406,16 @@
           Registrarse
         </button>
         <RouterLink
-          to="/auth/register/agent"
+          to="/auth/register/client"
           class="text-shadow transition-all duration-200 after:block after:h-px after:w-0 after:bg-black after:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] after:transition-[width] after:duration-200 after:ease-in-out hover:text-black hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] hover:after:w-full"
-          >Eres agente?</RouterLink
+          >No estás interesado?</RouterLink
         >
       </div>
+      <span class="relative -top-3 col-start-2 row-start-6 block text-xs text-sgray-300"
+        >Al registrarte en nuestro sitio, aceptas nuestras
+        <a class="font-semibold text-black" href="#">políticas de cookies</a> y
+        <a class="font-semibold text-black" href="#">privacidad</a>.</span
+      >
     </form>
   </div>
 </template>
