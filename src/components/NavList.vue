@@ -13,7 +13,7 @@
 </script>
 
 <template>
-  <ul v-if="!userStore.isLoggedIn" class="flex space-x-8 text-lg">
+  <ul v-if="!userStore.isLoggedIn" class="hidden space-x-8 text-sm lg:flex lg:text-lg">
     <li>
       <RouterLink to="/support/help" class="nav-link text-shadow">Ayuda</RouterLink>
     </li>
@@ -21,7 +21,7 @@
       <RouterLink to="/support/contact" class="nav-link text-shadow">Contáctanos</RouterLink>
     </li>
   </ul>
-  <ul v-if="!userStore.isLoggedIn" class="flex items-center space-x-2 text-lg">
+  <ul v-if="!userStore.isLoggedIn" class="hidden items-center space-x-2 text-sm lg:flex lg:text-lg">
     <li>
       <RouterLink
         v-if="
@@ -54,7 +54,7 @@
       </RouterLink>
     </li>
   </ul>
-  <ul v-if="userStore.isLoggedIn" class="flex space-x-8 text-lg">
+  <ul v-if="userStore.isLoggedIn" class="hidden space-x-8 text-sm lg:flex lg:text-lg">
     <li>
       <RouterLink to="/find" class="nav-link text-shadow">Compra</RouterLink>
     </li>
@@ -71,4 +71,5 @@
       <RouterLink to="/account" class="nav-link text-shadow">Mi Cuenta</RouterLink>
     </li>
   </ul>
+  <img src="../assets/menu-icon.svg" class="lg:hidden" />
 </template>

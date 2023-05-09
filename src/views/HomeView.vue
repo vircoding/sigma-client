@@ -8,9 +8,9 @@
 </script>
 
 <template>
-  <div class="p-2.5">
+  <div class="lg:p-2.5">
     <header>
-      <div class="relative flex h-[750px] flex-col overflow-hidden bg-background">
+      <div class="relative flex h-[500px] flex-col overflow-hidden bg-background lg:h-[750px]">
         <SigmaIcon
           class="absolute -top-5 h-full fill-sgray-100 lg:left-[53vw] xl:left-[60vw] 2xl:left-[65vw] min-[1921px]:hidden"
         />
@@ -20,7 +20,7 @@
     </header>
     <main class="mb-[10px]">
       <section class="relative mb-[10px] bg-sigma pb-12 pt-24">
-        <Wave class="absolute bottom-full translate-y-[-10px] fill-white" />
+        <Wave class="absolute bottom-full translate-y-[-5px] fill-white lg:translate-y-[-10px]" />
         <Wave class="absolute bottom-full fill-sigma" />
         <div class="text-shadow flex w-full flex-col items-center justify-center gap-4 text-white">
           <h2 class="text-4xl font-extrabold uppercase">Comienza Por Aquí</h2>

@@ -6,7 +6,7 @@
 </script>
 
 <template>
-  <div class="font-poppins text-sgray-400">
+  <div class="font-poppins text-xs text-sgray-400 lg:text-base">
     <RouterView />
   </div>
 </template>
