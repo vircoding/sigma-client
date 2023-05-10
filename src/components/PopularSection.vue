@@ -7,8 +7,10 @@
 </script>
 
 <template>
-  <div class="text-shadow flex w-full flex-col items-center justify-center gap-4">
-    <h2 class="text-4xl font-extrabold uppercase">
+  <div
+    class="text-shadow flex w-full flex-col items-center justify-center gap-4 px-[6%] text-center lg:px-[6%]"
+  >
+    <h2 class="text-3xl font-extrabold uppercase">
       Descubre nuestras casas en {{ buy ? "venta" : "renta" }}
     </h2>
     <p class="font-archivo">

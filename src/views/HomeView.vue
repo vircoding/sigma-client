@@ -10,9 +10,9 @@
 <template>
   <div class="lg:p-2.5">
     <header>
-      <div class="relative flex h-[500px] flex-col overflow-hidden bg-background lg:h-[750px]">
+      <div class="relative flex h-[600px] flex-col overflow-hidden bg-background lg:h-[750px]">
         <SigmaIcon
-          class="absolute -top-5 h-full fill-sgray-100 lg:left-[53vw] xl:left-[60vw] 2xl:left-[65vw] min-[1921px]:hidden"
+          class="absolute -top-3 left-[30vw] h-full fill-sgray-100 lg:-top-5 lg:left-[53vw] xl:left-[60vw] 2xl:left-[65vw] min-[1921px]:hidden"
         />
         <NavBar class="z-20" />
         <HeaderHero class="z-10 grow" />
@@ -22,21 +22,23 @@
       <section class="relative mb-[10px] bg-sigma pb-12 pt-24">
         <Wave class="absolute bottom-full translate-y-[-5px] fill-white lg:translate-y-[-10px]" />
         <Wave class="absolute bottom-full fill-sigma" />
-        <div class="text-shadow flex w-full flex-col items-center justify-center gap-4 text-white">
-          <h2 class="text-4xl font-extrabold uppercase">Comienza Por Aquí</h2>
+        <div
+          class="text-shadow flex w-full flex-col items-center justify-center gap-4 px-[6%] text-center text-white lg:px-[6%]"
+        >
+          <h2 class="text-3xl font-extrabold uppercase">Comienza Por Aquí</h2>
           <p class="font-archivo">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, necessitatibus!
           </p>
         </div>
 
         <div
-          class="grid h-full w-full grid-cols-3 gap-10 bg-sigma px-24 py-20 xl:gap-14 xl:px-32 2xl:px-44"
+          class="flex h-full w-full flex-col items-center justify-center gap-10 bg-sigma px-[6%] py-20 lg:flex-row lg:px-24 xl:gap-14 xl:px-32 2xl:px-44"
         >
           <div
-            class="flex h-[362px] w-full flex-col items-center justify-center gap-4 rounded-2xl bg-white p-5 text-center"
+            class="flex h-[300px] w-[285px] flex-col items-center justify-center gap-4 rounded-2xl bg-white p-5 text-center lg:h-[362px] lg:w-[300px]"
           >
             <img src="../assets/house-icon.svg" class="text-shadow w-16 xl:w-20" />
-            <h3 class="text-shadow text-2xl font-extrabold xl:text-3xl">Publica Tu Casa</h3>
+            <h3 class="text-shadow text-xl font-extrabold xl:text-3xl">Publica Tu Casa</h3>
             <p
               class="text-shadow mb-3 font-archivo text-sm tracking-tight text-sgray-200 xl:text-base"
             >
@@ -50,10 +52,10 @@
             >
           </div>
           <div
-            class="flex h-[362px] w-full flex-col items-center justify-center gap-4 rounded-2xl bg-white p-5 text-center"
+            class="flex h-[300px] w-[285px] flex-col items-center justify-center gap-4 rounded-2xl bg-white p-5 text-center lg:h-[362px] lg:w-[300px]"
           >
             <img src="../assets/credit-icon.svg" class="text-shadow w-16 xl:w-20" />
-            <h3 class="text-shadow text-2xl font-extrabold xl:text-3xl">Descubre Casas</h3>
+            <h3 class="text-shadow text-xl font-extrabold xl:text-3xl">Descubre Casas</h3>
             <p
               class="text-shadow mb-3 font-archivo text-sm tracking-tight text-sgray-200 xl:text-base"
             >
@@ -67,10 +69,10 @@
             >
           </div>
           <div
-            class="flex h-[362px] w-full flex-col items-center justify-center gap-4 rounded-2xl bg-white p-5 text-center"
+            class="flex h-[300px] w-[285px] flex-col items-center justify-center gap-4 rounded-2xl bg-white p-5 text-center lg:h-[362px] lg:w-[300px]"
           >
             <img src="../assets/bed-icon.svg" class="text-shadow w-16 xl:w-20" />
-            <h3 class="text-shadow text-2xl font-extrabold xl:text-3xl">Consigue Renta</h3>
+            <h3 class="text-shadow text-xl font-extrabold xl:text-3xl">Consigue Renta</h3>
             <p
               class="text-shadow mb-3 font-archivo text-sm tracking-tight text-sgray-200 xl:text-base"
             >

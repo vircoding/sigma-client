@@ -1,15 +1,13 @@
 <template>
-  <div class="flex space-x-10 px-[3%] lg:px-[6%] xl:space-x-24 xl:px-[10%] 2xl:space-x-32">
+  <div class="flex space-x-10 px-[6%] lg:px-[6%] xl:space-x-24 xl:px-[10%] 2xl:space-x-32">
     <div
       class="text-shadow relative -top-5 flex w-full flex-col items-center justify-center space-y-5 lg:-top-12 lg:space-y-10"
     >
-      <h1
-        class="w-[85%] text-center text-3xl font-extrabold uppercase lg:w-full lg:text-left lg:text-5xl"
-      >
+      <h1 class="w-full text-center text-4xl font-extrabold uppercase lg:text-left lg:text-5xl">
         Sigma te <span class="text-sigma">ayuda</span> a
         <span class="text-sigma">encontrar</span> tu casa <span class="text-sigma">ideal</span>
       </h1>
-      <p class="w-[85%] text-center font-archivo lg:w-full lg:text-left">
+      <p class="w-full text-center font-archivo lg:text-left">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae ad at pariatur voluptatem est
         numquam in explicabo a totam esse.
       </p>

@@ -71,5 +71,5 @@
       <RouterLink to="/account" class="nav-link text-shadow">Mi Cuenta</RouterLink>
     </li>
   </ul>
-  <img src="../assets/menu-icon.svg" class="lg:hidden" />
+  <img src="../assets/menu-icon.svg" class="w-9 lg:hidden" />
 </template>
