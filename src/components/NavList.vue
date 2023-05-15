@@ -1,15 +1,25 @@
 <script setup>
   import { RouterLink } from "vue-router";
-  import { useUserStore } from "../stores/user.js";
+  import { useUserStore } from "../stores/user";
+  import { useLayoutStore } from "../stores/layout";
   import { useRoute } from "vue-router";
   import { computed } from "vue";
 
   const userStore = useUserStore();
+  const layoutStore = useLayoutStore();
   const route = useRoute();
 
   const actualPath = computed(() => {
     return route.name;
   });
+
+  const menuInteraction = () => {
+    if (!layoutStore.sideMenuVisibility) {
+      layoutStore.unhideSideMenu();
+    } else {
+      layoutStore.hideSideMenu();
+    }
+  };
 </script>
 
 <template>
@@ -71,5 +81,11 @@
       <RouterLink to="/account" class="nav-link text-shadow">Mi Cuenta</RouterLink>
     </li>
   </ul>
-  <img src="../assets/menu-icon.svg" class="w-9 lg:hidden" />
+  <img
+    v-if="!layoutStore.sideMenuVisibility"
+    src="../assets/menu-icon.svg"
+    class="w-9 lg:hidden"
+    @click="menuInteraction"
+  />
+  <img v-else src="../assets/close-icon.svg" class="w-9 lg:hidden" @click="menuInteraction" />
 </template>

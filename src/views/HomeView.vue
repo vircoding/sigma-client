@@ -18,8 +18,8 @@
         <HeaderHero class="z-10 grow" />
       </div>
     </header>
-    <main class="mb-[10px]">
-      <section class="relative mb-[10px] bg-sigma pb-12 pt-24">
+    <main class="mb-[5px] lg:mb-[10px]">
+      <section class="relative mb-[5px] bg-sigma pb-12 pt-24 lg:mb-[10px]">
         <Wave class="absolute bottom-full translate-y-[-5px] fill-white lg:translate-y-[-10px]" />
         <Wave class="absolute bottom-full fill-sigma" />
         <div
@@ -30,7 +30,6 @@
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, necessitatibus!
           </p>
         </div>
-
         <div
           class="flex h-full w-full flex-col items-center justify-center gap-10 bg-sigma px-[6%] py-20 lg:flex-row lg:px-24 xl:gap-14 xl:px-32 2xl:px-44"
         >
@@ -87,7 +86,7 @@
           </div>
         </div>
       </section>
-      <section class="first-gradient mb-[10px] w-full pt-28">
+      <section class="first-gradient w-full pt-28">
         <PopularSection :buy="true" />
       </section>
       <section class="second-gradient w-full pb-12 pt-10">
