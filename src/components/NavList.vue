@@ -84,8 +84,8 @@
   <img
     v-if="!layoutStore.sideMenuVisibility"
     src="../assets/menu-icon.svg"
-    class="w-9 lg:hidden"
+    class="text-shadow w-9 lg:hidden"
     @click="menuInteraction"
   />
-  <img v-else src="../assets/close-icon.svg" class="w-9 lg:hidden" @click="menuInteraction" />
+  <img v-else src="../assets/close-icon.svg" class="text-shadow w-9 lg:hidden" @click="menuInteraction" />
 </template>
