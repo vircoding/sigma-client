@@ -1,19 +1,28 @@
 <script setup>
-  import router from "../router";
   import { useUserStore } from "../stores/user.js";
+  import NavBar from "../components/NavBar.vue";
+  import ClientInfo from "../components/ClientInfo.vue";
+  import AgentInfo from "../components/AgentInfo.vue";
+  import FooterSection from "../components/FooterSection.vue";
 
-  const logoutEvent = async () => {
-    const userStore = useUserStore();
-    try {
-      await userStore.logoutUser();
-
-      router.push("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const userStore = useUserStore();
 </script>
 
 <template>
-  <button class="ml-10 mt-10 bg-black text-white" @click="logoutEvent">Logout</button>
+  <div class="px-2.5">
+    <div class="flex h-screen flex-col py-2.5">
+      <header>
+        <div class="relative overflow-hidden bg-background">
+          <NavBar class="z-20" />
+        </div>
+      </header>
+      <main class="grow bg-background">
+        <!-- <ClientInfo /> -->
+        <AgentInfo />
+      </main>
+    </div>
+    <footer class="mb-2.5">
+      <FooterSection />
+    </footer>
+  </div>
 </template>
