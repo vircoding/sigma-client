@@ -75,7 +75,7 @@
         default:
           break;
       }
-    }, 3000);
+    }, 2000);
   };
 
   const codeError = computed(() => {

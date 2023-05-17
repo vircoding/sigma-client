@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useUserStore } from "../stores/user.js";
+import { useLayoutStore } from "../stores/layout.js";
 
 const routes = [
   {
@@ -66,6 +67,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const layoutStore = useLayoutStore();
+  layoutStore.hideSideMenu();
+
   if (!from.name && to.name !== "home") {
     next("/");
   } else {

@@ -3,17 +3,29 @@
   import { useUserStore } from "../stores/user.js";
   import { useRoute } from "vue-router";
   import { computed } from "vue";
+  import { useLayoutStore } from "../stores/layout";
 
   const userStore = useUserStore();
+  const layoutStore = useLayoutStore();
+
   const route = useRoute();
 
   const actualPath = computed(() => {
     return route.name;
   });
+
+  const menuInteraction = () => {
+    layoutStore.hideSideMenu();
+  };
 </script>
 
 <template>
-  <nav class="h-screen w-1/2 pt-[68px]">
+  <nav class="z-50 flex h-screen w-1/2 flex-col items-end">
+    <img
+      src="../assets/close-icon.svg"
+      class="text-shadow relative right-4 w-9 py-4 lg:hidden"
+      @click="menuInteraction"
+    />
     <div class="h-[1px] w-full bg-sgray-100"></div>
     <ul class="flex flex-col items-end gap-3 p-4 pr-6">
       <li v-if="userStore.isLoggedIn">
