@@ -1,11 +1,15 @@
 <script setup>
   import { useUserStore } from "../stores/user";
+  import { usePostStore } from "../stores/post";
   import NumberInput from "./NumberInput.vue";
   import RadioInput from "./RadioInput.vue";
   import SelectInput from "./SelectInput.vue";
   import { provinceList, municipalityList } from "../utils/provinces";
   import { ref, computed, watch } from "vue";
   import parsePhoneNumber from "libphonenumber-js";
+
+  const userStore = useUserStore();
+  const postStore = usePostStore();
 
   const post = ref({
     type: "sale",
@@ -23,17 +27,26 @@
       garden: 0,
       pool: 0,
     },
-    contact: "",
+    phone: "",
     description: "",
     currency: "mn",
-    price: "",
+    frequency: "",
+    amount: "",
   });
 
   const activeProvince = computed(() => post.value.address.province);
+  const activeType = computed(() => post.value.type);
 
-  watch(activeProvince, async () => {
-    console.log("her");
+  watch(activeProvince, () => {
     post.value.address.municipality = "";
+  });
+
+  watch(activeType, () => {
+    if (activeType.value === "rent") {
+      post.value.frequency = "monthly";
+    } else {
+      post.value.frequency = "";
+    }
   });
 
   const phoneInput = ref("");
@@ -102,16 +115,52 @@
     return false;
   });
 
-  const userStore = useUserStore();
+  const formSubmit = async () => {
+    post.value.phone = formattedPhone.value;
+    try {
+      await postStore.insertPost(post.value, userStore.token);
+
+      post.value.address.province = "La Habana";
+      post.value.address.municipality = "";
+      post.value.features.living_room = 0;
+      post.value.features.bed_room = 0;
+      post.value.features.bath_room = 0;
+      post.value.features.dinning_room = 0;
+      post.value.features.kitchen = 0;
+      post.value.features.garage = 0;
+      post.value.features.garden = 0;
+      post.value.features.pool = 0;
+      post.value.phone = "";
+      post.value.description = "";
+      post.value.amount = "";
+
+      phoneInput.value = "";
+      callCodeInput.value = "+53";
+
+      invalidPhone.value = true;
+
+      editedInputs.value.code = false;
+      editedInputs.value.phone = false;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 </script>
 
 <template>
-  <form novalidate class="flex w-1/4 flex-col gap-4 pl-4">
+  {{ post.type }}
+  {{ post.currency }}
+  {{ post.frequency }}
+  {{ post.address }}
+  <form novalidate @submit.prevent="formSubmit" class="flex w-1/4 flex-col gap-4 pl-4">
     <!-- Type -->
     <RadioInput v-model="post.type" type="type" />
 
     <!-- Currency -->
     <RadioInput v-model="post.currency" type="currency" />
+
+    <!-- Frequency -->
+    <RadioInput v-if="post.type === 'rent'" v-model="post.frequency" type="frequency" />
 
     <!-- Province -->
     <SelectInput v-model="post.address.province" type="province" :options-list="provinceList" />
@@ -146,6 +195,9 @@
 
     <!-- Pool -->
     <NumberInput v-model="post.features.pool" />
+
+    <!-- Amount -->
+    <input type="number" min="1" v-model="post.amount" />
 
     <!-- Phone -->
     <!-- <input type="text" placeholder="Número de Teléfono (Requerido)" name="phone" /> -->

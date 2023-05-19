@@ -47,4 +47,26 @@
     />
     <label for="currency-usd">USD</label>
   </div>
+
+  <div v-else-if="type === 'frequency'">
+    <input
+      type="radio"
+      id="frequency-monthly"
+      checked
+      name="frequency"
+      value="monthly"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
+    />
+    <label for="frequency-monthly">Mensual</label>
+    <input
+      type="radio"
+      id="frequency-daily"
+      name="frequency"
+      value="daily"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
+    />
+    <label for="frequency-daily">Diario</label>
+  </div>
 </template>

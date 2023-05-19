@@ -1,15 +1,15 @@
-import api from "./api.js";
+import { unauthorizedAPI } from "./api.js";
 
 export default {
   loginUser(user) {
-    return api().post("/auth/login", {
+    return unauthorizedAPI().post("/auth/login", {
       email: user.email,
       password: user.password,
     });
   },
 
   registerClient(user) {
-    return api().post("/auth/register/client", {
+    return unauthorizedAPI().post("/auth/register/client", {
       username: user.username,
       email: user.email,
       password: user.password,
@@ -18,7 +18,7 @@ export default {
   },
 
   registerAgent(user) {
-    return api().post("/auth/register/agent", {
+    return unauthorizedAPI().post("/auth/register/agent", {
       email: user.email,
       password: user.password,
       repassword: user.repassword,
@@ -31,10 +31,10 @@ export default {
   },
 
   refreshToken() {
-    return api().get("/auth/refresh");
+    return unauthorizedAPI().get("/auth/refresh");
   },
 
   logoutUser() {
-    return api().get("/auth/logout");
+    return unauthorizedAPI().get("/auth/logout");
   },
 };

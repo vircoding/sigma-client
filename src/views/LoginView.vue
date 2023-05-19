@@ -5,8 +5,8 @@
 </script>
 
 <template>
-  <div class="px-2.5">
-    <div class="flex h-screen flex-col py-2.5">
+  <div class="lg:px-2.5">
+    <div class="flex h-screen flex-col lg:py-2.5">
       <header>
         <div class="relative overflow-hidden bg-background">
           <NavBar class="z-20" />
@@ -16,7 +16,7 @@
         <LoginForm />
       </main>
     </div>
-    <footer class="mb-2.5">
+    <footer class="lg:mb-2.5">
       <FooterSection />
     </footer>
   </div>
