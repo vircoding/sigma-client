@@ -12,7 +12,7 @@
           <NavBar class="z-20" />
         </div>
       </header>
-      <main class="grow bg-background">
+      <main class="mb-[5px] grow bg-background lg:mb-0">
         <LoginForm />
       </main>
     </div>
