@@ -3,6 +3,7 @@
   import { useUserStore } from "../stores/user.js";
   import router from "../router";
   import SigmaVerticalIcon from "./icons/SigmaVerticalIcon.vue";
+  import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
 
   const userStore = useUserStore();
 
@@ -112,17 +113,24 @@
 
 <template>
   <div
-    class="relative -top-6 grid h-full w-full grid-cols-16 place-items-center px-24 xl:px-32 2xl:px-44"
+    class="relative flex h-full w-full grid-cols-16 flex-col place-items-center items-center justify-start gap-0 max-[1023px]:px-[10%] max-[499px]:px-[5%] lg:-top-6 lg:grid lg:gap-0 lg:px-24 xl:px-32 2xl:px-44"
   >
     <div class="text-shadow col-span-6">
-      <SigmaVerticalIcon class="w-full fill-sgray-200" />
+      <SigmaVerticalIcon class="hidden w-full fill-sgray-200 lg:block" />
+      <SigmaIsotypeIcon class="h-[100px] w-[320px] fill-sgray-200 lg:hidden" />
     </div>
-    <div class="invisible h-3/5 w-[1px] bg-sgray-100"></div>
+    <div class="invisible hidden h-3/5 w-[1px] bg-sgray-100 lg:block"></div>
     <!-- Form -->
     <form @submit.prevent="formSubmit" novalidate class="col-span-8 flex w-full flex-col gap-7">
       <div class="text-shadow">
-        <h1 class="text-4xl font-extrabold">Bienvenido a Sigma!</h1>
-        <span class="block text-lg text-sgray-300">Crea un nuevo usuario para continuar</span>
+        <h1
+          class="mb-2 text-center text-4xl font-extrabold max-[1023px]:text-4xl max-[505px]:text-3xl lg:mb-0 lg:text-left lg:text-4xl"
+        >
+          Bienvenido a Sigma!
+        </h1>
+        <span class="block text-center text-sgray-300 lg:text-left lg:text-lg"
+          >Crea un nuevo usuario para continuar</span
+        >
       </div>
       <div class="flex flex-col gap-2">
         <!-- Username -->
@@ -131,7 +139,7 @@
             @focus="editInput('username')"
             type="text"
             v-model.trim="user.username"
-            class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 text-lg font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1"
+            class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
             :class="
               usernameError
                 ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
@@ -151,7 +159,7 @@
             @focus="editInput('email')"
             type="email"
             v-model.trim="user.email"
-            class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 text-lg font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1"
+            class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
             :class="
               emailError
                 ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
@@ -171,7 +179,7 @@
             @focus="editInput('password')"
             type="password"
             v-model.trim="user.password"
-            class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 text-lg font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1"
+            class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
             :class="
               passwordError
                 ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
@@ -191,7 +199,7 @@
             @focus="editInput('repassword')"
             type="password"
             v-model.trim="user.repassword"
-            class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 text-lg font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1"
+            class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
             :class="
               repasswordError
                 ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
@@ -206,11 +214,13 @@
           >
         </div>
       </div>
-      <div class="relative -top-3 flex items-center justify-start gap-7">
+      <div
+        class="relative -top-5 flex flex-col items-center justify-start gap-7 lg:-top-3 lg:flex-row"
+      >
         <button
           type="submit"
           :disabled="disableSubmit"
-          class="flex h-10 w-44 items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 text-center text-lg font-semibold text-sgray-100 shadow-[0_0_10px_rgba(0,_0,_0,_0.4)] transition-all duration-200 ease-out hover:bg-black hover:text-white hover:shadow-[0_2px_10px_rgba(0,_0,_0,_0.5)] disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 disabled:shadow-[0_0_10px_rgba(0,_0,_0,_0)]"
+          class="flex h-9 w-full items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 text-center font-semibold text-sgray-100 shadow-[0_0_10px_rgba(0,_0,_0,_0.4)] transition-all duration-200 ease-out hover:bg-black hover:text-white hover:shadow-[0_2px_10px_rgba(0,_0,_0,_0.5)] disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 disabled:shadow-[0_0_10px_rgba(0,_0,_0,_0)] lg:h-10 lg:w-44 lg:text-lg"
         >
           Registrarse
         </button>
@@ -220,7 +230,7 @@
           >Eres agente?</RouterLink
         >
       </div>
-      <span class="relative -top-5 block text-xs text-sgray-300"
+      <span class="relative -top-5 block text-center text-xs text-sgray-300"
         >Al registrarte en nuestro sitio, aceptas nuestras
         <a class="font-semibold text-black" href="#">políticas de cookies</a> y
         <a class="font-semibold text-black" href="#">privacidad</a>.</span
