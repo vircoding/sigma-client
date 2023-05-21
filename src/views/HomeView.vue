@@ -12,7 +12,7 @@
     <header>
       <div class="relative flex h-[600px] flex-col overflow-hidden bg-background lg:h-[750px]">
         <SigmaIcon
-          class="absolute -top-3 left-[30vw] h-full fill-sgray-100 lg:-top-5 lg:left-[53vw] xl:left-[60vw] 2xl:left-[65vw] min-[1921px]:hidden"
+          class="absolute -top-3 left-[20vw] h-full fill-sgray-100 lg:-top-5 lg:left-[53vw] xl:left-[60vw] 2xl:left-[65vw] min-[1921px]:hidden"
         />
         <NavBar class="z-20" />
         <HeaderHero class="z-10 grow" />

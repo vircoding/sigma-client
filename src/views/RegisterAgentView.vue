@@ -5,18 +5,18 @@
 </script>
 
 <template>
-  <div class="px-2.5">
-    <div class="flex h-screen flex-col py-2.5">
+  <div class="lg:px-2.5">
+    <div class="flex min-h-screen flex-col lg:h-screen lg:py-2.5">
       <header>
         <div class="relative overflow-hidden bg-background">
           <NavBar class="z-20" />
         </div>
       </header>
-      <main class="grow bg-background">
+      <main class="mb-[5px] grow bg-background lg:mb-0">
         <RegisterAgentForm />
       </main>
     </div>
-    <footer class="mb-2.5">
+    <footer class="lg:mb-2.5">
       <FooterSection />
     </footer>
   </div>

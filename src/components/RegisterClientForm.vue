@@ -220,7 +220,7 @@
         <button
           type="submit"
           :disabled="disableSubmit"
-          class="flex h-9 w-full items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 text-center font-semibold text-sgray-100 shadow-[0_0_10px_rgba(0,_0,_0,_0.4)] transition-all duration-200 ease-out hover:bg-black hover:text-white hover:shadow-[0_2px_10px_rgba(0,_0,_0,_0.5)] disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 disabled:shadow-[0_0_10px_rgba(0,_0,_0,_0)] lg:h-10 lg:w-44 lg:text-lg"
+          class="flex h-[38px] w-full items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 text-center font-semibold text-sgray-100 shadow-[0_0_10px_rgba(0,_0,_0,_0.4)] transition-all duration-200 ease-out hover:bg-black hover:text-white hover:shadow-[0_2px_10px_rgba(0,_0,_0,_0.5)] disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 disabled:shadow-[0_0_10px_rgba(0,_0,_0,_0)] lg:h-10 lg:w-44 lg:text-lg"
         >
           Registrarse
         </button>
@@ -230,7 +230,7 @@
           >Eres agente?</RouterLink
         >
       </div>
-      <span class="relative -top-5 block text-center text-xs text-sgray-300"
+      <span class="relative -top-5 block text-center text-xs text-sgray-300 lg:text-left"
         >Al registrarte en nuestro sitio, aceptas nuestras
         <a class="font-semibold text-black" href="#">políticas de cookies</a> y
         <a class="font-semibold text-black" href="#">privacidad</a>.</span
