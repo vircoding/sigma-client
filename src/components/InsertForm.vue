@@ -292,6 +292,20 @@
         >
       </div>
 
+      <!-- Description -->
+      <div class="col-start-1 row-span-2 row-start-4 mb-2 flex flex-col lg:mb-0">
+        <textarea
+          maxlength="160"
+          v-model.trim="post.description"
+          class="h-[120px] resize-none rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:h-full lg:text-lg"
+          placeholder="Descripción (160 carácteres máximo)"
+        ></textarea>
+        <span
+          class="text-shadow invisible relative top-1 px-4 font-archivo text-sm italic text-alert"
+          >Error Message</span
+        >
+      </div>
+
       <!-- Phone -->
       <!-- <input type="text" placeholder="Número de Teléfono (Requerido)" name="phone" /> -->
       <div class="relative col-start-2 row-start-3 mb-1 flex flex-col">
