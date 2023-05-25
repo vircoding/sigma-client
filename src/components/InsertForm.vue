@@ -72,9 +72,11 @@
   });
 
   const editedInputs = ref({
+    amount: false,
+    municipality: false,
+    features: false,
     code: false,
     phone: false,
-    amount: false,
   });
 
   const editInput = (input) => {
@@ -82,6 +84,12 @@
       switch (input) {
         case "amount":
           editedInputs.value.amount = true;
+          break;
+        case "municipality":
+          editedInputs.value.municipality = true;
+          break;
+        case "features":
+          editedInputs.value.features = true;
           break;
         case "code":
           editedInputs.value.code = true;
@@ -94,6 +102,61 @@
       }
     }, 2000);
   };
+
+  const amountError = computed(() => {
+    if (
+      editedInputs.value.amount &&
+      (post.value.amount < 1 || !Number.isInteger(post.value.amount))
+    )
+      return true;
+    return false;
+  });
+
+  const municipalityError = computed(() => {
+    if (editedInputs.value.municipality && post.value.address.municipality === "") return true;
+    return false;
+  });
+
+  const featuresError = computed(() => {
+    const regex = /^[0-9]+$/;
+    const bath_roomToString = post.value.features.bath_room.toString();
+    const bed_roomToString = post.value.features.bed_room.toString();
+    const dinning_roomToString = post.value.features.dinning_room.toString();
+    const garageToString = post.value.features.garage.toString();
+    const gardenToString = post.value.features.garden.toString();
+    const kitchenToString = post.value.features.kitchen.toString();
+    const living_roomToString = post.value.features.living_room.toString();
+    const poolToString = post.value.features.pool.toString();
+
+    if (
+      post.value.features.bath_room < 0 ||
+      post.value.features.bath_room > 10 ||
+      post.value.features.bed_room < 0 ||
+      post.value.features.bed_room > 10 ||
+      post.value.features.dinning_room < 0 ||
+      post.value.features.dinning_room > 10 ||
+      post.value.features.garage < 0 ||
+      post.value.features.garage > 10 ||
+      post.value.features.garden < 0 ||
+      post.value.features.garden > 10 ||
+      post.value.features.kitchen < 0 ||
+      post.value.features.kitchen > 10 ||
+      post.value.features.living_room < 0 ||
+      post.value.features.living_room > 10 ||
+      post.value.features.pool < 0 ||
+      post.value.features.pool > 10 ||
+      !regex.test(bath_roomToString) ||
+      !regex.test(bed_roomToString) ||
+      !regex.test(dinning_roomToString) ||
+      !regex.test(garageToString) ||
+      !regex.test(gardenToString) ||
+      !regex.test(kitchenToString) ||
+      !regex.test(living_roomToString) ||
+      !regex.test(poolToString)
+    )
+      return true;
+    return false;
+  });
 
   const codeError = computed(() => {
     if (
@@ -109,16 +172,21 @@
     return false;
   });
 
-  const amountError = computed(() => {
-    if (editedInputs.value.amount && post.value.amount < 1) return true;
-    return false;
-  });
-
   const disableSubmit = computed(() => {
-    if (!editedInputs.value.phone) {
+    if (
+      !editedInputs.value.phone ||
+      !editedInputs.value.amount ||
+      !editedInputs.value.municipality
+    ) {
       return true;
     }
-    if (codeError.value || phoneError.value) {
+    if (
+      amountError.value ||
+      municipalityError.value ||
+      featuresError.value ||
+      codeError.value ||
+      phoneError.value
+    ) {
       return true;
     }
     return false;
@@ -205,7 +273,7 @@
       </div>
 
       <!-- Address -->
-      <div class="mb-6">
+      <div class="mb-1">
         <!-- Province -->
         <div
           class="flex flex-col gap-2 rounded-md border border-sgray-100 px-2 py-2 min-[420px]:px-2 min-[460px]:px-4"
@@ -218,14 +286,18 @@
 
           <!-- Municipality -->
           <SelectInput
+            @focus="editInput('municipality')"
             v-model="post.address.municipality"
             type="municipality"
             :options-list="municipalityList[activeProvince]"
           />
         </div>
+        <span
+          class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
+          :class="municipalityError ? 'visible' : 'invisible'"
+          >Error Message</span
+        >
       </div>
-      <!-- <div class="mb-7 flex w-full flex-col gap-3">
-      </div> -->
 
       <!-- Features -->
       <div class="mb-1">
@@ -236,25 +308,25 @@
             <!-- Bed Room -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Cuartos</span>
-              <NumberInput v-model="post.features.bed_room" />
+              <NumberInput @focus="editInput('features')" v-model="post.features.bed_room" />
             </div>
 
             <!-- Dinning Room -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Comedores</span>
-              <NumberInput v-model="post.features.dinning_room" />
+              <NumberInput @focus="editInput('features')" v-model="post.features.dinning_room" />
             </div>
 
             <!-- Kitchen -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Cocinas</span>
-              <NumberInput v-model="post.features.kitchen" />
+              <NumberInput @focus="editInput('features')" v-model="post.features.kitchen" />
             </div>
 
             <!-- Garage -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Garages</span>
-              <NumberInput v-model="post.features.garage" />
+              <NumberInput @focus="editInput('features')" v-model="post.features.garage" />
             </div>
           </div>
 
@@ -262,7 +334,7 @@
             <!-- Bathroom -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Baños</span>
-              <NumberInput v-model="post.features.bath_room" />
+              <NumberInput @focus="editInput('features')" v-model="post.features.bath_room" />
             </div>
 
             <!-- Livingroom -->
@@ -274,20 +346,20 @@
             <!-- Garden -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Jardínes</span>
-              <NumberInput v-model="post.features.garden" />
+              <NumberInput @focus="editInput('features')" v-model="post.features.garden" />
             </div>
 
             <!-- Pool -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Piscinas</span>
-              <NumberInput v-model="post.features.pool" />
+              <NumberInput @focus="editInput('features')" v-model="post.features.pool" />
             </div>
           </div>
         </div>
 
         <span
           class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
-          :class="phoneError ? 'visible' : 'invisible'"
+          :class="featuresError ? 'visible' : 'invisible'"
           >Error Message</span
         >
       </div>

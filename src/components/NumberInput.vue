@@ -7,6 +7,7 @@
   <input
     min="0"
     max="10"
+    pattern="[0-9]*"
     type="number"
     :value="modelValue"
     @input="$emit('update:modelValue', $event.target.value)"
