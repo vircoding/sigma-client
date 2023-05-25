@@ -31,7 +31,7 @@
     description: "",
     currency: "mn",
     frequency: "",
-    amount: "",
+    amount: null,
   });
 
   const activeProvince = computed(() => post.value.address.province);
@@ -74,11 +74,15 @@
   const editedInputs = ref({
     code: false,
     phone: false,
+    amount: false,
   });
 
   const editInput = (input) => {
     setTimeout(() => {
       switch (input) {
+        case "amount":
+          editedInputs.value.amount = true;
+          break;
         case "code":
           editedInputs.value.code = true;
           break;
@@ -102,6 +106,11 @@
 
   const phoneError = computed(() => {
     if (editedInputs.value.phone && invalidPhone.value) return true;
+    return false;
+  });
+
+  const amountError = computed(() => {
+    if (editedInputs.value.amount && post.value.amount < 1) return true;
     return false;
   });
 
@@ -132,7 +141,7 @@
       post.value.features.pool = 0;
       post.value.phone = "";
       post.value.description = "";
-      post.value.amount = "";
+      post.value.amount = null;
 
       phoneInput.value = "";
       callCodeInput.value = "+53";
@@ -148,101 +157,186 @@
 </script>
 
 <template>
-  {{ post.type }}
-  {{ post.currency }}
-  {{ post.frequency }}
-  {{ post.address }}
-  <form novalidate @submit.prevent="formSubmit" class="flex w-1/4 flex-col gap-4 pl-4">
-    <!-- Type -->
-    <RadioInput v-model="post.type" type="type" />
-
-    <!-- Currency -->
-    <RadioInput v-model="post.currency" type="currency" />
-
-    <!-- Frequency -->
-    <RadioInput v-if="post.type === 'rent'" v-model="post.frequency" type="frequency" />
-
-    <!-- Province -->
-    <SelectInput v-model="post.address.province" type="province" :options-list="provinceList" />
-
-    <!-- Municipality -->
-    <SelectInput
-      v-model="post.address.municipality"
-      type="municipality"
-      :options-list="municipalityList[activeProvince]"
-    />
-
-    <!-- Bed Room -->
-    <NumberInput v-model="post.features.bed_room" />
-
-    <!-- Dinning Room -->
-    <NumberInput v-model="post.features.dinning_room" />
-
-    <!-- Kitchen -->
-    <NumberInput v-model="post.features.kitchen" />
-
-    <!-- Garage -->
-    <NumberInput v-model="post.features.garage" />
-
-    <!-- Bathroom -->
-    <NumberInput v-model="post.features.bath_room" />
-
-    <!-- Livingroom -->
-    <NumberInput v-model="post.features.living_room" />
-
-    <!-- Garden -->
-    <NumberInput v-model="post.features.garden" />
-
-    <!-- Pool -->
-    <NumberInput v-model="post.features.pool" />
-
-    <!-- Amount -->
-    <input type="number" min="1" v-model="post.amount" />
-
-    <!-- Phone -->
-    <!-- <input type="text" placeholder="Número de Teléfono (Requerido)" name="phone" /> -->
-    <div class="relative col-start-2 row-start-3 flex flex-col">
-      <div class="flex w-full items-center gap-4">
-        <input
-          @focus="editInput('code')"
-          type="text"
-          v-model.trim="callCodeInput"
-          class="inline-block w-[70px] rounded-md border border-sgray-100 bg-transparent py-2 text-center text-lg font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1"
-          :class="
-            codeError
-              ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
-              : 'ring-sigma'
-          "
-          placeholder="+53"
-        />
-        <!-- Phone Number -->
-        <input
-          @focus="editInput('phone')"
-          type="tel"
-          v-model.trim="phoneInput"
-          class="grow rounded-md border border-sgray-100 bg-transparent px-4 py-2 text-lg font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1"
-          :class="
-            phoneError
-              ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
-              : 'ring-sigma'
-          "
-          placeholder="Número De Teléfono"
-        />
-      </div>
-      <span
-        class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
-        :class="phoneError ? 'visible' : 'invisible'"
-        >Error Message</span
+  <div
+    class="flex h-full w-full flex-col items-center py-7 max-[1023px]:px-[10%] max-[499px]:px-[5%] lg:items-start lg:justify-center lg:gap-7 lg:px-24 lg:py-0 xl:px-32 2xl:px-44"
+  >
+    <div class="text-shadow mb-4 lg:mb-0">
+      <h1
+        class="mb-2 text-center text-4xl font-extrabold max-[1023px]:text-4xl max-[505px]:text-3xl lg:mb-0 lg:text-left lg:text-4xl"
+      >
+        Publica tu casa!
+      </h1>
+      <span class="block text-center text-sgray-300 lg:text-left lg:text-lg"
+        >Define si vendes o rentas tu casa y agrega los datos requeridos</span
       >
     </div>
-
-    <!-- Submit -->
-    <button
-      :disabled="disableSubmit"
-      type="submit"
-      class="flex h-10 w-44 items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 text-center text-lg font-semibold text-sgray-100 shadow-[0_0_10px_rgba(0,_0,_0,_0.4)] transition-all duration-200 ease-out hover:bg-black hover:text-white hover:shadow-[0_2px_10px_rgba(0,_0,_0,_0.5)] disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 disabled:shadow-[0_0_10px_rgba(0,_0,_0,_0)]"
+    <form
+      @submit.prevent="formSubmit"
+      novalidate
+      class="flex w-full grid-cols-2 grid-rows-6 flex-col lg:grid lg:gap-x-8 lg:gap-y-2"
     >
-      Publicar
-    </button>
-  </form>
+      <div class="mb-4">
+        <!-- Type -->
+        <RadioInput v-model="post.type" type="type" />
+
+        <div class="flex min-[320px]:gap-0 min-[400px]:gap-2">
+          <!-- Currency -->
+          <RadioInput v-model="post.currency" type="currency" />
+          <!-- Frequency -->
+          <RadioInput v-if="post.type === 'rent'" v-model="post.frequency" type="frequency" />
+        </div>
+      </div>
+
+      <!-- Amount -->
+      <div class="mb-1 w-full">
+        <input
+          @focus="editInput('amount')"
+          type="number"
+          min="1"
+          v-model="post.amount"
+          placeholder="Precio"
+          class="w-full rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
+        />
+        <span
+          class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
+          :class="amountError ? 'visible' : 'invisible'"
+          >Error Message</span
+        >
+      </div>
+
+      <!-- Address -->
+      <div class="mb-6">
+        <!-- Province -->
+        <div
+          class="flex flex-col gap-2 rounded-md border border-sgray-100 px-2 py-2 min-[420px]:px-2 min-[460px]:px-4"
+        >
+          <SelectInput
+            v-model="post.address.province"
+            type="province"
+            :options-list="provinceList"
+          />
+
+          <!-- Municipality -->
+          <SelectInput
+            v-model="post.address.municipality"
+            type="municipality"
+            :options-list="municipalityList[activeProvince]"
+          />
+        </div>
+      </div>
+      <!-- <div class="mb-7 flex w-full flex-col gap-3">
+      </div> -->
+
+      <!-- Features -->
+      <div class="mb-1">
+        <div
+          class="flex flex-col gap-2 rounded-md border border-sgray-100 px-2 pb-3 pt-2 min-[420px]:px-2 min-[460px]:px-4"
+        >
+          <div class="flex w-full justify-evenly">
+            <!-- Bed Room -->
+            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
+              <span>Cuartos</span>
+              <NumberInput v-model="post.features.bed_room" />
+            </div>
+
+            <!-- Dinning Room -->
+            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
+              <span>Comedores</span>
+              <NumberInput v-model="post.features.dinning_room" />
+            </div>
+
+            <!-- Kitchen -->
+            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
+              <span>Cocinas</span>
+              <NumberInput v-model="post.features.kitchen" />
+            </div>
+
+            <!-- Garage -->
+            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
+              <span>Garages</span>
+              <NumberInput v-model="post.features.garage" />
+            </div>
+          </div>
+
+          <div class="flex w-full justify-evenly">
+            <!-- Bathroom -->
+            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
+              <span>Baños</span>
+              <NumberInput v-model="post.features.bath_room" />
+            </div>
+
+            <!-- Livingroom -->
+            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
+              <span>Salas</span>
+              <NumberInput v-model="post.features.living_room" />
+            </div>
+
+            <!-- Garden -->
+            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
+              <span>Jardínes</span>
+              <NumberInput v-model="post.features.garden" />
+            </div>
+
+            <!-- Pool -->
+            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
+              <span>Piscinas</span>
+              <NumberInput v-model="post.features.pool" />
+            </div>
+          </div>
+        </div>
+
+        <span
+          class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
+          :class="phoneError ? 'visible' : 'invisible'"
+          >Error Message</span
+        >
+      </div>
+
+      <!-- Phone -->
+      <!-- <input type="text" placeholder="Número de Teléfono (Requerido)" name="phone" /> -->
+      <div class="relative col-start-2 row-start-3 mb-1 flex flex-col">
+        <div class="flex w-full items-center gap-4">
+          <input
+            @focus="editInput('code')"
+            type="text"
+            v-model.trim="callCodeInput"
+            class="inline-block w-[70px] rounded-md border border-sgray-100 bg-transparent py-2 text-center font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
+            :class="
+              codeError
+                ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
+                : 'ring-sigma'
+            "
+            placeholder="+53"
+          />
+          <!-- Phone Number -->
+          <input
+            @focus="editInput('phone')"
+            type="tel"
+            v-model.trim="phoneInput"
+            class="grow rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
+            :class="
+              phoneError
+                ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
+                : 'ring-sigma'
+            "
+            placeholder="Número De Teléfono"
+          />
+        </div>
+        <span
+          class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
+          :class="phoneError ? 'visible' : 'invisible'"
+          >Error Message</span
+        >
+      </div>
+
+      <!-- Submit -->
+      <button
+        :disabled="disableSubmit"
+        type="submit"
+        class="flex h-[38px] w-full items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 text-center font-semibold text-sgray-100 shadow-[0_0_10px_rgba(0,_0,_0,_0.4)] transition-all duration-200 ease-out hover:bg-black hover:text-white hover:shadow-[0_2px_10px_rgba(0,_0,_0,_0.5)] disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 disabled:shadow-[0_0_10px_rgba(0,_0,_0,_0)] lg:h-10 lg:w-44 lg:text-lg"
+      >
+        Publicar
+      </button>
+    </form>
+  </div>
 </template>
