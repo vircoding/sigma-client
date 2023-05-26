@@ -1,7 +1,7 @@
 import { authorizedAPI } from "./api.js";
 
 export default {
-  insertPost(post, token) {
+  insertPost(post) {
     return authorizedAPI().post("/posts", {
       type: post.type,
       province: post.address.province,
@@ -20,5 +20,9 @@ export default {
       frequency: post.frequency,
       amount: post.amount,
     });
+  },
+
+  getUserPosts() {
+    return authorizedAPI().get("/posts");
   },
 };
