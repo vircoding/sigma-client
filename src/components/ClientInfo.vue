@@ -117,7 +117,9 @@
       </div>
       <ul class="space-y-4">
         <li v-for="(item, index) in posts" :key="index">
-          <PostTableItem :post="item" />
+          <RouterLink :to="`/post/${item._id}`">
+            <PostTableItem :post="item" />
+          </RouterLink>
         </li>
       </ul>
     </section>

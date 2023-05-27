@@ -23,5 +23,15 @@ export const usePostStore = defineStore("post", () => {
     }
   };
 
-  return { insertPost, getUserPosts };
+  const getPost = async (id) => {
+    try {
+      const res = await postServices.getPost(id);
+
+      return res.data.post;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { insertPost, getUserPosts, getPost };
 });

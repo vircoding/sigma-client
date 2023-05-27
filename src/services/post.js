@@ -1,4 +1,4 @@
-import { authorizedAPI } from "./api.js";
+import { authorizedAPI, unauthorizedAPI } from "./api.js";
 
 export default {
   insertPost(post) {
@@ -23,6 +23,10 @@ export default {
   },
 
   getUserPosts() {
-    return authorizedAPI().get("/posts");
+    return authorizedAPI().get("/posts/user");
+  },
+
+  getPost(id) {
+    return unauthorizedAPI().get(`/posts/${id}`);
   },
 };
