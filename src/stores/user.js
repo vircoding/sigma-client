@@ -111,6 +111,16 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
+  const updateClient = async (user) => {
+    try {
+      const res = await userServices.updateClient(user);
+
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getUserInfo = async () => {
     try {
       const res = await userServices.getUserInfo();
@@ -145,6 +155,7 @@ export const useUserStore = defineStore("user", () => {
     registerAgent,
     refreshToken,
     logoutUser,
+    updateClient,
     getUserInfo,
   };
 });

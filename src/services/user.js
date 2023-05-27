@@ -38,6 +38,12 @@ export default {
     return unauthorizedAPI().get("/auth/logout");
   },
 
+  updateClient(user) {
+    return authorizedAPI().patch("/auth/update/client", {
+      username: user.username,
+    });
+  },
+
   getUserInfo() {
     return authorizedAPI().get("/auth/");
   },
