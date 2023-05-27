@@ -1,4 +1,4 @@
-import { unauthorizedAPI } from "./api.js";
+import { unauthorizedAPI, authorizedAPI } from "./api.js";
 
 export default {
   loginUser(user) {
@@ -36,5 +36,9 @@ export default {
 
   logoutUser() {
     return unauthorizedAPI().get("/auth/logout");
+  },
+
+  getUserInfo() {
+    return authorizedAPI().get("/auth/");
   },
 };

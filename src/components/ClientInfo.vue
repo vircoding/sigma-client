@@ -52,8 +52,6 @@
   const getPosts = async () => {
     try {
       posts.value = await postStore.getUserPosts();
-
-      console.log(posts.value);
     } catch (error) {
       console.log(error);
     }

@@ -111,6 +111,16 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
+  const getUserInfo = async () => {
+    try {
+      const res = await userServices.getUserInfo();
+
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const $reset = () => {
     token.value = "";
     tokenExpiration.value = null;
@@ -135,5 +145,6 @@ export const useUserStore = defineStore("user", () => {
     registerAgent,
     refreshToken,
     logoutUser,
+    getUserInfo,
   };
 });
