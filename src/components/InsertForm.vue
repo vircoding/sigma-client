@@ -7,6 +7,7 @@
   import { provinceList, municipalityList } from "../utils/provinces";
   import { ref, computed, watch } from "vue";
   import parsePhoneNumber from "libphonenumber-js";
+  import router from "../router";
 
   const userStore = useUserStore();
   const postStore = usePostStore();
@@ -195,7 +196,7 @@
   const formSubmit = async () => {
     post.value.phone = formattedPhone.value;
     try {
-      await postStore.insertPost(post.value, userStore.token);
+      const res = await postStore.insertPost(post.value, userStore.token);
 
       post.value.address.province = "La Habana";
       post.value.address.municipality = "";
@@ -218,6 +219,9 @@
 
       editedInputs.value.code = false;
       editedInputs.value.phone = false;
+
+      console.log(res);
+      router.push(`/post/${res._id}`);
     } catch (error) {
       console.log(error);
     }

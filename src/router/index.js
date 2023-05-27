@@ -59,6 +59,12 @@ const routes = [
     component: () => import("../views/AccountView.vue"),
     meta: { requiresAuth: true },
   },
+  {
+    path: "/post/:id",
+    name: "post",
+    component: () => import("../views/PostView.vue"),
+    meta: { requiresAuth: true },
+  },
 ];
 
 const router = createRouter({

@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
 import postServices from "../services/post.js";
 
 export const usePostStore = defineStore("post", () => {
@@ -8,13 +7,13 @@ export const usePostStore = defineStore("post", () => {
     try {
       const res = await postServices.insertPost(post, token);
 
-      console.log(res.data);
+      return res.data;
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getUserPosts = async (token) => {
+  const getUserPosts = async () => {
     try {
       const res = await postServices.getUserPosts();
 

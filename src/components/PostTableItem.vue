@@ -73,10 +73,11 @@
     </div>
     <div class="h-[1px] w-[97%] border-t border-sgray-200"></div>
     <div class="w-full px-4">
-      <p v-if="post.description.length === 0">Sin Descripción</p>
-      <p v-else>
-        {{ post.description.slice(0, 90) }} <span v-if="post.description.length > 90">...</span>
-      </p>
+      <span v-if="post.description.length === 0" class="w-full">Sin Descripción</span>
+      <span v-else class="block w-full break-words"
+        >{{ post.description.slice(0, 90)
+        }}<span v-if="post.description.length > 90">...</span></span
+      >
     </div>
   </div>
 </template>
