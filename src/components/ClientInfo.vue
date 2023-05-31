@@ -24,9 +24,7 @@
   });
 
   const editInput = () => {
-    setTimeout(() => {
-      editedInputs.value.username = true;
-    }, 3000);
+    editedInputs.value.username = true;
   };
 
   const usernameError = computed(() => {

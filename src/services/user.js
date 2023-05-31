@@ -35,12 +35,22 @@ export default {
   },
 
   logoutUser() {
-    return unauthorizedAPI().get("/auth/logout");
+    return authorizedAPI().get("/auth/logout");
   },
 
   updateClient(user) {
     return authorizedAPI().patch("/auth/update/client", {
       username: user.username,
+    });
+  },
+
+  updateAgent(user) {
+    return authorizedAPI().patch("/auth/update/agent", {
+      firstname: user.firstname,
+      lastname: user.lastname,
+      phone: user.phone,
+      bio: user.bio,
+      public_email: user.public_email,
     });
   },
 
