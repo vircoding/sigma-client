@@ -106,49 +106,13 @@
     }
   });
 
-  const editedInputs = ref({
-    amount: false,
-    municipality: false,
-    features: false,
-    code: false,
-    phone: false,
-  });
-
-  const editInput = (input) => {
-    setTimeout(() => {
-      switch (input) {
-        case "amount":
-          editedInputs.value.amount = true;
-          break;
-        case "municipality":
-          editedInputs.value.municipality = true;
-          break;
-        case "features":
-          editedInputs.value.features = true;
-          break;
-        case "code":
-          editedInputs.value.code = true;
-          break;
-        case "phone":
-          editedInputs.value.phone = true;
-          break;
-        default:
-          break;
-      }
-    }, 2000);
-  };
-
   const amountError = computed(() => {
-    if (
-      editedInputs.value.amount &&
-      (newPost.value.amount < 1 || !Number.isInteger(newPost.value.amount))
-    )
-      return true;
+    if (newPost.value.amount < 1 || !Number.isInteger(newPost.value.amount)) return true;
     return false;
   });
 
   const municipalityError = computed(() => {
-    if (editedInputs.value.municipality && newPost.value.address.municipality === "") return true;
+    if (newPost.value.address.municipality === "") return true;
     return false;
   });
 
@@ -194,36 +158,43 @@
   });
 
   const codeError = computed(() => {
-    if (
-      editedInputs.value.code &&
-      (!/^\+\d+$/.test(callCodeInput.value) || !(callCodeInput.value.length <= 4))
-    )
-      return true;
+    if (!/^\+\d+$/.test(callCodeInput.value) || !(callCodeInput.value.length <= 4)) return true;
     return false;
   });
 
   const phoneError = computed(() => {
-    if (editedInputs.value.phone && invalidPhone.value) return true;
+    if (invalidPhone.value) return true;
     return false;
   });
 
   const disableSubmit = computed(() => {
-    if (
-      !editedInputs.value.phone ||
-      !editedInputs.value.amount ||
-      !editedInputs.value.municipality
-    ) {
-      return true;
-    }
     if (
       amountError.value ||
       municipalityError.value ||
       featuresError.value ||
       codeError.value ||
       phoneError.value
-    ) {
+    )
       return true;
-    }
+    if (
+      newPost.value.type === prevPost.value.type &&
+      newPost.value.currency === prevPost.value.currency &&
+      newPost.value.frequency === prevPost.value.frequency &&
+      newPost.value.address.province === prevPost.value.address.province &&
+      newPost.value.address.municipality === prevPost.value.address.municipality &&
+      newPost.value.features.bed_room == prevPost.value.features.bed_room &&
+      newPost.value.features.bath_room == prevPost.value.features.bath_room &&
+      newPost.value.features.dinning_room == prevPost.value.features.dinning_room &&
+      newPost.value.features.living_room == prevPost.value.features.living_room &&
+      newPost.value.features.kitchen == prevPost.value.features.kitchen &&
+      newPost.value.features.garden == prevPost.value.features.garden &&
+      newPost.value.features.garage == prevPost.value.features.garage &&
+      newPost.value.features.pool == prevPost.value.features.pool &&
+      newPost.value.amount === prevPost.value.amount &&
+      newPost.value.description === prevPost.value.description &&
+      formattedPhone.value === prevPost.value.phone
+    )
+      return true;
     return false;
   });
 
@@ -348,7 +319,6 @@
       <!-- Amount -->
       <div class="mb-1 w-full">
         <input
-          @focus="editInput('amount')"
           type="number"
           min="1"
           v-model="newPost.amount"
@@ -376,7 +346,6 @@
 
           <!-- Municipality -->
           <SelectInput
-            @focus="editInput('municipality')"
             v-model="newPost.address.municipality"
             type="municipality"
             :options-list="municipalityList[activeProvince]"
@@ -398,25 +367,25 @@
             <!-- Bed Room -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Cuartos</span>
-              <NumberInput @focus="editInput('features')" v-model="newPost.features.bed_room" />
+              <NumberInput v-model="newPost.features.bed_room" />
             </div>
 
             <!-- Dinning Room -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Comedores</span>
-              <NumberInput @focus="editInput('features')" v-model="newPost.features.dinning_room" />
+              <NumberInput v-model="newPost.features.dinning_room" />
             </div>
 
             <!-- Kitchen -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Cocinas</span>
-              <NumberInput @focus="editInput('features')" v-model="newPost.features.kitchen" />
+              <NumberInput v-model="newPost.features.kitchen" />
             </div>
 
             <!-- Garage -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Garages</span>
-              <NumberInput @focus="editInput('features')" v-model="newPost.features.garage" />
+              <NumberInput v-model="newPost.features.garage" />
             </div>
           </div>
 
@@ -424,7 +393,7 @@
             <!-- Bathroom -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Baños</span>
-              <NumberInput @focus="editInput('features')" v-model="newPost.features.bath_room" />
+              <NumberInput v-model="newPost.features.bath_room" />
             </div>
 
             <!-- Livingroom -->
@@ -436,13 +405,13 @@
             <!-- Garden -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Jardínes</span>
-              <NumberInput @focus="editInput('features')" v-model="newPost.features.garden" />
+              <NumberInput v-model="newPost.features.garden" />
             </div>
 
             <!-- Pool -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Piscinas</span>
-              <NumberInput @focus="editInput('features')" v-model="newPost.features.pool" />
+              <NumberInput v-model="newPost.features.pool" />
             </div>
           </div>
         </div>
@@ -473,7 +442,6 @@
       <div class="relative col-start-2 row-start-3 mb-1 flex flex-col">
         <div class="flex w-full items-center gap-4">
           <input
-            @focus="editInput('code')"
             type="text"
             v-model.trim="callCodeInput"
             class="inline-block w-[70px] rounded-md border border-sgray-100 bg-transparent py-2 text-center font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
@@ -486,7 +454,6 @@
           />
           <!-- Phone Number -->
           <input
-            @focus="editInput('phone')"
             type="tel"
             v-model.trim="phoneInput"
             class="grow rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
