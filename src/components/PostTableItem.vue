@@ -66,7 +66,9 @@
 
       <!-- Actions -->
       <div class="flex">
-        <img src="../assets/edit-icon.svg" />
+        <RouterLink :to="`/post/edit/${post._id}`">
+          <img src="../assets/edit-icon.svg" />
+        </RouterLink>
         <img src="../assets/share-icon.svg" />
         <img src="../assets/delete-icon.svg" />
       </div>

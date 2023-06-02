@@ -3,9 +3,9 @@ import postServices from "../services/post.js";
 
 export const usePostStore = defineStore("post", () => {
   // Actions
-  const insertPost = async (post, token) => {
+  const insertPost = async (post) => {
     try {
-      const res = await postServices.insertPost(post, token);
+      const res = await postServices.insertPost(post);
 
       return res.data;
     } catch (error) {
@@ -26,6 +26,15 @@ export const usePostStore = defineStore("post", () => {
   const getPost = async (id) => {
     try {
       const res = await postServices.getPost(id);
+      return res.data.post;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updatePost = async (id, post) => {
+    try {
+      const res = await postServices.updatePost(id, post);
 
       return res.data.post;
     } catch (error) {
@@ -33,5 +42,5 @@ export const usePostStore = defineStore("post", () => {
     }
   };
 
-  return { insertPost, getUserPosts, getPost };
+  return { insertPost, getUserPosts, getPost, updatePost };
 });

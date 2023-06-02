@@ -1,4 +1,5 @@
 <script setup>
+  import { useUserStore } from "../stores/user";
   import { usePostStore } from "../stores/post";
   import NumberInput from "./NumberInput.vue";
   import RadioInput from "./RadioInput.vue";
@@ -6,11 +7,14 @@
   import { provinceList, municipalityList } from "../utils/provinces";
   import { ref, computed, watch } from "vue";
   import parsePhoneNumber from "libphonenumber-js";
+  import { useRoute } from "vue-router";
   import router from "../router";
 
   const postStore = usePostStore();
 
-  const post = ref({
+  const route = useRoute();
+
+  const prevPost = ref({
     type: "sale",
     address: {
       province: "La Habana",
@@ -33,19 +37,51 @@
     amount: null,
   });
 
-  const activeProvince = computed(() => post.value.address.province);
-  const activeType = computed(() => post.value.type);
+  const newPost = ref({
+    type: "sale",
+    address: {
+      province: "La Habana",
+      municipality: "",
+    },
+    features: {
+      living_room: 0,
+      bed_room: 0,
+      bath_room: 0,
+      dinning_room: 0,
+      kitchen: 0,
+      garage: 0,
+      garden: 0,
+      pool: 0,
+    },
+    phone: "",
+    description: "",
+    currency: "mn",
+    frequency: "",
+    amount: null,
+  });
+
+  const provinceFirstChange = ref(true);
+  const frequencyFirstChange = ref(true);
+
+  const activeProvince = computed(() => newPost.value.address.province);
+  const activeType = computed(() => newPost.value.type);
 
   watch(activeProvince, () => {
-    post.value.address.municipality = "";
+    if (!provinceFirstChange.value) {
+      newPost.value.address.municipality = "";
+    }
+    provinceFirstChange.value = false;
   });
 
   watch(activeType, () => {
-    if (activeType.value === "rent") {
-      post.value.frequency = "monthly";
-    } else {
-      post.value.frequency = "";
+    if (!frequencyFirstChange.value) {
+      if (activeType.value === "rent") {
+        newPost.value.frequency = "monthly";
+      } else {
+        newPost.value.frequency = "";
+      }
     }
+    frequencyFirstChange.value = false;
   });
 
   const phoneInput = ref("");
@@ -105,45 +141,45 @@
   const amountError = computed(() => {
     if (
       editedInputs.value.amount &&
-      (post.value.amount < 1 || !Number.isInteger(post.value.amount))
+      (newPost.value.amount < 1 || !Number.isInteger(newPost.value.amount))
     )
       return true;
     return false;
   });
 
   const municipalityError = computed(() => {
-    if (editedInputs.value.municipality && post.value.address.municipality === "") return true;
+    if (editedInputs.value.municipality && newPost.value.address.municipality === "") return true;
     return false;
   });
 
   const featuresError = computed(() => {
     const regex = /^[0-9]+$/;
-    const bath_roomToString = post.value.features.bath_room.toString();
-    const bed_roomToString = post.value.features.bed_room.toString();
-    const dinning_roomToString = post.value.features.dinning_room.toString();
-    const garageToString = post.value.features.garage.toString();
-    const gardenToString = post.value.features.garden.toString();
-    const kitchenToString = post.value.features.kitchen.toString();
-    const living_roomToString = post.value.features.living_room.toString();
-    const poolToString = post.value.features.pool.toString();
+    const bath_roomToString = newPost.value.features.bath_room.toString();
+    const bed_roomToString = newPost.value.features.bed_room.toString();
+    const dinning_roomToString = newPost.value.features.dinning_room.toString();
+    const garageToString = newPost.value.features.garage.toString();
+    const gardenToString = newPost.value.features.garden.toString();
+    const kitchenToString = newPost.value.features.kitchen.toString();
+    const living_roomToString = newPost.value.features.living_room.toString();
+    const poolToString = newPost.value.features.pool.toString();
 
     if (
-      post.value.features.bath_room < 0 ||
-      post.value.features.bath_room > 10 ||
-      post.value.features.bed_room < 0 ||
-      post.value.features.bed_room > 10 ||
-      post.value.features.dinning_room < 0 ||
-      post.value.features.dinning_room > 10 ||
-      post.value.features.garage < 0 ||
-      post.value.features.garage > 10 ||
-      post.value.features.garden < 0 ||
-      post.value.features.garden > 10 ||
-      post.value.features.kitchen < 0 ||
-      post.value.features.kitchen > 10 ||
-      post.value.features.living_room < 0 ||
-      post.value.features.living_room > 10 ||
-      post.value.features.pool < 0 ||
-      post.value.features.pool > 10 ||
+      newPost.value.features.bath_room < 0 ||
+      newPost.value.features.bath_room > 10 ||
+      newPost.value.features.bed_room < 0 ||
+      newPost.value.features.bed_room > 10 ||
+      newPost.value.features.dinning_room < 0 ||
+      newPost.value.features.dinning_room > 10 ||
+      newPost.value.features.garage < 0 ||
+      newPost.value.features.garage > 10 ||
+      newPost.value.features.garden < 0 ||
+      newPost.value.features.garden > 10 ||
+      newPost.value.features.kitchen < 0 ||
+      newPost.value.features.kitchen > 10 ||
+      newPost.value.features.living_room < 0 ||
+      newPost.value.features.living_room > 10 ||
+      newPost.value.features.pool < 0 ||
+      newPost.value.features.pool > 10 ||
       !regex.test(bath_roomToString) ||
       !regex.test(bed_roomToString) ||
       !regex.test(dinning_roomToString) ||
@@ -191,42 +227,78 @@
     return false;
   });
 
-  const formSubmit = async () => {
-    post.value.phone = formattedPhone.value;
+  const getPost = async (id) => {
     try {
-      const res = await postStore.insertPost(post.value);
+      const res = await postStore.getPost(id);
 
-      post.value.address.province = "La Habana";
-      post.value.address.municipality = "";
-      post.value.features.living_room = 0;
-      post.value.features.bed_room = 0;
-      post.value.features.bath_room = 0;
-      post.value.features.dinning_room = 0;
-      post.value.features.kitchen = 0;
-      post.value.features.garage = 0;
-      post.value.features.garden = 0;
-      post.value.features.pool = 0;
-      post.value.phone = "";
-      post.value.description = "";
-      post.value.amount = null;
+      if (res.__t === "rent") {
+        prevPost.value.frequency = res.frequency;
+        newPost.value.frequency = res.frequency;
+        prevPost.value.amount = res.tax;
+        newPost.value.amount = res.tax;
+      } else {
+        prevPost.value.frequency = "";
+        newPost.value.frequency = "";
+        prevPost.value.amount = res.price;
+        newPost.value.amount = res.price;
+      }
 
-      phoneInput.value = "";
-      callCodeInput.value = "+53";
+      // Previous Post
+      prevPost.value.type = res.__t;
+      prevPost.value.address.province = res.address.province;
+      prevPost.value.address.municipality = res.address.municipality;
+      prevPost.value.features.bath_room = res.features.bath_room;
+      prevPost.value.features.bed_room = res.features.bed_room;
+      prevPost.value.features.dinning_room = res.features.dinning_room;
+      prevPost.value.features.garage = res.features.garage;
+      prevPost.value.features.garden = res.features.garden;
+      prevPost.value.features.kitchen = res.features.kitchen;
+      prevPost.value.features.living_room = res.features.living_room;
+      prevPost.value.features.pool = res.features.pool;
+      prevPost.value.phone = res.phone;
+      prevPost.value.description = res.description;
+      prevPost.value.currency = res.currency;
 
-      invalidPhone.value = true;
+      // New Post
+      newPost.value.type = res.__t;
+      newPost.value.address.province = res.address.province;
+      newPost.value.address.municipality = res.address.municipality;
+      newPost.value.features.bath_room = res.features.bath_room;
+      newPost.value.features.bed_room = res.features.bed_room;
+      newPost.value.features.dinning_room = res.features.dinning_room;
+      newPost.value.features.garage = res.features.garage;
+      newPost.value.features.garden = res.features.garden;
+      newPost.value.features.kitchen = res.features.kitchen;
+      newPost.value.features.living_room = res.features.living_room;
+      newPost.value.features.pool = res.features.pool;
+      newPost.value.phone = res.phone;
+      newPost.value.description = res.description;
+      newPost.value.currency = res.currency;
 
-      editedInputs.value.amount = false;
-      editedInputs.value.features = false;
-      editedInputs.value.municipality = false;
-      editedInputs.value.code = false;
-      editedInputs.value.phone = false;
+      // Code and Phone Setup
+      const parsedPhoneNumber = parsePhoneNumber(res.phone);
 
-      console.log(res);
-      router.push(`/post/${res._id}`);
+      callCodeInput.value = "+" + parsedPhoneNumber.countryCallingCode;
+      phoneInput.value = parsedPhoneNumber.nationalNumber;
+
+      console.log(newPost.value);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const formSubmit = async () => {
+    newPost.value.phone = formattedPhone.value;
+    try {
+      await postStore.updatePost(route.params.id, newPost.value);
+
+      router.push(`/post/${route.params.id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getPost(route.params.id);
 </script>
 
 <template>
@@ -250,13 +322,26 @@
     >
       <div class="mb-4">
         <!-- Type -->
-        <RadioInput v-model="post.type" type="type" />
+        <RadioInput
+          v-model="newPost.type"
+          type="type"
+          :option="prevPost.type === 'sale' ? 'first' : 'second'"
+        />
 
         <div class="flex min-[320px]:gap-0 min-[400px]:gap-2">
           <!-- Currency -->
-          <RadioInput v-model="post.currency" type="currency" />
+          <RadioInput
+            v-model="newPost.currency"
+            type="currency"
+            :option="prevPost.currency === 'mn' ? 'first' : 'second'"
+          />
           <!-- Frequency -->
-          <RadioInput v-if="post.type === 'rent'" v-model="post.frequency" type="frequency" />
+          <RadioInput
+            v-if="newPost.type === 'rent'"
+            v-model="newPost.frequency"
+            type="frequency"
+            :option="prevPost.currency === 'monthly' ? 'first' : 'second'"
+          />
         </div>
       </div>
 
@@ -266,7 +351,7 @@
           @focus="editInput('amount')"
           type="number"
           min="1"
-          v-model="post.amount"
+          v-model="newPost.amount"
           placeholder="Precio"
           class="w-full rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
         />
@@ -284,7 +369,7 @@
           class="flex flex-col gap-2 rounded-md border border-sgray-100 px-2 py-2 min-[420px]:px-2 min-[460px]:px-4"
         >
           <SelectInput
-            v-model="post.address.province"
+            v-model="newPost.address.province"
             type="province"
             :options-list="provinceList"
           />
@@ -292,7 +377,7 @@
           <!-- Municipality -->
           <SelectInput
             @focus="editInput('municipality')"
-            v-model="post.address.municipality"
+            v-model="newPost.address.municipality"
             type="municipality"
             :options-list="municipalityList[activeProvince]"
           />
@@ -313,25 +398,25 @@
             <!-- Bed Room -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Cuartos</span>
-              <NumberInput @focus="editInput('features')" v-model="post.features.bed_room" />
+              <NumberInput @focus="editInput('features')" v-model="newPost.features.bed_room" />
             </div>
 
             <!-- Dinning Room -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Comedores</span>
-              <NumberInput @focus="editInput('features')" v-model="post.features.dinning_room" />
+              <NumberInput @focus="editInput('features')" v-model="newPost.features.dinning_room" />
             </div>
 
             <!-- Kitchen -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Cocinas</span>
-              <NumberInput @focus="editInput('features')" v-model="post.features.kitchen" />
+              <NumberInput @focus="editInput('features')" v-model="newPost.features.kitchen" />
             </div>
 
             <!-- Garage -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Garages</span>
-              <NumberInput @focus="editInput('features')" v-model="post.features.garage" />
+              <NumberInput @focus="editInput('features')" v-model="newPost.features.garage" />
             </div>
           </div>
 
@@ -339,25 +424,25 @@
             <!-- Bathroom -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Baños</span>
-              <NumberInput @focus="editInput('features')" v-model="post.features.bath_room" />
+              <NumberInput @focus="editInput('features')" v-model="newPost.features.bath_room" />
             </div>
 
             <!-- Livingroom -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Salas</span>
-              <NumberInput v-model="post.features.living_room" />
+              <NumberInput v-model="newPost.features.living_room" />
             </div>
 
             <!-- Garden -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Jardínes</span>
-              <NumberInput @focus="editInput('features')" v-model="post.features.garden" />
+              <NumberInput @focus="editInput('features')" v-model="newPost.features.garden" />
             </div>
 
             <!-- Pool -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Piscinas</span>
-              <NumberInput @focus="editInput('features')" v-model="post.features.pool" />
+              <NumberInput @focus="editInput('features')" v-model="newPost.features.pool" />
             </div>
           </div>
         </div>
@@ -373,7 +458,7 @@
       <div class="col-start-1 row-span-2 row-start-4 mb-2 flex flex-col lg:mb-0">
         <textarea
           maxlength="160"
-          v-model.trim="post.description"
+          v-model.trim="newPost.description"
           class="h-[120px] resize-none rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:h-full lg:text-lg"
           placeholder="Descripción (160 carácteres máximo)"
         ></textarea>

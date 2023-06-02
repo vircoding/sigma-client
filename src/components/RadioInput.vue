@@ -1,27 +1,33 @@
 <script setup>
-  import { ref } from "vue";
+  import { ref, computed } from "vue";
   import SigmaHouseIcon from "./icons/SigmaHouseIcon.vue";
 
-  defineProps(["modelValue", "type"]);
+  const props = defineProps(["modelValue", "type"]);
   defineEmits(["update:modelValue"]);
 
-  const checkStatus = ref({
-    firstOption: true,
-    secondOption: false,
+  const saleFill = computed(() => {
+    return props.modelValue === "sale";
   });
 
-  const switchFill = (option) => {
-    if (option === "first") {
-      checkStatus.value.firstOption = true;
-      checkStatus.value.secondOption = false;
-      return;
-    }
-    if (option === "second") {
-      checkStatus.value.secondOption = true;
-      checkStatus.value.firstOption = false;
-      return;
-    }
-  };
+  const rentFill = computed(() => {
+    return props.modelValue === "rent";
+  });
+
+  const mnFill = computed(() => {
+    return props.modelValue === "mn";
+  });
+
+  const usdFill = computed(() => {
+    return props.modelValue === "usd";
+  });
+
+  const monthlyFill = computed(() => {
+    return props.modelValue === "monthly";
+  });
+
+  const dailyFill = computed(() => {
+    return props.modelValue === "daily";
+  });
 </script>
 
 <template>
@@ -29,38 +35,29 @@
     <input
       type="radio"
       id="type-sale"
-      checked
+      :checked="props.modelValue === 'sale'"
       name="type"
       value="sale"
-      :value="modelValue"
+      :value="props.modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       class="hidden"
     />
-    <label @click="switchFill('first')" for="type-sale" class="flex w-[70px] flex-row items-center">
-      <SigmaHouseIcon
-        class="h-6"
-        :class="checkStatus.firstOption ? 'fill-sgray-400' : 'fill-sgray-200'"
-      />
+    <label for="type-sale" class="flex w-[70px] flex-row items-center">
+      <SigmaHouseIcon class="h-6" :class="saleFill ? 'fill-sgray-400' : 'fill-sgray-200'" />
       <span class="font-medium text-sgray-300 lg:text-lg">Venta</span>
     </label>
     <input
       type="radio"
       id="type-rent"
+      :checked="props.modelValue === 'rent'"
       name="type"
       value="rent"
-      :value="modelValue"
+      :value="props.modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       class="hidden"
     />
-    <label
-      @click="switchFill('second')"
-      for="type-rent"
-      class="flex w-[70px] flex-row items-center"
-    >
-      <SigmaHouseIcon
-        class="h-6"
-        :class="checkStatus.secondOption ? 'fill-sgray-400' : 'fill-sgray-200'"
-      />
+    <label for="type-rent" class="flex w-[70px] flex-row items-center">
+      <SigmaHouseIcon class="h-6" :class="rentFill ? 'fill-sgray-400' : 'fill-sgray-200'" />
       <span class="font-medium text-sgray-300 lg:text-lg">Renta</span>
     </label>
   </div>
@@ -70,41 +67,29 @@
       type="radio"
       id="currency-mn"
       checked
+      :checked="props.modelValue === 'mn'"
       name="currency"
       value="mn"
-      :value="modelValue"
+      :value="props.modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       class="hidden"
     />
-    <label
-      @click="switchFill('first')"
-      for="currency-mn"
-      class="flex w-[70px] flex-row items-center"
-    >
-      <SigmaHouseIcon
-        class="h-6"
-        :class="checkStatus.firstOption ? 'fill-sgray-400' : 'fill-sgray-200'"
-      />
+    <label for="currency-mn" class="flex w-[70px] flex-row items-center">
+      <SigmaHouseIcon class="h-6" :class="mnFill ? 'fill-sgray-400' : 'fill-sgray-200'" />
       <span class="font-medium text-sgray-300 lg:text-lg">MN</span>
     </label>
     <input
       type="radio"
       id="currency-usd"
+      :checked="props.modelValue === 'usd'"
       name="currency"
       value="usd"
-      :value="modelValue"
+      :value="props.modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       class="hidden"
     />
-    <label
-      @click="switchFill('second')"
-      for="currency-usd"
-      class="flex w-[70px] flex-row items-center"
-    >
-      <SigmaHouseIcon
-        class="h-6"
-        :class="checkStatus.secondOption ? 'fill-sgray-400' : 'fill-sgray-200'"
-      />
+    <label for="currency-usd" class="flex w-[70px] flex-row items-center">
+      <SigmaHouseIcon class="h-6" :class="usdFill ? 'fill-sgray-400' : 'fill-sgray-200'" />
       <span class="font-medium text-sgray-300 lg:text-lg">USD</span>
     </label>
   </div>
@@ -113,42 +98,29 @@
     <input
       type="radio"
       id="frequency-monthly"
-      checked
+      :checked="props.modelValue === 'monthly'"
       name="frequency"
       value="monthly"
-      :value="modelValue"
+      :value="props.modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       class="hidden"
     />
-    <label
-      @click="switchFill('first')"
-      for="frequency-monthly"
-      class="flex w-[85px] flex-row items-center"
-    >
-      <SigmaHouseIcon
-        class="h-6"
-        :class="checkStatus.firstOption ? 'fill-sgray-400' : 'fill-sgray-200'"
-      />
+    <label for="frequency-monthly" class="flex w-[85px] flex-row items-center">
+      <SigmaHouseIcon class="h-6" :class="monthlyFill ? 'fill-sgray-400' : 'fill-sgray-200'" />
       <span class="font-medium text-sgray-300 lg:text-lg">Mensual</span>
     </label>
     <input
       type="radio"
       id="frequency-daily"
+      :checked="props.modelValue === 'daily'"
       name="frequency"
       value="daily"
-      :value="modelValue"
+      :value="props.modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       class="hidden"
     />
-    <label
-      @click="switchFill('second')"
-      for="frequency-daily"
-      class="flex w-[70px] flex-row items-center"
-    >
-      <SigmaHouseIcon
-        class="h-6"
-        :class="checkStatus.secondOption ? 'fill-sgray-400' : 'fill-sgray-200'"
-      />
+    <label for="frequency-daily" class="flex w-[70px] flex-row items-center">
+      <SigmaHouseIcon class="h-6" :class="dailyFill ? 'fill-sgray-400' : 'fill-sgray-200'" />
       <span class="font-medium text-sgray-300 lg:text-lg">Diario</span>
     </label>
   </div>

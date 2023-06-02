@@ -31,8 +31,6 @@
   const getPost = async (id) => {
     try {
       post.value = await postStore.getPost(id);
-
-      console.log(post.value);
     } catch (error) {
       console.log(error);
     }
