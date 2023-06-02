@@ -9,6 +9,8 @@
   const postStore = usePostStore();
   const userStore = useUserStore();
 
+  const alertVisibility = ref(false);
+
   const posts = ref([]);
 
   const prevUser = ref({
@@ -89,11 +91,50 @@
     }
   };
 
+  const selectedPostID = ref("");
+
+  const showAlert = (id) => {
+    alertVisibility.value = true;
+    selectedPostID.value = id;
+  };
+
+  const hideAlert = () => {
+    alertVisibility.value = false;
+  };
+
+  const deletePost = async () => {
+    try {
+      await postStore.deletePost(selectedPostID.value);
+
+      alertVisibility.value = false;
+      getPosts();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   getUser();
   getPosts();
 </script>
 
 <template>
+  <div
+    class="fixed left-1/2 top-1/2 w-3/4 -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-3 rounded-3xl border border-sigma bg-white p-4"
+    :class="alertVisibility ? 'flex' : 'hidden'"
+  >
+    <span>Estás seguro que deseas eliminar esta publicación?</span>
+    <div class="flex gap-4">
+      <button
+        @click.prevent="deletePost"
+        class="w-20 rounded-md bg-sigma px-4 py-1 text-center text-white"
+      >
+        Sí
+      </button>
+      <button @click.prevent="hideAlert" class="w-20 rounded-md bg-sgray-200 px-4 py-1 text-center">
+        No
+      </button>
+    </div>
+  </div>
   <div
     class="flex h-full w-full flex-col items-center max-[1023px]:px-[10%] max-[499px]:px-[5%] lg:items-start lg:justify-center lg:gap-7 lg:px-24 xl:px-32 2xl:px-44"
   >
@@ -151,7 +192,7 @@
       <ul class="space-y-4">
         <li v-for="(item, index) in posts" :key="index">
           <RouterLink :to="`/post/${item._id}`">
-            <PostTableItem :post="item" />
+            <PostTableItem :post="item" @delete-post="showAlert" />
           </RouterLink>
         </li>
       </ul>

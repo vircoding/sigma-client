@@ -1,4 +1,6 @@
 <script setup>
+  defineEmits(["deletePost"]);
+
   const props = defineProps({
     post: Object,
   });
@@ -70,7 +72,7 @@
           <img src="../assets/edit-icon.svg" />
         </RouterLink>
         <img src="../assets/share-icon.svg" />
-        <img src="../assets/delete-icon.svg" />
+        <img @click.prevent="$emit('deletePost', post._id)" src="../assets/delete-icon.svg" />
       </div>
     </div>
     <div class="h-[1px] w-[97%] border-t border-sgray-200"></div>

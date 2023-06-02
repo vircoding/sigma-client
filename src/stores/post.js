@@ -42,5 +42,13 @@ export const usePostStore = defineStore("post", () => {
     }
   };
 
-  return { insertPost, getUserPosts, getPost, updatePost };
+  const deletePost = async (id) => {
+    try {
+      await postServices.deletePost(id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { insertPost, getUserPosts, getPost, updatePost, deletePost };
 });

@@ -50,4 +50,8 @@ export default {
       amount: post.amount,
     });
   },
+
+  deletePost(id) {
+    return authorizedAPI().delete(`/posts/${id}`);
+  },
 };
