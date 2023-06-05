@@ -1,4 +1,6 @@
 <script setup>
+  import ShareButton from "./ShareButton.vue";
+
   defineEmits(["deletePost"]);
 
   const props = defineProps({
@@ -71,7 +73,8 @@
         <RouterLink :to="`/post/edit/${post._id}`">
           <img src="../assets/edit-icon.svg" />
         </RouterLink>
-        <img src="../assets/share-icon.svg" />
+        <!-- <img src="../assets/share-icon.svg" /> -->
+        <ShareButton :url="`http://localhost:5173/post/${post._id}`" />
         <img @click.prevent="$emit('deletePost', post._id)" src="../assets/delete-icon.svg" />
       </div>
     </div>

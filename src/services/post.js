@@ -30,6 +30,10 @@ export default {
     return unauthorizedAPI().get(`/posts/${id}`);
   },
 
+  visitPost(id) {
+    return unauthorizedAPI().put(`/posts/${id}`);
+  },
+
   updatePost(id, post) {
     return authorizedAPI().patch(`/posts/${id}`, {
       type: post.type,

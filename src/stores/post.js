@@ -32,6 +32,14 @@ export const usePostStore = defineStore("post", () => {
     }
   };
 
+  const visitPost = async (id) => {
+    try {
+      await postServices.visitPost(id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const updatePost = async (id, post) => {
     try {
       const res = await postServices.updatePost(id, post);
@@ -50,5 +58,5 @@ export const usePostStore = defineStore("post", () => {
     }
   };
 
-  return { insertPost, getUserPosts, getPost, updatePost, deletePost };
+  return { insertPost, getUserPosts, getPost, visitPost, updatePost, deletePost };
 });
