@@ -1,21 +1,9 @@
 <script setup>
-  import { computed } from "vue";
-
-  const props = defineProps({
-    buy: Boolean,
-    address: Object,
-    details: Object,
-    price: Number,
-    contact: String,
-  });
-
-  const bgColor = computed(() => {
-    return props.buy ? "bg-sigma" : "bg-sgreen-300";
-  });
+  const props = defineProps(["post", "color"]);
 </script>
 
 <template>
-  <div class="flex h-96 w-72 flex-col overflow-hidden rounded-2xl xl:w-80">
+  <div class="flex h-96 w-[300px] flex-col overflow-hidden rounded-2xl xl:w-80">
     <div class="relative h-3/5 w-full">
       <img
         src="../assets/card-img.jpg"
@@ -28,7 +16,7 @@
         <div class="relative mx-auto h-20 w-20">
           <div
             class="absolute top-1/2 flex h-full w-full items-center justify-center rounded-full"
-            :class="bgColor"
+            :class="props.color"
           >
             <img
               src="../assets/full-vertical-logo.svg"
@@ -37,27 +25,36 @@
             />
           </div>
         </div>
-        <div class="flex h-48 w-28 flex-col px-3 py-5 text-center text-white" :class="bgColor">
+        <div class="flex h-48 w-28 flex-col px-3 py-5 text-center text-white" :class="props.color">
           <div class="mt-8 flex flex-grow flex-col items-center font-poppins font-extrabold">
             <span class="text-3xl leading-none">CASA</span>
             <span
               class="text-sm leading-none tracking-wider"
-              :class="buy ? 'text-sblue-100' : 'text-sgreen-100'"
-              >EN {{ buy ? "VENTA" : "RENTA" }}</span
+              :class="props.post.type === 'sale' ? 'text-sblue-100' : 'text-sgreen-100'"
+              >EN {{ props.post.type === "sale" ? "VENTA" : "RENTA" }}</span
             >
           </div>
-          <div
-            class="font-bahnschrift scoped-font-condensed flex flex-col items-center text-xl font-extralight"
-          >
-            <span class="leading-none">Precio</span>
-            <span>$ {{ price }}</span>
+          <div class="scoped-font-condensed flex flex-col items-center text-xl font-extralight">
+            <div v-if="props.post.type === 'sale'" class="flex flex-col">
+              <span>{{ props.post.amount }}</span>
+              <span class="text-base uppercase">{{ props.post.currency }}</span>
+            </div>
+            <div v-else class="flex flex-col">
+              <span>{{ props.post.amount }}</span>
+              <span class="text-base uppercase"
+                >{{ props.post.currency }}
+                <span class="text-base lowercase"
+                  >/ {{ props.post.frequency === "daily" ? "día" : "mes" }}</span
+                ></span
+              >
+            </div>
           </div>
         </div>
       </div>
-      <div class="absolute right-0 flex h-full w-44 flex-col px-3 pb-4 pt-2 xl:w-52">
+      <div class="absolute right-0 flex h-full w-[188px] flex-col px-2 pb-4 pt-2 xl:w-52">
         <div
-          class="flex items-center gap-1 font-poppins font-extrabold"
-          :class="buy ? 'text-sigma' : 'text-sgreen-300'"
+          class="flex items-center gap-1 pl-1 font-poppins font-extrabold"
+          :class="props.post.type === 'sale' ? 'text-sigma' : 'text-sgreen-300'"
         >
           <h3 class="text-2xl tracking-wide">SOBRE</h3>
           <div class="text-xs leading-none">
@@ -66,19 +63,19 @@
           </div>
         </div>
         <div
-          class="font-bahnschrift scoped-font-condensed scoped-font-10px mb-3 text-xs font-semibold leading-none text-sgray-200"
+          class="scoped-font-condensed scoped-font-10px flex h-6 items-center pl-1 text-xs font-semibold leading-none text-sgray-200"
         >
-          <span class="">{{ address.street }} #{{ address.number }}.</span>
-          <br />
-          <span>{{ address.residence }}. {{ address.province }}.</span>
+          <span class="relative -top-[1px]"
+            >{{ props.post.address.municipality }}, {{ props.post.address.province }}.</span
+          >
         </div>
-        <div class="font-bahnschrift grid grow grid-cols-4 grid-rows-2 gap-y-2 font-semibold">
+        <div class="grid grow grid-cols-4 grid-rows-2 gap-y-2 font-semibold">
           <div
-            v-for="(value, index) in details"
-            :key="index"
+            v-for="(value, property) in props.post.features"
+            :key="property"
             class="scoped-gap flex h-5 place-self-center"
           >
-            <div class="h-5 w-5 rounded-md" :class="value > 0 ? bgColor : 'bg-sgray-100'"></div>
+            <div class="h-5 w-5 rounded-md" :class="value > 0 ? props.color : 'bg-sgray-100'"></div>
             <span
               class="scoped-font-condensed"
               :class="value > 0 ? 'text-sgray-300' : 'text-sgray-100'"
