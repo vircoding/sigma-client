@@ -1,13 +1,15 @@
 <script setup>
-  import { computed, ref } from "vue";
+  import { computed, ref, onMounted } from "vue";
   import router from "../router";
   import { useUserStore } from "../stores/user.js";
   import { usePostStore } from "../stores/post";
+  import { useLayoutStore } from "../stores/layout";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
   import PostTableItem from "./PostTableItem.vue";
 
   const postStore = usePostStore();
   const userStore = useUserStore();
+  const layoutStore = useLayoutStore()
 
   const alertVisibility = ref(false);
 
@@ -113,8 +115,17 @@
     }
   };
 
-  getUser();
-  getPosts();
+  onMounted(async () => {
+    try {
+      layoutStore.unhideLoading();
+      await getUser();
+      await getPosts();
+      layoutStore.hideLoading();
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
 </script>
 
 <template>

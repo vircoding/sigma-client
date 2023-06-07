@@ -1,9 +1,12 @@
 <script setup>
-  import { ref } from "vue";
+  import { ref, onMounted } from "vue";
   import { useRoute } from "vue-router";
   import { usePostStore } from "../stores/post";
+  import { useLayoutStore } from "../stores/layout";
 
   const postStore = usePostStore();
+  const layoutStore = useLayoutStore();
+
   const route = useRoute();
 
   const post = ref({
@@ -37,7 +40,15 @@
     }
   };
 
-  getPost(route.params.id);
+  onMounted(async () => {
+    try {
+      layoutStore.unhideLoading();
+      await getPost(route.params.id);
+      layoutStore.hideLoading();
+    } catch (error) {
+      console.log(error);
+    }
+  });
 </script>
 
 <template>

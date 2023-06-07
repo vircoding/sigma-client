@@ -1,12 +1,14 @@
 <script setup>
-  import { ref } from "vue";
+  import { ref, onMounted } from "vue";
   import { useUserStore } from "../stores/user.js";
+  import { useLayoutStore } from "../stores/layout";
   import NavBar from "../components/NavBar.vue";
   import ClientInfo from "../components/ClientInfo.vue";
   import AgentInfo from "../components/AgentInfo.vue";
   import FooterSection from "../components/FooterSection.vue";
 
   const userStore = useUserStore();
+  const layoutStore = useLayoutStore();
 
   const accountType = ref("");
 
@@ -18,6 +20,16 @@
       console.log(error);
     }
   };
+
+  // onMounted(async () => {
+  //   try {
+  //     layoutStore.unhideLoading();
+  //     await loadInfo();
+  //     layoutStore.hideLoading();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // });
 
   loadInfo();
 </script>

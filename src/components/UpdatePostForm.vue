@@ -1,16 +1,18 @@
 <script setup>
   import { useUserStore } from "../stores/user";
   import { usePostStore } from "../stores/post";
+  import { useLayoutStore } from "../stores/layout"
   import NumberInput from "./NumberInput.vue";
   import RadioInput from "./RadioInput.vue";
   import SelectInput from "./SelectInput.vue";
   import { provinceList, municipalityList } from "../utils/provinces";
-  import { ref, computed, watch } from "vue";
+  import { ref, computed, watch, onMounted } from "vue";
   import parsePhoneNumber from "libphonenumber-js";
   import { useRoute } from "vue-router";
   import router from "../router";
 
   const postStore = usePostStore();
+  const layoutStore = useLayoutStore()
 
   const route = useRoute();
 
@@ -269,7 +271,16 @@
     }
   };
 
-  getPost(route.params.id);
+  onMounted(async () => {
+    try {
+      layoutStore.unhideLoading();
+      await getPost(route.params.id);
+      layoutStore.hideLoading();
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
 </script>
 
 <template>

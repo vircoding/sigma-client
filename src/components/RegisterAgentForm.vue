@@ -213,7 +213,7 @@
     }
   };
 
-  getCountries();
+  // getCountries();
 </script>
 
 <template>

@@ -1,11 +1,25 @@
 <script setup>
-  import { computed, ref, watch } from "vue";
+  import { computed, onMounted, ref, watch } from "vue";
   import router from "../router";
   import { useUserStore } from "../stores/user.js";
   import { usePostStore } from "../stores/post";
+  import { useLayoutStore } from "../stores/layout";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
   import PostTableItem from "./PostTableItem.vue";
   import parsePhoneNumber from "libphonenumber-js";
+
+  const layoutStore = useLayoutStore();
+
+  onMounted(async () => {
+    try {
+      layoutStore.unhideLoading();
+      await getUser();
+      await getPosts();
+      layoutStore.hideLoading();
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
   const postStore = usePostStore();
   const userStore = useUserStore();
@@ -226,9 +240,6 @@
       console.log(error);
     }
   };
-
-  getUser();
-  getPosts();
 </script>
 
 <template>

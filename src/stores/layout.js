@@ -5,6 +5,8 @@ export const useLayoutStore = defineStore("layout", () => {
   // State
   const sideMenuVisibility = ref(false);
 
+  const isLoading = ref(false);
+
   // Actions
   const unhideSideMenu = () => {
     sideMenuVisibility.value = true;
@@ -14,5 +16,20 @@ export const useLayoutStore = defineStore("layout", () => {
     sideMenuVisibility.value = false;
   };
 
-  return { sideMenuVisibility, unhideSideMenu, hideSideMenu };
+  const unhideLoading = () => {
+    isLoading.value = true;
+  };
+
+  const hideLoading = () => {
+    isLoading.value = false;
+  };
+
+  return {
+    sideMenuVisibility,
+    isLoading,
+    unhideSideMenu,
+    hideSideMenu,
+    unhideLoading,
+    hideLoading,
+  };
 });
