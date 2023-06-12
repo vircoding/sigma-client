@@ -91,15 +91,9 @@
   </div>
   <div class="flex flex-col items-center justify-center py-20">
     <div class="flex flex-col items-center justify-center gap-8 lg:flex-row">
-      <!-- <PostCard :post="salePost" :color="salePost.type === 'sale' ? 'bg-sigma' : 'bg-sgreen-300'" />
-      <PostCard :post="rentPost" :color="rentPost.type === 'sale' ? 'bg-sigma' : 'bg-sgreen-300'" />
-      <PostCard :post="salePost" :color="salePost.type === 'sale' ? 'bg-sigma' : 'bg-sgreen-300'" /> -->
-      <PostCard
-        v-for="(item, index) in posts"
-        :key="index"
-        :post="item"
-        :color="item.__t === 'sale' ? 'bg-sigma' : 'bg-sgreen-300'"
-      />
+      <RouterLink :to="`/post/${item._id}`" v-for="(item, index) in posts" :key="index">
+        <PostCard :post="item" :color="item.__t === 'sale' ? 'bg-sigma' : 'bg-sgreen-300'" />
+      </RouterLink>
     </div>
     <RouterLink class="nav-link mt-14 block text-xl font-extrabold" to="/find">Ver Más</RouterLink>
   </div>
