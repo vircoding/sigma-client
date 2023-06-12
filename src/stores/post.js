@@ -58,5 +58,34 @@ export const usePostStore = defineStore("post", () => {
     }
   };
 
-  return { insertPost, getUserPosts, getPost, visitPost, updatePost, deletePost };
+  const getPopularSales = async () => {
+    try {
+      const res = await postServices.getPopularSales();
+
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getPopularRents = async () => {
+    try {
+      const res = await postServices.getPopularRents();
+
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return {
+    insertPost,
+    getUserPosts,
+    getPost,
+    visitPost,
+    updatePost,
+    deletePost,
+    getPopularSales,
+    getPopularRents,
+  };
 });

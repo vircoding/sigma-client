@@ -30,17 +30,17 @@
             <span class="text-3xl leading-none">CASA</span>
             <span
               class="text-sm leading-none tracking-wider"
-              :class="props.post.type === 'sale' ? 'text-sblue-100' : 'text-sgreen-100'"
-              >EN {{ props.post.type === "sale" ? "VENTA" : "RENTA" }}</span
+              :class="props.post.__t === 'sale' ? 'text-sblue-100' : 'text-sgreen-100'"
+              >EN {{ props.post.__t === "sale" ? "VENTA" : "RENTA" }}</span
             >
           </div>
           <div class="scoped-font-condensed flex flex-col items-center text-xl font-extralight">
-            <div v-if="props.post.type === 'sale'" class="flex flex-col">
-              <span>{{ props.post.amount }}</span>
+            <div v-if="props.post.__t === 'sale'" class="flex flex-col">
+              <span>{{ props.post.price }}</span>
               <span class="text-base uppercase">{{ props.post.currency }}</span>
             </div>
             <div v-else class="flex flex-col">
-              <span>{{ props.post.amount }}</span>
+              <span>{{ props.post.tax }}</span>
               <span class="text-base uppercase"
                 >{{ props.post.currency }}
                 <span class="text-base lowercase"
@@ -54,7 +54,7 @@
       <div class="absolute right-0 flex h-full w-[188px] flex-col px-2 pb-4 pt-2 xl:w-52">
         <div
           class="flex items-center gap-1 pl-1 font-poppins font-extrabold"
-          :class="props.post.type === 'sale' ? 'text-sigma' : 'text-sgreen-300'"
+          :class="props.post.__t === 'sale' ? 'text-sigma' : 'text-sgreen-300'"
         >
           <h3 class="text-2xl tracking-wide">SOBRE</h3>
           <div class="text-xs leading-none">
@@ -63,7 +63,7 @@
           </div>
         </div>
         <div
-          class="scoped-font-condensed scoped-font-10px flex h-6 items-center pl-1 text-xs font-semibold leading-none text-sgray-200"
+          class="scoped-font-condensed scoped-font-10px flex h-8 items-center pl-1 text-xs font-semibold leading-none text-sgray-200"
         >
           <span class="relative -top-[1px]"
             >{{ props.post.address.municipality }}, {{ props.post.address.province }}.</span

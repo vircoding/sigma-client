@@ -58,4 +58,12 @@ export default {
   deletePost(id) {
     return authorizedAPI().delete(`/posts/${id}`);
   },
+
+  getPopularSales() {
+    return unauthorizedAPI().get("/posts/sales");
+  },
+
+  getPopularRents() {
+    return unauthorizedAPI().get("/posts/rents");
+  },
 };
