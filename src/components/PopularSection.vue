@@ -22,7 +22,6 @@
     }
 
     posts.value.forEach((item) => delete item.features._id);
-    console.log(posts.value);
   };
 
   onMounted(async () => {

@@ -74,6 +74,7 @@
     <h1>Piscinas: {{ post.features.pool }}</h1>
     <h1 class="break-words">Descripción: {{ post.description }}</h1>
     <h1>Teléfono a contactar: {{ post.phone }}</h1>
+    <h1>Visitas: {{ post.visits_count }}</h1>
   </div>
 </template>
 
