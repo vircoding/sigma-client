@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="flex h-full w-full flex-col items-center justify-center">
+  <div class="flex h-full w-full flex-col items-center justify-center bg-background">
     <SigmaLoadingAnimation class="w-1/2 fill-sigma" />
   </div>
 </template>

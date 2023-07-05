@@ -10,28 +10,39 @@
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
 
-  const accountType = ref("");
+  const data = ref({});
 
-  const loadInfo = async () => {
+  const getData = async () => {
     try {
-      const res = await userStore.getUserInfo();
-      accountType.value = res.__t;
+      data.value = await userStore.getAccountViewData();
     } catch (error) {
       console.log(error);
     }
   };
 
-  // onMounted(async () => {
-  //   try {
-  //     layoutStore.unhideLoading();
-  //     await loadInfo();
-  //     layoutStore.hideLoading();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // });
+  const reloadData = async () => {
+    try {
+      layoutStore.unhideLoading();
+      await getData();
+      layoutStore.hideLoading();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  loadInfo();
+  // getData();
+
+  onMounted(async () => {
+    try {
+      layoutStore.unhideLoading();
+      await getData();
+      layoutStore.hideLoading();
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  // loadInfo();
 </script>
 
 <template>
@@ -43,8 +54,13 @@
         </div>
       </header>
       <main class="mb-[5px] grow bg-background lg:mb-0">
-        <AgentInfo v-if="accountType === 'agent'" />
-        <ClientInfo v-else-if="accountType === 'client'" />
+        <AgentInfo v-if="data.user?.__t === 'agent'" />
+        <ClientInfo
+          v-else-if="data.user?.__t === 'client'"
+          @reload="reloadData"
+          :user="data.user"
+          :posts="data.posts"
+        />
       </main>
     </div>
     <footer class="lg:mb-2.5">

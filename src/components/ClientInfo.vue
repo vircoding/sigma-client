@@ -7,47 +7,31 @@
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
   import PostTableItem from "./PostTableItem.vue";
 
+  const emit = defineEmits(["reload"]);
+
+  const props = defineProps(["user", "posts"]);
+
   const postStore = usePostStore();
   const userStore = useUserStore();
-  const layoutStore = useLayoutStore()
 
   const alertVisibility = ref(false);
 
-  const posts = ref([]);
-
-  const prevUser = ref({
-    username: "",
-  });
+  const posts = computed(() => props.posts);
 
   const newUser = ref({
-    username: "",
+    username: props.user.username,
   });
-
-  const editedInputs = ref({
-    username: false,
-  });
-
-  const editInput = () => {
-    editedInputs.value.username = true;
-  };
 
   const usernameError = computed(() => {
-    if (
-      editedInputs.value.username &&
-      !(newUser.value.username.length >= 3 && newUser.value.username.length <= 20)
-    )
-      return true;
+    if (!(newUser.value.username.length >= 3 && newUser.value.username.length <= 20)) return true;
     return false;
   });
 
   const disableSubmit = computed(() => {
-    if (!editedInputs.value.username) {
-      return true;
-    }
     if (usernameError.value) {
       return true;
     }
-    if (newUser.value.username === prevUser.value.username) return true;
+    if (newUser.value.username === props.user.username) return true;
     return false;
   });
 
@@ -61,33 +45,10 @@
     }
   };
 
-  const getPosts = async () => {
-    try {
-      posts.value = await postStore.getUserPosts();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getUser = async () => {
-    try {
-      const res = await userStore.getUserInfo();
-
-      // Previous User
-      prevUser.value.username = res.username;
-
-      // New User
-      newUser.value.username = res.username;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const formSubmit = async () => {
     try {
       await userStore.updateClient(newUser.value);
-
-      await getUser();
+      emit("reload");
     } catch (error) {
       console.log(error);
     }
@@ -114,18 +75,6 @@
       console.log(error);
     }
   };
-
-  onMounted(async () => {
-    try {
-      layoutStore.unhideLoading();
-      await getUser();
-      await getPosts();
-      layoutStore.hideLoading();
-    } catch (error) {
-      console.log(error);
-    }
-  });
-
 </script>
 
 <template>
@@ -160,7 +109,6 @@
       <!-- Username -->
       <div class="mb-1 w-full">
         <input
-          @focus="editInput"
           type="text"
           v-model.trim="newUser.username"
           class="w-full rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"

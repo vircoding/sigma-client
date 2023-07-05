@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, onMounted, ref } from "vue";
 import userServices from "../services/user.js";
+import postServices from "../services/post.js";
 
 export const useUserStore = defineStore("user", () => {
   // State
@@ -141,6 +142,22 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
+  const getAccountViewData = async () => {
+    try {
+      const userInfo = await userServices.getUserInfo();
+      const postsInfo = await postServices.getUserPosts();
+
+      const res = {
+        user: userInfo.data,
+        posts: postsInfo.data.posts,
+      };
+
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const $reset = () => {
     token.value = "";
     tokenExpiration.value = null;
@@ -168,5 +185,6 @@ export const useUserStore = defineStore("user", () => {
     updateClient,
     updateAgent,
     getUserInfo,
+    getAccountViewData,
   };
 });
