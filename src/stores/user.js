@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { computed, onMounted, ref } from "vue";
+import router from "../router";
 import userServices from "../services/user.js";
 import postServices from "../services/post.js";
 
@@ -7,6 +8,7 @@ export const useUserStore = defineStore("user", () => {
   // State
   const token = ref("");
   const tokenExpiration = ref(null);
+  const role = ref("reader");
 
   // Getters
   const isLoggedIn = computed(() => !!token.value);
@@ -16,6 +18,7 @@ export const useUserStore = defineStore("user", () => {
     try {
       const res = await userServices.loginUser(user);
 
+      role.value = res.data.role;
       token.value = res.data.token;
       tokenExpiration.value = new Date();
       tokenExpiration.value.setSeconds(tokenExpiration.value.getSeconds() + res.data.expiresIn);
@@ -102,6 +105,7 @@ export const useUserStore = defineStore("user", () => {
   const logoutUser = async () => {
     try {
       await userServices.logoutUser();
+      router.push("/");
       $reset();
     } catch (error) {
       if (error.response.status === 500) {
@@ -161,6 +165,7 @@ export const useUserStore = defineStore("user", () => {
   const $reset = () => {
     token.value = "";
     tokenExpiration.value = null;
+    role.value = "reader";
   };
 
   // Extra Functions
@@ -176,6 +181,7 @@ export const useUserStore = defineStore("user", () => {
   return {
     token,
     tokenExpiration,
+    role,
     isLoggedIn,
     loginUser,
     registerClient,

@@ -5,6 +5,8 @@
 </script>
 
 <template>
+  <!-- TODO: Para agregar boton de llamada fijado abajo del todo -->
+  <!-- <a href="tel:+5354017747">Llamarme</a> -->
   <div class="lg:px-2.5">
     <div class="flex h-screen flex-col lg:py-2.5">
       <header>

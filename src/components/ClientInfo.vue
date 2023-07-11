@@ -2,8 +2,6 @@
   import { computed, ref, onMounted } from "vue";
   import router from "../router";
   import { useUserStore } from "../stores/user.js";
-  import { usePostStore } from "../stores/post";
-  import { useLayoutStore } from "../stores/layout";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
   import PostTableItem from "./PostTableItem.vue";
 
@@ -11,7 +9,6 @@
 
   const props = defineProps(["user", "posts"]);
 
-  const postStore = usePostStore();
   const userStore = useUserStore();
 
   const alertVisibility = ref(false);
@@ -39,7 +36,6 @@
     const userStore = useUserStore();
     try {
       await userStore.logoutUser();
-      router.push("/");
     } catch (error) {
       console.log(error);
     }
@@ -149,7 +145,7 @@
         <div class="h-[1px] grow border-t border-black"></div>
       </div>
       <ul class="space-y-4">
-        <li v-for="(item, index) in posts" :key="index">
+        <li v-for="(item, index) in props.posts" :key="index">
           <RouterLink :to="`/post/${item._id}`">
             <PostTableItem :post="item" @delete-post="showAlert" />
           </RouterLink>

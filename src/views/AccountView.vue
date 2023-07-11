@@ -30,8 +30,6 @@
     }
   };
 
-  // getData();
-
   onMounted(async () => {
     try {
       layoutStore.unhideLoading();
@@ -41,8 +39,6 @@
       console.log(error);
     }
   });
-
-  // loadInfo();
 </script>
 
 <template>
@@ -54,7 +50,12 @@
         </div>
       </header>
       <main class="mb-[5px] grow bg-background lg:mb-0">
-        <AgentInfo v-if="data.user?.__t === 'agent'" />
+        <AgentInfo
+          v-if="data.user?.__t === 'agent'"
+          @reload="reloadData"
+          :user="data.user"
+          :posts="data.posts"
+        />
         <ClientInfo
           v-else-if="data.user?.__t === 'client'"
           @reload="reloadData"

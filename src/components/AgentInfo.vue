@@ -2,148 +2,77 @@
   import { computed, onMounted, ref, watch } from "vue";
   import router from "../router";
   import { useUserStore } from "../stores/user.js";
-  import { usePostStore } from "../stores/post";
-  import { useLayoutStore } from "../stores/layout";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
   import PostTableItem from "./PostTableItem.vue";
   import parsePhoneNumber from "libphonenumber-js";
 
-  const layoutStore = useLayoutStore();
+  const emit = defineEmits(["reload"]);
 
-  onMounted(async () => {
-    try {
-      layoutStore.unhideLoading();
-      await getUser();
-      await getPosts();
-      layoutStore.hideLoading();
-    } catch (error) {
-      console.log(error);
-    }
-  });
+  const props = defineProps(["user", "posts"]);
 
-  const postStore = usePostStore();
   const userStore = useUserStore();
 
   const alertVisibility = ref(false);
 
   const posts = ref([]);
 
-  const prevUser = ref({
-    firstname: "",
-    lastname: "",
-    phone: "",
-    public_email: "",
-    bio: "",
-  });
+  const parsedPhoneNumber = parsePhoneNumber(props.user.phone);
+  const phoneInput = ref(parsedPhoneNumber.nationalNumber);
+  const callCodeInput = ref(`+${parsedPhoneNumber.countryCallingCode}`);
 
   const newUser = ref({
-    firstname: "",
-    lastname: "",
-    phone: "",
-    public_email: "",
-    bio: "",
+    firstname: props.user.firstname,
+    lastname: props.user.lastname,
+    public_email: props.user.public_email,
+    bio: props.user.bio,
   });
-
-  const phoneInput = ref("");
-  const callCodeInput = ref("+53");
 
   const formattedPhone = computed(() => {
     return callCodeInput.value + phoneInput.value;
   });
 
-  const invalidPhone = ref(true);
+  const invalidPhone = ref(false);
 
-  watch(phoneInput, () => {
+  watch(formattedPhone, () => {
     try {
       const parsedPhoneNumber = parsePhoneNumber(formattedPhone.value);
       if (!parsedPhoneNumber.isValid()) {
-        throw new Error("Non-valid Phone Number");
+        invalidPhone.value = true;
       } else {
         invalidPhone.value = false;
       }
     } catch (error) {
-      invalidPhone.value = true;
+      console.log(error);
     }
   });
-
-  const editedInputs = ref({
-    firstname: false,
-    lastname: false,
-    code: false,
-    phone: false,
-    public_email: false,
-    bio: false,
-  });
-
-  const editInput = (input) => {
-    switch (input) {
-      case "firstname":
-        editedInputs.value.firstname = true;
-        break;
-      case "lastname":
-        editedInputs.value.lastname = true;
-        break;
-      case "code":
-        editedInputs.value.code = true;
-        break;
-      case "phone":
-        editedInputs.value.phone = true;
-        break;
-      case "public_email":
-        editedInputs.value.public_email = true;
-        break;
-      case "bio":
-        editedInputs.value.public_email = true;
-        break;
-      default:
-        break;
-    }
-  };
 
   const firstnameError = computed(() => {
-    if (editedInputs.value.firstname && !(newUser.value.firstname.length >= 1)) return true;
+    if (!(newUser.value.firstname.length >= 1)) return true;
     return false;
   });
 
   const lastnameError = computed(() => {
-    if (editedInputs.value.lastname && !(newUser.value.lastname.length >= 1)) return true;
+    if (!(newUser.value.lastname.length >= 1)) return true;
     return false;
   });
 
   const codeError = computed(() => {
-    if (
-      editedInputs.value.code &&
-      (!/^\+\d+$/.test(callCodeInput.value) || !(callCodeInput.value.length <= 4))
-    )
-      return true;
+    if (!/^\+\d+$/.test(callCodeInput.value) || !(callCodeInput.value.length <= 4)) return true;
     return false;
   });
 
   const phoneError = computed(() => {
-    if (editedInputs.value.phone && invalidPhone.value) return true;
+    if (invalidPhone.value) return true;
     return false;
   });
 
   const public_emailError = computed(() => {
-    if (
-      editedInputs.value.public_email &&
-      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(newUser.value.public_email)
-    )
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(newUser.value.public_email))
       return true;
     return false;
   });
 
   const disableSubmit = computed(() => {
-    if (
-      !editedInputs.value.firstname &&
-      !editedInputs.value.lastname &&
-      !editedInputs.value.code &&
-      !editedInputs.value.phone &&
-      !editedInputs.value.public_email &&
-      !editedInputs.value.bio
-    ) {
-      return true;
-    }
     if (
       firstnameError.value ||
       lastnameError.value ||
@@ -153,11 +82,11 @@
     )
       return true;
     if (
-      newUser.value.firstname === prevUser.value.firstname &&
-      newUser.value.lastname === prevUser.value.lastname &&
-      formattedPhone.value === prevUser.value.phone &&
-      newUser.value.public_email === prevUser.value.public_email &&
-      newUser.value.bio === prevUser.value.bio
+      newUser.value.firstname === props.user.firstname &&
+      newUser.value.lastname === props.user.lastname &&
+      formattedPhone.value === props.user.phone &&
+      newUser.value.public_email === props.user.public_email &&
+      newUser.value.bio === props.user.bio
     )
       return true;
     return false;
@@ -166,7 +95,6 @@
   const logoutEvent = async () => {
     try {
       await userStore.logoutUser();
-      router.push("/");
     } catch (error) {
       console.log(error);
     }
@@ -180,40 +108,11 @@
     }
   };
 
-  const getUser = async () => {
-    try {
-      const res = await userStore.getUserInfo();
-
-      // Previous User
-      prevUser.value.firstname = res.firstname;
-      prevUser.value.lastname = res.lastname;
-      prevUser.value.phone = res.phone;
-      prevUser.value.public_email = res.public_email;
-      prevUser.value.bio = res.bio;
-
-      // New User
-      newUser.value.firstname = res.firstname;
-      newUser.value.lastname = res.lastname;
-      newUser.value.phone = res.phone;
-      newUser.value.public_email = res.public_email;
-      newUser.value.bio = res.bio;
-
-      // Code and Phone Setup
-      const parsedPhoneNumber = parsePhoneNumber(res.phone);
-
-      callCodeInput.value = "+" + parsedPhoneNumber.countryCallingCode;
-      phoneInput.value = parsedPhoneNumber.nationalNumber;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const formSubmit = async () => {
     newUser.value.phone = formattedPhone.value;
     try {
       await userStore.updateAgent(newUser.value);
-
-      await getUser();
+      emit("reload");
     } catch (error) {
       console.log(error);
     }
@@ -274,7 +173,6 @@
       <!-- First Name -->
       <div class="col-start-2 row-start-1 mb-2 flex flex-col lg:mb-0">
         <input
-          @focus="editInput('firstname')"
           type="text"
           v-model.trim="newUser.firstname"
           class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
@@ -294,7 +192,6 @@
       <!-- Last Name -->
       <div class="col-start-2 row-start-2 mb-2 flex flex-col lg:mb-0">
         <input
-          @focus="editInput('lastname')"
           type="text"
           v-model.trim="newUser.lastname"
           class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
@@ -315,7 +212,6 @@
       <div class="relative col-start-2 row-start-3 mb-2 flex flex-col lg:mb-0">
         <div class="flex w-full items-center gap-2 lg:gap-4">
           <input
-            @focus="editInput('code')"
             type="text"
             v-model.trim="callCodeInput"
             class="inline-block w-[70px] rounded-md border border-sgray-100 bg-transparent py-2 text-center font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
@@ -328,7 +224,6 @@
           />
           <!-- Phone Number -->
           <input
-            @focus="editInput('phone')"
             type="tel"
             v-model.trim="phoneInput"
             class="grow rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
@@ -349,7 +244,6 @@
       <!-- Public Email -->
       <div class="col-start-2 row-start-4 mb-2 flex flex-col lg:mb-0">
         <input
-          @focus="editInput('public_email')"
           type="email"
           v-model.trim="newUser.public_email"
           class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
@@ -369,7 +263,6 @@
       <!-- Bio -->
       <div class="col-start-1 row-span-2 row-start-4 mb-2 flex flex-col lg:mb-0">
         <textarea
-          @focus="editInput('phone')"
           maxlength="160"
           v-model.trim="newUser.bio"
           class="h-[120px] resize-none rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:h-full lg:text-lg"
@@ -405,7 +298,7 @@
         <div class="h-[1px] grow border-t border-black"></div>
       </div>
       <ul class="space-y-4">
-        <li v-for="(item, index) in posts" :key="index">
+        <li v-for="(item, index) in props.posts" :key="index">
           <RouterLink :to="`/post/${item._id}`">
             <PostTableItem :post="item" @delete-post="showAlert" />
           </RouterLink>

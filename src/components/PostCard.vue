@@ -3,7 +3,9 @@
 </script>
 
 <template>
-  <div class="flex h-96 w-[300px] flex-col overflow-hidden rounded-2xl xl:w-80">
+  <div
+    class="flex h-96 w-[300px] flex-col overflow-hidden rounded-2xl min-[420px]:w-[350px] xl:w-80"
+  >
     <div class="relative h-3/5 w-full">
       <img
         src="../assets/card-img.jpg"
