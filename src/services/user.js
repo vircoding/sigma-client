@@ -54,7 +54,7 @@ export default {
     });
   },
 
-  getUserInfo() {
+  getSessionInfo() {
     return authorizedAPI().get("/auth/");
   },
 };

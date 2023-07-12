@@ -15,6 +15,8 @@ export const useUserStore = defineStore("user", () => {
     },
   });
 
+  const firstLoadState = ref(false);
+
   const token = ref("");
   const tokenExpiration = ref(null);
   const role = ref("reader");
@@ -26,6 +28,14 @@ export const useUserStore = defineStore("user", () => {
   const loginUser = async (user) => {
     try {
       const res = await userServices.loginUser(user);
+
+      localStorage.setItem(
+        "activeSession",
+        JSON.stringify({
+          expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000,
+        })
+      );
+
       userState.value.credentials.token = res.data.credentials.token;
       userState.value.credentials.tokenExpiration = new Date();
       userState.value.credentials.tokenExpiration.setSeconds(
@@ -33,10 +43,6 @@ export const useUserStore = defineStore("user", () => {
       );
       userState.value.credentials.role = res.data.credentials.role;
       userState.value.info = res.data.info;
-
-      setInterval(() => {
-        refreshToken();
-      }, 2 * 60 * 1000); // 2 Minutes
 
       router.push("/");
     } catch (error) {
@@ -49,12 +55,20 @@ export const useUserStore = defineStore("user", () => {
       } else {
         throw new Error("Untracked Error");
       }
+      console.log(error);
     }
   };
 
   const registerClient = async (user) => {
     try {
       const res = await userServices.registerClient(user);
+
+      localStorage.setItem(
+        "activeSession",
+        JSON.stringify({
+          expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000,
+        })
+      );
 
       userState.value.credentials.token = res.data.credentials.token;
       userState.value.credentials.tokenExpiration = new Date();
@@ -64,9 +78,7 @@ export const useUserStore = defineStore("user", () => {
       userState.value.credentials.role = res.data.credentials.role;
       userState.value.info = res.data.info;
 
-      setInterval(() => {
-        refreshToken();
-      }, 2 * 60 * 1000); // 2 Minutes
+      router.push("/");
     } catch (error) {
       if (error.response.status === 400) {
         throw new Error("Request Error");
@@ -84,6 +96,13 @@ export const useUserStore = defineStore("user", () => {
     try {
       const res = await userServices.registerAgent(user);
 
+      localStorage.setItem(
+        "activeSession",
+        JSON.stringify({
+          expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000,
+        })
+      );
+
       userState.value.credentials.token = res.data.credentials.token;
       userState.value.credentials.tokenExpiration = new Date();
       userState.value.credentials.tokenExpiration.setSeconds(
@@ -92,9 +111,7 @@ export const useUserStore = defineStore("user", () => {
       userState.value.credentials.role = res.data.credentials.role;
       userState.value.info = res.data.info;
 
-      setInterval(() => {
-        refreshToken();
-      }, 2 * 60 * 1000); // 2 Minutes
+      router.push("/");
     } catch (error) {
       console.log(error);
       if (error.response.status === 400) {
@@ -110,25 +127,37 @@ export const useUserStore = defineStore("user", () => {
   };
 
   const refreshToken = async () => {
-    console.log("Refreshing Token");
-    try {
-      const res = await userServices.refreshToken();
-      userState.value.credentials.token = res.data.token;
-      userState.value.credentials.tokenExpiration = new Date();
-      userState.value.credentials.tokenExpiration.setSeconds(
-        userState.value.credentials.tokenExpiration.getSeconds() + res.data.expiresIn
-      );
-    } catch (error) {
-      if (error.response.status === 401) {
-        console.log("User not logged in");
-      } else if (error.response.status === 500) {
-        console.log("Server Error");
-      } else {
-        console.log("Untracked Error");
+    if (localStorage.getItem("activeSession")) {
+      const refreshTokenExpiration = JSON.parse(localStorage.getItem("activeSession"));
+      if (Date.now() < refreshTokenExpiration.expiresIn) {
+        try {
+          const res = await userServices.refreshToken();
+          userState.value.credentials.token = res.data.token;
+          userState.value.credentials.tokenExpiration = new Date();
+          userState.value.credentials.tokenExpiration.setSeconds(
+            userState.value.credentials.tokenExpiration.getSeconds() + res.data.expiresIn
+          );
+
+          if (firstLoadState.value) {
+            const res = await userServices.getSessionInfo();
+            userState.value.credentials.role = res.data.credentials.role;
+            userState.value.info = res.data.info;
+          }
+        } catch (error) {
+          if (error.response.status === 401) {
+            console.log("User not logged in");
+          } else if (error.response.status === 500) {
+            console.log("Server Error");
+          } else {
+            console.log("Untracked Error");
+          }
+        }
+        return;
       }
+      localStorage.removeItem("activeSession");
+      $reset();
+      return;
     }
-    console.log(userState.value.credentials.token);
-    console.log(userState.value.credentials.tokenExpiration);
   };
 
   const logoutUser = async () => {
@@ -204,16 +233,19 @@ export const useUserStore = defineStore("user", () => {
 
   // Extra Functions
   onMounted(async () => {
+    console.log("first Refresh");
+    firstLoadState.value = true;
     await refreshToken();
-    if (isLoggedIn.value) {
-      setInterval(() => {
-        refreshToken();
-      }, 2 * 60 * 1000); // 2 Minutes
-    }
+    firstLoadState.value = false;
+    setInterval(() => {
+      console.log("refreshing de onmounted");
+      if (isLoggedIn.value) refreshToken();
+    }, 2 * 60 * 1000); // 2 Minutes
   });
 
   return {
     userState,
+    firstLoadState,
     token,
     tokenExpiration,
     role,
