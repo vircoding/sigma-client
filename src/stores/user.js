@@ -6,25 +6,39 @@ import postServices from "../services/post.js";
 
 export const useUserStore = defineStore("user", () => {
   // State
+  const userState = ref({
+    info: {},
+    credentials: {
+      token: "",
+      tokenExpiration: null,
+      role: "reader",
+    },
+  });
+
   const token = ref("");
   const tokenExpiration = ref(null);
   const role = ref("reader");
 
   // Getters
-  const isLoggedIn = computed(() => !!token.value);
+  const isLoggedIn = computed(() => !!userState.value.credentials.token);
 
   // Actions
   const loginUser = async (user) => {
     try {
       const res = await userServices.loginUser(user);
+      userState.value.credentials.token = res.data.credentials.token;
+      userState.value.credentials.tokenExpiration = new Date();
+      userState.value.credentials.tokenExpiration.setSeconds(
+        userState.value.credentials.tokenExpiration.getSeconds() + res.data.credentials.expiresIn
+      );
+      userState.value.credentials.role = res.data.credentials.role;
+      userState.value.info = res.data.info;
 
-      role.value = res.data.role;
-      token.value = res.data.token;
-      tokenExpiration.value = new Date();
-      tokenExpiration.value.setSeconds(tokenExpiration.value.getSeconds() + res.data.expiresIn);
       setInterval(() => {
         refreshToken();
       }, 2 * 60 * 1000); // 2 Minutes
+
+      router.push("/");
     } catch (error) {
       if (error.response.status === 400) {
         throw new Error("Request Error");
@@ -42,9 +56,14 @@ export const useUserStore = defineStore("user", () => {
     try {
       const res = await userServices.registerClient(user);
 
-      token.value = res.data.token;
-      tokenExpiration.value = new Date();
-      tokenExpiration.value.setSeconds(tokenExpiration.value.getSeconds() + res.data.expiresIn);
+      userState.value.credentials.token = res.data.credentials.token;
+      userState.value.credentials.tokenExpiration = new Date();
+      userState.value.credentials.tokenExpiration.setSeconds(
+        userState.value.credentials.tokenExpiration.getSeconds() + res.data.credentials.expiresIn
+      );
+      userState.value.credentials.role = res.data.credentials.role;
+      userState.value.info = res.data.info;
+
       setInterval(() => {
         refreshToken();
       }, 2 * 60 * 1000); // 2 Minutes
@@ -65,9 +84,14 @@ export const useUserStore = defineStore("user", () => {
     try {
       const res = await userServices.registerAgent(user);
 
-      token.value = res.data.token;
-      tokenExpiration.value = new Date();
-      tokenExpiration.value.setSeconds(tokenExpiration.value.getSeconds() + res.data.expiresIn);
+      userState.value.credentials.token = res.data.credentials.token;
+      userState.value.credentials.tokenExpiration = new Date();
+      userState.value.credentials.tokenExpiration.setSeconds(
+        userState.value.credentials.tokenExpiration.getSeconds() + res.data.credentials.expiresIn
+      );
+      userState.value.credentials.role = res.data.credentials.role;
+      userState.value.info = res.data.info;
+
       setInterval(() => {
         refreshToken();
       }, 2 * 60 * 1000); // 2 Minutes
@@ -86,11 +110,14 @@ export const useUserStore = defineStore("user", () => {
   };
 
   const refreshToken = async () => {
+    console.log("Refreshing Token");
     try {
       const res = await userServices.refreshToken();
-      token.value = res.data.token;
-      tokenExpiration.value = new Date();
-      tokenExpiration.value.setSeconds(tokenExpiration.value.getSeconds() + res.data.expiresIn);
+      userState.value.credentials.token = res.data.token;
+      userState.value.credentials.tokenExpiration = new Date();
+      userState.value.credentials.tokenExpiration.setSeconds(
+        userState.value.credentials.tokenExpiration.getSeconds() + res.data.expiresIn
+      );
     } catch (error) {
       if (error.response.status === 401) {
         console.log("User not logged in");
@@ -100,6 +127,8 @@ export const useUserStore = defineStore("user", () => {
         console.log("Untracked Error");
       }
     }
+    console.log(userState.value.credentials.token);
+    console.log(userState.value.credentials.tokenExpiration);
   };
 
   const logoutUser = async () => {
@@ -163,9 +192,14 @@ export const useUserStore = defineStore("user", () => {
   };
 
   const $reset = () => {
-    token.value = "";
-    tokenExpiration.value = null;
-    role.value = "reader";
+    userState.value = {
+      info: {},
+      credentials: {
+        token: "",
+        tokenExpiration: null,
+        role: "reader",
+      },
+    };
   };
 
   // Extra Functions
@@ -179,6 +213,7 @@ export const useUserStore = defineStore("user", () => {
   });
 
   return {
+    userState,
     token,
     tokenExpiration,
     role,
