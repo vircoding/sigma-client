@@ -163,8 +163,9 @@ export const useUserStore = defineStore("user", () => {
   const logoutUser = async () => {
     try {
       await userServices.logoutUser();
-      router.push("/");
+      localStorage.removeItem("activeSession");
       $reset();
+      router.push("/");
     } catch (error) {
       if (error.response.status === 500) {
         throw new Error("Server Error");
