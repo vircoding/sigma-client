@@ -1,6 +1,5 @@
 <script setup>
   import { computed, ref, onMounted } from "vue";
-  import router from "../router";
   import { useUserStore } from "../stores/user.js";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
   import PostTableItem from "./PostTableItem.vue";
