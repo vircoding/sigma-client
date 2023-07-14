@@ -204,22 +204,7 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const getAccountViewData = async () => {
-    try {
-      const userInfo = await userServices.getUserInfo();
-      const postsInfo = await postServices.getUserPosts();
-
-      const res = {
-        user: userInfo.data,
-        posts: postsInfo.data.posts,
-      };
-
-      return res;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  // Extra Functions
   const $reset = () => {
     userState.value = {
       info: {},
@@ -231,7 +216,6 @@ export const useUserStore = defineStore("user", () => {
     };
   };
 
-  // Extra Functions
   onMounted(async () => {
     await refreshToken(true);
     setInterval(() => {
@@ -254,6 +238,5 @@ export const useUserStore = defineStore("user", () => {
     updateClient,
     updateAgent,
     getUserInfo,
-    getAccountViewData,
   };
 });
