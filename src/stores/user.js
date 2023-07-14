@@ -15,8 +15,6 @@ export const useUserStore = defineStore("user", () => {
     },
   });
 
-  const firstLoadState = ref(false);
-
   const token = ref("");
   const tokenExpiration = ref(null);
   const role = ref("reader");
@@ -32,7 +30,7 @@ export const useUserStore = defineStore("user", () => {
       localStorage.setItem(
         "activeSession",
         JSON.stringify({
-          expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000,
+          expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000, // 30 Days
         })
       );
 
@@ -66,7 +64,7 @@ export const useUserStore = defineStore("user", () => {
       localStorage.setItem(
         "activeSession",
         JSON.stringify({
-          expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000,
+          expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000, // 30 Days
         })
       );
 
@@ -99,7 +97,7 @@ export const useUserStore = defineStore("user", () => {
       localStorage.setItem(
         "activeSession",
         JSON.stringify({
-          expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000,
+          expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000, // 30 Days
         })
       );
 
@@ -126,7 +124,7 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const refreshToken = async () => {
+  const refreshToken = async (firstLoad = false) => {
     if (localStorage.getItem("activeSession")) {
       const refreshTokenExpiration = JSON.parse(localStorage.getItem("activeSession"));
       if (Date.now() < refreshTokenExpiration.expiresIn) {
@@ -138,7 +136,8 @@ export const useUserStore = defineStore("user", () => {
             userState.value.credentials.tokenExpiration.getSeconds() + res.data.expiresIn
           );
 
-          if (firstLoadState.value) {
+          if (firstLoad) {
+            console.log("first Refresh");
             const res = await userServices.getSessionInfo();
             userState.value.credentials.role = res.data.credentials.role;
             userState.value.info = res.data.info;
@@ -234,19 +233,15 @@ export const useUserStore = defineStore("user", () => {
 
   // Extra Functions
   onMounted(async () => {
-    console.log("first Refresh");
-    firstLoadState.value = true;
-    await refreshToken();
-    firstLoadState.value = false;
+    await refreshToken(true);
     setInterval(() => {
       console.log("refreshing de onmounted");
       if (isLoggedIn.value) refreshToken();
-    }, 2 * 60 * 1000); // 2 Minutes
+    }, 10 * 60 * 1000); // 10 Minutes
   });
 
   return {
     userState,
-    firstLoadState,
     token,
     tokenExpiration,
     role,
