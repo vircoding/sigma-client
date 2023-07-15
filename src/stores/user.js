@@ -13,6 +13,7 @@ export const useUserStore = defineStore("user", () => {
       tokenExpiration: null,
       role: "reader",
     },
+    posts: [],
   });
 
   const token = ref("");
@@ -27,13 +28,6 @@ export const useUserStore = defineStore("user", () => {
     try {
       const res = await userServices.loginUser(user);
 
-      localStorage.setItem(
-        "activeSession",
-        JSON.stringify({
-          expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000, // 30 Days
-        })
-      );
-
       userState.value.credentials.token = res.data.credentials.token;
       userState.value.credentials.tokenExpiration = new Date();
       userState.value.credentials.tokenExpiration.setSeconds(
@@ -42,8 +36,21 @@ export const useUserStore = defineStore("user", () => {
       userState.value.credentials.role = res.data.credentials.role;
       userState.value.info = res.data.info;
 
+      const posts = await postServices.getUserPosts();
+
+      userState.value.posts = posts.data.posts;
+
+      localStorage.setItem(
+        "activeSession",
+        JSON.stringify({
+          expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000, // 30 Days
+        })
+      );
+
       router.push("/");
     } catch (error) {
+      $reset();
+      console.log(error);
       if (error.response.status === 400) {
         throw new Error("Request Error");
       } else if (error.response.status === 403) {
@@ -53,20 +60,12 @@ export const useUserStore = defineStore("user", () => {
       } else {
         throw new Error("Untracked Error");
       }
-      console.log(error);
     }
   };
 
   const registerClient = async (user) => {
     try {
       const res = await userServices.registerClient(user);
-
-      localStorage.setItem(
-        "activeSession",
-        JSON.stringify({
-          expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000, // 30 Days
-        })
-      );
 
       userState.value.credentials.token = res.data.credentials.token;
       userState.value.credentials.tokenExpiration = new Date();
@@ -76,8 +75,17 @@ export const useUserStore = defineStore("user", () => {
       userState.value.credentials.role = res.data.credentials.role;
       userState.value.info = res.data.info;
 
+      localStorage.setItem(
+        "activeSession",
+        JSON.stringify({
+          expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000, // 30 Days
+        })
+      );
+
       router.push("/");
     } catch (error) {
+      $reset();
+      console.log(error);
       if (error.response.status === 400) {
         throw new Error("Request Error");
       } else if (error.response.status === 403) {
@@ -94,13 +102,6 @@ export const useUserStore = defineStore("user", () => {
     try {
       const res = await userServices.registerAgent(user);
 
-      localStorage.setItem(
-        "activeSession",
-        JSON.stringify({
-          expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000, // 30 Days
-        })
-      );
-
       userState.value.credentials.token = res.data.credentials.token;
       userState.value.credentials.tokenExpiration = new Date();
       userState.value.credentials.tokenExpiration.setSeconds(
@@ -109,8 +110,16 @@ export const useUserStore = defineStore("user", () => {
       userState.value.credentials.role = res.data.credentials.role;
       userState.value.info = res.data.info;
 
+      localStorage.setItem(
+        "activeSession",
+        JSON.stringify({
+          expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000, // 30 Days
+        })
+      );
+
       router.push("/");
     } catch (error) {
+      $reset();
       console.log(error);
       if (error.response.status === 400) {
         throw new Error("Request Error");
@@ -137,10 +146,12 @@ export const useUserStore = defineStore("user", () => {
           );
 
           if (firstLoad) {
-            console.log("first Refresh");
             const res = await userServices.getSessionInfo();
             userState.value.credentials.role = res.data.credentials.role;
             userState.value.info = res.data.info;
+
+            const posts = await postServices.getUserPosts();
+            userState.value.posts = posts.data.posts;
           }
         } catch (error) {
           if (error.response.status === 401) {
@@ -213,6 +224,7 @@ export const useUserStore = defineStore("user", () => {
         tokenExpiration: null,
         role: "reader",
       },
+      posts: [],
     };
   };
 
