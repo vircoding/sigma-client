@@ -1,16 +1,14 @@
 <script setup>
-defineProps({
-  icon: String,
-});
+  const props = defineProps(["icon", "role"]);
 </script>
 
 <template>
   <div
-    v-if="icon === 'instagram'"
-    class="p-1 border rounded-full border-white hover:border-black hover:cursor-pointer"
+    v-if="props.icon === 'instagram'"
+    :class="props.role === 'agent' ? 'brand-icon-container-agent' : 'brand-icon-container'"
   >
     <svg
-      class="fill-white hover:fill-black w-5 lg:w-8"
+      :class="props.role === 'agent' ? 'brand-icon-item-agent' : 'brand-icon-item'"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
     >
@@ -25,11 +23,11 @@ defineProps({
   </div>
 
   <div
-    v-if="icon === 'facebook'"
-    class="p-1 border rounded-full border-white hover:border-black hover:cursor-pointer"
+    v-if="props.icon === 'facebook'"
+    :class="props.role === 'agent' ? 'brand-icon-container-agent' : 'brand-icon-container'"
   >
     <svg
-      class="fill-white hover:fill-black w-5 lg:w-8"
+      :class="props.role === 'agent' ? 'brand-icon-item-agent' : 'brand-icon-item'"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
     >
@@ -40,11 +38,11 @@ defineProps({
   </div>
 
   <div
-    v-if="icon === 'tiktok'"
-    class="p-1 border rounded-full border-white hover:border-black hover:cursor-pointer"
+    v-if="props.icon === 'tiktok'"
+    :class="props.role === 'agent' ? 'brand-icon-container-agent' : 'brand-icon-container'"
   >
     <svg
-      class="fill-white hover:fill-black w-5 lg:w-8"
+      :class="props.role === 'agent' ? 'brand-icon-item-agent' : 'brand-icon-item'"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
     >
@@ -55,11 +53,11 @@ defineProps({
   </div>
 
   <div
-    v-if="icon === 'youtube'"
-    class="p-1 border rounded-full border-white hover:border-black hover:cursor-pointer"
+    v-if="props.icon === 'youtube'"
+    :class="props.role === 'agent' ? 'brand-icon-container-agent' : 'brand-icon-container'"
   >
     <svg
-      class="fill-white hover:fill-black w-5 lg:w-8"
+      :class="props.role === 'agent' ? 'brand-icon-item-agent' : 'brand-icon-item'"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
     >

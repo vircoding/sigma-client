@@ -16,4 +16,20 @@
   .nav-cta {
     @apply relative top-1 flex h-8 w-44 items-center justify-center rounded-md text-center transition-[filter,_color,_background-color,_box-shadow] duration-200 ease-out hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.1)];
   }
+
+  .brand-icon-container-agent {
+    @apply rounded-full border border-background p-1 hover:cursor-pointer hover:border-b-sgray-400;
+  }
+
+  .brand-icon-container {
+    @apply rounded-full border border-sigma p-1 hover:cursor-pointer hover:border-b-white;
+  }
+
+  .brand-icon-item-agent {
+    @apply w-5 fill-sgray-400 lg:w-8;
+  }
+
+  .brand-icon-item {
+    @apply w-5 fill-white lg:w-8;
+  }
 }

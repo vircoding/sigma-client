@@ -5,6 +5,9 @@
   import Wave from "../components/Wave.vue";
   import PopularSection from "../components/PopularSection.vue";
   import FooterSection from "../components/FooterSection.vue";
+  import { useUserStore } from "../stores/user";
+
+  const userStore = useUserStore();
 </script>
 
 <template>
@@ -15,7 +18,7 @@
           class="absolute -top-3 left-[20vw] h-full fill-sgray-100 lg:-top-5 lg:left-[53vw] xl:left-[60vw] 2xl:left-[65vw] min-[1921px]:hidden"
         />
         <NavBar class="z-20" />
-        <HeaderHero class="z-10 grow" />
+        <HeaderHero :role="userStore.userState.credentials.role" class="z-10 grow" />
       </div>
     </header>
     <main class="mb-[5px] lg:mb-[10px]">
@@ -86,15 +89,21 @@
           </div>
         </div>
       </section>
-      <section class="first-gradient w-full pt-28">
+      <section
+        v-if="!(userStore.userState.credentials.role === 'agent')"
+        class="first-gradient w-full pt-28"
+      >
         <PopularSection :buy="true" />
       </section>
-      <section class="second-gradient w-full pb-12 pt-10">
+      <section
+        v-if="!(userStore.userState.credentials.role === 'agent')"
+        class="second-gradient w-full pb-12 pt-10"
+      >
         <PopularSection />
       </section>
     </main>
     <footer>
-      <FooterSection />
+      <FooterSection :role="userStore.userState.credentials.role" />
     </footer>
   </div>
 </template>

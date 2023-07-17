@@ -1,9 +1,23 @@
+<script setup>
+  const props = defineProps(["role"]);
+</script>
+
 <template>
   <div class="flex space-x-10 px-[6%] lg:px-[6%] xl:space-x-24 xl:px-[10%] 2xl:space-x-32">
     <div
       class="text-shadow relative -top-5 flex w-full flex-col items-center justify-center space-y-5 lg:-top-12 lg:space-y-10"
     >
-      <h1 class="w-full text-center text-4xl font-extrabold uppercase lg:text-left lg:text-5xl">
+      <h1
+        v-if="props.role === 'agent'"
+        class="w-full text-center text-4xl font-extrabold uppercase lg:text-left lg:text-5xl"
+      >
+        Ya <span class="text-sigma">trabajas</span> con
+        <span class="text-sigma">nosotros</span>
+      </h1>
+      <h1
+        v-else
+        class="w-full text-center text-4xl font-extrabold uppercase lg:text-left lg:text-5xl"
+      >
         Sigma te <span class="text-sigma">ayuda</span> a
         <span class="text-sigma">encontrar</span> tu casa <span class="text-sigma">ideal</span>
       </h1>
