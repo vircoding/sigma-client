@@ -146,14 +146,11 @@ export const useUserStore = defineStore("user", () => {
           );
 
           if (firstLoad) {
-            const res = await userServices.getSessionInfo();
-            userState.value.credentials.role = res.data.credentials.role;
-            userState.value.info = res.data.info;
-
-            const posts = await postServices.getUserPosts();
-            userState.value.posts = posts.data.posts;
+            loadSessionInfo();
+            loadSessionPosts();
           }
         } catch (error) {
+          // console.log(error);
           if (error.response.status === 401) {
             console.log("User not logged in");
           } else if (error.response.status === 500) {
@@ -205,6 +202,25 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
+  const loadSessionInfo = async () => {
+    try {
+      const res = await userServices.getSessionInfo();
+      userState.value.credentials.role = res.data.credentials.role;
+      userState.value.info = res.data.info;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const loadSessionPosts = async () => {
+    try {
+      const posts = await postServices.getUserPosts();
+      userState.value.posts = posts.data.posts;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getUserInfo = async () => {
     try {
       const res = await userServices.getUserInfo();
@@ -249,6 +265,8 @@ export const useUserStore = defineStore("user", () => {
     logoutUser,
     updateClient,
     updateAgent,
+    loadSessionInfo,
+    loadSessionPosts,
     getUserInfo,
   };
 });
