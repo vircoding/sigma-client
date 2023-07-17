@@ -4,7 +4,7 @@
 
 <template>
   <div
-    class="flex h-96 w-[300px] flex-col overflow-hidden rounded-2xl min-[420px]:w-[350px] xl:w-80"
+    class="flex h-96 w-[300px] flex-col overflow-hidden rounded-2xl min-[420px]:w-[350px] lg:w-[300px] xl:w-80"
   >
     <div class="relative h-3/5 w-full">
       <img
@@ -53,7 +53,9 @@
           </div>
         </div>
       </div>
-      <div class="absolute right-0 flex h-full w-[188px] flex-col px-2 pb-4 pt-2 xl:w-52">
+      <div
+        class="absolute right-0 flex h-full w-[188px] flex-col px-2 pb-4 pt-2 min-[420px]:w-[238px] lg:w-[188px] xl:w-52"
+      >
         <div
           class="flex items-center gap-1 pl-1 font-poppins font-extrabold"
           :class="props.post.__t === 'sale' ? 'text-sigma' : 'text-sgreen-300'"
@@ -75,7 +77,7 @@
           <div
             v-for="(value, property) in props.post.features"
             :key="property"
-            class="scoped-gap flex h-5 place-self-center"
+            class="flex h-5 gap-[2px] place-self-center min-[420px]:gap-1 lg:gap-[2px]"
           >
             <div class="h-5 w-5 rounded-md" :class="value > 0 ? props.color : 'bg-sgray-100'"></div>
             <span
@@ -91,10 +93,6 @@
 </template>
 
 <style scoped>
-  .scoped-gap {
-    gap: 2px;
-  }
-
   .scoped-font-condensed {
     font-stretch: condensed;
   }
