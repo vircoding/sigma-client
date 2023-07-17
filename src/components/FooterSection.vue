@@ -13,10 +13,6 @@
     class="px-7 pb-12 pt-16 font-archivo text-sm lg:text-lg"
     :class="props.role === 'agent' ? 'bg-background' : 'bg-sigma'"
   >
-    <SigmaIcon
-      class="lg:mb- mx-auto mb-8 w-36 lg:w-56"
-      :class="props.role === 'agent' ? 'fill-sgray-400' : 'fill-white'"
-    />
     <div class="scoped-width mx-auto mb-8 lg:mb-5 lg:grid lg:grid-cols-2">
       <div class="mb-3 flex flex-col">
         <h4 class="font-bold" :class="props.role === 'agent' ? 'text-sgray-400' : 'text-white'">
@@ -102,10 +98,22 @@
         <BrandIcon icon="youtube" :role="props.role" />
       </a>
     </nav>
-    <div class="mt-5 w-full text-center">
-      <span class="text-xs" :class="props.role === 'agent' ? 'text-sgray-400' : 'text-white'"
-        >© {{ year }}, La Habana, Cuba</span
-      >
+    <div class="mt-5 flex h-[30px] w-full items-center justify-center gap-5">
+      <SigmaIcon
+        class="w-20 lg:w-56"
+        :class="props.role === 'agent' ? 'fill-sgray-400' : 'fill-white'"
+      />
+      <div
+        class="h-[25px] border-r"
+        :class="props.role === 'agent' ? 'border-sgray-400' : 'border-white'"
+      ></div>
+      <div class="text-center">
+        <span
+          class="relative top-[2px] text-xs"
+          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-white'"
+          >© {{ year }}, La Habana, Cuba</span
+        >
+      </div>
     </div>
   </div>
 </template>
