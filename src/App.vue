@@ -10,15 +10,49 @@
 </script>
 
 <template>
-  <SideMenu
-    class="absolute right-0 z-20 bg-white lg:hidden"
-    :class="layoutStore.sideMenuVisibility ? 'visiblle' : 'invisible'"
-  />
-  <Loading :class="layoutStore.isLoading ? 'block' : 'hidden'" class="h-screen w-screen" />
-  <div
-    :class="layoutStore.isLoading ? 'hidden' : 'block'"
-    class="font-poppins text-sm text-sgray-400 lg:text-base"
-  >
-    <RouterView />
+  <div class="h-screen" :class="layoutStore.sideMenuVisibility ? 'overflow-hidden' : ''">
+    <SideMenu
+      class="side-menu fixed -right-1/2 z-30 bg-white lg:hidden"
+      :class="layoutStore.sideMenuVisibility ? 'visiblle transition' : 'invisible'"
+    />
+    <Loading :class="layoutStore.isLoading ? 'block' : 'hidden'" class="h-screen w-screen" />
+    <div
+      :class="`${layoutStore.isLoading ? 'hidden' : 'block'} ${
+        layoutStore.sideMenuVisibility ? 'blur' : ''
+      }`"
+      class="router-view font-poppins text-sm text-sgray-400 lg:text-base"
+    >
+      <RouterView />
+    </div>
+    <!-- Overlay -->
+    <div
+      @click.prevent="layoutStore.hideSideMenu"
+      class="overlay"
+      :class="layoutStore.sideMenuVisibility ? 'visiblle' : 'invisible'"
+    ></div>
   </div>
 </template>
+
+<style scoped>
+  .side-menu {
+    transition: all 0.1s linear;
+  }
+  .transition {
+    right: 0;
+  }
+  .router-view {
+    transition: filter 0.1s linear;
+  }
+  .blur {
+    filter: blur(2px);
+  }
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 20;
+  }
+</style>
