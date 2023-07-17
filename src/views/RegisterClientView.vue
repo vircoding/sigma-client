@@ -6,7 +6,7 @@
 
 <template>
   <div class="lg:px-2.5">
-    <div class="flex h-screen flex-col lg:py-2.5">
+    <div class="flex min-h-screen flex-col lg:h-screen lg:py-2.5">
       <header>
         <div class="relative overflow-hidden bg-background">
           <NavBar class="z-20" />
