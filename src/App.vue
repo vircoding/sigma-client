@@ -12,7 +12,7 @@
 <template>
   <div class="h-screen" :class="layoutStore.sideMenuVisibility ? 'overflow-hidden' : ''">
     <SideMenu
-      class="side-menu fixed -right-1/2 z-30 bg-white lg:hidden"
+      class="side-menu fixed right-0 z-30 translate-x-full bg-white lg:hidden"
       :class="layoutStore.sideMenuVisibility ? 'visiblle transition' : 'invisible'"
     />
     <Loading :class="layoutStore.isLoading ? 'block' : 'hidden'" class="h-screen w-screen" />
@@ -36,17 +36,23 @@
 <style scoped>
   .side-menu {
     transition: all 0.1s linear;
+    will-change: transform;
   }
+
   .transition {
-    right: 0;
+    transform: translateX(0);
   }
+
   .router-view {
     transition: filter 0.1s linear;
   }
+
   .blur {
     filter: blur(2px);
   }
+
   .overlay {
+    will-change: transform;
     position: fixed;
     top: 0;
     left: 0;
