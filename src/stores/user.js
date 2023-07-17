@@ -246,9 +246,11 @@ export const useUserStore = defineStore("user", () => {
 
   onMounted(async () => {
     await refreshToken(true);
-    setInterval(() => {
+    setInterval(async () => {
       console.log("refreshing de onmounted");
-      if (isLoggedIn.value) refreshToken();
+      if (isLoggedIn.value) {
+        await refreshToken();
+      }
     }, 10 * 60 * 1000); // 10 Minutes
   });
 
