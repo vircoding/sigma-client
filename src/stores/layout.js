@@ -4,8 +4,8 @@ import { ref } from "vue";
 export const useLayoutStore = defineStore("layout", () => {
   // State
   const sideMenuVisibility = ref(false);
-
   const isLoading = ref(false);
+  const spinnerVisibility = ref(false);
 
   // Actions
   const unhideSideMenu = () => {
@@ -24,12 +24,23 @@ export const useLayoutStore = defineStore("layout", () => {
     isLoading.value = false;
   };
 
+  const unhideSpinner = () => {
+    spinnerVisibility.value = true;
+  };
+
+  const hideSpinner = () => {
+    spinnerVisibility.value = false;
+  };
+
   return {
     sideMenuVisibility,
     isLoading,
+    spinnerVisibility,
     unhideSideMenu,
     hideSideMenu,
     unhideLoading,
     hideLoading,
+    unhideSpinner,
+    hideSpinner,
   };
 });

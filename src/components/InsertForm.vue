@@ -1,5 +1,6 @@
 <script setup>
   import { usePostStore } from "../stores/post";
+  import { useLayoutStore } from "../stores/layout";
   import NumberInput from "./NumberInput.vue";
   import RadioInput from "./RadioInput.vue";
   import SelectInput from "./SelectInput.vue";
@@ -9,6 +10,7 @@
   import router from "../router";
 
   const postStore = usePostStore();
+  const layoutStore = useLayoutStore();
 
   const post = ref({
     type: "sale",
@@ -192,9 +194,11 @@
   });
 
   const formSubmit = async () => {
+    layoutStore.unhideSpinner();
     post.value.phone = formattedPhone.value;
     try {
       const res = await postStore.insertPost(post.value);
+      layoutStore.hideSpinner();
 
       post.value.address.province = "La Habana";
       post.value.address.municipality = "";
@@ -221,7 +225,6 @@
       editedInputs.value.code = false;
       editedInputs.value.phone = false;
 
-      console.log(res);
       router.push(`/post/${res._id}`);
     } catch (error) {
       console.log(error);

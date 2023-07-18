@@ -4,17 +4,24 @@
   import { useLayoutStore } from "./stores/layout";
   import SideMenu from "./components/SideMenu.vue";
   import Loading from "./components/Loading.vue";
+  import FormSpinner from "./components/FormSpinner.vue";
 
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
 </script>
 
 <template>
-  <div class="h-screen" :class="layoutStore.sideMenuVisibility ? 'overflow-hidden' : ''">
+  <div
+    class="h-screen"
+    :class="
+      layoutStore.sideMenuVisibility || layoutStore.spinnerVisibility ? 'overflow-hidden' : ''
+    "
+  >
     <SideMenu
       class="side-menu fixed right-0 z-30 translate-x-full bg-white lg:hidden"
       :class="layoutStore.sideMenuVisibility ? 'visiblle transition' : 'invisible'"
     />
+
     <Loading :class="layoutStore.isLoading ? 'block' : 'hidden'" class="h-screen w-screen" />
     <div
       :class="`${layoutStore.isLoading ? 'hidden' : 'block'} ${
@@ -30,6 +37,7 @@
       class="overlay"
       :class="layoutStore.sideMenuVisibility ? 'visiblle' : 'invisible'"
     ></div>
+    <FormSpinner :class="layoutStore.spinnerVisibility ? 'block' : 'hidden'" class="z-30" />
   </div>
 </template>
 
