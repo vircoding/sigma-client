@@ -19,14 +19,12 @@
       municipality: "",
     },
     features: {
-      living_room: 0,
       bed_room: 0,
       bath_room: 0,
-      dinning_room: 0,
-      kitchen: 0,
-      garage: 0,
-      garden: 0,
-      pool: 0,
+      garage: false,
+      garden: false,
+      pool: false,
+      furnished: false,
     },
     phone: "",
     description: "",
@@ -75,7 +73,6 @@
   const editedInputs = ref({
     amount: false,
     municipality: false,
-    features: false,
     code: false,
     phone: false,
   });
@@ -88,9 +85,6 @@
           break;
         case "municipality":
           editedInputs.value.municipality = true;
-          break;
-        case "features":
-          editedInputs.value.features = true;
           break;
         case "code":
           editedInputs.value.code = true;
@@ -122,38 +116,14 @@
     const regex = /^[0-9]+$/;
     const bath_roomToString = post.value.features.bath_room.toString();
     const bed_roomToString = post.value.features.bed_room.toString();
-    const dinning_roomToString = post.value.features.dinning_room.toString();
-    const garageToString = post.value.features.garage.toString();
-    const gardenToString = post.value.features.garden.toString();
-    const kitchenToString = post.value.features.kitchen.toString();
-    const living_roomToString = post.value.features.living_room.toString();
-    const poolToString = post.value.features.pool.toString();
 
     if (
-      post.value.features.bath_room < 0 ||
-      post.value.features.bath_room > 10 ||
       post.value.features.bed_room < 0 ||
       post.value.features.bed_room > 10 ||
-      post.value.features.dinning_room < 0 ||
-      post.value.features.dinning_room > 10 ||
-      post.value.features.garage < 0 ||
-      post.value.features.garage > 10 ||
-      post.value.features.garden < 0 ||
-      post.value.features.garden > 10 ||
-      post.value.features.kitchen < 0 ||
-      post.value.features.kitchen > 10 ||
-      post.value.features.living_room < 0 ||
-      post.value.features.living_room > 10 ||
-      post.value.features.pool < 0 ||
-      post.value.features.pool > 10 ||
+      post.value.features.bath_room < 0 ||
+      post.value.features.bath_room > 10 ||
       !regex.test(bath_roomToString) ||
-      !regex.test(bed_roomToString) ||
-      !regex.test(dinning_roomToString) ||
-      !regex.test(garageToString) ||
-      !regex.test(gardenToString) ||
-      !regex.test(kitchenToString) ||
-      !regex.test(living_roomToString) ||
-      !regex.test(poolToString)
+      !regex.test(bed_roomToString)
     )
       return true;
     return false;
@@ -202,14 +172,12 @@
 
       post.value.address.province = "La Habana";
       post.value.address.municipality = "";
-      post.value.features.living_room = 0;
       post.value.features.bed_room = 0;
       post.value.features.bath_room = 0;
-      post.value.features.dinning_room = 0;
-      post.value.features.kitchen = 0;
-      post.value.features.garage = 0;
-      post.value.features.garden = 0;
-      post.value.features.pool = 0;
+      post.value.features.garage = false;
+      post.value.features.garden = false;
+      post.value.features.pool = false;
+      post.value.features.furnished = false;
       post.value.phone = "";
       post.value.description = "";
       post.value.amount = null;
@@ -220,7 +188,6 @@
       invalidPhone.value = true;
 
       editedInputs.value.amount = false;
-      editedInputs.value.features = false;
       editedInputs.value.municipality = false;
       editedInputs.value.code = false;
       editedInputs.value.phone = false;
@@ -263,6 +230,67 @@
         </div>
       </div>
 
+      <div class="mb-1 w-[250px]">
+        <div
+          class="flex items-center justify-between rounded-md border border-sgray-100 px-5 pb-1 pt-2"
+        >
+          <!-- Number Inputs -->
+          <div class="mb-4 flex flex-col gap-1">
+            <!-- Bed Room -->
+            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
+              <span>Cuartos</span>
+              <NumberInput @focus="editInput('features')" v-model="post.features.bed_room" />
+            </div>
+
+            <!-- Bathroom -->
+            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
+              <span>Baños</span>
+              <NumberInput @focus="editInput('features')" v-model="post.features.bath_room" />
+            </div>
+          </div>
+
+          <!-- Vertical Line -->
+          <div class="h-[100px] w-0 border-e border-sgray-100"></div>
+
+          <!-- Checkboxs -->
+          <div class="relative bottom-[2px] space-y-1">
+            <!-- Garage -->
+            <div class="flex gap-2">
+              <input v-model="post.features.garage" type="checkbox" name="garage" id="garage" />
+              <label for="garage">Garage</label>
+            </div>
+
+            <!-- Garden -->
+            <div class="flex gap-2">
+              <input v-model="post.features.garden" type="checkbox" name="garden" id="garden" />
+              <label for="garden">Jardín</label>
+            </div>
+
+            <!-- Pool -->
+            <div class="flex gap-2">
+              <input v-model="post.features.pool" type="checkbox" name="pool" id="pool" />
+              <label for="pool">Piscina</label>
+            </div>
+
+            <!-- Furnished -->
+            <div class="flex gap-2">
+              <input
+                v-model="post.features.furnished"
+                type="checkbox"
+                name="furnished"
+                id="furnished"
+              />
+              <label for="furnished">Amueblada</label>
+            </div>
+          </div>
+        </div>
+        <span
+          class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
+          :class="featuresError ? 'visible' : 'invisible'"
+          >Error Message</span
+        >
+      </div>
+
       <!-- Amount -->
       <div class="mb-1 w-full">
         <input
@@ -283,9 +311,7 @@
       <!-- Address -->
       <div class="mb-1">
         <!-- Province -->
-        <div
-          class="flex flex-col gap-2 rounded-md border border-sgray-100 px-2 py-2 min-[420px]:px-2 min-[460px]:px-4"
-        >
+        <div class="flex flex-col gap-2 rounded-md border border-sgray-100 p-5">
           <SelectInput
             v-model="post.address.province"
             type="province"
@@ -303,71 +329,6 @@
         <span
           class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
           :class="municipalityError ? 'visible' : 'invisible'"
-          >Error Message</span
-        >
-      </div>
-
-      <!-- Features -->
-      <div class="mb-1">
-        <div
-          class="flex flex-col gap-2 rounded-md border border-sgray-100 px-2 pb-3 pt-2 min-[420px]:px-2 min-[460px]:px-4"
-        >
-          <div class="flex w-full justify-evenly">
-            <!-- Bed Room -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Cuartos</span>
-              <NumberInput @focus="editInput('features')" v-model="post.features.bed_room" />
-            </div>
-
-            <!-- Dinning Room -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Comedores</span>
-              <NumberInput @focus="editInput('features')" v-model="post.features.dinning_room" />
-            </div>
-
-            <!-- Kitchen -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Cocinas</span>
-              <NumberInput @focus="editInput('features')" v-model="post.features.kitchen" />
-            </div>
-
-            <!-- Garage -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Garages</span>
-              <NumberInput @focus="editInput('features')" v-model="post.features.garage" />
-            </div>
-          </div>
-
-          <div class="flex w-full justify-evenly">
-            <!-- Bathroom -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Baños</span>
-              <NumberInput @focus="editInput('features')" v-model="post.features.bath_room" />
-            </div>
-
-            <!-- Livingroom -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Salas</span>
-              <NumberInput v-model="post.features.living_room" />
-            </div>
-
-            <!-- Garden -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Jardínes</span>
-              <NumberInput @focus="editInput('features')" v-model="post.features.garden" />
-            </div>
-
-            <!-- Pool -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Piscinas</span>
-              <NumberInput @focus="editInput('features')" v-model="post.features.pool" />
-            </div>
-          </div>
-        </div>
-
-        <span
-          class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
-          :class="featuresError ? 'visible' : 'invisible'"
           >Error Message</span
         >
       </div>
