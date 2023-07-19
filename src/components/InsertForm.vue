@@ -1,6 +1,7 @@
 <script setup>
   import { usePostStore } from "../stores/post";
   import { useLayoutStore } from "../stores/layout";
+  import { useUserStore } from "../stores/user";
   import NumberInput from "./NumberInput.vue";
   import RadioInput from "./RadioInput.vue";
   import SelectInput from "./SelectInput.vue";
@@ -11,6 +12,7 @@
 
   const postStore = usePostStore();
   const layoutStore = useLayoutStore();
+  const userStore = useUserStore();
 
   const post = ref({
     type: "sale",
@@ -168,6 +170,7 @@
     post.value.phone = formattedPhone.value;
     try {
       const res = await postStore.insertPost(post.value);
+      await userStore.loadSessionPosts();
       layoutStore.hideSpinner();
 
       post.value.address.province = "La Habana";
@@ -230,7 +233,7 @@
         </div>
       </div>
 
-      <div class="mb-1 w-[250px]">
+      <div class="mb-1 w-[275px]">
         <div
           class="flex items-center justify-between rounded-md border border-sgray-100 px-5 pb-1 pt-2"
         >
@@ -239,13 +242,13 @@
             <!-- Bed Room -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Cuartos</span>
-              <NumberInput @focus="editInput('features')" v-model="post.features.bed_room" />
+              <NumberInput v-model="post.features.bed_room" />
             </div>
 
             <!-- Bathroom -->
             <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Baños</span>
-              <NumberInput @focus="editInput('features')" v-model="post.features.bath_room" />
+              <NumberInput v-model="post.features.bath_room" />
             </div>
           </div>
 
