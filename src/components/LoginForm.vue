@@ -148,7 +148,7 @@
         >
           Ingresar
         </button>
-        <div class="flex flex-col gap-1">
+        <div class="mb-3 flex flex-col gap-1">
           <a
             href="#"
             class="text-shadow w-fit transition-all duration-200 after:block after:h-px after:w-0 after:bg-black after:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] after:transition-[width] after:duration-200 after:ease-in-out hover:text-black hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] hover:after:w-full"
