@@ -69,8 +69,6 @@
 
       editedInputs.value.email = false;
       editedInputs.value.password = false;
-
-      // router.push("/");
     } catch (error) {
       console.log(error);
     }

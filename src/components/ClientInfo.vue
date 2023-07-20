@@ -42,8 +42,6 @@
   const formSubmit = async () => {
     try {
       await userStore.updateClient(newUser.value);
-      await userStore.loadSessionInfo();
-      $reset();
     } catch (error) {
       console.log(error);
     }

@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from "vue";
 import router from "../router";
 import userServices from "../services/user.js";
 import postServices from "../services/post.js";
+import { useLayoutStore } from "./layout";
 
 export const useUserStore = defineStore("user", () => {
   // State
@@ -16,6 +17,8 @@ export const useUserStore = defineStore("user", () => {
     posts: [],
   });
 
+  const layoutStore = useLayoutStore();
+
   const token = ref("");
   const tokenExpiration = ref(null);
   const role = ref("reader");
@@ -26,6 +29,7 @@ export const useUserStore = defineStore("user", () => {
   // Actions
   const loginUser = async (user) => {
     try {
+      layoutStore.unhideSpinner();
       const res = await userServices.loginUser(user);
 
       userState.value.credentials.token = res.data.credentials.token;
@@ -47,6 +51,8 @@ export const useUserStore = defineStore("user", () => {
         })
       );
 
+      layoutStore.hideSpinner();
+
       router.push("/");
     } catch (error) {
       $reset();
@@ -65,6 +71,7 @@ export const useUserStore = defineStore("user", () => {
 
   const registerClient = async (user) => {
     try {
+      layoutStore.unhideSpinner();
       const res = await userServices.registerClient(user);
 
       userState.value.credentials.token = res.data.credentials.token;
@@ -81,6 +88,8 @@ export const useUserStore = defineStore("user", () => {
           expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000, // 30 Days
         })
       );
+
+      layoutStore.hideSpinner();
 
       router.push("/");
     } catch (error) {
@@ -100,6 +109,7 @@ export const useUserStore = defineStore("user", () => {
 
   const registerAgent = async (user) => {
     try {
+      layoutStore.unhideSpinner();
       const res = await userServices.registerAgent(user);
 
       userState.value.credentials.token = res.data.credentials.token;
@@ -116,6 +126,8 @@ export const useUserStore = defineStore("user", () => {
           expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000, // 30 Days
         })
       );
+
+      layoutStore.hideSpinner();
 
       router.push("/");
     } catch (error) {
@@ -169,9 +181,11 @@ export const useUserStore = defineStore("user", () => {
 
   const logoutUser = async () => {
     try {
+      layoutStore.unhideSpinner();
       await userServices.logoutUser();
       localStorage.removeItem("activeSession");
       $reset();
+      layoutStore.hideSpinner();
       router.push("/");
     } catch (error) {
       if (error.response.status === 500) {
@@ -184,9 +198,10 @@ export const useUserStore = defineStore("user", () => {
 
   const updateClient = async (user) => {
     try {
-      const res = await userServices.updateClient(user);
-
-      return res.data;
+      layoutStore.unhideSpinner();
+      await userServices.updateClient(user);
+      await loadSessionInfo();
+      layoutStore.hideSpinner();
     } catch (error) {
       console.log(error);
     }
@@ -194,9 +209,10 @@ export const useUserStore = defineStore("user", () => {
 
   const updateAgent = async (user) => {
     try {
-      const res = await userServices.updateAgent(user);
-
-      return res.data;
+      layoutStore.unhideSpinner();
+      await userServices.updateAgent(user);
+      await loadSessionInfo();
+      layoutStore.hideSpinner();
     } catch (error) {
       console.log(error);
     }

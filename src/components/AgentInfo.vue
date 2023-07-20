@@ -104,8 +104,6 @@
     newUser.value.phone = formattedPhone.value;
     try {
       await userStore.updateAgent(newUser.value);
-      await userStore.loadSessionInfo();
-      $reset();
     } catch (error) {
       console.log(error);
     }

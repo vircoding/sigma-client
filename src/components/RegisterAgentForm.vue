@@ -19,7 +19,6 @@
     bio: "",
   });
 
-  const countries = ref([]);
   const phoneInput = ref("");
   const callCodeInput = ref("+53");
 
@@ -201,19 +200,6 @@
       console.log(error);
     }
   };
-
-  const getCountries = async () => {
-    try {
-      const res = await countriesServices.getCountries();
-      res.data.forEach((item) => {
-        countries.value.push(item);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // getCountries();
 </script>
 
 <template>
