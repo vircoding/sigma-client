@@ -1,110 +1,78 @@
 <script setup>
   import { useUserStore } from "../stores/user";
   import { usePostStore } from "../stores/post";
-  import { useLayoutStore } from "../stores/layout"
+  import { useLayoutStore } from "../stores/layout";
   import NumberInput from "./NumberInput.vue";
   import RadioInput from "./RadioInput.vue";
   import SelectInput from "./SelectInput.vue";
   import { provinceList, municipalityList } from "../utils/provinces";
   import { ref, computed, watch, onMounted } from "vue";
   import parsePhoneNumber from "libphonenumber-js";
-  import { useRoute } from "vue-router";
   import router from "../router";
-
-  const postStore = usePostStore();
-  const layoutStore = useLayoutStore()
+  import { useRoute } from "vue-router";
 
   const route = useRoute();
 
-  const prevPost = ref({
-    type: "sale",
-    address: {
-      province: "La Habana",
-      municipality: "",
-    },
-    features: {
-      living_room: 0,
-      bed_room: 0,
-      bath_room: 0,
-      dinning_room: 0,
-      kitchen: 0,
-      garage: 0,
-      garden: 0,
-      pool: 0,
-    },
-    phone: "",
-    description: "",
-    currency: "mn",
-    frequency: "",
-    amount: null,
-  });
+  const props = defineProps(["post"]);
+
+  const postStore = usePostStore();
+  const layoutStore = useLayoutStore();
+  const userStore = useUserStore();
+
+  const parsedPhoneNumber = parsePhoneNumber(props.post.phone);
+  const phoneInput = ref(parsedPhoneNumber.nationalNumber);
+  const callCodeInput = ref(`+${parsedPhoneNumber.countryCallingCode}`);
 
   const newPost = ref({
-    type: "sale",
+    type: props.post.__t,
     address: {
-      province: "La Habana",
-      municipality: "",
+      province: props.post.address.province,
+      municipality: props.post.address.municipality,
     },
     features: {
-      living_room: 0,
-      bed_room: 0,
-      bath_room: 0,
-      dinning_room: 0,
-      kitchen: 0,
-      garage: 0,
-      garden: 0,
-      pool: 0,
+      bed_room: props.post.features.bed_room,
+      bath_room: props.post.features.bath_room,
+      garage: props.post.features.garage,
+      garden: props.post.features.garden,
+      pool: props.post.features.pool,
+      furnished: props.post.features.furnished,
     },
-    phone: "",
-    description: "",
-    currency: "mn",
-    frequency: "",
-    amount: null,
+    phone: props.post.phone,
+    description: props.post.description,
+    currency: props.post.currency,
+    frequency: props.post.frequency ? props.post.frequency : "",
+    amount: props.post.__t === "sale" ? props.post.price : props.post.tax,
   });
-
-  const provinceFirstChange = ref(true);
-  const frequencyFirstChange = ref(true);
-
-  const activeProvince = computed(() => newPost.value.address.province);
-  const activeType = computed(() => newPost.value.type);
-
-  watch(activeProvince, () => {
-    if (!provinceFirstChange.value) {
-      newPost.value.address.municipality = "";
-    }
-    provinceFirstChange.value = false;
-  });
-
-  watch(activeType, () => {
-    if (!frequencyFirstChange.value) {
-      if (activeType.value === "rent") {
-        newPost.value.frequency = "monthly";
-      } else {
-        newPost.value.frequency = "";
-      }
-    }
-    frequencyFirstChange.value = false;
-  });
-
-  const phoneInput = ref("");
-  const callCodeInput = ref("+53");
 
   const formattedPhone = computed(() => {
     return callCodeInput.value + phoneInput.value;
   });
 
-  const invalidPhone = ref(true);
+  const invalidPhone = ref(false);
 
-  watch(phoneInput, () => {
+  watch(formattedPhone, () => {
     try {
       const parsedPhoneNumber = parsePhoneNumber(formattedPhone.value);
       if (!parsedPhoneNumber.isValid()) {
-        throw new Error("Non-valid Phone Number");
+        invalidPhone.value = true;
       } else {
         invalidPhone.value = false;
       }
-    } catch (error) {
-      invalidPhone.value = true;
+    } catch (error) {}
+  });
+
+  const activeProvince = computed(() => newPost.value.address.province);
+  const activeType = computed(() => newPost.value.type);
+
+  watch(activeProvince, () => {
+    newPost.value.address.municipality = "";
+  });
+
+  watch(activeType, () => {
+    if (activeType.value === "rent") {
+      newPost.value.frequency = "monthly";
+    } else {
+      newPost.value.frequency = "";
     }
   });
 
@@ -122,38 +90,14 @@
     const regex = /^[0-9]+$/;
     const bath_roomToString = newPost.value.features.bath_room.toString();
     const bed_roomToString = newPost.value.features.bed_room.toString();
-    const dinning_roomToString = newPost.value.features.dinning_room.toString();
-    const garageToString = newPost.value.features.garage.toString();
-    const gardenToString = newPost.value.features.garden.toString();
-    const kitchenToString = newPost.value.features.kitchen.toString();
-    const living_roomToString = newPost.value.features.living_room.toString();
-    const poolToString = newPost.value.features.pool.toString();
 
     if (
-      newPost.value.features.bath_room < 0 ||
-      newPost.value.features.bath_room > 10 ||
       newPost.value.features.bed_room < 0 ||
       newPost.value.features.bed_room > 10 ||
-      newPost.value.features.dinning_room < 0 ||
-      newPost.value.features.dinning_room > 10 ||
-      newPost.value.features.garage < 0 ||
-      newPost.value.features.garage > 10 ||
-      newPost.value.features.garden < 0 ||
-      newPost.value.features.garden > 10 ||
-      newPost.value.features.kitchen < 0 ||
-      newPost.value.features.kitchen > 10 ||
-      newPost.value.features.living_room < 0 ||
-      newPost.value.features.living_room > 10 ||
-      newPost.value.features.pool < 0 ||
-      newPost.value.features.pool > 10 ||
+      newPost.value.features.bath_room < 0 ||
+      newPost.value.features.bath_room > 10 ||
       !regex.test(bath_roomToString) ||
-      !regex.test(bed_roomToString) ||
-      !regex.test(dinning_roomToString) ||
-      !regex.test(garageToString) ||
-      !regex.test(gardenToString) ||
-      !regex.test(kitchenToString) ||
-      !regex.test(living_roomToString) ||
-      !regex.test(poolToString)
+      !regex.test(bed_roomToString)
     )
       return true;
     return false;
@@ -179,108 +123,38 @@
     )
       return true;
     if (
-      newPost.value.type === prevPost.value.type &&
-      newPost.value.currency === prevPost.value.currency &&
-      newPost.value.frequency === prevPost.value.frequency &&
-      newPost.value.address.province === prevPost.value.address.province &&
-      newPost.value.address.municipality === prevPost.value.address.municipality &&
-      newPost.value.features.bed_room == prevPost.value.features.bed_room &&
-      newPost.value.features.bath_room == prevPost.value.features.bath_room &&
-      newPost.value.features.dinning_room == prevPost.value.features.dinning_room &&
-      newPost.value.features.living_room == prevPost.value.features.living_room &&
-      newPost.value.features.kitchen == prevPost.value.features.kitchen &&
-      newPost.value.features.garden == prevPost.value.features.garden &&
-      newPost.value.features.garage == prevPost.value.features.garage &&
-      newPost.value.features.pool == prevPost.value.features.pool &&
-      newPost.value.amount === prevPost.value.amount &&
-      newPost.value.description === prevPost.value.description &&
-      formattedPhone.value === prevPost.value.phone
+      newPost.value.type === props.post.__t &&
+      newPost.value.currency === props.post.currency &&
+      newPost.value.frequency === (props.post.__t === "sale" ? "" : props.post.frequency) &&
+      newPost.value.address.province === props.post.address.province &&
+      newPost.value.address.municipality === props.post.address.municipality &&
+      newPost.value.features.bed_room == props.post.features.bed_room &&
+      newPost.value.features.bath_room == props.post.features.bath_room &&
+      newPost.value.features.garden == props.post.features.garden &&
+      newPost.value.features.garage == props.post.features.garage &&
+      newPost.value.features.pool == props.post.features.pool &&
+      newPost.value.features.furnished == props.post.features.furnished &&
+      newPost.value.amount === (props.post.__t === "sale" ? props.post.price : props.post.tax) &&
+      newPost.value.description === props.post.description &&
+      formattedPhone.value === props.post.phone
     )
       return true;
     return false;
   });
 
-  const getPost = async (id) => {
-    try {
-      const res = await postStore.getPost(id);
-
-      if (res.__t === "rent") {
-        prevPost.value.frequency = res.frequency;
-        newPost.value.frequency = res.frequency;
-        prevPost.value.amount = res.tax;
-        newPost.value.amount = res.tax;
-      } else {
-        prevPost.value.frequency = "";
-        newPost.value.frequency = "";
-        prevPost.value.amount = res.price;
-        newPost.value.amount = res.price;
-      }
-
-      // Previous Post
-      prevPost.value.type = res.__t;
-      prevPost.value.address.province = res.address.province;
-      prevPost.value.address.municipality = res.address.municipality;
-      prevPost.value.features.bath_room = res.features.bath_room;
-      prevPost.value.features.bed_room = res.features.bed_room;
-      prevPost.value.features.dinning_room = res.features.dinning_room;
-      prevPost.value.features.garage = res.features.garage;
-      prevPost.value.features.garden = res.features.garden;
-      prevPost.value.features.kitchen = res.features.kitchen;
-      prevPost.value.features.living_room = res.features.living_room;
-      prevPost.value.features.pool = res.features.pool;
-      prevPost.value.phone = res.phone;
-      prevPost.value.description = res.description;
-      prevPost.value.currency = res.currency;
-
-      // New Post
-      newPost.value.type = res.__t;
-      newPost.value.address.province = res.address.province;
-      newPost.value.address.municipality = res.address.municipality;
-      newPost.value.features.bath_room = res.features.bath_room;
-      newPost.value.features.bed_room = res.features.bed_room;
-      newPost.value.features.dinning_room = res.features.dinning_room;
-      newPost.value.features.garage = res.features.garage;
-      newPost.value.features.garden = res.features.garden;
-      newPost.value.features.kitchen = res.features.kitchen;
-      newPost.value.features.living_room = res.features.living_room;
-      newPost.value.features.pool = res.features.pool;
-      newPost.value.phone = res.phone;
-      newPost.value.description = res.description;
-      newPost.value.currency = res.currency;
-
-      // Code and Phone Setup
-      const parsedPhoneNumber = parsePhoneNumber(res.phone);
-
-      callCodeInput.value = "+" + parsedPhoneNumber.countryCallingCode;
-      phoneInput.value = parsedPhoneNumber.nationalNumber;
-
-      console.log(newPost.value);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const formSubmit = async () => {
+    layoutStore.unhideSpinner();
     newPost.value.phone = formattedPhone.value;
     try {
       await postStore.updatePost(route.params.id, newPost.value);
+      await userStore.loadSessionPosts();
+      layoutStore.hideSpinner();
 
       router.push(`/post/${route.params.id}`);
     } catch (error) {
       console.log(error);
     }
   };
-
-  onMounted(async () => {
-    try {
-      layoutStore.unhideLoading();
-      await getPost(route.params.id);
-      layoutStore.hideLoading();
-    } catch (error) {
-      console.log(error);
-    }
-  });
-
 </script>
 
 <template>
@@ -307,7 +181,7 @@
         <RadioInput
           v-model="newPost.type"
           type="type"
-          :option="prevPost.type === 'sale' ? 'first' : 'second'"
+          :option="post.type === 'sale' ? 'first' : 'second'"
         />
 
         <div class="flex min-[320px]:gap-0 min-[400px]:gap-2">
@@ -315,16 +189,78 @@
           <RadioInput
             v-model="newPost.currency"
             type="currency"
-            :option="prevPost.currency === 'mn' ? 'first' : 'second'"
+            :option="post.currency === 'mn' ? 'first' : 'second'"
           />
           <!-- Frequency -->
           <RadioInput
             v-if="newPost.type === 'rent'"
             v-model="newPost.frequency"
             type="frequency"
-            :option="prevPost.currency === 'monthly' ? 'first' : 'second'"
+            :option="post.currency === 'monthly' ? 'first' : 'second'"
           />
         </div>
+      </div>
+
+      <!-- Features -->
+      <div class="mb-1 w-[275px]">
+        <div
+          class="flex items-center justify-between rounded-md border border-sgray-100 px-5 pb-1 pt-2"
+        >
+          <!-- Number Inputs -->
+          <div class="mb-4 flex flex-col gap-1">
+            <!-- Bed Room -->
+            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
+              <span>Cuartos</span>
+              <NumberInput v-model="newPost.features.bed_room" />
+            </div>
+
+            <!-- Bathroom -->
+            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
+              <span>Baños</span>
+              <NumberInput v-model="newPost.features.bath_room" />
+            </div>
+          </div>
+
+          <!-- Vertical Line -->
+          <div class="h-[100px] w-0 border-e border-sgray-100"></div>
+
+          <!-- Checkboxs -->
+          <div class="relative bottom-[2px] space-y-1">
+            <!-- Garage -->
+            <div class="flex gap-2">
+              <input v-model="post.features.garage" type="checkbox" name="garage" id="garage" />
+              <label for="garage">Garage</label>
+            </div>
+
+            <!-- Garden -->
+            <div class="flex gap-2">
+              <input v-model="post.features.garden" type="checkbox" name="garden" id="garden" />
+              <label for="garden">Jardín</label>
+            </div>
+
+            <!-- Pool -->
+            <div class="flex gap-2">
+              <input v-model="post.features.pool" type="checkbox" name="pool" id="pool" />
+              <label for="pool">Piscina</label>
+            </div>
+
+            <!-- Furnished -->
+            <div class="flex gap-2">
+              <input
+                v-model="post.features.furnished"
+                type="checkbox"
+                name="furnished"
+                id="furnished"
+              />
+              <label for="furnished">Amueblada</label>
+            </div>
+          </div>
+        </div>
+        <span
+          class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
+          :class="featuresError ? 'visible' : 'invisible'"
+          >Error Message</span
+        >
       </div>
 
       <!-- Amount -->
@@ -365,71 +301,6 @@
         <span
           class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
           :class="municipalityError ? 'visible' : 'invisible'"
-          >Error Message</span
-        >
-      </div>
-
-      <!-- Features -->
-      <div class="mb-1">
-        <div
-          class="flex flex-col gap-2 rounded-md border border-sgray-100 px-2 pb-3 pt-2 min-[420px]:px-2 min-[460px]:px-4"
-        >
-          <div class="flex w-full justify-evenly">
-            <!-- Bed Room -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Cuartos</span>
-              <NumberInput v-model="newPost.features.bed_room" />
-            </div>
-
-            <!-- Dinning Room -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Comedores</span>
-              <NumberInput v-model="newPost.features.dinning_room" />
-            </div>
-
-            <!-- Kitchen -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Cocinas</span>
-              <NumberInput v-model="newPost.features.kitchen" />
-            </div>
-
-            <!-- Garage -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Garages</span>
-              <NumberInput v-model="newPost.features.garage" />
-            </div>
-          </div>
-
-          <div class="flex w-full justify-evenly">
-            <!-- Bathroom -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Baños</span>
-              <NumberInput v-model="newPost.features.bath_room" />
-            </div>
-
-            <!-- Livingroom -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Salas</span>
-              <NumberInput v-model="newPost.features.living_room" />
-            </div>
-
-            <!-- Garden -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Jardínes</span>
-              <NumberInput v-model="newPost.features.garden" />
-            </div>
-
-            <!-- Pool -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Piscinas</span>
-              <NumberInput v-model="newPost.features.pool" />
-            </div>
-          </div>
-        </div>
-
-        <span
-          class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
-          :class="featuresError ? 'visible' : 'invisible'"
           >Error Message</span
         >
       </div>

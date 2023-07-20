@@ -233,6 +233,7 @@
         </div>
       </div>
 
+      <!-- Features -->
       <div class="mb-1 w-[275px]">
         <div
           class="flex items-center justify-between rounded-md border border-sgray-100 px-5 pb-1 pt-2"

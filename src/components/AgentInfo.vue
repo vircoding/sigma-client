@@ -34,9 +34,7 @@
       } else {
         invalidPhone.value = false;
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   });
 
   const firstnameError = computed(() => {
