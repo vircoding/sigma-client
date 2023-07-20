@@ -166,12 +166,9 @@
   });
 
   const formSubmit = async () => {
-    layoutStore.unhideSpinner();
     post.value.phone = formattedPhone.value;
     try {
-      const res = await postStore.insertPost(post.value);
-      await userStore.loadSessionPosts();
-      layoutStore.hideSpinner();
+      await postStore.insertPost(post.value);
 
       post.value.address.province = "La Habana";
       post.value.address.municipality = "";
@@ -195,7 +192,7 @@
       editedInputs.value.code = false;
       editedInputs.value.phone = false;
 
-      router.push(`/post/${res._id}`);
+      // router.push(`/post/${res._id}`);
     } catch (error) {
       console.log(error);
     }

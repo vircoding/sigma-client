@@ -1,13 +1,22 @@
 import { defineStore } from "pinia";
 import postServices from "../services/post.js";
+import router from "../router";
+import { useLayoutStore } from "./layout.js";
+import { useUserStore } from "./user.js";
+
+const userStore = useUserStore();
+const layoutStore = useLayoutStore();
 
 export const usePostStore = defineStore("post", () => {
   // Actions
   const insertPost = async (post) => {
     try {
+      layoutStore.unhideSpinner();
       const res = await postServices.insertPost(post);
+      await userStore.loadSessionPosts();
+      layoutStore.hideSpinner();
 
-      return res.data;
+      router.push(`/post/${res.data._id}`);
     } catch (error) {
       console.log(error);
     }
@@ -42,9 +51,12 @@ export const usePostStore = defineStore("post", () => {
 
   const updatePost = async (id, post) => {
     try {
-      const res = await postServices.updatePost(id, post);
+      layoutStore.unhideSpinner();
+      await postServices.updatePost(id, post);
+      await userStore.loadSessionPosts();
+      layoutStore.hideSpinner();
 
-      return res.data.post;
+      router.push(`/post/${id}`);
     } catch (error) {
       console.log(error);
     }

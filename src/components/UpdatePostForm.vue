@@ -6,7 +6,7 @@
   import RadioInput from "./RadioInput.vue";
   import SelectInput from "./SelectInput.vue";
   import { provinceList, municipalityList } from "../utils/provinces";
-  import { ref, computed, watch, onMounted } from "vue";
+  import { ref, computed, watch } from "vue";
   import parsePhoneNumber from "libphonenumber-js";
   import router from "../router";
   import { useRoute } from "vue-router";
@@ -143,14 +143,9 @@
   });
 
   const formSubmit = async () => {
-    layoutStore.unhideSpinner();
     newPost.value.phone = formattedPhone.value;
     try {
       await postStore.updatePost(route.params.id, newPost.value);
-      await userStore.loadSessionPosts();
-      layoutStore.hideSpinner();
-
-      router.push(`/post/${route.params.id}`);
     } catch (error) {
       console.log(error);
     }
