@@ -6,8 +6,6 @@ import postServices from "../services/post.js";
 import { useLayoutStore } from "./layout";
 
 export const useUserStore = defineStore("user", () => {
-  const layoutStore = useLayoutStore();
-
   // State
   const userState = ref({
     info: {},
@@ -18,6 +16,8 @@ export const useUserStore = defineStore("user", () => {
     },
     posts: [],
   });
+
+  const layoutStore = useLayoutStore();
 
   const token = ref("");
   const tokenExpiration = ref(null);
@@ -261,7 +261,6 @@ export const useUserStore = defineStore("user", () => {
   };
 
   onMounted(async () => {
-    await refreshToken(true);
     setInterval(async () => {
       console.log("refreshing de onmounted");
       if (isLoggedIn.value) {

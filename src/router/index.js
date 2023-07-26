@@ -28,19 +28,40 @@ const routes = [
     path: "/auth/register/client",
     name: "register-client",
     component: () => import("../views/RegisterClientView.vue"),
-    meta: { requiresAuth: false },
+    beforeEnter: (to, from, next) => {
+      const userStore = useUserStore();
+      if (userStore.isLoggedIn) {
+        next("/");
+      } else {
+        next("");
+      }
+    },
   },
   {
     path: "/auth/register/agent",
     name: "register-agent",
     component: () => import("../views/RegisterAgentView.vue"),
-    meta: { requiresAuth: false },
+    beforeEnter: (to, from, next) => {
+      const userStore = useUserStore();
+      if (userStore.isLoggedIn) {
+        next("/");
+      } else {
+        next("");
+      }
+    },
   },
   {
     path: "/auth/login",
     name: "login",
     component: () => import("../views/LoginView.vue"),
-    meta: { requiresAuth: false },
+    beforeEnter: (to, from, next) => {
+      const userStore = useUserStore();
+      if (userStore.isLoggedIn) {
+        next("/");
+      } else {
+        next("");
+      }
+    },
   },
   {
     path: "/find",
@@ -94,29 +115,26 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const layoutStore = useLayoutStore();
   layoutStore.hideSideMenu();
 
-  if (!from.name && to.name !== "home") {
-    next("/");
-  } else {
-    const userStore = useUserStore();
-    if (to.meta.requiresAuth === true) {
-      if (userStore.isLoggedIn) {
-        next();
-      } else {
-        next("/auth/login");
-      }
-    } else if (to.meta.requiresAuth === false) {
-      if (userStore.isLoggedIn) {
-        next("/");
-      } else {
-        next();
-      }
-    } else {
+  const userStore = useUserStore();
+  if (!from.name) {
+    layoutStore.unhideLoading();
+    await userStore.refreshToken(true);
+    layoutStore.hideLoading();
+  }
+
+  if (to.meta.requiresAuth === true) {
+    console.log(userStore.isLoggedIn);
+    if (userStore.isLoggedIn) {
       next();
+    } else {
+      next("/auth/login");
     }
+  } else {
+    next();
   }
 });
 
