@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useUserStore } from "../stores/user.js";
+import { usePostStore } from "../stores/post.js";
 import { useLayoutStore } from "../stores/layout.js";
 
 const routes = [
@@ -64,6 +65,21 @@ const routes = [
     name: "post",
     component: () => import("../views/PostView.vue"),
     meta: { requiresAuth: true },
+    beforeEnter: async (to, from, next) => {
+      const postStore = usePostStore();
+      const layoutStore = useLayoutStore();
+
+      layoutStore.unhideSpinner();
+      try {
+        await postStore.loadPost(to.params.id);
+        layoutStore.hideSpinner();
+        next();
+      } catch (error) {
+        console.log(error);
+        layoutStore.hideSpinner();
+        next("/");
+      }
+    },
   },
   {
     path: "/post/edit/:id",

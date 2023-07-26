@@ -223,26 +223,26 @@
           <div class="relative bottom-[2px] space-y-1">
             <!-- Garage -->
             <div class="flex gap-2">
-              <input v-model="post.features.garage" type="checkbox" name="garage" id="garage" />
+              <input v-model="newPost.features.garage" type="checkbox" name="garage" id="garage" />
               <label for="garage">Garage</label>
             </div>
 
             <!-- Garden -->
             <div class="flex gap-2">
-              <input v-model="post.features.garden" type="checkbox" name="garden" id="garden" />
+              <input v-model="newPost.features.garden" type="checkbox" name="garden" id="garden" />
               <label for="garden">Jardín</label>
             </div>
 
             <!-- Pool -->
             <div class="flex gap-2">
-              <input v-model="post.features.pool" type="checkbox" name="pool" id="pool" />
+              <input v-model="newPost.features.pool" type="checkbox" name="pool" id="pool" />
               <label for="pool">Piscina</label>
             </div>
 
             <!-- Furnished -->
             <div class="flex gap-2">
               <input
-                v-model="post.features.furnished"
+                v-model="newPost.features.furnished"
                 type="checkbox"
                 name="furnished"
                 id="furnished"
