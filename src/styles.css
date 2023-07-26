@@ -22,7 +22,7 @@
   }
 
   .brand-icon-container {
-    @apply rounded-full border border-sigma p-1 hover:cursor-pointer hover:border-b-white;
+    @apply rounded-full border border-sigma p-1 hover:cursor-pointer hover:border-b-sgray-100;
   }
 
   .brand-icon-item-agent {
@@ -30,6 +30,6 @@
   }
 
   .brand-icon-item {
-    @apply w-5 fill-white lg:w-8;
+    @apply w-5 fill-sgray-100 lg:w-8;
   }
 }

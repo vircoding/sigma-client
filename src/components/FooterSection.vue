@@ -21,14 +21,14 @@
         <RouterLink
           to="/support/about"
           class="hover:underline"
-          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-white'"
+          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-sgray-100'"
           >¿Quiénes somos?</RouterLink
         >
         <!-- TODO: Add an id ref to HelpView to FAQ section -->
         <RouterLink
           to="/support/help"
           class="hover:underline"
-          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-white'"
+          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-sgray-100'"
           >Preguntas Frequentes</RouterLink
         >
       </div>
@@ -40,7 +40,7 @@
         <a
           href="https://www.youtube.com/"
           class="hover:underline"
-          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-white'"
+          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-sgray-100'"
         >
           ¿Cómo funciona el sitio? (Tutorial)
         </a>
@@ -48,7 +48,7 @@
         <RouterLink
           to="/support/help"
           class="hover:underline"
-          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-white'"
+          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-sgray-100'"
           >Quiero contratar un agente</RouterLink
         >
       </div>
@@ -59,7 +59,7 @@
         </h4>
         <p
           class="hover:underline"
-          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-white'"
+          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-sgray-100'"
         >
           /Insert some info..../
         </p>
@@ -71,14 +71,14 @@
         <!-- TODO: Check about send and post emails directly or maybe copy the email to the clipboard -->
         <span
           class="hover:underline"
-          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-white'"
+          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-sgray-100'"
           >hola@sigmacuba.com</span
         >
         <!-- TODO: Insert the original whatsapp chat link and icon -->
         <a
           href="#"
           class="hover:underline"
-          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-white'"
+          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-sgray-100'"
           >W +53 5-000-6233</a
         >
       </div>
@@ -101,16 +101,16 @@
     <div class="mt-5 flex h-[30px] w-full items-center justify-center gap-5">
       <SigmaIcon
         class="w-20 lg:w-56"
-        :class="props.role === 'agent' ? 'fill-sgray-400' : 'fill-white'"
+        :class="props.role === 'agent' ? 'fill-sgray-400' : 'fill-sgray-100'"
       />
       <div
         class="h-[25px] border-r"
-        :class="props.role === 'agent' ? 'border-sgray-400' : 'border-white'"
+        :class="props.role === 'agent' ? 'border-sgray-400' : 'border-sgray-100'"
       ></div>
       <div class="text-center">
         <span
           class="relative top-[2px] text-xs"
-          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-white'"
+          :class="props.role === 'agent' ? 'text-sgray-400' : 'text-sgray-100'"
           >© {{ year }}, La Habana, Cuba</span
         >
       </div>
