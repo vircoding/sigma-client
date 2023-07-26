@@ -22,10 +22,6 @@ export const usePostStore = defineStore("post", () => {
     }
   };
 
-  // const loadPost = (post) => {
-  //   postState.value = post;
-  // };
-
   const insertPost = async (post) => {
     try {
       layoutStore.unhideSpinner();
