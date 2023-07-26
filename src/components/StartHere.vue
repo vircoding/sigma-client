@@ -7,7 +7,7 @@
     class="text-shadow flex w-full flex-col items-center justify-center gap-4 px-[6%] text-center text-white lg:px-[6%]"
   >
     <h2 class="text-3xl font-extrabold uppercase">Comienza Por Aquí</h2>
-    <p class="font-archivo">
+    <p class="font-archivo text-sgray-100">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, necessitatibus!
     </p>
   </div>
