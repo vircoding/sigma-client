@@ -108,6 +108,11 @@ const routes = [
     component: () => import("../views/EditPostView.vue"),
     meta: { requiresAuth: true },
   },
+  {
+    path: "/:catchAll(.*)",
+    name: "404",
+    component: () => import("../views/NotFund.vue"),
+  },
 ];
 
 const router = createRouter({
