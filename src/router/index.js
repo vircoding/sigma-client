@@ -33,7 +33,7 @@ const routes = [
       if (userStore.isLoggedIn) {
         next("/");
       } else {
-        next("");
+        next();
       }
     },
   },
@@ -46,7 +46,7 @@ const routes = [
       if (userStore.isLoggedIn) {
         next("/");
       } else {
-        next("");
+        next();
       }
     },
   },
@@ -55,11 +55,13 @@ const routes = [
     name: "login",
     component: () => import("../views/LoginView.vue"),
     beforeEnter: (to, from, next) => {
+      console.log("hqjgfawfjgaf");
       const userStore = useUserStore();
       if (userStore.isLoggedIn) {
         next("/");
       } else {
-        next("");
+        console.log("Ayo bitches");
+        next();
       }
     },
   },
