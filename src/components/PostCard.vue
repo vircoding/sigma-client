@@ -73,18 +73,85 @@
             >{{ props.post.address.municipality }}, {{ props.post.address.province }}.</span
           >
         </div>
-        <div class="grid grow grid-cols-4 grid-rows-2 gap-y-2 font-semibold">
-          <div
-            v-for="(value, property) in props.post.features"
-            :key="property"
-            class="flex h-5 gap-[2px] place-self-center min-[420px]:gap-1 lg:gap-[2px]"
-          >
-            <div class="h-5 w-5 rounded-md" :class="value > 0 ? props.color : 'bg-sgray-100'"></div>
+        <!-- Features -->
+        <div
+          class="relative left-[5px] top-2 grid grow grid-cols-3 grid-rows-2 gap-y-2 font-semibold min-[420px]:w-[90%] min-[420px]:gap-y-0"
+        >
+          <!-- Bed Room -->
+          <div class="flex h-5 gap-[2px] place-self-start min-[420px]:gap-1 lg:gap-[2px]">
+            <div
+              class="h-6 w-6 rounded-md"
+              :class="props.post.features.bed_room > 0 ? props.color : 'bg-sgray-100'"
+            ></div>
             <span
-              class="scoped-font-condensed"
-              :class="value > 0 ? 'text-sgray-300' : 'text-sgray-100'"
-              >x{{ value }}</span
+              class="scoped-font-condensed relative left-[2px]"
+              :class="props.post.features.bed_room > 0 ? 'text-sgray-300' : 'text-sgray-100'"
+              >x{{ props.post.features.bed_room }}</span
             >
+          </div>
+          <!-- Bath Room -->
+          <div class="flex h-5 gap-[2px] place-self-start min-[420px]:gap-1 lg:gap-[2px]">
+            <div
+              class="h-6 w-6 rounded-md"
+              :class="props.post.features.bath_room > 0 ? props.color : 'bg-sgray-100'"
+            ></div>
+            <span
+              class="scoped-font-condensed relative left-[2px]"
+              :class="props.post.features.bath_room > 0 ? 'text-sgray-300' : 'text-sgray-100'"
+              >x{{ props.post.features.bath_room }}</span
+            >
+          </div>
+          <!-- Garage -->
+          <div class="flex h-5 gap-[2px] place-self-start min-[420px]:gap-1 lg:gap-[2px]">
+            <div
+              class="h-6 w-6 rounded-md"
+              :class="props.post.features.garage ? props.color : 'bg-sgray-100'"
+            ></div>
+            <img
+              class="relative -left-[2px]"
+              v-if="props.post.features.garage"
+              src="../assets/true-icon.svg"
+            />
+            <img class="relative -left-[2px]" v-else src="../assets/false-icon.svg" />
+          </div>
+          <!-- Garden -->
+          <div class="flex h-5 gap-[2px] place-self-start min-[420px]:gap-1 lg:gap-[2px]">
+            <div
+              class="h-6 w-6 rounded-md"
+              :class="props.post.features.garden ? props.color : 'bg-sgray-100'"
+            ></div>
+            <img
+              class="relative -left-[2px]"
+              v-if="props.post.features.garden"
+              src="../assets/true-icon.svg"
+            />
+            <img class="relative -left-[2px]" v-else src="../assets/false-icon.svg" />
+          </div>
+          <!-- Pool -->
+          <div class="flex h-5 gap-[2px] place-self-start min-[420px]:gap-1 lg:gap-[2px]">
+            <div
+              class="h-6 w-6 rounded-md"
+              :class="props.post.features.pool ? props.color : 'bg-sgray-100'"
+            ></div>
+            <img
+              class="relative -left-[2px]"
+              v-if="props.post.features.pool"
+              src="../assets/true-icon.svg"
+            />
+            <img class="relative -left-[2px]" v-else src="../assets/false-icon.svg" />
+          </div>
+          <!--Furnished -->
+          <div class="flex h-5 gap-[2px] place-self-start min-[420px]:gap-1 lg:gap-[2px]">
+            <div
+              class="h-6 w-6 rounded-md"
+              :class="props.post.features.furnished ? props.color : 'bg-sgray-100'"
+            ></div>
+            <img
+              class="relative -left-[2px]"
+              v-if="props.post.features.furnished"
+              src="../assets/true-icon.svg"
+            />
+            <img class="relative -left-[2px]" v-else src="../assets/false-icon.svg" />
           </div>
         </div>
       </div>
