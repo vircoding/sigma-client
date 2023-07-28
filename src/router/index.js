@@ -55,12 +55,10 @@ const routes = [
     name: "login",
     component: () => import("../views/LoginView.vue"),
     beforeEnter: (to, from, next) => {
-      console.log("hqjgfawfjgaf");
       const userStore = useUserStore();
       if (userStore.isLoggedIn) {
         next("/");
       } else {
-        console.log("Ayo bitches");
         next();
       }
     },
@@ -134,7 +132,6 @@ router.beforeEach(async (to, from, next) => {
   }
 
   if (to.meta.requiresAuth === true) {
-    console.log(userStore.isLoggedIn);
     if (userStore.isLoggedIn) {
       next();
     } else {
