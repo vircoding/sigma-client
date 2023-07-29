@@ -85,7 +85,6 @@ const routes = [
     path: "/post/:id",
     name: "post",
     component: () => import("../views/PostView.vue"),
-    meta: { requiresAuth: true },
     beforeEnter: async (to, from, next) => {
       const postStore = usePostStore();
       const layoutStore = useLayoutStore();
