@@ -29,7 +29,7 @@ export const usePostStore = defineStore("post", () => {
       await userStore.loadSessionPosts();
       layoutStore.hideSpinner();
 
-      router.push(`/post/${res.data._id}`);
+      await router.push(`/post/${res.data._id}`);
     } catch (error) {
       console.log(error);
     }
@@ -69,7 +69,7 @@ export const usePostStore = defineStore("post", () => {
       await userStore.loadSessionPosts();
       layoutStore.hideSpinner();
 
-      router.push(`/post/${id}`);
+      await router.push(`/post/${id}`);
     } catch (error) {
       console.log(error);
     }

@@ -53,7 +53,7 @@ export const useUserStore = defineStore("user", () => {
 
       layoutStore.hideSpinner();
 
-      router.push("/");
+      await router.push("/");
     } catch (error) {
       $reset();
       console.log(error);
@@ -91,7 +91,7 @@ export const useUserStore = defineStore("user", () => {
 
       layoutStore.hideSpinner();
 
-      router.push("/");
+      await router.push("/");
     } catch (error) {
       $reset();
       console.log(error);
@@ -129,7 +129,7 @@ export const useUserStore = defineStore("user", () => {
 
       layoutStore.hideSpinner();
 
-      router.push("/");
+      await router.push("/");
     } catch (error) {
       $reset();
       console.log(error);
@@ -186,7 +186,7 @@ export const useUserStore = defineStore("user", () => {
       localStorage.removeItem("activeSession");
       $reset();
       layoutStore.hideSpinner();
-      router.push("/");
+      await router.push("/");
     } catch (error) {
       if (error.response.status === 500) {
         throw new Error("Server Error");
