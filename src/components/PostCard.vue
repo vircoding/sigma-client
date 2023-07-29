@@ -112,7 +112,7 @@
               v-if="props.post.features.garage"
               src="../assets/true-icon.svg"
             />
-            <img class="relative -left-[2px]" v-else src="../assets/false-icon.svg" />
+            <img class="relative -left-[1px]" v-else src="../assets/false-icon.svg" />
           </div>
           <!-- Garden -->
           <div class="flex h-5 gap-[2px] place-self-start min-[420px]:gap-1 lg:gap-[2px]">
@@ -125,7 +125,7 @@
               v-if="props.post.features.garden"
               src="../assets/true-icon.svg"
             />
-            <img class="relative -left-[2px]" v-else src="../assets/false-icon.svg" />
+            <img class="relative -left-[1px]" v-else src="../assets/false-icon.svg" />
           </div>
           <!-- Pool -->
           <div class="flex h-5 gap-[2px] place-self-start min-[420px]:gap-1 lg:gap-[2px]">
@@ -138,7 +138,7 @@
               v-if="props.post.features.pool"
               src="../assets/true-icon.svg"
             />
-            <img class="relative -left-[2px]" v-else src="../assets/false-icon.svg" />
+            <img class="relative -left-[1px]" v-else src="../assets/false-icon.svg" />
           </div>
           <!--Furnished -->
           <div class="flex h-5 gap-[2px] place-self-start min-[420px]:gap-1 lg:gap-[2px]">
@@ -151,7 +151,7 @@
               v-if="props.post.features.furnished"
               src="../assets/true-icon.svg"
             />
-            <img class="relative -left-[2px]" v-else src="../assets/false-icon.svg" />
+            <img class="relative -left-[1px]" v-else src="../assets/false-icon.svg" />
           </div>
         </div>
       </div>
