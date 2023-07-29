@@ -2,14 +2,12 @@
   import ShareButton from "./ShareButton.vue";
   import { ref } from "vue";
   import { usePostStore } from "../stores/post.js";
-  import { useUserStore } from "../stores/user";
 
   const props = defineProps({
     post: Object,
   });
 
   const postStore = usePostStore();
-  const userStore = useUserStore();
 
   const alertVisibility = ref(false);
 
@@ -23,9 +21,8 @@
 
   const deletePost = async () => {
     try {
-      await postStore.deletePost(props.post._id);
-      await userStore.loadSessionPosts();
       hideAlert();
+      await postStore.deletePost(props.post._id);
     } catch (error) {
       console.log(error);
     }
