@@ -245,8 +245,8 @@
 
     <!-- My Posts -->
     <section class="mb-20 w-full">
-      <div class="mb-4 flex w-full items-center gap-3">
-        <h3 class="text-base font-semibold">Tus publicaciones</h3>
+      <div class="mb-4 flex w-full items-center gap-[6px]">
+        <h3 class="text-base font-semibold">Tus publicaciones ({{ props.posts.length }})</h3>
         <div class="h-[1px] grow border-t border-black"></div>
       </div>
       <ul class="space-y-4">
