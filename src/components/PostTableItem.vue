@@ -3,7 +3,6 @@
   import { ref } from "vue";
   import { usePostStore } from "../stores/post.js";
   import { useUserStore } from "../stores/user";
-  import user from "../services/user";
 
   const props = defineProps({
     post: Object,
@@ -75,38 +74,40 @@
       </div>
 
       <!-- Features -->
-      <div class="grid w-[190px] grid-cols-4 grid-rows-2 place-items-center">
+      <div class="grid w-[190px] grid-cols-3 grid-rows-2 place-items-center">
+        <!-- Bed Room -->
         <div class="flex items-center">
           <img src="../assets/bed-room-icon.svg" />
           <span>x{{ post.features.bed_room }}</span>
         </div>
-        <div class="flex items-center">
-          <img src="../assets/bed-room-icon.svg" />
-          <span>x{{ post.features.living_room }}</span>
-        </div>
+        <!-- Bath Room -->
         <div class="flex items-center">
           <img src="../assets/bed-room-icon.svg" />
           <span>x{{ post.features.bath_room }}</span>
         </div>
+        <!-- Garage -->
         <div class="flex items-center">
           <img src="../assets/bed-room-icon.svg" />
-          <span>x{{ post.features.dinning_room }}</span>
+          <img v-if="post.features.garage" src="../assets/true-icon.svg" />
+          <img v-else src="../assets/false-icon.svg" />
         </div>
+        <!-- Garden -->
         <div class="flex items-center">
           <img src="../assets/bed-room-icon.svg" />
-          <span>x{{ post.features.kitchen }}</span>
+          <img v-if="post.features.garden" src="../assets/true-icon.svg" />
+          <img v-else src="../assets/false-icon.svg" />
         </div>
+        <!-- Pool -->
         <div class="flex items-center">
           <img src="../assets/bed-room-icon.svg" />
-          <span>x{{ post.features.garage }}</span>
+          <img v-if="post.features.pool" src="../assets/true-icon.svg" />
+          <img v-else src="../assets/false-icon.svg" />
         </div>
+        <!-- Furnished -->
         <div class="flex items-center">
           <img src="../assets/bed-room-icon.svg" />
-          <span>x{{ post.features.garden }}</span>
-        </div>
-        <div class="flex items-center">
-          <img src="../assets/bed-room-icon.svg" />
-          <span>x{{ post.features.pool }}</span>
+          <img v-if="post.features.furnished" src="../assets/true-icon.svg" />
+          <img v-else src="../assets/false-icon.svg" />
         </div>
       </div>
 
