@@ -85,7 +85,7 @@
             ></div>
             <span
               class="scoped-font-condensed relative left-[2px]"
-              :class="props.post.features.bed_room > 0 ? 'text-sgray-300' : 'text-sgray-100'"
+              :class="props.post.features.bed_room > 0 ? 'text-sgray-300' : 'text-sgray-200'"
               >x{{ props.post.features.bed_room }}</span
             >
           </div>
@@ -97,7 +97,7 @@
             ></div>
             <span
               class="scoped-font-condensed relative left-[2px]"
-              :class="props.post.features.bath_room > 0 ? 'text-sgray-300' : 'text-sgray-100'"
+              :class="props.post.features.bath_room > 0 ? 'text-sgray-300' : 'text-sgray-200'"
               >x{{ props.post.features.bath_room }}</span
             >
           </div>

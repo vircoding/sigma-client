@@ -1,7 +1,13 @@
 <script setup>
+  import { computed } from "vue";
   import { usePostStore } from "../stores/post";
 
   const postStore = usePostStore();
+
+  const iconBoxColor = computed(() => {
+    if (postStore.postState.__t === "sale") return "bg-sigma";
+    return "bg-sgreen-300";
+  });
 </script>
 
 <template>
@@ -14,9 +20,18 @@
     <!-- Amount -->
     <div class="mb-1">
       <h2 class="text-shadow text-2xl font-extrabold">
-        5500 <span class="text-xl font-semibold">USD<span> / día</span></span>
+        {{
+          postStore.postState.__t === "sale" ? postStore.postState.price : postStore.postState.tax
+        }}
+        <span class="text-xl font-semibold uppercase">{{ postStore.postState.currency }}</span>
+        <span class="text-xl font-semibold lowercase" v-if="postStore.postState.__t === 'rent'">
+          / {{ postStore.postState.frequency === "daily" ? "día" : "mes" }}</span
+        >
       </h2>
-      <h3 class="text-shadow font-normal text-sgray-300">Habana Vieja, La Habana</h3>
+      <!-- Address -->
+      <h3 class="text-shadow font-normal text-sgray-300">
+        {{ postStore.postState.address.municipality }}, {{ postStore.postState.address.province }}
+      </h3>
     </div>
     <!-- Horizontal Line -->
     <div class="w-full border-t border-sgray-100"></div>
@@ -26,60 +41,102 @@
       <div class="text-shadow flex flex-col gap-[3px] font-semibold">
         <span>Cuartos</span>
         <div class="flex items-center gap-2">
-          <div class="text-shadow h-8 w-8 rounded-md bg-sigma"></div>
-          <span class="text-shadow">x2</span>
+          <div
+            class="text-shadow h-8 w-8 rounded-md"
+            :class="postStore.postState.features.bed_room > 0 ? iconBoxColor : 'bg-sgray-100'"
+          ></div>
+          <span
+            class="text-shadow text-base font-medium"
+            :class="postStore.postState.features.bed_room > 0 ? 'text-sgray-300' : 'text-sgray-200'"
+            >x{{ postStore.postState.features.bed_room }}</span
+          >
         </div>
       </div>
       <!-- Bath Room -->
       <div class="text-shadow flex flex-col gap-[3px] font-semibold">
         <span>Baños</span>
         <div class="flex items-center gap-2">
-          <div class="text-shadow h-8 w-8 rounded-md bg-sigma"></div>
-          <span class="text-shadow">x2</span>
+          <div
+            class="text-shadow h-8 w-8 rounded-md"
+            :class="postStore.postState.features.bed_room > 0 ? iconBoxColor : 'bg-sgray-100'"
+          ></div>
+          <span
+            class="text-shadow text-base font-medium"
+            :class="postStore.postState.features.bed_room > 0 ? 'text-sgray-300' : 'text-sgray-200'"
+            >x{{ postStore.postState.features.bath_room }}</span
+          >
         </div>
       </div>
       <!-- Garage -->
       <div class="text-shadow flex flex-col gap-[3px] font-semibold">
         <span>Garage</span>
         <div class="flex items-center gap-2">
-          <div class="text-shadow h-8 w-8 rounded-md bg-sigma"></div>
-          <span class="text-shadow">x2</span>
+          <div
+            class="text-shadow h-8 w-8 rounded-md"
+            :class="postStore.postState.features.garage ? iconBoxColor : 'bg-sgray-100'"
+          ></div>
+          <img
+            v-if="postStore.postState.features.garage"
+            src="../assets/true-icon.svg"
+            class="relative -left-[6px] -top-[1px]"
+          />
+          <img v-else src="../assets/false-icon.svg" class="relative -left-[3px] -top-[1px]" />
         </div>
       </div>
       <!-- Garden -->
       <div class="text-shadow flex flex-col gap-[3px] font-semibold">
         <span>Jardín</span>
         <div class="flex items-center gap-2">
-          <div class="text-shadow h-8 w-8 rounded-md bg-sigma"></div>
-          <span class="text-shadow">x2</span>
+          <div
+            class="text-shadow h-8 w-8 rounded-md"
+            :class="postStore.postState.features.garden ? iconBoxColor : 'bg-sgray-100'"
+          ></div>
+          <img
+            v-if="postStore.postState.features.garden"
+            src="../assets/true-icon.svg"
+            class="relative -left-[6px] -top-[1px]"
+          />
+          <img v-else src="../assets/false-icon.svg" class="relative -left-[3px] -top-[1px]" />
         </div>
       </div>
       <!-- Pool -->
       <div class="text-shadow flex flex-col gap-[3px] font-semibold">
         <span>Piscina</span>
         <div class="flex items-center gap-2">
-          <div class="text-shadow h-8 w-8 rounded-md bg-sigma"></div>
-          <span class="text-shadow">x2</span>
+          <div
+            class="text-shadow h-8 w-8 rounded-md"
+            :class="postStore.postState.features.pool ? iconBoxColor : 'bg-sgray-100'"
+          ></div>
+          <img
+            v-if="postStore.postState.features.pool"
+            src="../assets/true-icon.svg"
+            class="relative -left-[6px] -top-[1px]"
+          />
+          <img v-else src="../assets/false-icon.svg" class="relative -left-[3px] -top-[1px]" />
         </div>
       </div>
       <!-- Furnished -->
       <div class="text-shadow flex flex-col gap-[3px] font-semibold">
         <span>Amueblada</span>
         <div class="flex items-center gap-2">
-          <div class="text-shadow h-8 w-8 rounded-md bg-sigma"></div>
-          <span class="text-shadow">x2</span>
+          <div
+            class="text-shadow h-8 w-8 rounded-md"
+            :class="postStore.postState.features.furnished ? iconBoxColor : 'bg-sgray-100'"
+          ></div>
+          <img
+            v-if="postStore.postState.features.furnished"
+            src="../assets/true-icon.svg"
+            class="relative -left-[6px] -top-[1px]"
+          />
+          <img v-else src="../assets/false-icon.svg" class="relative -left-[3px] -top-[1px]" />
         </div>
       </div>
     </div>
     <!-- Horizontal Line -->
     <div class="w-full border-t border-sgray-100"></div>
     <!-- Description -->
-    <div class="mb-2 mt-1 w-full break-words">
-      <p class="text-shadow">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda aut laudantium esse quo
-        in aliquam, tenetur quos sapiente! Maxime obcaecati iste nam blanditiis quisquam quas
-        reprehenderit, commodi et praesentium? Omnis!
-      </p>
+    <div class="mb-1 mt-1 w-full break-words">
+      <p class="text-shadow">{{ postStore.postState.description }}</p>
     </div>
     <!-- Horizontal Line -->
     <div class="w-full border-t border-sgray-100"></div>
@@ -108,31 +165,4 @@
       </div>
     </div>
   </div>
-  <!-- <div class="p-10">
-    <h1>Post View</h1>
-    <h1>ID: {{ postStore.postState._id }}</h1>
-    <h1>Type: {{ postStore.postState.__t }}</h1>
-    <h1 v-if="postStore.postState.__t === 'sale'">
-      Price: {{ postStore.postState.price }}
-      <span class="uppercase">{{ postStore.postState.currency }}</span>
-    </h1>
-    <h1 v-else>
-      Tax: {{ postStore.postState.tax }}
-      <span class="uppercase">{{ postStore.postState.currency }}</span> /
-      <span v-if="postStore.postState.frequency === 'daily'">Día</span><span v-else>Mes</span>
-    </h1>
-    <h1>
-      Dirección: {{ postStore.postState.address.municipality }},
-      {{ postStore.postState.address.province }}
-    </h1>
-    <h1>Cuartos: {{ postStore.postState.features.bed_room }}</h1>
-    <h1>Baños: {{ postStore.postState.features.bath_room }}</h1>
-    <h1>Garages: {{ postStore.postState.features.garage }}</h1>
-    <h1>Jardines: {{ postStore.postState.features.garden }}</h1>
-    <h1>Piscinas: {{ postStore.postState.features.pool }}</h1>
-    <h1>Amueblada: {{ postStore.postState.features.furnished }}</h1>
-    <h1 class="break-words">Descripción: {{ postStore.postState.description }}</h1>
-    <h1>Teléfono a contactar: {{ postStore.postState.phone }}</h1>
-    <h1>Visitas: {{ postStore.postState.visits_count }}</h1>
-  </div> -->
 </template>
