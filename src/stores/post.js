@@ -17,6 +17,7 @@ export const usePostStore = defineStore("post", () => {
     try {
       const res = await postServices.getPost(id);
       postState.value = res.data.post;
+      postState.value.published_by = res.data.published_by;
     } catch (error) {
       console.log(error);
     }

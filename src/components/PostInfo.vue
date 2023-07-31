@@ -50,7 +50,7 @@
             "
           ></div>
           <span
-            class="text-shadow text-base font-medium"
+            class="text-shadow text-base"
             :class="postStore.postState.features.bed_room > 0 ? 'text-sgray-300' : 'text-sgray-200'"
             >x{{ postStore.postState.features.bed_room }}</span
           >
@@ -69,7 +69,7 @@
             "
           ></div>
           <span
-            class="text-shadow text-base font-medium"
+            class="text-shadow text-base"
             :class="postStore.postState.features.bed_room > 0 ? 'text-sgray-300' : 'text-sgray-200'"
             >x{{ postStore.postState.features.bath_room }}</span
           >
@@ -157,9 +157,15 @@
       <p class="text-shadow">{{ postStore.postState.description }}</p>
     </div>
     <!-- Horizontal Line -->
-    <div class="w-full border-t border-sgray-100"></div>
+    <div
+      v-if="postStore.postState.published_by.role === 'agent'"
+      class="w-full border-t border-sgray-100"
+    ></div>
     <!-- Agent -->
-    <div class="mt-2 flex w-full justify-between gap-3">
+    <div
+      v-if="postStore.postState.published_by.role === 'agent'"
+      class="mt-2 flex w-full justify-between gap-3"
+    >
       <!-- Avatar -->
       <div class="w-1/5">
         <img
@@ -168,18 +174,31 @@
           alt="Avatar del agente"
         />
       </div>
-      <div class="flex w-4/5 flex-col gap-1">
-        <!-- Name -->
-        <h4 class="text-shadow">
-          Publicado por <span class="font-semibold">Luis Miguel Navarro</span>
-        </h4>
+      <div class="flex w-4/5 flex-col gap-2">
+        <div class="mb-[1px] leading-tight">
+          <!-- Name -->
+          <h4 class="text-shadow">
+            Por
+            <span class="font-semibold">{{
+              postStore.postState.published_by.agent.firstname +
+              " " +
+              postStore.postState.published_by.agent.lastname
+            }}</span>
+          </h4>
+          <!-- Public Email -->
+          <!-- <h5 class="text-sgray-300">{{ postStore.postState.published_by.agent.public_email }}</h5> -->
+          <a
+            class="text-sgray-300"
+            :href="`mailto:${postStore.postState.published_by.agent.public_email}`"
+            >{{ postStore.postState.published_by.agent.public_email }}</a
+          >
+        </div>
         <!-- Horizontal Line -->
         <div class="w-[98%] border-t border-sgray-100"></div>
         <!-- Bio -->
-        <span class="text-shadow inline-block w-full">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Error explicabo ullam voluptatem
-          at temporibus! Sequi, explicabo. Delectus labore reprehenderit quibusdam.
-        </span>
+        <span class="text-shadow inline-block w-full">{{
+          postStore.postState.published_by.agent.bio
+        }}</span>
       </div>
     </div>
   </div>
