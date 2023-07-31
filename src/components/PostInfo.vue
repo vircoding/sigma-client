@@ -42,8 +42,12 @@
         <span>Cuartos</span>
         <div class="flex items-center gap-2">
           <div
-            class="text-shadow h-8 w-8 rounded-md"
-            :class="postStore.postState.features.bed_room > 0 ? iconBoxColor : 'bg-sgray-100'"
+            class="h-8 w-8 rounded-md"
+            :class="
+              postStore.postState.features.bed_room > 0
+                ? iconBoxColor + ' text-shadow'
+                : 'bg-sgray-100'
+            "
           ></div>
           <span
             class="text-shadow text-base font-medium"
@@ -57,8 +61,12 @@
         <span>Baños</span>
         <div class="flex items-center gap-2">
           <div
-            class="text-shadow h-8 w-8 rounded-md"
-            :class="postStore.postState.features.bed_room > 0 ? iconBoxColor : 'bg-sgray-100'"
+            class="h-8 w-8 rounded-md"
+            :class="
+              postStore.postState.features.bed_room > 0
+                ? iconBoxColor + ' text-shadow'
+                : 'bg-sgray-100'
+            "
           ></div>
           <span
             class="text-shadow text-base font-medium"
@@ -72,15 +80,17 @@
         <span>Garage</span>
         <div class="flex items-center gap-2">
           <div
-            class="text-shadow h-8 w-8 rounded-md"
-            :class="postStore.postState.features.garage ? iconBoxColor : 'bg-sgray-100'"
+            class="h-8 w-8 rounded-md"
+            :class="
+              postStore.postState.features.garage ? iconBoxColor + ' text-shadow' : 'bg-sgray-100'
+            "
           ></div>
           <img
             v-if="postStore.postState.features.garage"
             src="../assets/true-icon.svg"
             class="relative -left-[6px] -top-[1px]"
           />
-          <img v-else src="../assets/false-icon.svg" class="relative -left-[3px] -top-[1px]" />
+          <img v-else src="../assets/false-icon.svg" class="relative -left-[4px] -top-[1px]" />
         </div>
       </div>
       <!-- Garden -->
@@ -88,15 +98,17 @@
         <span>Jardín</span>
         <div class="flex items-center gap-2">
           <div
-            class="text-shadow h-8 w-8 rounded-md"
-            :class="postStore.postState.features.garden ? iconBoxColor : 'bg-sgray-100'"
+            class="h-8 w-8 rounded-md"
+            :class="
+              postStore.postState.features.garden ? iconBoxColor + ' text-shadow' : 'bg-sgray-100'
+            "
           ></div>
           <img
             v-if="postStore.postState.features.garden"
             src="../assets/true-icon.svg"
             class="relative -left-[6px] -top-[1px]"
           />
-          <img v-else src="../assets/false-icon.svg" class="relative -left-[3px] -top-[1px]" />
+          <img v-else src="../assets/false-icon.svg" class="relative -left-[4px] -top-[1px]" />
         </div>
       </div>
       <!-- Pool -->
@@ -104,15 +116,17 @@
         <span>Piscina</span>
         <div class="flex items-center gap-2">
           <div
-            class="text-shadow h-8 w-8 rounded-md"
-            :class="postStore.postState.features.pool ? iconBoxColor : 'bg-sgray-100'"
+            class="h-8 w-8 rounded-md"
+            :class="
+              postStore.postState.features.pool ? iconBoxColor + ' text-shadow' : 'bg-sgray-100'
+            "
           ></div>
           <img
             v-if="postStore.postState.features.pool"
             src="../assets/true-icon.svg"
             class="relative -left-[6px] -top-[1px]"
           />
-          <img v-else src="../assets/false-icon.svg" class="relative -left-[3px] -top-[1px]" />
+          <img v-else src="../assets/false-icon.svg" class="relative -left-[4px] -top-[1px]" />
         </div>
       </div>
       <!-- Furnished -->
@@ -120,15 +134,19 @@
         <span>Amueblada</span>
         <div class="flex items-center gap-2">
           <div
-            class="text-shadow h-8 w-8 rounded-md"
-            :class="postStore.postState.features.furnished ? iconBoxColor : 'bg-sgray-100'"
+            class="h-8 w-8 rounded-md"
+            :class="
+              postStore.postState.features.furnished
+                ? iconBoxColor + ' text-shadow'
+                : 'bg-sgray-100'
+            "
           ></div>
           <img
             v-if="postStore.postState.features.furnished"
             src="../assets/true-icon.svg"
             class="relative -left-[6px] -top-[1px]"
           />
-          <img v-else src="../assets/false-icon.svg" class="relative -left-[3px] -top-[1px]" />
+          <img v-else src="../assets/false-icon.svg" class="relative -left-[4px] -top-[1px]" />
         </div>
       </div>
     </div>
@@ -146,7 +164,7 @@
       <div class="w-1/5">
         <img
           src="../assets/agent-avatar.jpg"
-          class="text-shadow rounded-full"
+          class="text-shadow rounded-full border-2 border-sgray-100"
           alt="Avatar del agente"
         />
       </div>
