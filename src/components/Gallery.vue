@@ -9,7 +9,6 @@
   const images = [cardImg, cardImg2, cardImg3, cardImg4, cardImg5];
 
   const activeIndex = ref(0);
-  const activeClass = ref("-translate-x-[0%]");
 
   // Swipe
   const startPositionX = ref(null);
