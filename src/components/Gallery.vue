@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, onMounted } from "vue";
+  import { ref } from "vue";
   import cardImg from "../assets/card-img.jpg";
   import cardImg2 from "../assets/card-img2.jpg";
   import cardImg3 from "../assets/card-img3.jpg";
@@ -12,16 +12,45 @@
   const activeClass = ref("-translate-x-[0%]");
 
   // Swipe
-  const startSwipe = (event) => {};
+  const startPosition = ref(null);
+  const diffX = ref(0);
+  const translationLength = ref(0);
 
-  const moveSwipe = (event) => {};
+  const startSwipe = (event) => {
+    startPosition.value = event.touches[0].clientX;
+  };
 
-  const endSwipe = (event) => {};
+  const moveSwipe = (event) => {
+    const movePos = event.touches[0].clientX;
+    if (activeIndex.value === 0 && movePos - startPosition.value > 0) {
+      return;
+    } else if (activeIndex.value === 4 && movePos - startPosition.value < 0) {
+      return;
+    }
+    diffX.value = movePos - startPosition.value;
+    translationLength.value =
+      -(activeIndex.value * window.innerWidth) + movePos - startPosition.value;
+  };
+
+  const endSwipe = (event) => {
+    if (diffX.value > window.innerWidth / 2) {
+      activeIndex.value = activeIndex.value - 1;
+    } else if (diffX.value < -(window.innerWidth / 2)) {
+      activeIndex.value = activeIndex.value + 1;
+    }
+    translationLength.value = -(activeIndex.value * window.innerWidth);
+    startPosition.value = null;
+    diffX.value = 0;
+  };
 
   const directMove = (index) => {
     activeIndex.value = index;
     activeClass.value = `-translate-x-[${index * 100}%]`;
   };
+
+  const prevImage = () => {};
+
+  const nextImage = () => {};
 
   // Loading Images
   // onMounted(() => {
@@ -29,11 +58,13 @@
   // });
 </script>
 
+<!-- duration-[500ms] -->
+
 <template>
   <div class="overflow-hidden">
     <div
-      :class="activeClass"
-      class="relative flex aspect-video w-full transition-transform duration-[500ms]"
+      :style="`transform: translateX(${translationLength}px)`"
+      class="relative flex aspect-video w-full shadow-lg"
     >
       <img
         v-for="(image, index) in images"
@@ -57,22 +88,3 @@
     </div>
   </div>
 </template>
-
-<style scoped>
-  .slider {
-    aspect-ratio: 16 / 9;
-    width: 100%;
-    position: relative;
-    display: flex;
-    overflow: scroll;
-    scroll-snap-type: x mandatory;
-  }
-
-  .slider img {
-    width: 100%;
-    left: 0;
-    position: sticky;
-    object-fit: cover;
-    scroll-snap-align: center;
-  }
-</style>
