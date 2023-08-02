@@ -15,6 +15,7 @@
   const startPosition = ref(null);
   const diffX = ref(0);
   const translationLength = ref(0);
+  const transitionEnable = ref("");
 
   const startSwipe = (event) => {
     startPosition.value = event.touches[0].clientX;
@@ -38,9 +39,13 @@
     } else if (diffX.value < -(window.innerWidth / 2)) {
       activeIndex.value = activeIndex.value + 1;
     }
+    transitionEnable.value = "transition-transform duration-500";
     translationLength.value = -(activeIndex.value * window.innerWidth);
     startPosition.value = null;
     diffX.value = 0;
+    setTimeout(() => {
+      transitionEnable.value = "";
+    }, 500);
   };
 
   const directMove = (index) => {
@@ -65,6 +70,7 @@
     <div
       :style="`transform: translateX(${translationLength}px)`"
       class="relative flex aspect-video w-full shadow-lg"
+      :class="transitionEnable"
     >
       <img
         v-for="(image, index) in images"
