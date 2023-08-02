@@ -12,25 +12,34 @@
   const activeClass = ref("-translate-x-[0%]");
 
   // Swipe
-  const startPosition = ref(null);
+  const startPositionX = ref(null);
+  const startPositionY = ref(null);
   const diffX = ref(0);
   const translationLength = ref(0);
   const transitionEnable = ref("");
 
   const startSwipe = (event) => {
-    startPosition.value = event.touches[0].clientX;
+    startPositionX.value = event.touches[0].clientX;
+    startPositionY.value = event.touches[0].clientY;
   };
 
   const moveSwipe = (event) => {
-    const movePos = event.touches[0].clientX;
-    if (activeIndex.value === 0 && movePos - startPosition.value > 0) {
+    const movePosX = event.touches[0].clientX;
+    const movePosY = event.touches[0].clientY;
+    const diffY = Math.abs(movePosY - startPositionY.value);
+
+    if (diffY > 0) {
+      event.preventDefault();
+    }
+
+    if (activeIndex.value === 0 && movePosX - startPositionX.value > 0) {
       return;
-    } else if (activeIndex.value === 4 && movePos - startPosition.value < 0) {
+    } else if (activeIndex.value === 4 && movePosX - startPositionX.value < 0) {
       return;
     }
-    diffX.value = movePos - startPosition.value;
+    diffX.value = movePosX - startPositionX.value;
     translationLength.value =
-      -(activeIndex.value * window.innerWidth) + movePos - startPosition.value;
+      -(activeIndex.value * window.innerWidth) + movePosX - startPositionX.value;
   };
 
   const endSwipe = (event) => {
@@ -41,7 +50,7 @@
     }
     transitionEnable.value = "transition-transform duration-500";
     translationLength.value = -(activeIndex.value * window.innerWidth);
-    startPosition.value = null;
+    startPositionX.value = null;
     diffX.value = 0;
     setTimeout(() => {
       transitionEnable.value = "";
@@ -49,13 +58,13 @@
   };
 
   const directMove = (index) => {
+    transitionEnable.value = "transition-transform duration-500";
     activeIndex.value = index;
-    activeClass.value = `-translate-x-[${index * 100}%]`;
+    translationLength.value = -(activeIndex.value * window.innerWidth);
+    setTimeout(() => {
+      transitionEnable.value = "";
+    }, 500);
   };
-
-  const prevImage = () => {};
-
-  const nextImage = () => {};
 
   // Loading Images
   // onMounted(() => {
@@ -63,20 +72,18 @@
   // });
 </script>
 
-<!-- duration-[500ms] -->
-
 <template>
   <div class="overflow-hidden">
     <div
       :style="`transform: translateX(${translationLength}px)`"
-      class="relative flex aspect-video w-full shadow-lg"
+      class="relative flex aspect-video w-full"
       :class="transitionEnable"
     >
       <img
         v-for="(image, index) in images"
         :key="index"
         :src="image"
-        class="sticky left-0 w-full object-cover"
+        class="sticky left-0 w-full object-cover shadow-lg"
         @touchstart="startSwipe($event)"
         @touchmove="moveSwipe($event)"
         @touchend="endSwipe($event)"
