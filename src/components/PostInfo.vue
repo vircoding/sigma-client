@@ -1,6 +1,7 @@
 <script setup>
   import { computed } from "vue";
   import { usePostStore } from "../stores/post";
+  import Gallery from "./Gallery.vue";
 
   const postStore = usePostStore();
 
@@ -12,11 +13,12 @@
 
 <template>
   <!-- Gallery -->
-  <div class="w-full">
+  <!-- <div class="w-full">
     <img src="../assets/card-img.jpg" class="h-[250px] shadow-lg" alt="Una Casa" />
-  </div>
+  </div> -->
+  <Gallery />
   <!-- Details -->
-  <div class="flex w-full flex-col gap-2 px-5 py-4">
+  <div class="flex w-full flex-col gap-2 px-5 pb-4">
     <!-- Amount -->
     <div class="mb-1">
       <h2 class="text-shadow text-2xl font-extrabold">
@@ -88,9 +90,13 @@
           <img
             v-if="postStore.postState.features.garage"
             src="../assets/true-icon.svg"
-            class="relative -left-[6px] -top-[1px]"
+            class="text-shadow relative -left-[6px] -top-[1px]"
           />
-          <img v-else src="../assets/false-icon.svg" class="relative -left-[4px] -top-[1px]" />
+          <img
+            v-else
+            src="../assets/false-icon.svg"
+            class="text-shadow text-shadow relative -left-[4px] -top-[1px]"
+          />
         </div>
       </div>
       <!-- Garden -->
@@ -106,9 +112,13 @@
           <img
             v-if="postStore.postState.features.garden"
             src="../assets/true-icon.svg"
-            class="relative -left-[6px] -top-[1px]"
+            class="text-shadow relative -left-[6px] -top-[1px]"
           />
-          <img v-else src="../assets/false-icon.svg" class="relative -left-[4px] -top-[1px]" />
+          <img
+            v-else
+            src="../assets/false-icon.svg"
+            class="text-shadow relative -left-[4px] -top-[1px]"
+          />
         </div>
       </div>
       <!-- Pool -->
@@ -124,9 +134,13 @@
           <img
             v-if="postStore.postState.features.pool"
             src="../assets/true-icon.svg"
-            class="relative -left-[6px] -top-[1px]"
+            class="text-shadow relative -left-[6px] -top-[1px]"
           />
-          <img v-else src="../assets/false-icon.svg" class="relative -left-[4px] -top-[1px]" />
+          <img
+            v-else
+            src="../assets/false-icon.svg"
+            class="text-shadow relative -left-[4px] -top-[1px]"
+          />
         </div>
       </div>
       <!-- Furnished -->
@@ -144,9 +158,13 @@
           <img
             v-if="postStore.postState.features.furnished"
             src="../assets/true-icon.svg"
-            class="relative -left-[6px] -top-[1px]"
+            class="text-shadow relative -left-[6px] -top-[1px]"
           />
-          <img v-else src="../assets/false-icon.svg" class="relative -left-[4px] -top-[1px]" />
+          <img
+            v-else
+            src="../assets/false-icon.svg"
+            class="text-shadow relative -left-[4px] -top-[1px]"
+          />
         </div>
       </div>
     </div>
