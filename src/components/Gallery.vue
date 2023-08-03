@@ -108,14 +108,6 @@
       />
     </div>
     <div class="mt-2 flex justify-center gap-[2px] py-4">
-      <!-- <span
-        v-for="(image, index) in images"
-        :key="index"
-        @click="directMove(index)"
-        class="text-lg text-sgray-400"
-      >
-        {{ index === activeIndex ? "●" : "○" }}
-      </span> -->
       <GalleryIndicator
         v-for="(image, index) in images"
         :key="index"
@@ -124,6 +116,4 @@
       />
     </div>
   </div>
-  <!-- <GalleryIndicator :enable="false" /> -->
-  <!-- <GalleryIndicator :enable="true" /> -->
 </template>

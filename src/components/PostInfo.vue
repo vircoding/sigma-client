@@ -1,7 +1,9 @@
 <script setup>
-  import { computed } from "vue";
+  import { ref, computed } from "vue";
   import { usePostStore } from "../stores/post";
   import Gallery from "./Gallery.vue";
+  import FavoriteIcon from "./icons/FavoriteIcon.vue";
+  import ShareButton from "./ShareButton.vue";
 
   const postStore = usePostStore();
 
@@ -9,27 +11,41 @@
     if (postStore.postState.__t === "sale") return "bg-sigma";
     return "bg-sgreen-300";
   });
+
+  const favorite = ref(false);
+
+  const switchFavorite = () => {
+    favorite.value = !favorite.value;
+  };
 </script>
 
 <template>
   <!-- Gallery -->
-  <!-- <div class="w-full">
-    <img src="../assets/card-img.jpg" class="h-[250px] shadow-lg" alt="Una Casa" />
-  </div> -->
-  <Gallery />
+  <section>
+    <Gallery />
+  </section>
   <!-- Details -->
   <div class="flex w-full flex-col gap-2 px-5 pb-4">
-    <!-- Amount -->
+    <!-- Top -->
     <div class="mb-1">
-      <h2 class="text-shadow text-2xl font-extrabold">
-        {{
-          postStore.postState.__t === "sale" ? postStore.postState.price : postStore.postState.tax
-        }}
-        <span class="text-xl font-semibold uppercase">{{ postStore.postState.currency }}</span>
-        <span class="text-xl font-semibold lowercase" v-if="postStore.postState.__t === 'rent'">
-          / {{ postStore.postState.frequency === "daily" ? "día" : "mes" }}</span
-        >
-      </h2>
+      <!-- Amount/Buttons -->
+      <div class="flex items-center justify-between">
+        <!-- Amount -->
+        <h2 class="text-shadow text-2xl font-extrabold">
+          {{
+            postStore.postState.__t === "sale" ? postStore.postState.price : postStore.postState.tax
+          }}
+          <span class="text-xl font-semibold uppercase">{{ postStore.postState.currency }}</span>
+          <span class="text-xl font-semibold lowercase" v-if="postStore.postState.__t === 'rent'">
+            / {{ postStore.postState.frequency === "daily" ? "día" : "mes" }}</span
+          >
+        </h2>
+        <!-- Buttons -->
+        <div class="flex items-center justify-center gap-1">
+          <ShareButton :url="`http://localhost:5173/post/${postStore.postState._id}`" />
+          <FavoriteIcon @click="switchFavorite" class="relative -top-[1px]" :favorite="favorite" />
+        </div>
+      </div>
       <!-- Address -->
       <h3 class="text-shadow font-normal text-sgray-300">
         {{ postStore.postState.address.municipality }}, {{ postStore.postState.address.province }}
@@ -204,7 +220,6 @@
             }}</span>
           </h4>
           <!-- Public Email -->
-          <!-- <h5 class="text-sgray-300">{{ postStore.postState.published_by.agent.public_email }}</h5> -->
           <a
             class="text-sgray-300"
             :href="`mailto:${postStore.postState.published_by.agent.public_email}`"

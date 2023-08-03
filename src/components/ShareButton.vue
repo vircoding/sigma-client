@@ -10,7 +10,6 @@
 
     navigator
       .share(shareData)
-      .then(() => console.log("Successfully shared link"))
       .catch((error) => console.log("Share Failed", error));
   };
 </script>
