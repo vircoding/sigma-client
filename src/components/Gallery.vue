@@ -16,32 +16,38 @@
   const diffX = ref(0);
   const translationLength = ref(0);
   const transitionEnable = ref("");
+  const enableSwipe = ref(true);
 
   const startSwipe = (event) => {
-    startPositionX.value = event.touches[0].clientX;
+    if (enableSwipe.value) {
+      startPositionX.value = event.touches[0].clientX;
+    }
     startPositionY.value = event.touches[0].clientY;
   };
 
   const moveSwipe = (event) => {
-    const movePosX = event.touches[0].clientX;
+    if (enableSwipe.value) {
+      const movePosX = event.touches[0].clientX;
+
+      if (activeIndex.value === 0 && movePosX - startPositionX.value > 0) {
+        return;
+      } else if (activeIndex.value === 4 && movePosX - startPositionX.value < 0) {
+        return;
+      }
+      diffX.value = movePosX - startPositionX.value;
+      translationLength.value =
+        -(activeIndex.value * window.innerWidth) + movePosX - startPositionX.value;
+    }
     const movePosY = event.touches[0].clientY;
     const diffY = Math.abs(movePosY - startPositionY.value);
 
     if (diffY > 0) {
       event.preventDefault();
     }
-
-    if (activeIndex.value === 0 && movePosX - startPositionX.value > 0) {
-      return;
-    } else if (activeIndex.value === 4 && movePosX - startPositionX.value < 0) {
-      return;
-    }
-    diffX.value = movePosX - startPositionX.value;
-    translationLength.value =
-      -(activeIndex.value * window.innerWidth) + movePosX - startPositionX.value;
   };
 
   const endSwipe = (event) => {
+    enableSwipe.value = false;
     if (diffX.value > window.innerWidth / 2) {
       activeIndex.value = activeIndex.value - 1;
     } else if (diffX.value < -(window.innerWidth / 2)) {
@@ -53,6 +59,7 @@
     diffX.value = 0;
     setTimeout(() => {
       transitionEnable.value = "";
+      enableSwipe.value = true;
     }, 500);
   };
 
