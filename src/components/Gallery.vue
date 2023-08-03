@@ -47,7 +47,6 @@
     const endTime = Date.now();
     const swipeDuration = endTime - startTime.value;
     if (swipeDuration < 175) {
-      console.log(`Short: ${swipeDuration}`);
       if (diffX.value > window.innerWidth * 0.15) {
         activeIndex.value = activeIndex.value - 1;
       } else if (diffX.value < -(window.innerWidth * 0.15)) {
