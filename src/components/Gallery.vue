@@ -15,62 +15,54 @@
   const startPositionY = ref(null);
   const diffX = ref(0);
   const translationLength = ref(0);
-  const enableTransition = ref("");
-  const enableSwipe = ref(true);
+  const transitionEnable = ref("");
 
   const startSwipe = (event) => {
-    if (enableSwipe.value) {
-      startPositionX.value = event.touches[0].clientX;
-    }
+    startPositionX.value = event.touches[0].clientX;
     startPositionY.value = event.touches[0].clientY;
   };
 
   const moveSwipe = (event) => {
-    if (enableSwipe.value) {
-      const movePosX = event.touches[0].clientX;
-
-      if (activeIndex.value === 0 && movePosX - startPositionX.value > 0) {
-        return;
-      } else if (activeIndex.value === 4 && movePosX - startPositionX.value < 0) {
-        return;
-      }
-      diffX.value = movePosX - startPositionX.value;
-      translationLength.value =
-        -(activeIndex.value * window.innerWidth) + movePosX - startPositionX.value;
-    }
+    const movePosX = event.touches[0].clientX;
     const movePosY = event.touches[0].clientY;
     const diffY = Math.abs(movePosY - startPositionY.value);
 
     if (diffY > 0) {
       event.preventDefault();
     }
+
+    if (activeIndex.value === 0 && movePosX - startPositionX.value > 0) {
+      return;
+    } else if (activeIndex.value === 4 && movePosX - startPositionX.value < 0) {
+      return;
+    }
+    diffX.value = movePosX - startPositionX.value;
+    translationLength.value =
+      -(activeIndex.value * window.innerWidth) + movePosX - startPositionX.value;
   };
 
   const endSwipe = (event) => {
-    enableSwipe.value = false;
     if (diffX.value > window.innerWidth / 2) {
       activeIndex.value = activeIndex.value - 1;
     } else if (diffX.value < -(window.innerWidth / 2)) {
       activeIndex.value = activeIndex.value + 1;
     }
-    enableTransition.value = "transition-transform duration-500";
+    transitionEnable.value = "transition-transform duration-250";
     translationLength.value = -(activeIndex.value * window.innerWidth);
     startPositionX.value = null;
     diffX.value = 0;
     setTimeout(() => {
-      enableTransition.value = "";
-      enableSwipe.value = true;
-    }, 500);
+      transitionEnable.value = "";
+    }, 250);
   };
 
   const directMove = (index) => {
-    enableTransition.value = "transition-transform duration-500";
+    transitionEnable.value = "transition-transform duration-250";
     activeIndex.value = index;
     translationLength.value = -(activeIndex.value * window.innerWidth);
     setTimeout(() => {
-      enableTransition.value = "";
-      enableSwipe.value = true;
-    }, 500);
+      transitionEnable.value = "";
+    }, 250);
   };
 
   // Loading Images
@@ -84,7 +76,7 @@
     <div
       :style="`transform: translateX(${translationLength}px)`"
       class="relative flex aspect-video w-full"
-      :class="enableTransition"
+      :class="transitionEnable"
     >
       <img
         v-for="(image, index) in images"
