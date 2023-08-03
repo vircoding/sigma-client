@@ -5,8 +5,20 @@
   import cardImg3 from "../assets/card-img3.jpg";
   import cardImg4 from "../assets/card-img4.jpg";
   import cardImg5 from "../assets/card-img5.jpg";
+  import GalleryIndicator from "./GalleryIndicator.vue";
 
-  const images = [cardImg, cardImg2, cardImg3, cardImg4, cardImg5];
+  const images = [
+    cardImg,
+    cardImg2,
+    cardImg3,
+    cardImg4,
+    cardImg5,
+    cardImg,
+    cardImg2,
+    cardImg3,
+    cardImg4,
+    cardImg5,
+  ];
 
   const activeIndex = ref(0);
 
@@ -35,7 +47,7 @@
 
     if (activeIndex.value === 0 && movePosX - startPositionX.value > 0) {
       return;
-    } else if (activeIndex.value === 4 && movePosX - startPositionX.value < 0) {
+    } else if (activeIndex.value === images.length - 1 && movePosX - startPositionX.value < 0) {
       return;
     }
     diffX.value = movePosX - startPositionX.value;
@@ -82,7 +94,7 @@
   <div class="overflow-hidden">
     <div
       :style="`transform: translateX(${translationLength}px)`"
-      class="relative flex aspect-video w-full"
+      class="relative flex aspect-video w-full will-change-transform"
       :class="transitionEnable"
     >
       <img
@@ -95,15 +107,23 @@
         @touchend="endSwipe($event)"
       />
     </div>
-    <div class="mt-2 flex justify-center">
-      <span
+    <div class="mt-2 flex justify-center gap-[2px] py-4">
+      <!-- <span
         v-for="(image, index) in images"
         :key="index"
         @click="directMove(index)"
         class="text-lg text-sgray-400"
       >
         {{ index === activeIndex ? "●" : "○" }}
-      </span>
+      </span> -->
+      <GalleryIndicator
+        v-for="(image, index) in images"
+        :key="index"
+        @click="directMove(index)"
+        :enable="index === activeIndex ? true : false"
+      />
     </div>
   </div>
+  <!-- <GalleryIndicator :enable="false" /> -->
+  <!-- <GalleryIndicator :enable="true" /> -->
 </template>
