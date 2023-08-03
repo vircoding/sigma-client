@@ -13,11 +13,13 @@
   // Swipe
   const startPositionX = ref(null);
   const startPositionY = ref(null);
+  const startTime = ref(0);
   const diffX = ref(0);
   const translationLength = ref(0);
   const transitionEnable = ref("");
 
   const startSwipe = (event) => {
+    startTime.value = Date.now();
     startPositionX.value = event.touches[0].clientX;
     startPositionY.value = event.touches[0].clientY;
   };
@@ -42,10 +44,21 @@
   };
 
   const endSwipe = (event) => {
-    if (diffX.value > window.innerWidth / 2) {
-      activeIndex.value = activeIndex.value - 1;
-    } else if (diffX.value < -(window.innerWidth / 2)) {
-      activeIndex.value = activeIndex.value + 1;
+    const endTime = Date.now();
+    const swipeDuration = endTime - startTime.value;
+    if (swipeDuration < 175) {
+      console.log(`Short: ${swipeDuration}`);
+      if (diffX.value > window.innerWidth * 0.15) {
+        activeIndex.value = activeIndex.value - 1;
+      } else if (diffX.value < -(window.innerWidth * 0.15)) {
+        activeIndex.value = activeIndex.value + 1;
+      }
+    } else {
+      if (diffX.value > window.innerWidth / 2) {
+        activeIndex.value = activeIndex.value - 1;
+      } else if (diffX.value < -(window.innerWidth / 2)) {
+        activeIndex.value = activeIndex.value + 1;
+      }
     }
     transitionEnable.value = "transition-transform duration-250";
     translationLength.value = -(activeIndex.value * window.innerWidth);
@@ -64,11 +77,6 @@
       transitionEnable.value = "";
     }, 250);
   };
-
-  // Loading Images
-  // onMounted(() => {
-  //   images.forEach((image) => (new Image().src = image));
-  // });
 </script>
 
 <template>
