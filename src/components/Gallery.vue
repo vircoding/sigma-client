@@ -42,7 +42,9 @@
     const diffY = Math.abs(movePosY - startPositionY.value);
 
     if (diffY > 0) {
-      event.preventDefault();
+      if (event.cancelable) {
+        event.preventDefault();
+      }
     }
 
     if (activeIndex.value === 0 && movePosX - startPositionX.value > 0) {
