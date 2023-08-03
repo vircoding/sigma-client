@@ -15,7 +15,7 @@
   const startPositionY = ref(null);
   const diffX = ref(0);
   const translationLength = ref(0);
-  const transitionEnable = ref("");
+  const enableTransition = ref("");
   const enableSwipe = ref(true);
 
   const startSwipe = (event) => {
@@ -53,22 +53,23 @@
     } else if (diffX.value < -(window.innerWidth / 2)) {
       activeIndex.value = activeIndex.value + 1;
     }
-    transitionEnable.value = "transition-transform duration-500";
+    enableTransition.value = "transition-transform duration-500";
     translationLength.value = -(activeIndex.value * window.innerWidth);
     startPositionX.value = null;
     diffX.value = 0;
     setTimeout(() => {
-      transitionEnable.value = "";
+      enableTransition.value = "";
       enableSwipe.value = true;
     }, 500);
   };
 
   const directMove = (index) => {
-    transitionEnable.value = "transition-transform duration-500";
+    enableTransition.value = "transition-transform duration-500";
     activeIndex.value = index;
     translationLength.value = -(activeIndex.value * window.innerWidth);
     setTimeout(() => {
-      transitionEnable.value = "";
+      enableTransition.value = "";
+      enableSwipe.value = true;
     }, 500);
   };
 
@@ -83,7 +84,7 @@
     <div
       :style="`transform: translateX(${translationLength}px)`"
       class="relative flex aspect-video w-full"
-      :class="transitionEnable"
+      :class="enableTransition"
     >
       <img
         v-for="(image, index) in images"
