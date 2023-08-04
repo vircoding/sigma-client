@@ -2,7 +2,6 @@
   import { computed, ref, watch } from "vue";
   import { useUserStore } from "../stores/user.js";
   import router from "../router";
-  import countriesServices from "../services/countries.js";
   import parsePhoneNumber from "libphonenumber-js";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
 

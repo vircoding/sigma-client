@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, computed, watch } from "vue";
+  import { computed } from "vue";
   import { usePostStore } from "../stores/post";
   import { useUserStore } from "../stores/user";
   import Gallery from "./Gallery.vue";
