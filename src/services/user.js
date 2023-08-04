@@ -57,4 +57,9 @@ export default {
   getSessionInfo() {
     return authorizedAPI().get("/auth/");
   },
+
+  favorite(id, add) {
+    if (add) return authorizedAPI().put(`/auth/favorite?id=${id}&add=${add}`);
+    else return authorizedAPI().put(`/auth/favorite?id=${id}&add=`);
+  },
 };

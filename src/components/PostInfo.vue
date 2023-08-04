@@ -1,21 +1,28 @@
 <script setup>
-  import { ref, computed } from "vue";
+  import { ref, computed, watch } from "vue";
   import { usePostStore } from "../stores/post";
+  import { useUserStore } from "../stores/user";
   import Gallery from "./Gallery.vue";
   import FavoriteIcon from "./icons/FavoriteIcon.vue";
   import ShareButton from "./ShareButton.vue";
 
   const postStore = usePostStore();
+  const userStore = useUserStore();
 
   const iconBoxColor = computed(() => {
     if (postStore.postState.__t === "sale") return "bg-sigma";
     return "bg-sgreen-300";
   });
 
-  const favorite = ref(false);
+  const favorite = computed(() => {
+    if (userStore.userState.favorites.find((item) => item.id === postStore.postState._id)) {
+      return true;
+    }
+    return false;
+  });
 
-  const switchFavorite = () => {
-    favorite.value = !favorite.value;
+  const favoriteEvent = async () => {
+    await userStore.favorite(postStore.postState._id, !favorite.value);
   };
 </script>
 
@@ -43,7 +50,7 @@
         <!-- Buttons -->
         <div class="flex items-center justify-center gap-1">
           <ShareButton :url="`http://localhost:5173/post/${postStore.postState._id}`" />
-          <FavoriteIcon @click="switchFavorite" class="relative -top-[1px]" :favorite="favorite" />
+          <FavoriteIcon @click="favoriteEvent" class="relative -top-[1px]" :favorite="favorite" />
         </div>
       </div>
       <!-- Address -->

@@ -15,6 +15,7 @@ export const useUserStore = defineStore("user", () => {
       role: "reader",
     },
     posts: [],
+    favorites: [],
   });
 
   const layoutStore = useLayoutStore();
@@ -32,6 +33,8 @@ export const useUserStore = defineStore("user", () => {
       layoutStore.unhideSpinner();
       const res = await userServices.loginUser(user);
 
+      console.log(res.data);
+
       userState.value.credentials.token = res.data.credentials.token;
       userState.value.credentials.tokenExpiration = new Date();
       userState.value.credentials.tokenExpiration.setSeconds(
@@ -39,6 +42,7 @@ export const useUserStore = defineStore("user", () => {
       );
       userState.value.credentials.role = res.data.credentials.role;
       userState.value.info = res.data.info;
+      userState.value.favorites = res.data.favorites;
 
       const posts = await postServices.getUserPosts();
 
@@ -81,6 +85,7 @@ export const useUserStore = defineStore("user", () => {
       );
       userState.value.credentials.role = res.data.credentials.role;
       userState.value.info = res.data.info;
+      userState.value.favorites = res.data.favorites;
 
       localStorage.setItem(
         "activeSession",
@@ -119,6 +124,7 @@ export const useUserStore = defineStore("user", () => {
       );
       userState.value.credentials.role = res.data.credentials.role;
       userState.value.info = res.data.info;
+      userState.value.favorites = res.data.favorites;
 
       localStorage.setItem(
         "activeSession",
@@ -223,6 +229,7 @@ export const useUserStore = defineStore("user", () => {
       const res = await userServices.getSessionInfo();
       userState.value.credentials.role = res.data.credentials.role;
       userState.value.info = res.data.info;
+      userState.value.favorites = res.data.favorites;
     } catch (error) {
       console.log(error);
     }
@@ -237,15 +244,24 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const getUserInfo = async () => {
+  const favorite = async (id, add) => {
     try {
-      const res = await userServices.getUserInfo();
-
-      return res.data;
+      const res = await userServices.favorite(id, add);
+      userState.value.favorites = res.data.favorites;
     } catch (error) {
       console.log(error);
     }
   };
+
+  // const getUserInfo = async () => {
+  //   try {
+  //     const res = await userServices.getUserInfo();
+
+  //     return res.data;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // Extra Functions
   const $reset = () => {
@@ -257,6 +273,7 @@ export const useUserStore = defineStore("user", () => {
         role: "reader",
       },
       posts: [],
+      favorites: [],
     };
   };
 
@@ -284,6 +301,6 @@ export const useUserStore = defineStore("user", () => {
     updateAgent,
     loadSessionInfo,
     loadSessionPosts,
-    getUserInfo,
+    favorite,
   };
 });
