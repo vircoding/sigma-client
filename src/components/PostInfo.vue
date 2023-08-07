@@ -50,7 +50,12 @@
         <!-- Buttons -->
         <div class="flex items-center justify-center gap-1">
           <ShareButton :url="`http://localhost:5173/post/${postStore.postState._id}`" />
-          <FavoriteIcon @click="favoriteEvent" class="relative -top-[1px]" :favorite="favorite" />
+          <FavoriteIcon
+            v-if="userStore.isLoggedIn"
+            @click="favoriteEvent"
+            class="relative -top-[1px]"
+            :favorite="favorite"
+          />
         </div>
       </div>
       <!-- Address -->
