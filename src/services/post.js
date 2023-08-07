@@ -62,4 +62,8 @@ export default {
   getPopularRents() {
     return unauthorizedAPI().get("/posts/rents");
   },
+
+  favorite(id) {
+    return authorizedAPI().put(`/posts/favorite/${id}`);
+  },
 };

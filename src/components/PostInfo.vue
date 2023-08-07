@@ -22,7 +22,7 @@
   });
 
   const favoriteEvent = async () => {
-    await userStore.favorite(postStore.postState._id, !favorite.value);
+    await postStore.favorite(postStore.postState._id);
   };
 </script>
 

@@ -244,25 +244,6 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const favorite = async (id, add) => {
-    try {
-      const res = await userServices.favorite(id, add);
-      userState.value.favorites = res.data.favorites;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // const getUserInfo = async () => {
-  //   try {
-  //     const res = await userServices.getUserInfo();
-
-  //     return res.data;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   // Extra Functions
   const $reset = () => {
     userState.value = {
@@ -301,6 +282,5 @@ export const useUserStore = defineStore("user", () => {
     updateAgent,
     loadSessionInfo,
     loadSessionPosts,
-    favorite,
   };
 });
