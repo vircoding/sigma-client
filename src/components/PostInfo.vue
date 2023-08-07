@@ -247,4 +247,13 @@
       </div>
     </div>
   </div>
+  <!-- Phone -->
+  <div
+    class="sticky inset-x-0 bottom-0 flex h-14 items-center gap-[5px] bg-sgray-400 px-5 shadow-[0_-7px_6px_rgba(0,_0,_0,_0.1)]"
+  >
+    <img src="../assets/phone-icon.svg" class="text-shadow" />
+    <h2 class="text-shadow relative top-[1px] text-base text-white">
+      {{ postStore.postState.phone }}
+    </h2>
+  </div>
 </template>
