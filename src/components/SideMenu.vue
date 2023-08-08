@@ -20,7 +20,7 @@
 </script>
 
 <template>
-  <nav class="z-50 flex h-screen w-1/2 flex-col items-end">
+  <nav class="z-50 flex h-screen w-1/2 flex-col items-end text-sgray-400">
     <img
       src="../assets/close-icon.svg"
       class="text-shadow relative right-4 w-9 py-4 lg:hidden"
