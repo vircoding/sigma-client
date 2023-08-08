@@ -164,8 +164,8 @@ export const useUserStore = defineStore("user", () => {
           );
 
           if (firstLoad) {
-            loadSessionInfo();
-            loadSessionPosts();
+            await loadSessionInfo();
+            await loadSessionPosts();
           }
         } catch (error) {
           // console.log(error);

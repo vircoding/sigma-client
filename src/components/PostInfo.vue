@@ -1,5 +1,5 @@
 <script setup>
-  import { computed } from "vue";
+  import { ref, computed, onMounted } from "vue";
   import { usePostStore } from "../stores/post";
   import { useUserStore } from "../stores/user";
   import Gallery from "./Gallery.vue";
@@ -14,14 +14,12 @@
     return "bg-sgreen-300";
   });
 
-  const favorite = computed(() => {
-    if (userStore.userState.favorites.find((item) => item.id === postStore.postState._id)) {
-      return true;
-    }
-    return false;
-  });
+  const favorite = ref(
+    Boolean(userStore.userState.favorites.find((item) => item.id === postStore.postState._id))
+  );
 
   const favoriteEvent = async () => {
+    favorite.value = !favorite.value;
     await postStore.favorite(postStore.postState._id);
   };
 </script>
@@ -118,7 +116,7 @@
           <img
             v-if="postStore.postState.features.garage"
             src="../assets/true-icon.svg"
-            class="text-shadow relative -left-[6px] -top-[1px]"
+            class="text-shadow relative -left-[4px] -top-[1px]"
           />
           <img
             v-else
@@ -140,7 +138,7 @@
           <img
             v-if="postStore.postState.features.garden"
             src="../assets/true-icon.svg"
-            class="text-shadow relative -left-[6px] -top-[1px]"
+            class="text-shadow relative -left-[4px] -top-[1px]"
           />
           <img
             v-else
@@ -162,7 +160,7 @@
           <img
             v-if="postStore.postState.features.pool"
             src="../assets/true-icon.svg"
-            class="text-shadow relative -left-[6px] -top-[1px]"
+            class="text-shadow relative -left-[4px] -top-[1px]"
           />
           <img
             v-else
@@ -186,7 +184,7 @@
           <img
             v-if="postStore.postState.features.furnished"
             src="../assets/true-icon.svg"
-            class="text-shadow relative -left-[6px] -top-[1px]"
+            class="text-shadow relative -left-[4px] -top-[1px]"
           />
           <img
             v-else
