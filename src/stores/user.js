@@ -18,6 +18,11 @@ export const useUserStore = defineStore("user", () => {
     favorites: [],
   });
 
+  const favoritesPageState = ref({
+    posts: [],
+    page: 0,
+  });
+
   const layoutStore = useLayoutStore();
 
   const token = ref("");
@@ -244,6 +249,21 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
+  const loadFavorites = async () => {
+    try {
+      const posts = [];
+      userState.value.favorites.forEach(async (item, index) => {
+        const post = await postServices.getPost(item.id);
+        posts.push(post.data);
+      });
+
+      favoritesPageState.value.posts = posts;
+      favoritesPageState.value.page = 1;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // Extra Functions
   const $reset = () => {
     userState.value = {
@@ -269,6 +289,7 @@ export const useUserStore = defineStore("user", () => {
 
   return {
     userState,
+    favoritesPageState,
     token,
     tokenExpiration,
     role,
@@ -282,5 +303,6 @@ export const useUserStore = defineStore("user", () => {
     updateAgent,
     loadSessionInfo,
     loadSessionPosts,
+    loadFavorites,
   };
 });

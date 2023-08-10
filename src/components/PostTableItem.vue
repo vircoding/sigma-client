@@ -47,7 +47,9 @@
       </button>
     </div>
   </div>
-  <div class="flex flex-col items-center gap-2 rounded-md border border-sgray-100 bg-white p-2">
+  <div
+    class="flex flex-col items-center gap-2 rounded-md border border-sgray-100 bg-background p-2"
+  >
     <div class="flex w-full items-center justify-evenly gap-3">
       <!-- Type -->
       <!-- Sale -->

@@ -8,6 +8,8 @@
 
   const userStore = useUserStore();
 
+  const myPostsController = ref(true);
+
   const newUser = ref({
     username: props.user.username,
   });
@@ -45,6 +47,14 @@
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const myPostEvent = () => {
+    myPostsController.value = true;
+  };
+
+  const favoritesEvent = async () => {
+    myPostsController.value = false;
   };
 </script>
 
@@ -96,19 +106,89 @@
       </div>
     </form>
 
-    <!-- My Posts -->
+    <!-- Posts / Favorites -->
     <section class="mb-20 w-full">
-      <div class="mb-4 flex w-full items-center gap-3">
-        <h3 class="text-base font-semibold">Tus publicaciones</h3>
-        <div class="h-[1px] grow border-t border-black"></div>
+      <div class="flex items-center">
+        <!-- Post Title -->
+        <div
+          class="w-1/2 rounded-t-md py-2 text-center"
+          :class="myPostsController ? 'bg-white font-semibold' : 'bg-transparent'"
+          @click.prevent="myPostEvent"
+        >
+          <h3>Publicaciones</h3>
+        </div>
+        <!-- Favorites Title -->
+        <div
+          class="w-1/2 rounded-t-md py-2 text-center"
+          :class="!myPostsController ? 'bg-white font-semibold' : 'bg-transparent'"
+          @click.prevent="favoritesEvent"
+        >
+          <h3>Favoritos</h3>
+        </div>
       </div>
-      <ul class="space-y-4">
-        <li v-for="(item, index) in props.posts" :key="index">
-          <RouterLink :to="`/post/${item._id}`">
-            <PostTableItem :post="item" />
-          </RouterLink>
-        </li>
-      </ul>
+      <!-- Table -->
+      <div
+        class="z-50 min-h-[264px] w-full rounded-b-md bg-white px-3 py-[18px]"
+        :class="myPostsController ? 'rounded-tr-md' : 'rounded-tl-md'"
+      >
+        <!-- Posts -->
+        <ul v-if="myPostsController" class="space-y-4">
+          <li v-for="(item, index) in props.posts" :key="index">
+            <RouterLink :to="`/post/${item._id}`">
+              <PostTableItem :post="item" />
+            </RouterLink>
+          </li>
+          <li
+            v-if="props.posts.length === 0"
+            class="flex h-[282px] w-full flex-col items-center justify-center gap-2"
+          >
+            <span>Aún no tienes publicaciones</span>
+            <RouterLink to="/insert" class="underline">Publica</RouterLink>
+          </li>
+          <li
+            v-if="!(props.posts.length === 0)"
+            class="flex w-full items-center justify-center gap-2"
+          >
+            <span>{{ "<" }}</span>
+            <div>
+              <span>1 / {{ Math.ceil(props.posts.length / 10) }}</span>
+            </div>
+            <span>{{ ">" }}</span>
+          </li>
+        </ul>
+        <!-- Favorites -->
+        <ul v-else class="space-y-4">
+          <li v-for="(item, index) in userStore.favoritesPageState.posts" :key="index">
+            <RouterLink :to="`/post/${item.post._id}`">
+              <PostTableItem :post="item.post" />
+            </RouterLink>
+          </li>
+          <li
+            v-if="userStore.favoritesPageState.posts.length === 0"
+            class="flex h-[282px] w-full flex-col items-center justify-center gap-2"
+          >
+            <span>Aún no tienes favoritos</span>
+          </li>
+          <li
+            v-if="!(userStore.favoritesPageState.posts.length === 0)"
+            class="flex w-full items-center justify-center gap-2"
+          >
+            <span>{{ "<" }}</span>
+            <div>
+              <span
+                >{{ userStore.favoritesPageState.page }} /
+                {{ Math.ceil(userStore.favoritesPageState.posts.length / 10) }}</span
+              >
+            </div>
+            <span>{{ ">" }}</span>
+          </li>
+        </ul>
+      </div>
     </section>
   </div>
 </template>
+
+<!-- <div class="mb-4 flex w-full items-center gap-3">
+  <h3 class="text-base font-semibold">Tus publicaciones</h3>
+  <div class="h-[1px] grow border-t border-black"></div>
+</div> -->

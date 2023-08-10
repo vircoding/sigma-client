@@ -80,6 +80,21 @@ const routes = [
     name: "account",
     component: () => import("../views/AccountView.vue"),
     meta: { requiresAuth: true },
+    beforeEnter: async (to, from, next) => {
+      const userStore = useUserStore();
+      const layoutStore = useLayoutStore();
+
+      layoutStore.unhideSpinner();
+      try {
+        await userStore.loadFavorites();
+        layoutStore.hideSpinner();
+        next();
+      } catch (error) {
+        console.log(error);
+        layoutStore.hideSpinner();
+        next("/");
+      }
+    },
   },
   {
     path: "/post/:id",
