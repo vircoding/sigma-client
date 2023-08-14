@@ -4,8 +4,13 @@
   import ClientInfo from "../components/ClientInfo.vue";
   import AgentInfo from "../components/AgentInfo.vue";
   import FooterSection from "../components/FooterSection.vue";
+  import { onBeforeUnmount } from "vue";
 
   const userStore = useUserStore();
+
+  onBeforeUnmount(() => {
+    userStore.resetUserAccountState();
+  });
 </script>
 
 <template>

@@ -293,5 +293,6 @@ export const useUserStore = defineStore("user", () => {
     loadUserInfo,
     loadUserPosts,
     loadUserFavorites,
+    resetUserAccountState,
   };
 });
