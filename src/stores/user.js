@@ -15,6 +15,7 @@ export const useUserStore = defineStore("user", () => {
       role: "reader",
     },
     favorites: [],
+    posts: [],
   });
 
   const userAccountState = ref({
@@ -41,6 +42,7 @@ export const useUserStore = defineStore("user", () => {
       userState.value.credentials.role = res.data.credentials.role;
       userState.value.info = res.data.info;
       userState.value.favorites = res.data.favorites;
+      userState.value.posts = res.data.posts;
 
       localStorage.setItem(
         "activeSession",
@@ -119,6 +121,7 @@ export const useUserStore = defineStore("user", () => {
       userState.value.credentials.role = res.data.credentials.role;
       userState.value.info = res.data.info;
       userState.value.favorites = res.data.favorites;
+      userState.value.posts = res.data.posts;
 
       localStorage.setItem(
         "activeSession",
@@ -222,6 +225,7 @@ export const useUserStore = defineStore("user", () => {
       userState.value.credentials.role = res.data.credentials.role;
       userState.value.info = res.data.info;
       userState.value.favorites = res.data.favorites;
+      userState.value.posts = res.data.posts;
     } catch (error) {
       console.log(error);
     }
@@ -254,6 +258,8 @@ export const useUserStore = defineStore("user", () => {
         tokenExpiration: null,
         role: "reader",
       },
+      favorites: [],
+      posts: [],
     };
     resetUserAccountState();
   };
