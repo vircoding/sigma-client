@@ -2,12 +2,14 @@
   import NavBar from "../components/NavBar.vue";
   import UpdatePostForm from "../components/UpdatePostForm.vue";
   import FooterSection from "../components/FooterSection.vue";
-  import { useUserStore } from "../stores/user";
-  import { useRoute } from "vue-router";
+  import { usePostStore } from "../stores/post";
+  import { onBeforeUnmount } from "vue";
 
-  const route = useRoute();
+  const postStore = usePostStore();
 
-  const userStore = useUserStore();
+  onBeforeUnmount(() => {
+    postStore.$reset();
+  });
 </script>
 
 <template>
@@ -19,13 +21,12 @@
         </div>
       </header>
       <main class="mb-[5px] grow bg-background lg:mb-0">
-        <UpdatePostForm
-          :post="userStore.userState.posts.find((item) => item._id == route.params.id)"
-        />
+        <UpdatePostForm :post="postStore.postState" />
       </main>
     </div>
     <footer class="lg:mb-2.5">
       <FooterSection />
     </footer>
   </div>
+  {{ postStore.postState }}
 </template>

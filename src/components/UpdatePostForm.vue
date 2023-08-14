@@ -1,23 +1,17 @@
 <script setup>
-  import { useUserStore } from "../stores/user";
   import { usePostStore } from "../stores/post";
-  import { useLayoutStore } from "../stores/layout";
   import NumberInput from "./NumberInput.vue";
   import RadioInput from "./RadioInput.vue";
   import SelectInput from "./SelectInput.vue";
   import { provinceList, municipalityList } from "../utils/provinces";
   import { ref, computed, watch } from "vue";
   import parsePhoneNumber from "libphonenumber-js";
-  import router from "../router";
   import { useRoute } from "vue-router";
 
   const route = useRoute();
+  const postStore = usePostStore();
 
   const props = defineProps(["post"]);
-
-  const postStore = usePostStore();
-  const layoutStore = useLayoutStore();
-  const userStore = useUserStore();
 
   const parsedPhoneNumber = parsePhoneNumber(props.post.phone);
   const phoneInput = ref(parsedPhoneNumber.nationalNumber);

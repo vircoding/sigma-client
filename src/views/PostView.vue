@@ -2,11 +2,18 @@
   import NavBar from "../components/NavBar.vue";
   import PostInfo from "../components/PostInfo.vue";
   import FooterSection from "../components/FooterSection.vue";
+  import { usePostStore } from "../stores/post";
+  import { onBeforeUnmount } from "vue";
+
+  const postStore = usePostStore();
+
+  onBeforeUnmount(() => {
+    postStore.$reset();
+  });
 </script>
 
 <template>
   <!-- TODO: Para agregar boton de llamada fijado abajo del todo -->
-  <!-- <a href="tel:+5354017747">Llamarme</a> -->
   <div class="lg:px-2.5">
     <div class="flex min-h-screen flex-col lg:h-screen lg:py-2.5">
       <header>

@@ -106,6 +106,11 @@ export const usePostStore = defineStore("post", () => {
     }
   };
 
+  // Extra Functions
+  const $reset = () => {
+    postState.value = {};
+  };
+
   return {
     postState,
     loadPost,
@@ -117,5 +122,6 @@ export const usePostStore = defineStore("post", () => {
     getPopularSales,
     getPopularRents,
     favorite,
+    $reset,
   };
 });

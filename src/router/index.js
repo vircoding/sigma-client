@@ -122,6 +122,21 @@ const routes = [
     name: "edit-post",
     component: () => import("../views/EditPostView.vue"),
     meta: { requiresAuth: true },
+    beforeEnter: async (to, from, next) => {
+      const postStore = usePostStore();
+      const layoutStore = useLayoutStore();
+
+      layoutStore.unhideSpinner();
+      try {
+        await postStore.loadPost(to.params.id);
+        layoutStore.hideSpinner();
+        next();
+      } catch (error) {
+        console.log(error);
+        layoutStore.hideSpinner();
+        next("/");
+      }
+    },
   },
   {
     path: "/:catchAll(.*)",
