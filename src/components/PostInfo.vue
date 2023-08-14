@@ -15,7 +15,7 @@
   });
 
   const favorite = ref(
-    Boolean(userStore.userState.favorites.find((item) => item.id === postStore.postState._id))
+    Boolean(userStore.userState.favorites.find((item) => item === postStore.postState._id))
   );
 
   const favoriteEvent = async () => {

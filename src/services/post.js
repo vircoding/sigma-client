@@ -20,8 +20,12 @@ export default {
     });
   },
 
-  getUserPosts() {
-    return authorizedAPI().get("/posts/user");
+  getUserPosts(page) {
+    return authorizedAPI().get(`/posts/user?page=${page}`);
+  },
+
+  getUserFavorites(page) {
+    return authorizedAPI().get(`posts/user/favorites?page=${page}`);
   },
 
   getPost(id) {
@@ -30,6 +34,10 @@ export default {
 
   visitPost(id) {
     return unauthorizedAPI().put(`/posts/${id}`);
+  },
+
+  favorite(id) {
+    return authorizedAPI().put(`/posts/favorite/${id}`);
   },
 
   updatePost(id, post) {
@@ -61,9 +69,5 @@ export default {
 
   getPopularRents() {
     return unauthorizedAPI().get("/posts/rents");
-  },
-
-  favorite(id) {
-    return authorizedAPI().put(`/posts/favorite/${id}`);
   },
 };

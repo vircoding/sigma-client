@@ -4,14 +4,12 @@
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
   import PostTableItem from "./PostTableItem.vue";
 
-  const props = defineProps(["user", "posts"]);
-
   const userStore = useUserStore();
 
   const myPostsController = ref(true);
 
   const newUser = ref({
-    username: props.user.username,
+    username: userStore.userState.info.username,
   });
 
   const usernameError = computed(() => {
@@ -23,7 +21,7 @@
     if (usernameError.value) {
       return true;
     }
-    if (newUser.value.username === props.user.username) return true;
+    if (newUser.value.username === userStore.userState.info.username) return true;
     return false;
   });
 
@@ -37,7 +35,7 @@
 
   const $reset = () => {
     newUser.value = {
-      username: props.user.username,
+      username: userStore.userState.info.username,
     };
   };
 
@@ -55,6 +53,32 @@
 
   const favoritesEvent = async () => {
     myPostsController.value = false;
+  };
+
+  const prevPostsPageEvent = async () => {
+    if (userStore.userAccountState.posts.page !== 1) {
+      await userStore.loadUserPosts(userStore.userAccountState.posts.page - 1);
+    }
+  };
+
+  const nextPostsPageEvent = async () => {
+    if (userStore.userAccountState.posts.page < userStore.userAccountState.posts.total_pages) {
+      await userStore.loadUserPosts(userStore.userAccountState.posts.page + 1);
+    }
+  };
+
+  const prevFavoritesPageEvent = async () => {
+    if (userStore.userAccountState.favorites.page !== 1) {
+      await userStore.loadUserFavorites(userStore.userAccountState.favorites.page - 1);
+    }
+  };
+
+  const nextFavoritesPageEvent = async () => {
+    if (
+      userStore.userAccountState.favorites.page < userStore.userAccountState.favorites.total_pages
+    ) {
+      await userStore.loadUserFavorites(userStore.userAccountState.favorites.page + 1);
+    }
   };
 </script>
 
@@ -133,62 +157,60 @@
       >
         <!-- Posts -->
         <ul v-if="myPostsController" class="space-y-4">
-          <li v-for="(item, index) in props.posts" :key="index">
+          <li v-for="(item, index) in userStore.userAccountState.posts.posts" :key="index">
             <RouterLink :to="`/post/${item._id}`">
               <PostTableItem :post="item" />
             </RouterLink>
           </li>
           <li
-            v-if="props.posts.length === 0"
+            v-if="userStore.userAccountState.posts.total_posts === 0"
             class="flex h-[282px] w-full flex-col items-center justify-center gap-2"
           >
             <span>Aún no tienes publicaciones</span>
             <RouterLink to="/insert" class="underline">Publica</RouterLink>
           </li>
           <li
-            v-if="!(props.posts.length === 0)"
+            v-if="!(userStore.userAccountState.posts.total_posts === 0)"
             class="flex w-full items-center justify-center gap-2"
           >
-            <span>{{ "<" }}</span>
+            <button @click.prevent="prevPostsPageEvent" class="select-none">{{ "<" }}</button>
             <div>
-              <span>1 / {{ Math.ceil(props.posts.length / 10) }}</span>
+              <span
+                >{{ userStore.userAccountState.posts.page }} /
+                {{ userStore.userAccountState.posts.total_pages }}</span
+              >
             </div>
-            <span>{{ ">" }}</span>
+            <button @click.prevent="nextPostsPageEvent" class="select-none">{{ ">" }}</button>
           </li>
         </ul>
         <!-- Favorites -->
         <ul v-else class="space-y-4">
-          <li v-for="(item, index) in userStore.favoritesPageState.posts" :key="index">
-            <RouterLink :to="`/post/${item.post._id}`">
-              <PostTableItem :post="item.post" />
+          <li v-for="(item, index) in userStore.userAccountState.favorites.favorites" :key="index">
+            <RouterLink :to="`/post/${item._id}`">
+              <PostTableItem :post="item" />
             </RouterLink>
           </li>
           <li
-            v-if="userStore.favoritesPageState.posts.length === 0"
+            v-if="userStore.userAccountState.favorites.total_favorites === 0"
             class="flex h-[282px] w-full flex-col items-center justify-center gap-2"
           >
             <span>Aún no tienes favoritos</span>
           </li>
           <li
-            v-if="!(userStore.favoritesPageState.posts.length === 0)"
+            v-if="!(userStore.userAccountState.favorites.total_favorites === 0)"
             class="flex w-full items-center justify-center gap-2"
           >
-            <span>{{ "<" }}</span>
+            <button @click.prevent="prevFavoritesPageEvent">{{ "<" }}</button>
             <div>
               <span
-                >{{ userStore.favoritesPageState.page }} /
-                {{ Math.ceil(userStore.favoritesPageState.posts.length / 10) }}</span
+                >{{ userStore.userAccountState.favorites.page }} /
+                {{ userStore.userAccountState.favorites.total_pages }}</span
               >
             </div>
-            <span>{{ ">" }}</span>
+            <button @click.prevent="nextFavoritesPageEvent" class="select-none">{{ ">" }}</button>
           </li>
         </ul>
       </div>
     </section>
   </div>
 </template>
-
-<!-- <div class="mb-4 flex w-full items-center gap-3">
-  <h3 class="text-base font-semibold">Tus publicaciones</h3>
-  <div class="h-[1px] grow border-t border-black"></div>
-</div> -->

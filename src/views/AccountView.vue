@@ -17,17 +17,8 @@
         </div>
       </header>
       <main class="mb-[5px] grow bg-background lg:mb-0">
-        <AgentInfo
-          v-if="userStore.userState.credentials.role === 'agent'"
-          @reload=""
-          :user="userStore.userState.info"
-          :posts="userStore.userState.posts"
-        />
-        <ClientInfo
-          v-else-if="userStore.userState.credentials.role === 'client'"
-          :user="userStore.userState.info"
-          :posts="userStore.userState.posts"
-        />
+        <AgentInfo v-if="userStore.userState.credentials.role === 'agent'" />
+        <ClientInfo v-else-if="userStore.userState.credentials.role === 'client'" />
       </main>
     </div>
     <footer class="lg:mb-2.5">

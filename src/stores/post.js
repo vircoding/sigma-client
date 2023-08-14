@@ -27,20 +27,9 @@ export const usePostStore = defineStore("post", () => {
     try {
       layoutStore.unhideSpinner();
       const res = await postServices.insertPost(post);
-      await userStore.loadSessionPosts();
       layoutStore.hideSpinner();
 
       await router.push(`/post/${res.data._id}`);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getUserPosts = async () => {
-    try {
-      const res = await postServices.getUserPosts();
-
-      return res.data.posts;
     } catch (error) {
       console.log(error);
     }
@@ -67,7 +56,6 @@ export const usePostStore = defineStore("post", () => {
     try {
       layoutStore.unhideSpinner();
       await postServices.updatePost(id, post);
-      await userStore.loadSessionPosts();
       layoutStore.hideSpinner();
 
       await router.push(`/post/${id}`);
@@ -80,7 +68,6 @@ export const usePostStore = defineStore("post", () => {
     try {
       layoutStore.unhideSpinner();
       await postServices.deletePost(id);
-      await userStore.loadSessionPosts();
       layoutStore.hideSpinner();
     } catch (error) {
       console.log(error);
@@ -120,7 +107,6 @@ export const usePostStore = defineStore("post", () => {
     postState,
     loadPost,
     insertPost,
-    getUserPosts,
     getPost,
     visitPost,
     updatePost,

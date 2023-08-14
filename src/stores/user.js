@@ -14,20 +14,15 @@ export const useUserStore = defineStore("user", () => {
       tokenExpiration: null,
       role: "reader",
     },
-    posts: [],
     favorites: [],
   });
 
-  const favoritesPageState = ref({
-    posts: [],
-    page: 0,
+  const userAccountState = ref({
+    posts: {},
+    favorites: {},
   });
 
   const layoutStore = useLayoutStore();
-
-  const token = ref("");
-  const tokenExpiration = ref(null);
-  const role = ref("reader");
 
   // Getters
   const isLoggedIn = computed(() => !!userState.value.credentials.token);
@@ -38,8 +33,6 @@ export const useUserStore = defineStore("user", () => {
       layoutStore.unhideSpinner();
       const res = await userServices.loginUser(user);
 
-      console.log(res.data);
-
       userState.value.credentials.token = res.data.credentials.token;
       userState.value.credentials.tokenExpiration = new Date();
       userState.value.credentials.tokenExpiration.setSeconds(
@@ -48,10 +41,6 @@ export const useUserStore = defineStore("user", () => {
       userState.value.credentials.role = res.data.credentials.role;
       userState.value.info = res.data.info;
       userState.value.favorites = res.data.favorites;
-
-      const posts = await postServices.getUserPosts();
-
-      userState.value.posts = posts.data.posts;
 
       localStorage.setItem(
         "activeSession",
@@ -169,11 +158,9 @@ export const useUserStore = defineStore("user", () => {
           );
 
           if (firstLoad) {
-            await loadSessionInfo();
-            await loadSessionPosts();
+            await loadUserInfo();
           }
         } catch (error) {
-          // console.log(error);
           if (error.response.status === 401) {
             console.log("User not logged in");
           } else if (error.response.status === 500) {
@@ -211,7 +198,7 @@ export const useUserStore = defineStore("user", () => {
     try {
       layoutStore.unhideSpinner();
       await userServices.updateClient(user);
-      await loadSessionInfo();
+      await loadUserInfo();
       layoutStore.hideSpinner();
     } catch (error) {
       console.log(error);
@@ -222,14 +209,14 @@ export const useUserStore = defineStore("user", () => {
     try {
       layoutStore.unhideSpinner();
       await userServices.updateAgent(user);
-      await loadSessionInfo();
+      await loadUserInfo();
       layoutStore.hideSpinner();
     } catch (error) {
       console.log(error);
     }
   };
 
-  const loadSessionInfo = async () => {
+  const loadUserInfo = async () => {
     try {
       const res = await userServices.getSessionInfo();
       userState.value.credentials.role = res.data.credentials.role;
@@ -240,25 +227,19 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const loadSessionPosts = async () => {
+  const loadUserPosts = async (page = 1) => {
     try {
-      const posts = await postServices.getUserPosts();
-      userState.value.posts = posts.data.posts;
+      const res = await postServices.getUserPosts(page);
+      userAccountState.value.posts = res.data;
     } catch (error) {
       console.log(error);
     }
   };
 
-  const loadFavorites = async () => {
+  const loadUserFavorites = async (page = 1) => {
     try {
-      const posts = [];
-      userState.value.favorites.forEach(async (item, index) => {
-        const post = await postServices.getPost(item.id);
-        posts.push(post.data);
-      });
-
-      favoritesPageState.value.posts = posts;
-      favoritesPageState.value.page = 1;
+      const res = await postServices.getUserFavorites(page);
+      userAccountState.value.favorites = res.data;
     } catch (error) {
       console.log(error);
     }
@@ -273,14 +254,19 @@ export const useUserStore = defineStore("user", () => {
         tokenExpiration: null,
         role: "reader",
       },
-      posts: [],
-      favorites: [],
+    };
+    resetUserAccountState();
+  };
+
+  const resetUserAccountState = () => {
+    userAccountState.value = {
+      posts: {},
+      favorites: {},
     };
   };
 
   onMounted(async () => {
     setInterval(async () => {
-      console.log("refreshing de onmounted");
       if (isLoggedIn.value) {
         await refreshToken();
       }
@@ -289,10 +275,7 @@ export const useUserStore = defineStore("user", () => {
 
   return {
     userState,
-    favoritesPageState,
-    token,
-    tokenExpiration,
-    role,
+    userAccountState,
     isLoggedIn,
     loginUser,
     registerClient,
@@ -301,8 +284,8 @@ export const useUserStore = defineStore("user", () => {
     logoutUser,
     updateClient,
     updateAgent,
-    loadSessionInfo,
-    loadSessionPosts,
-    loadFavorites,
+    loadUserInfo,
+    loadUserPosts,
+    loadUserFavorites,
   };
 });

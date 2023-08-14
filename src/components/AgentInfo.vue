@@ -1,25 +1,23 @@
 <script setup>
-  import { computed, onMounted, ref, watch } from "vue";
+  import { computed, ref, watch } from "vue";
   import { useUserStore } from "../stores/user.js";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
   import PostTableItem from "./PostTableItem.vue";
   import parsePhoneNumber from "libphonenumber-js";
 
-  const props = defineProps(["user", "posts"]);
-
   const userStore = useUserStore();
 
   const myPostsController = ref(true);
 
-  const parsedPhoneNumber = parsePhoneNumber(props.user.phone);
+  const parsedPhoneNumber = parsePhoneNumber(userStore.userState.info.phone);
   const phoneInput = ref(parsedPhoneNumber.nationalNumber);
   const callCodeInput = ref(`+${parsedPhoneNumber.countryCallingCode}`);
 
   const newUser = ref({
-    firstname: props.user.firstname,
-    lastname: props.user.lastname,
-    public_email: props.user.public_email,
-    bio: props.user.bio,
+    firstname: userStore.userState.info.firstname,
+    lastname: userStore.userState.info.lastname,
+    public_email: userStore.userState.info.public_email,
+    bio: userStore.userState.info.bio,
   });
 
   const formattedPhone = computed(() => {
@@ -75,11 +73,11 @@
     )
       return true;
     if (
-      newUser.value.firstname === props.user.firstname &&
-      newUser.value.lastname === props.user.lastname &&
-      formattedPhone.value === props.user.phone &&
-      newUser.value.public_email === props.user.public_email &&
-      newUser.value.bio === props.user.bio
+      newUser.value.firstname === userStore.userState.info.firstname &&
+      newUser.value.lastname === userStore.userState.info.lastname &&
+      formattedPhone.value === userStore.userState.info.phone &&
+      newUser.value.public_email === userStore.userState.info.public_email &&
+      newUser.value.bio === userStore.userState.info.bio
     )
       return true;
     return false;
@@ -95,10 +93,10 @@
 
   const $reset = () => {
     newUser.value = {
-      firstname: props.user.firstname,
-      lastname: props.user.lastname,
-      public_email: props.user.public_email,
-      bio: props.user.bio,
+      firstname: userStore.userState.info.firstname,
+      lastname: userStore.userState.info.lastname,
+      public_email: userStore.userState.info.public_email,
+      bio: userStore.userState.info.bio,
     };
   };
 
@@ -117,6 +115,32 @@
 
   const favoritesEvent = async () => {
     myPostsController.value = false;
+  };
+
+  const prevPostsPageEvent = async () => {
+    if (userStore.userAccountState.posts.page !== 1) {
+      await userStore.loadUserPosts(userStore.userAccountState.posts.page - 1);
+    }
+  };
+
+  const nextPostsPageEvent = async () => {
+    if (userStore.userAccountState.posts.page < userStore.userAccountState.posts.total_pages) {
+      await userStore.loadUserPosts(userStore.userAccountState.posts.page + 1);
+    }
+  };
+
+  const prevFavoritesPageEvent = async () => {
+    if (userStore.userAccountState.favorites.page !== 1) {
+      await userStore.loadUserFavorites(userStore.userAccountState.favorites.page - 1);
+    }
+  };
+
+  const nextFavoritesPageEvent = async () => {
+    if (
+      userStore.userAccountState.favorites.page < userStore.userAccountState.favorites.total_pages
+    ) {
+      await userStore.loadUserFavorites(userStore.userAccountState.favorites.page + 1);
+    }
   };
 </script>
 
@@ -280,54 +304,57 @@
       >
         <!-- Posts -->
         <ul v-if="myPostsController" class="space-y-4">
-          <li v-for="(item, index) in props.posts" :key="index">
+          <li v-for="(item, index) in userStore.userAccountState.posts.posts" :key="index">
             <RouterLink :to="`/post/${item._id}`">
               <PostTableItem :post="item" />
             </RouterLink>
           </li>
           <li
-            v-if="props.posts.length === 0"
+            v-if="userStore.userAccountState.posts.total_posts === 0"
             class="flex h-[282px] w-full flex-col items-center justify-center gap-2"
           >
             <span>Aún no tienes publicaciones</span>
             <RouterLink to="/insert" class="underline">Publica</RouterLink>
           </li>
           <li
-            v-if="!(props.posts.length === 0)"
+            v-if="!(userStore.userAccountState.posts.total_posts === 0)"
             class="flex w-full items-center justify-center gap-2"
           >
-            <span>{{ "<" }}</span>
+            <button @click.prevent="prevPostsPageEvent" class="select-none">{{ "<" }}</button>
             <div>
-              <span>1 / {{ Math.ceil(props.posts.length / 10) }}</span>
+              <span
+                >{{ userStore.userAccountState.posts.page }} /
+                {{ userStore.userAccountState.posts.total_pages }}</span
+              >
             </div>
-            <span>{{ ">" }}</span>
+            <button @click.prevent="nextPostsPageEvent" class="select-none">{{ ">" }}</button>
           </li>
         </ul>
         <!-- Favorites -->
         <ul v-else class="space-y-4">
-          <li v-for="(item, index) in userStore.favoritesPageState.posts" :key="index">
-            <RouterLink :to="`/post/${item.post._id}`">
-              <PostTableItem :post="item.post" />
+          <li v-for="(item, index) in userStore.userAccountState.favorites.favorites" :key="index">
+            <RouterLink :to="`/post/${item._id}`">
+              <PostTableItem :post="item" />
             </RouterLink>
           </li>
           <li
-            v-if="userStore.favoritesPageState.posts.length === 0"
+            v-if="userStore.userAccountState.favorites.total_favorites === 0"
             class="flex h-[282px] w-full flex-col items-center justify-center gap-2"
           >
             <span>Aún no tienes favoritos</span>
           </li>
           <li
-            v-if="!(userStore.favoritesPageState.posts.length === 0)"
+            v-if="!(userStore.userAccountState.favorites.total_favorites === 0)"
             class="flex w-full items-center justify-center gap-2"
           >
-            <span>{{ "<" }}</span>
+            <button @click.prevent="prevFavoritesPageEvent">{{ "<" }}</button>
             <div>
               <span
-                >{{ userStore.favoritesPageState.page }} /
-                {{ Math.ceil(userStore.favoritesPageState.posts.length / 10) }}</span
+                >{{ userStore.userAccountState.favorites.page }} /
+                {{ userStore.userAccountState.favorites.total_pages }}</span
               >
             </div>
-            <span>{{ ">" }}</span>
+            <button @click.prevent="nextFavoritesPageEvent" class="select-none">{{ ">" }}</button>
           </li>
         </ul>
       </div>

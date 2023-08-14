@@ -86,7 +86,8 @@ const routes = [
 
       layoutStore.unhideSpinner();
       try {
-        await userStore.loadFavorites();
+        await userStore.loadUserPosts();
+        await userStore.loadUserFavorites();
         layoutStore.hideSpinner();
         next();
       } catch (error) {
