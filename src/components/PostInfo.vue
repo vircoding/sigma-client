@@ -221,14 +221,16 @@
       <div class="flex w-4/5 flex-col gap-2">
         <div class="mb-[1px] leading-tight">
           <!-- Name -->
-          <h4 class="text-shadow">
-            Por
-            <span class="font-semibold">{{
-              postStore.postState.published_by.agent.firstname +
-              " " +
-              postStore.postState.published_by.agent.lastname
-            }}</span>
-          </h4>
+          <RouterLink :to="`/agents/${postStore.postState.uid}`">
+            <h4 class="text-shadow">
+              Por
+              <span class="font-semibold">{{
+                postStore.postState.published_by.agent.firstname +
+                " " +
+                postStore.postState.published_by.agent.lastname
+              }}</span>
+            </h4>
+          </RouterLink>
           <!-- Public Email -->
           <a
             class="text-sgray-300"

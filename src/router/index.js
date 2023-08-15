@@ -139,6 +139,26 @@ const routes = [
     },
   },
   {
+    path: "/agents/:id",
+    name: "agent",
+    component: () => import("../views/AgentInfoView.vue"),
+    beforeEnter: async (to, from, next) => {
+      const userStore = useUserStore();
+      const layoutStore = useLayoutStore();
+
+      layoutStore.unhideSpinner();
+      try {
+        await userStore.loadAgentData(to.params.id);
+        layoutStore.hideSpinner();
+        next();
+      } catch (error) {
+        console.log(error);
+        layoutStore.hideSpinner();
+        next("/");
+      }
+    },
+  },
+  {
     path: "/:catchAll(.*)",
     name: "404",
     component: () => import("../views/NotFund.vue"),

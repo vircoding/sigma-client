@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from "vue";
 import router from "../router";
 import userServices from "../services/user.js";
 import postServices from "../services/post.js";
+import agentServices from "../services/agent.js";
 import { useLayoutStore } from "./layout";
 
 export const useUserStore = defineStore("user", () => {
@@ -21,6 +22,11 @@ export const useUserStore = defineStore("user", () => {
   const userAccountState = ref({
     posts: {},
     favorites: {},
+  });
+
+  const agentDataState = ref({
+    info: {},
+    posts: {},
   });
 
   const layoutStore = useLayoutStore();
@@ -249,6 +255,18 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
+  const loadAgentData = async (id, page = 1) => {
+    try {
+      const info = await agentServices.getAgentInfo(id);
+      const posts = await agentServices.getAgentPosts(id, page);
+
+      agentDataState.value.info = info.data;
+      agentDataState.value.posts = posts.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // Extra Functions
   const $reset = () => {
     userState.value = {
@@ -262,12 +280,20 @@ export const useUserStore = defineStore("user", () => {
       posts: [],
     };
     resetUserAccountState();
+    resetAgentDataState();
   };
 
   const resetUserAccountState = () => {
     userAccountState.value = {
       posts: {},
       favorites: {},
+    };
+  };
+
+  const resetAgentDataState = () => {
+    agentDataState.value = {
+      info: {},
+      posts: {},
     };
   };
 
@@ -282,6 +308,7 @@ export const useUserStore = defineStore("user", () => {
   return {
     userState,
     userAccountState,
+    agentDataState,
     isLoggedIn,
     loginUser,
     registerClient,
@@ -293,6 +320,8 @@ export const useUserStore = defineStore("user", () => {
     loadUserInfo,
     loadUserPosts,
     loadUserFavorites,
+    loadAgentData,
     resetUserAccountState,
+    resetAgentDataState,
   };
 });
