@@ -12,7 +12,7 @@
           <NavBar class="z-20" />
         </div>
       </header>
-      <main class="mb-[5px] grow bg-background lg:mb-0">
+      <main class="mb-[5px] grow lg:mb-0">
         <AgentDetails />
       </main>
     </div>
