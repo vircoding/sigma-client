@@ -1,6 +1,5 @@
 <script setup>
   import PostCard from "../components/PostCard.vue";
-  import post from "../services/post";
   import { usePostStore } from "../stores/post";
   import { useLayoutStore } from "../stores/layout";
   import { ref, onMounted } from "vue";
@@ -33,48 +32,6 @@
       console.log(error);
     }
   });
-
-  const salePost = {
-    address: {
-      province: "La Habana",
-      municipality: "Playa",
-    },
-    features: {
-      bed_room: 2,
-      bath_room: 2,
-      living_room: 2,
-      dinning_room: 2,
-      kitchen: 2,
-      garage: 2,
-      garden: 2,
-      pool: 2,
-    },
-    amount: 24000,
-    currency: "usd",
-    frequency: "",
-    type: "sale",
-  };
-
-  const rentPost = {
-    address: {
-      province: "La Habana",
-      municipality: "Cerro",
-    },
-    features: {
-      bed_room: 2,
-      bath_room: 2,
-      living_room: 2,
-      dinning_room: 2,
-      kitchen: 2,
-      garage: 0,
-      garden: 0,
-      pool: 0,
-    },
-    amount: 5000,
-    currency: "usd",
-    frequency: "monthly",
-    type: "rent",
-  };
 </script>
 
 <template>
@@ -88,7 +45,7 @@
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, necessitatibus!
     </p>
   </div>
-  <div class="flex flex-col items-center justify-center py-20">
+  <div class="flex flex-col items-center justify-center px-5 py-20">
     <div class="flex flex-col items-center justify-center gap-8 lg:flex-row">
       <RouterLink :to="`/post/${item._id}`" v-for="(item, index) in posts" :key="index">
         <PostCard :post="item" :color="item.__t === 'sale' ? 'bg-sigma' : 'bg-sgreen-300'" />
