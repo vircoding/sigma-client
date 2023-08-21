@@ -1,11 +1,13 @@
 <script setup>
   import { computed, ref, watch } from "vue";
   import { useUserStore } from "../stores/user.js";
+  import { usePostStore } from "../stores/post";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
   import PostTableItem from "./PostTableItem.vue";
   import parsePhoneNumber from "libphonenumber-js";
 
   const userStore = useUserStore();
+  const postStore = usePostStore();
 
   const myPostsController = ref(true);
 
@@ -140,6 +142,25 @@
       userStore.userAccountState.favorites.page < userStore.userAccountState.favorites.total_pages
     ) {
       await userStore.loadUserFavorites(userStore.userAccountState.favorites.page + 1);
+    }
+  };
+
+  const removeUnavailableFavorite = async (index) => {
+    try {
+      postStore.removeFavorite(userStore.userAccountState.favorites.favorites[index]._id);
+      // console.log(userStore.userAccountState.favorites.favorites[index]._id);
+      userStore.userAccountState.favorites.favorites.splice(index, 1);
+      if (
+        userStore.userAccountState.favorites.page < userStore.userAccountState.favorites.total_pages
+      ) {
+        userStore.loadNextFavorite(userStore.userAccountState.favorites.page * 10 + 1);
+      }
+      userStore.userAccountState.favorites.total_favorites -= 1;
+      userStore.userAccountState.favorites.total_pages = Math.ceil(
+        userStore.userAccountState.favorites.total_favorites / 10
+      );
+    } catch (error) {
+      console.log(error);
     }
   };
 </script>
@@ -333,7 +354,18 @@
         <!-- Favorites -->
         <ul v-else class="space-y-4">
           <li v-for="(item, index) in userStore.userAccountState.favorites.favorites" :key="index">
-            <RouterLink :to="`/post/${item._id}`">
+            <div
+              v-if="item.status === 'deleted'"
+              class="flex h-[80px] w-full flex-col items-center justify-center rounded-md border border-sgray-100 bg-background p-6"
+            >
+              <span>Esta publicacion se eliminó</span>
+              <img
+                @click.prevent="removeUnavailableFavorite(index)"
+                src="../assets/close-icon.svg"
+                class="h-[40px] w-[40px]"
+              />
+            </div>
+            <RouterLink v-else :to="`/post/${item._id}`">
               <PostTableItem :post="item" />
             </RouterLink>
           </li>

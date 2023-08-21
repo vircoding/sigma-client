@@ -106,6 +106,15 @@ export const usePostStore = defineStore("post", () => {
     }
   };
 
+  const removeFavorite = async (id) => {
+    try {
+      const res = await postServices.removeFavorite(id);
+      userStore.userState.favorites = res.data.favorites;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // Extra Functions
   const $reset = () => {
     postState.value = {};
@@ -122,6 +131,7 @@ export const usePostStore = defineStore("post", () => {
     getPopularSales,
     getPopularRents,
     favorite,
+    removeFavorite,
     $reset,
   };
 });

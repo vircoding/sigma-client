@@ -28,6 +28,10 @@ export default {
     return authorizedAPI().get(`posts/user/favorites?page=${page}`);
   },
 
+  getNextFavorite(index) {
+    return authorizedAPI().get(`posts/user/favorites?page=${index}&limit=1`);
+  },
+
   getPost(id) {
     return unauthorizedAPI().get(`/posts/${id}`);
   },
@@ -38,6 +42,10 @@ export default {
 
   favorite(id) {
     return authorizedAPI().put(`/posts/favorite/${id}`);
+  },
+
+  removeFavorite(id) {
+    return authorizedAPI().put(`/posts/favorite/${id}?remove=1`);
   },
 
   updatePost(id, post) {
