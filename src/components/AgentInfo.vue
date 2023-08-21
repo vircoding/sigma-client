@@ -148,7 +148,6 @@
   const removeUnavailableFavorite = async (index) => {
     try {
       postStore.removeFavorite(userStore.userAccountState.favorites.favorites[index]._id);
-      // console.log(userStore.userAccountState.favorites.favorites[index]._id);
       userStore.userAccountState.favorites.favorites.splice(index, 1);
       if (
         userStore.userAccountState.favorites.page < userStore.userAccountState.favorites.total_pages

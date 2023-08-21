@@ -1,6 +1,7 @@
 <script setup>
   import ShareButton from "./ShareButton.vue";
   import { ref } from "vue";
+  import { useUserStore } from "../stores/user";
   import { usePostStore } from "../stores/post.js";
 
   const props = defineProps({
@@ -8,6 +9,7 @@
   });
 
   const postStore = usePostStore();
+  const userStore = useUserStore();
 
   const alertVisibility = ref(false);
 
@@ -23,6 +25,14 @@
     try {
       hideAlert();
       await postStore.deletePost(props.post._id);
+      if (
+        userStore.userAccountState.posts.posts.length === 1 &&
+        userStore.userAccountState.posts.page > 1
+      ) {
+        await userStore.loadUserPosts(userStore.userAccountState.posts.page - 1);
+      } else {
+        await userStore.loadUserPosts(userStore.userAccountState.posts.page);
+      }
     } catch (error) {
       console.log(error);
     }

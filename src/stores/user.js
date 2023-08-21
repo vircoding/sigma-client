@@ -246,6 +246,15 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
+  const loadNextPost = async (index) => {
+    try {
+      const res = await postServices.getNextPost(index);
+      userAccountState.value.posts.posts.push(res.data.posts[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const loadUserFavorites = async (page = 1) => {
     try {
       const res = await postServices.getUserFavorites(page);
@@ -328,6 +337,7 @@ export const useUserStore = defineStore("user", () => {
     updateAgent,
     loadUserInfo,
     loadUserPosts,
+    loadNextPost,
     loadUserFavorites,
     loadNextFavorite,
     loadAgentData,

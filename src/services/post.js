@@ -24,6 +24,10 @@ export default {
     return authorizedAPI().get(`/posts/user?page=${page}`);
   },
 
+  getNextPost(index) {
+    return authorizedAPI().get(`posts/user?page=${index}&limit=1`);
+  },
+
   getUserFavorites(page) {
     return authorizedAPI().get(`posts/user/favorites?page=${page}`);
   },

@@ -68,10 +68,8 @@ export const usePostStore = defineStore("post", () => {
 
   const deletePost = async (id) => {
     try {
-      layoutStore.unhideSpinner();
-      await postServices.deletePost(id);
-      await userStore.loadUserInfo();
-      layoutStore.hideSpinner();
+      const res = await postServices.deletePost(id);
+      userStore.userState.posts = res.data.posts;
     } catch (error) {
       console.log(error);
     }
