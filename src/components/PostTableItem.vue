@@ -3,6 +3,7 @@
   import { ref } from "vue";
   import { useUserStore } from "../stores/user";
   import { usePostStore } from "../stores/post.js";
+  import { useLayoutStore } from "../stores/layout";
 
   const props = defineProps({
     post: Object,
@@ -10,6 +11,7 @@
 
   const postStore = usePostStore();
   const userStore = useUserStore();
+  const layoutStore = useLayoutStore();
 
   const alertVisibility = ref(false);
 
@@ -24,6 +26,7 @@
   const deletePost = async () => {
     try {
       hideAlert();
+      layoutStore.unhideTableSpinner();
       await postStore.deletePost(props.post._id);
       if (
         userStore.userAccountState.posts.posts.length === 1 &&
@@ -33,6 +36,7 @@
       } else {
         await userStore.loadUserPosts(userStore.userAccountState.posts.page);
       }
+      layoutStore.hideTableSpinner();
     } catch (error) {
       console.log(error);
     }

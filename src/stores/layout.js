@@ -6,6 +6,7 @@ export const useLayoutStore = defineStore("layout", () => {
   const sideMenuVisibility = ref(false);
   const isLoading = ref(false);
   const spinnerVisibility = ref(false);
+  const tableSpinnerVisibility = ref(false);
 
   // Actions
   const unhideSideMenu = () => {
@@ -32,15 +33,26 @@ export const useLayoutStore = defineStore("layout", () => {
     spinnerVisibility.value = false;
   };
 
+  const unhideTableSpinner = () => {
+    tableSpinnerVisibility.value = true;
+  };
+
+  const hideTableSpinner = () => {
+    tableSpinnerVisibility.value = false;
+  };
+
   return {
     sideMenuVisibility,
     isLoading,
     spinnerVisibility,
+    tableSpinnerVisibility,
     unhideSideMenu,
     hideSideMenu,
     unhideLoading,
     hideLoading,
     unhideSpinner,
     hideSpinner,
+    unhideTableSpinner,
+    hideTableSpinner,
   };
 });
