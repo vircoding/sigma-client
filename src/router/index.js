@@ -84,15 +84,32 @@ const routes = [
       const userStore = useUserStore();
       const layoutStore = useLayoutStore();
 
-      layoutStore.unhideSpinner();
+      if (!from.name) {
+        layoutStore.unhideLoading();
+      } else {
+        layoutStore.unhideSpinner();
+      }
+
       try {
         await userStore.loadUserPosts();
         await userStore.loadUserFavorites();
-        layoutStore.hideSpinner();
+
+        if (!from.name) {
+          layoutStore.hideLoading();
+        } else {
+          layoutStore.hideSpinner();
+        }
+
         next();
       } catch (error) {
         console.log(error);
-        layoutStore.hideSpinner();
+
+        if (!from.name) {
+          layoutStore.hideLoading();
+        } else {
+          layoutStore.hideSpinner();
+        }
+
         next("/");
       }
     },
@@ -105,14 +122,31 @@ const routes = [
       const postStore = usePostStore();
       const layoutStore = useLayoutStore();
 
-      layoutStore.unhideSpinner();
+      if (!from.name) {
+        layoutStore.unhideLoading();
+      } else {
+        layoutStore.unhideSpinner();
+      }
+
       try {
         await postStore.loadPost(to.params.id);
-        layoutStore.hideSpinner();
+
+        if (!from.name) {
+          layoutStore.hideLoading();
+        } else {
+          layoutStore.hideSpinner();
+        }
+
         next();
       } catch (error) {
         console.log(error);
-        layoutStore.hideSpinner();
+
+        if (!from.name) {
+          layoutStore.hideLoading();
+        } else {
+          layoutStore.hideSpinner();
+        }
+
         next("/");
       }
     },
@@ -126,14 +160,30 @@ const routes = [
       const postStore = usePostStore();
       const layoutStore = useLayoutStore();
 
-      layoutStore.unhideSpinner();
+      if (!from.name) {
+        layoutStore.unhideLoading();
+      } else {
+        layoutStore.unhideSpinner();
+      }
       try {
         await postStore.loadPost(to.params.id);
-        layoutStore.hideSpinner();
+
+        if (!from.name) {
+          layoutStore.hideLoading();
+        } else {
+          layoutStore.hideSpinner();
+        }
+
         next();
       } catch (error) {
         console.log(error);
-        layoutStore.hideSpinner();
+
+        if (!from.name) {
+          layoutStore.hideLoading();
+        } else {
+          layoutStore.hideSpinner();
+        }
+
         next("/");
       }
     },
@@ -146,14 +196,31 @@ const routes = [
       const userStore = useUserStore();
       const layoutStore = useLayoutStore();
 
-      layoutStore.unhideSpinner();
+      if (!from.name) {
+        layoutStore.unhideLoading();
+      } else {
+        layoutStore.unhideSpinner();
+      }
+
       try {
         await userStore.loadAgentData(to.params.id);
-        layoutStore.hideSpinner();
+
+        if (!from.name) {
+          layoutStore.hideLoading();
+        } else {
+          layoutStore.hideSpinner();
+        }
+
         next();
       } catch (error) {
         console.log(error);
-        layoutStore.hideSpinner();
+
+        if (!from.name) {
+          layoutStore.hideLoading();
+        } else {
+          layoutStore.hideSpinner();
+        }
+
         next("/");
       }
     },
