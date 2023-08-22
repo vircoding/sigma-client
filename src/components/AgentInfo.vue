@@ -147,17 +147,13 @@
 
   const removeUnavailableFavorite = async (index) => {
     try {
-      postStore.removeFavorite(userStore.userAccountState.favorites.favorites[index]._id);
-      userStore.userAccountState.favorites.favorites.splice(index, 1);
-      if (
-        userStore.userAccountState.favorites.page < userStore.userAccountState.favorites.total_pages
-      ) {
-        userStore.loadNextFavorite(userStore.userAccountState.favorites.page * 10 + 1);
-      }
-      userStore.userAccountState.favorites.total_favorites -= 1;
-      userStore.userAccountState.favorites.total_pages = Math.ceil(
-        userStore.userAccountState.favorites.total_favorites / 10
-      );
+      await postStore.removeFavorite(userStore.userAccountState.favorites.favorites[index]._id);
+      if(userStore.userAccountState.favorites.favorites.length === 1 &&
+        userStore.userAccountState.favorites.page > 1) {
+          await userStore.loadUserFavorites(userStore.userAccountState.favorites.page - 1)
+        } else {
+          await userStore.loadUserFavorites(userStore.userAccountState.favorites.page)
+        }
     } catch (error) {
       console.log(error);
     }
