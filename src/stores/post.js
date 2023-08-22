@@ -20,6 +20,7 @@ export const usePostStore = defineStore("post", () => {
       postState.value.published_by = res.data.published_by;
     } catch (error) {
       console.log(error);
+      throw new Error(error.response.data.error);
     }
   };
 

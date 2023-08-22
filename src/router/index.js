@@ -139,15 +139,17 @@ const routes = [
 
         next();
       } catch (error) {
-        console.log(error);
-
         if (!from.name) {
           layoutStore.hideLoading();
         } else {
           layoutStore.hideSpinner();
         }
 
-        next("/");
+        if (error.message === "Post not founded") {
+          next({ name: "404" });
+        } else {
+          next("/");
+        }
       }
     },
   },
@@ -227,8 +229,13 @@ const routes = [
   },
   {
     path: "/:catchAll(.*)",
+    name: "not_found",
+    component: () => import("../views/NotFound.vue"),
+  },
+  {
+    path: "/404",
     name: "404",
-    component: () => import("../views/NotFund.vue"),
+    component: () => import("../views/NotFound.vue"),
   },
 ];
 
