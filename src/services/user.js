@@ -57,4 +57,16 @@ export default {
   getSessionInfo() {
     return authorizedAPI().get("/auth/");
   },
+
+  updateUserPostsAndFavorites() {
+    return authorizedAPI().get("/auth/?posts=1&favorites=1");
+  },
+
+  updateUserPosts() {
+    return authorizedAPI().get("/auth/?posts=1");
+  },
+
+  updateUserFavorites() {
+    return authorizedAPI().get("/auth/?favorites=1");
+  },
 };

@@ -13,6 +13,14 @@
 
   const myPostsController = ref(true);
 
+  const favoritesList = computed(() => {
+    return userStore.userState.favorites;
+  });
+
+  watch(favoritesList, async () => {
+    await userStore.loadUserFavorites();
+  });
+
   const parsedPhoneNumber = parsePhoneNumber(userStore.userState.info.phone);
   const phoneInput = ref(parsedPhoneNumber.nationalNumber);
   const callCodeInput = ref(`+${parsedPhoneNumber.countryCallingCode}`);

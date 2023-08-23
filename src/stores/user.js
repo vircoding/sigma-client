@@ -237,6 +237,34 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
+  const updateUserPostsAndFavorites = async () => {
+    try {
+      const res = await userServices.updatePostsAndFavorites();
+      userState.value.posts = res.data.posts;
+      userState.value.favorites = res.data.favorites;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateUserPosts = async () => {
+    try {
+      const res = await userServices.updateUserPosts();
+      userState.value.posts = res.data.posts;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateUserFavorites = async () => {
+    try {
+      const res = await userServices.updateUserFavorites();
+      userState.value.favorites = res.data.favorites;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const loadUserPosts = async (page = 1) => {
     try {
       const res = await postServices.getUserPosts(page);
@@ -336,6 +364,9 @@ export const useUserStore = defineStore("user", () => {
     updateClient,
     updateAgent,
     loadUserInfo,
+    updateUserPostsAndFavorites,
+    updateUserPosts,
+    updateUserFavorites,
     loadUserPosts,
     loadNextPost,
     loadUserFavorites,
