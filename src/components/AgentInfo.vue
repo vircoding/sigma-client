@@ -155,7 +155,7 @@
     }
   };
 
-  const removeUnavailableFavorite = async (index) => {
+  const removeFavorite = async (index) => {
     try {
       layoutStore.unhideTableSpinner();
       await postStore.removeFavorite(userStore.userAccountState.favorites.favorites[index]._id);
@@ -340,7 +340,7 @@
         >
           <li v-for="(item, index) in userStore.userAccountState.posts.posts" :key="index">
             <RouterLink :to="`/post/${item._id}`">
-              <PostTableItem :post="item" />
+              <PostTableItem :type="'post'" :post="item" />
             </RouterLink>
           </li>
           <li
@@ -377,13 +377,13 @@
               >
                 <span>Esta publicacion se eliminó</span>
                 <img
-                  @click.prevent="removeUnavailableFavorite(index)"
+                  @click.prevent="removeFavorite(index)"
                   src="../assets/close-icon.svg"
                   class="h-[40px] w-[40px]"
                 />
               </div>
               <RouterLink v-else :to="`/post/${item._id}`">
-                <PostTableItem :post="item" />
+                <PostTableItem :index="index" :type="'favorite'" :post="item" />
               </RouterLink>
             </li>
             <li

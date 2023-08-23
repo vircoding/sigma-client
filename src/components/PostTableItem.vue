@@ -5,9 +5,7 @@
   import { usePostStore } from "../stores/post.js";
   import { useLayoutStore } from "../stores/layout";
 
-  const props = defineProps({
-    post: Object,
-  });
+  const props = defineProps(["post", "type", "index"]);
 
   const postStore = usePostStore();
   const userStore = useUserStore();
@@ -35,6 +33,27 @@
         await userStore.loadUserPosts(userStore.userAccountState.posts.page - 1);
       } else {
         await userStore.loadUserPosts(userStore.userAccountState.posts.page);
+      }
+      layoutStore.hideTableSpinner();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const removeFavorite = async () => {
+    console.log(props.index);
+    try {
+      layoutStore.unhideTableSpinner();
+      await postStore.removeFavorite(
+        userStore.userAccountState.favorites.favorites[props.index]._id
+      );
+      if (
+        userStore.userAccountState.favorites.favorites.length === 1 &&
+        userStore.userAccountState.favorites.page > 1
+      ) {
+        await userStore.loadUserFavorites(userStore.userAccountState.favorites.page - 1);
+      } else {
+        await userStore.loadUserFavorites(userStore.userAccountState.favorites.page);
       }
       layoutStore.hideTableSpinner();
     } catch (error) {
@@ -126,11 +145,26 @@
 
       <!-- Actions -->
       <div class="flex">
+        <!-- Edit -->
         <RouterLink :to="`/post/edit/${post._id}`">
           <img src="../assets/edit-icon.svg" />
         </RouterLink>
+
+        <!-- Share -->
         <ShareButton :url="`http://localhost:5173/post/${post._id}`" />
-        <img @click.prevent="unhideAlert" src="../assets/delete-icon.svg" />
+
+        <!-- Remove -->
+        <img
+          v-if="props.type === 'post'"
+          @click.prevent="unhideAlert"
+          src="../assets/delete-icon.svg"
+        />
+        <img
+          v-if="props.type === 'favorite'"
+          @click.prevent="removeFavorite"
+          class="h-[30px] w-[30px]"
+          src="../assets/close-icon.svg"
+        />
       </div>
     </div>
     <div class="h-[1px] w-[97%] border-t border-sgray-200"></div>
