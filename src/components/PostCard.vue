@@ -50,27 +50,57 @@
         class="feature-container grid h-[60px] flex-shrink-0 grid-cols-3 grid-rows-2 place-items-center"
       >
         <div class="flex items-center gap-[2px]">
-          <FeatureIcon :role="props.post.__t" icon="bed_room" />
+          <FeatureIcon
+            :classes="
+              'h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]' + ' ' + props.color
+            "
+            icon="bed_room"
+          />
           <span class="text-xs text-sgray-400">x2</span>
         </div>
         <div class="flex items-center gap-[2px]">
-          <FeatureIcon :role="props.post.__t" icon="bath_room" />
+          <FeatureIcon
+            :classes="
+              'h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]' + ' ' + props.color
+            "
+            icon="bath_room"
+          />
           <span class="text-xs text-sgray-400">x2</span>
         </div>
         <div class="flex items-center gap-[2px]">
-          <FeatureIcon :role="props.post.__t" icon="garage" />
+          <FeatureIcon
+            :classes="
+              'h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]' + ' ' + props.color
+            "
+            icon="garage"
+          />
           <span class="text-xs text-sgray-400">x2</span>
         </div>
         <div class="flex items-center gap-[2px]">
-          <FeatureIcon :role="props.post.__t" icon="garden" />
+          <FeatureIcon
+            :classes="
+              'h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]' + ' ' + props.color
+            "
+            icon="garden"
+          />
           <span class="text-xs text-sgray-400">x2</span>
         </div>
         <div class="flex items-center gap-[2px]">
-          <FeatureIcon :role="props.post.__t" icon="pool" />
+          <FeatureIcon
+            :classes="
+              'h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]' + ' ' + props.color
+            "
+            icon="pool"
+          />
           <span class="text-xs text-sgray-400">x2</span>
         </div>
         <div class="flex items-center gap-[2px]">
-          <FeatureIcon :role="props.post.__t" icon="furnished" />
+          <FeatureIcon
+            :classes="
+              'h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]' + ' ' + props.color
+            "
+            icon="furnished"
+          />
           <span class="text-xs text-sgray-400">x2</span>
         </div>
       </div>

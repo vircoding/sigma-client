@@ -1,15 +1,16 @@
 <script setup>
-  const props = defineProps(["icon", "role"]);
+  const props = defineProps(["icon", "classes"]);
 </script>
 
 <template>
   <!-- Bed Room -->
-  <div
+  <!-- <div
     v-if="props.icon === 'bed_room'"
     class="h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]"
     :class="props.role === 'sale' ? 'fill-sigma' : 'fill-sgreen-300'"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  > -->
+  <div v-if="props.icon === 'bed_room'" :class="props.classes">
+    <svg class="text-shadow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
       <path
         class="cls-1"
         d="M16.9,34.28c-.84,0-.9-.09-.88,.87,.02,.71,0,.87,.01,1.57,0,.46-.21,1.28-1.31,1.28-1.26,0-.21,0-1.47,0s-1.39-.94-1.39-1.24c0-.4,0-.26,0-.66,0-9.05,0-12.88,0-21.93,0-.93,.26-1.7,1.07-2.23,.75-.48,1.44-.3,1.81-.13,.78,.4,1.24,1.07,1.27,1.95,.04,.95,.01,1.9,.01,2.85,0,3.45,0,8.85,0,12.29,0,.54,.05,.58,.58,.58,6.86,0,13.71,0,20.57,0h0c3.61,0,7.21,0,10.82,0v-4.1H20.89c-.81,0-1.47-.66-1.47-1.47s.66-1.47,1.47-1.47h27.11V10c0-5.52-4.48-10-10-10H10C4.48,0,0,4.48,0,10v28c0,5.52,4.48,10,10,10h28c5.52,0,10-4.48,10-10v-3.72c-10.37,0-20.73,0-31.1,0Zm3.94-17.45h8.97c.79,0,1.43,.64,1.43,1.43s-.64,1.43-1.43,1.43h-8.97c-.79,0-1.43-.64-1.43-1.43s.64-1.43,1.43-1.43Z"
@@ -17,11 +18,7 @@
     </svg>
   </div>
   <!-- Bath Room -->
-  <div
-    v-if="props.icon === 'bath_room'"
-    class="h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]"
-    :class="props.role === 'sale' ? 'fill-sigma' : 'fill-sgreen-300'"
-  >
+  <div v-if="props.icon === 'bath_room'" :class="props.classes">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
       <path
         class="cls-1"
@@ -30,11 +27,7 @@
     </svg>
   </div>
   <!-- Garage -->
-  <div
-    v-if="props.icon === 'garage'"
-    class="h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]"
-    :class="props.role === 'sale' ? 'fill-sigma' : 'fill-sgreen-300'"
-  >
+  <div v-if="props.icon === 'garage'" :class="props.classes">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
       <path
         class="cls-1"
@@ -55,11 +48,7 @@
     </svg>
   </div>
   <!-- Garden -->
-  <div
-    v-if="props.icon === 'garden'"
-    class="h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]"
-    :class="props.role === 'sale' ? 'fill-sigma' : 'fill-sgreen-300'"
-  >
+  <div v-if="props.icon === 'garden'" :class="props.classes">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
       <path
         class="cls-1"
@@ -71,11 +60,7 @@
     </svg>
   </div>
   <!-- Pool -->
-  <div
-    v-if="props.icon === 'pool'"
-    class="h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]"
-    :class="props.role === 'sale' ? 'fill-sigma' : 'fill-sgreen-300'"
-  >
+  <div v-if="props.icon === 'pool'" :class="props.classes">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
       <rect class="cls-1" x="25.61" y="18.71" width="10.76" height="5.14" />
       <path
@@ -85,11 +70,7 @@
     </svg>
   </div>
   <!-- Furnished -->
-  <div
-    v-if="props.icon === 'furnished'"
-    class="h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]"
-    :class="props.role === 'sale' ? 'fill-sigma' : 'fill-sgreen-300'"
-  >
+  <div v-if="props.icon === 'furnished'" :class="props.classes">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
       <path
         class="cls-1"

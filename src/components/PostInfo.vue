@@ -5,14 +5,10 @@
   import Gallery from "./Gallery.vue";
   import FavoriteIcon from "./icons/FavoriteIcon.vue";
   import ShareButton from "./ShareButton.vue";
+  import FeatureIcon from "./icons/FeatureIcon.vue";
 
   const postStore = usePostStore();
   const userStore = useUserStore();
-
-  const iconBoxColor = computed(() => {
-    if (postStore.postState.__t === "sale") return "bg-sigma";
-    return "bg-sgreen-300";
-  });
 
   const favorite = ref(
     Boolean(userStore.userState.favorites.find((item) => item.id === postStore.postState._id))
@@ -69,14 +65,14 @@
       <div class="text-shadow flex flex-col gap-[3px] font-semibold">
         <span>Cuartos</span>
         <div class="flex items-center gap-2">
-          <div
-            class="h-8 w-8 rounded-md"
-            :class="
-              postStore.postState.features.bed_room > 0
-                ? iconBoxColor + ' text-shadow'
-                : 'bg-sgray-100'
+          <FeatureIcon
+            :classes="
+              'h-8 w-8' +
+              ' ' +
+              (postStore.postState.__t === 'sale' ? 'fill-sigma' : 'fill-sgreen-300')
             "
-          ></div>
+            icon="bed_room"
+          />
           <span
             class="text-shadow text-base"
             :class="postStore.postState.features.bed_room > 0 ? 'text-sgray-300' : 'text-sgray-200'"
@@ -88,14 +84,14 @@
       <div class="text-shadow flex flex-col gap-[3px] font-semibold">
         <span>Baños</span>
         <div class="flex items-center gap-2">
-          <div
-            class="h-8 w-8 rounded-md"
-            :class="
-              postStore.postState.features.bed_room > 0
-                ? iconBoxColor + ' text-shadow'
-                : 'bg-sgray-100'
+          <FeatureIcon
+            :classes="
+              'h-8 w-8' +
+              ' ' +
+              (postStore.postState.__t === 'sale' ? 'fill-sigma' : 'fill-sgreen-300')
             "
-          ></div>
+            icon="bath_room"
+          />
           <span
             class="text-shadow text-base"
             :class="postStore.postState.features.bed_room > 0 ? 'text-sgray-300' : 'text-sgray-200'"
@@ -107,12 +103,14 @@
       <div class="text-shadow flex flex-col gap-[3px] font-semibold">
         <span>Garage</span>
         <div class="flex items-center gap-2">
-          <div
-            class="h-8 w-8 rounded-md"
-            :class="
-              postStore.postState.features.garage ? iconBoxColor + ' text-shadow' : 'bg-sgray-100'
+          <FeatureIcon
+            :classes="
+              'h-8 w-8' +
+              ' ' +
+              (postStore.postState.__t === 'sale' ? 'fill-sigma' : 'fill-sgreen-300')
             "
-          ></div>
+            icon="garage"
+          />
           <img
             v-if="postStore.postState.features.garage"
             src="../assets/true-icon.svg"
@@ -129,12 +127,14 @@
       <div class="text-shadow flex flex-col gap-[3px] font-semibold">
         <span>Jardín</span>
         <div class="flex items-center gap-2">
-          <div
-            class="h-8 w-8 rounded-md"
-            :class="
-              postStore.postState.features.garden ? iconBoxColor + ' text-shadow' : 'bg-sgray-100'
+          <FeatureIcon
+            :classes="
+              'h-8 w-8' +
+              ' ' +
+              (postStore.postState.__t === 'sale' ? 'fill-sigma' : 'fill-sgreen-300')
             "
-          ></div>
+            icon="garden"
+          />
           <img
             v-if="postStore.postState.features.garden"
             src="../assets/true-icon.svg"
@@ -151,12 +151,14 @@
       <div class="text-shadow flex flex-col gap-[3px] font-semibold">
         <span>Piscina</span>
         <div class="flex items-center gap-2">
-          <div
-            class="h-8 w-8 rounded-md"
-            :class="
-              postStore.postState.features.pool ? iconBoxColor + ' text-shadow' : 'bg-sgray-100'
+          <FeatureIcon
+            :classes="
+              'h-8 w-8' +
+              ' ' +
+              (postStore.postState.__t === 'sale' ? 'fill-sigma' : 'fill-sgreen-300')
             "
-          ></div>
+            icon="pool"
+          />
           <img
             v-if="postStore.postState.features.pool"
             src="../assets/true-icon.svg"
@@ -173,14 +175,14 @@
       <div class="text-shadow flex flex-col gap-[3px] font-semibold">
         <span>Amueblada</span>
         <div class="flex items-center gap-2">
-          <div
-            class="h-8 w-8 rounded-md"
-            :class="
-              postStore.postState.features.furnished
-                ? iconBoxColor + ' text-shadow'
-                : 'bg-sgray-100'
+          <FeatureIcon
+            :classes="
+              'h-8 w-8' +
+              ' ' +
+              (postStore.postState.__t === 'sale' ? 'fill-sigma' : 'fill-sgreen-300')
             "
-          ></div>
+            icon="furnished"
+          />
           <img
             v-if="postStore.postState.features.furnished"
             src="../assets/true-icon.svg"
