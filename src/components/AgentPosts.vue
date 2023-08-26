@@ -13,10 +13,14 @@
 
   const activeStyles = "bg-sigma font-semibold text-white";
 
+  const spinnerVisibility = ref(false);
+
   const activatePage = async (page) => {
     if (page !== pagesBuck) {
       activePage.value = page;
+      spinnerVisibility.value = true;
       await userStore.loadAgentData(route.params.id, page);
+      spinnerVisibility.value = false;
     }
   };
 
@@ -51,7 +55,7 @@
     </ul>
     <!-- Pages -->
     <div class="mb-7 mt-3 h-9">
-      <ul class="flex h-full items-center justify-center px-4">
+      <ul v-if="!spinnerVisibility" class="flex h-full items-center justify-center px-4">
         <div class="flex h-full items-center justify-center rounded-lg bg-sgray-100">
           <li
             @click.prevent="prevPageBuck"
@@ -84,6 +88,36 @@
           </li>
         </div>
       </ul>
+      <!-- Spinner Container -->
+      <div v-else class="flex items-center justify-center">
+        <div
+          class="spinner h-[36px] w-[36px] rounded-full border-4 border-solid border-x-sgray-100 border-b-sgray-100 border-t-sigma"
+        ></div>
+      </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+  .scoped-blur {
+    filter: blur(1px);
+  }
+
+  .spinner {
+    animation: spin 0.75s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    50% {
+      transform: rotate(360deg);
+    }
+
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+</style>
