@@ -6,6 +6,7 @@
   import FavoriteIcon from "./icons/FavoriteIcon.vue";
   import ShareButton from "./ShareButton.vue";
   import FeatureIcon from "./icons/FeatureIcon.vue";
+  import { formatAmount } from "../utils/formatAmount.js";
 
   const postStore = usePostStore();
   const userStore = useUserStore();
@@ -34,7 +35,11 @@
         <!-- Amount -->
         <h2 class="text-shadow text-2xl font-extrabold">
           {{
-            postStore.postState.__t === "sale" ? postStore.postState.price : postStore.postState.tax
+            formatAmount(
+              postStore.postState.__t === "sale"
+                ? postStore.postState.price
+                : postStore.postState.tax
+            )
           }}
           <span class="text-xl font-semibold uppercase">{{ postStore.postState.currency }}</span>
           <span class="text-xl font-semibold lowercase" v-if="postStore.postState.__t === 'rent'">
