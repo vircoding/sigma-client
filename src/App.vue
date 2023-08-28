@@ -5,6 +5,7 @@
   import SideMenu from "./components/SideMenu.vue";
   import Loading from "./components/Loading.vue";
   import FormSpinner from "./components/FormSpinner.vue";
+  import FullScreenGallery from "./components/FullScreenGallery.vue";
 
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
@@ -14,7 +15,11 @@
   <div
     class="h-screen"
     :class="
-      layoutStore.sideMenuVisibility || layoutStore.spinnerVisibility ? 'overflow-hidden' : ''
+      layoutStore.sideMenuVisibility ||
+      layoutStore.spinnerVisibility ||
+      layoutStore.fullScreenGallery
+        ? 'overflow-hidden'
+        : ''
     "
   >
     <SideMenu
@@ -24,9 +29,11 @@
 
     <Loading :class="layoutStore.isLoading ? 'block' : 'hidden'" class="h-screen w-screen" />
     <div
-      :class="`${layoutStore.isLoading ? 'hidden' : 'block'} ${
-        layoutStore.sideMenuVisibility ? 'blur' : ''
-      }`"
+      :class="`${layoutStore.isLoading ? 'hidden' : 'block'} 
+      ${layoutStore.sideMenuVisibility ? 'blur' : ''}
+      ${layoutStore.spinnerVisibility ? 'blur' : ''}
+      ${layoutStore.fullScreenGallery ? 'blur' : ''}
+      `"
       class="router-view font-poppins text-sm text-sgray-400 lg:text-base"
     >
       <RouterView />
@@ -35,9 +42,13 @@
     <div
       @click.prevent="layoutStore.hideSideMenu"
       class="overlay"
-      :class="layoutStore.sideMenuVisibility ? 'visiblle' : 'invisible'"
+      :class="layoutStore.sideMenuVisibility ? 'visible' : 'invisible'"
     ></div>
     <FormSpinner :class="layoutStore.spinnerVisibility ? 'block' : 'hidden'" class="z-30" />
+  </div>
+  <!-- FullScreen Gallery -->
+  <div class="overlay" :class="layoutStore.fullScreenGallery ? 'visible' : 'invisible'">
+    <FullScreenGallery />
   </div>
 </template>
 

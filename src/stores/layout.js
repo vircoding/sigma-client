@@ -7,6 +7,7 @@ export const useLayoutStore = defineStore("layout", () => {
   const isLoading = ref(false);
   const spinnerVisibility = ref(false);
   const tableSpinnerVisibility = ref(false);
+  const fullScreenGallery = ref(false);
 
   // Actions
   const unhideSideMenu = () => {
@@ -41,11 +42,20 @@ export const useLayoutStore = defineStore("layout", () => {
     tableSpinnerVisibility.value = false;
   };
 
+  const unhideFullScreenGallery = () => {
+    fullScreenGallery.value = true;
+  };
+
+  const hideFullScreenGallery = () => {
+    fullScreenGallery.value = false;
+  };
+
   return {
     sideMenuVisibility,
     isLoading,
     spinnerVisibility,
     tableSpinnerVisibility,
+    fullScreenGallery,
     unhideSideMenu,
     hideSideMenu,
     unhideLoading,
@@ -54,5 +64,7 @@ export const useLayoutStore = defineStore("layout", () => {
     hideSpinner,
     unhideTableSpinner,
     hideTableSpinner,
+    unhideFullScreenGallery,
+    hideFullScreenGallery,
   };
 });

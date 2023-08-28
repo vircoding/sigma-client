@@ -1,11 +1,14 @@
 <script setup>
   import { ref } from "vue";
+  import { useLayoutStore } from "../stores/layout.js";
   import cardImg from "../assets/card-img.jpg";
   import cardImg2 from "../assets/card-img2.jpg";
   import cardImg3 from "../assets/card-img3.jpg";
   import cardImg4 from "../assets/card-img4.jpg";
   import cardImg5 from "../assets/card-img5.jpg";
   import GalleryIndicator from "./GalleryIndicator.vue";
+
+  const layoutStore = useLayoutStore();
 
   const images = [
     cardImg,
@@ -90,23 +93,34 @@
       transitionEnable.value = "";
     }, 250);
   };
+
+  const EnterFullScreen = () => {
+    layoutStore.unhideFullScreenGallery();
+  };
 </script>
 
 <template>
   <div class="overflow-hidden">
-    <div
-      :style="`transform: translateX(${translationLength}px)`"
-      class="relative flex aspect-video w-full will-change-transform"
-      :class="transitionEnable"
-    >
+    <div class="relative">
+      <div
+        :style="`transform: translateX(${translationLength}px)`"
+        class="relative flex aspect-video w-full will-change-transform"
+        :class="transitionEnable"
+      >
+        <img
+          v-for="(image, index) in images"
+          :key="index"
+          :src="image"
+          class="sticky left-0 w-full object-cover shadow-lg"
+          @touchstart="startSwipe($event)"
+          @touchmove="moveSwipe($event)"
+          @touchend="endSwipe($event)"
+        />
+      </div>
       <img
-        v-for="(image, index) in images"
-        :key="index"
-        :src="image"
-        class="sticky left-0 w-full object-cover shadow-lg"
-        @touchstart="startSwipe($event)"
-        @touchmove="moveSwipe($event)"
-        @touchend="endSwipe($event)"
+        @click.prevent="EnterFullScreen"
+        class="absolute bottom-0 right-0 mb-2 mr-2 h-5 w-5"
+        src="../assets/fullscreen-icon.svg"
       />
     </div>
     <div class="mt-2 flex justify-center gap-[2px] py-4">
