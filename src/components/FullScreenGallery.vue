@@ -76,23 +76,23 @@
 </script>
 
 <template>
-  <div class="fixed top-0 z-10 w-full p-4">
-    <nav class="flex justify-end gap-1">
-      <img
+  <div class="fixed top-0 z-10 w-full">
+    <nav class="flex h-[68px] justify-end p-4">
+      <!-- <img
         @click.prevent="zoomIn"
-        class="custom-shadow mx-[6px] w-6"
+        class="custom-shadow mx-[6px] w-5"
         src="../assets/zoom-in-icon.svg"
         alt="Zoom In"
       />
       <img
         @click.prevent="zoomOut"
-        class="custom-shadow mx-[6px] w-6"
+        class="custom-shadow mx-[6px] w-5"
         src="../assets/zoom-out-icon.svg"
         alt="Zoom Out"
-      />
+      /> -->
       <img
         @click.prevent="closeFullScreen"
-        class="custom-shadow w-9"
+        class="custom-shadow w-5"
         src="../assets/exit-fullscreen-icon.svg"
         alt="Exit Fullscreen"
       />
@@ -126,6 +126,6 @@
 
 <style scoped>
   .arrow-button {
-    background-color: rgba(237, 237, 237, 0.6);
+    background-color: rgba(237, 237, 237, 0.45);
   }
 </style>

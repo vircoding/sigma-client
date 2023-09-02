@@ -21,11 +21,9 @@
 
 <template>
   <nav class="z-50 flex h-screen w-1/2 flex-col items-end text-sgray-400">
-    <img
-      src="../assets/close-icon.svg"
-      class="text-shadow relative right-4 w-9 py-4 lg:hidden"
-      @click="menuInteraction"
-    />
+    <div class="flex h-[68px] items-center p-4 lg:hidden">
+      <img src="../assets/close-icon.svg" class="text-shadow w-5" @click="menuInteraction" />
+    </div>
     <div class="h-[1px] w-full bg-sgray-100"></div>
     <ul class="flex flex-col items-end gap-6 pr-6 pt-10">
       <li v-if="userStore.isLoggedIn">

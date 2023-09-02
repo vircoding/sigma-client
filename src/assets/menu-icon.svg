@@ -1,4 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-  style="fill: rgb(51, 51, 51);transform: ;msFilter:;">
-  <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<svg width="48" height="48" viewBox="0 0 48 48" version="1.1" id="svg1" xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+   <defs id="defs1" />
+   <g id="layer1" transform="translate(-184)">
+      <path
+         style="color:#000000;fill:#333333;stroke-width:1.65517;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 188.19947,0 a 4.137931,4.137931 0 0 0 -4.13793,4.137931 4.137931,4.137931 0 0 0 4.13793,4.1379306 h 39.72414 A 4.137931,4.137931 0 0 0 232.06154,4.137931 4.137931,4.137931 0 0 0 227.92361,0 Z"
+         id="path13" />
+      <path
+         style="color:#000000;fill:#333333;stroke-width:1.65517;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="M 188.13793,39.724138 A 4.137931,4.137931 0 0 0 184,43.862069 4.137931,4.137931 0 0 0 188.13793,48 h 39.72414 A 4.137931,4.137931 0 0 0 232,43.862069 4.137931,4.137931 0 0 0 227.86207,39.724138 Z"
+         id="path15" />
+      <path
+         style="color:#000000;fill:#333333;stroke-width:1.65517;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="M 188.13793,19.862069 A 4.137931,4.137931 0 0 0 184,24 a 4.137931,4.137931 0 0 0 4.13793,4.137931 h 13.00861 A 4.137931,4.137931 0 0 0 205.28447,24 4.137931,4.137931 0 0 0 201.14654,19.862069 Z"
+         id="path16" />
+      <path
+         style="color:#000000;fill:#333333;stroke-width:1.65517;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="M 214.85344,19.862069 A 4.137931,4.137931 0 0 0 210.71551,24 a 4.137931,4.137931 0 0 0 4.13793,4.137931 h 13.00863 A 4.137931,4.137931 0 0 0 232,24 4.137931,4.137931 0 0 0 227.86207,19.862069 Z"
+         id="path17" />
+   </g>
 </svg>
