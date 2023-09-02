@@ -4,6 +4,13 @@
   import { formatAmount } from "../utils/formatAmount.js";
 
   const props = defineProps(["post", "color"]);
+
+  const defineFeatureStyles = (type, count) => {
+    let fill;
+    if (Boolean(count)) fill = type === "sale" ? "fill-sigma" : "fill-sgreen-300";
+    else fill = "fill-sgray-200";
+    return `h-8 w-8 ${fill}`;
+  };
 </script>
 
 <template>

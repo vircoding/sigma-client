@@ -4,11 +4,6 @@
 
 <template>
   <!-- Bed Room -->
-  <!-- <div
-    v-if="props.icon === 'bed_room'"
-    class="h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]"
-    :class="props.role === 'sale' ? 'fill-sigma' : 'fill-sgreen-300'"
-  > -->
   <div v-if="props.icon === 'bed_room'" :class="props.classes">
     <svg class="text-shadow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
       <path

@@ -1,4 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-  style="fill: rgba(89, 89, 89, 1);transform: ;msFilter:;">
-  <path d="m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z"></path>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<svg width="24" height="24" viewBox="0 0 24 24" version="1.1" id="svg1" inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="menu(Proyect).svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+   <sodipodi:namedview id="namedview1" pagecolor="#ffffff" bordercolor="#000000" borderopacity="0.25"
+      inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1"
+      inkscape:document-units="px" showguides="true" inkscape:zoom="3.7953795" inkscape:cx="1096.86"
+      inkscape:cy="55.462174" inkscape:window-width="1366" inkscape:window-height="715" inkscape:window-x="0"
+      inkscape:window-y="27" inkscape:window-maximized="1" inkscape:current-layer="layer1">
+      <inkscape:page x="0" y="0" width="24" height="24" id="page22" margin="0" bleed="0" />
+   </sodipodi:namedview>
+   <defs id="defs1" />
+   <g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1" transform="translate(-1112)">
+      <path
+         style="color:#000000;fill:#595959;fill-opacity:1;stroke-width:2.31238;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 1132.1734,1.2079384 c -6.7831,5.8781838 -11.2216,11.4220876 -13.8653,14.9175566 -0.5552,-1.867295 -0.9065,-3.857349 -1.8833,-6.042897 a 2.3123791,2.3123791 0 0 0 -3.0532,-1.1697401 2.3123791,2.3123791 0 0 0 -1.1696,3.0575791 c 1.6862,3.772891 2.2691,5.184156 2.9582,9.443719 a 2.3126105,2.3126105 0 0 0 4.1867,0.94392 c 0,0 6.8257,-9.831833 15.8524,-17.6544697 a 2.3123791,2.3123791 0 0 0 0.2349,-3.2653331 2.3123791,2.3123791 0 0 0 -3.2608,-0.2303348 z"
+         id="path22" />
+   </g>
 </svg>

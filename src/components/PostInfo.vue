@@ -19,6 +19,13 @@
     favorite.value = !favorite.value;
     await postStore.favorite(postStore.postState._id);
   };
+
+  const defineFeatureStyles = (type, count) => {
+    let fill;
+    if (Boolean(count)) fill = type === "sale" ? "fill-sigma" : "fill-sgreen-300";
+    else fill = "fill-sgray-200";
+    return `h-8 w-8 ${fill}`;
+  };
 </script>
 
 <template>
@@ -72,9 +79,7 @@
         <div class="flex items-center gap-2">
           <FeatureIcon
             :classes="
-              'h-8 w-8' +
-              ' ' +
-              (postStore.postState.__t === 'sale' ? 'fill-sigma' : 'fill-sgreen-300')
+              defineFeatureStyles(postStore.postState.__t, postStore.postState.features.bed_room)
             "
             icon="bed_room"
           />
@@ -91,9 +96,7 @@
         <div class="flex items-center gap-2">
           <FeatureIcon
             :classes="
-              'h-8 w-8' +
-              ' ' +
-              (postStore.postState.__t === 'sale' ? 'fill-sigma' : 'fill-sgreen-300')
+              defineFeatureStyles(postStore.postState.__t, postStore.postState.features.bath_room)
             "
             icon="bath_room"
           />
@@ -110,22 +113,16 @@
         <div class="flex items-center gap-2">
           <FeatureIcon
             :classes="
-              'h-8 w-8' +
-              ' ' +
-              (postStore.postState.__t === 'sale' ? 'fill-sigma' : 'fill-sgreen-300')
+              defineFeatureStyles(postStore.postState.__t, postStore.postState.features.garage)
             "
             icon="garage"
           />
           <img
             v-if="postStore.postState.features.garage"
             src="../assets/true-icon.svg"
-            class="text-shadow relative -left-[4px] -top-[1px]"
+            class="text-shadow h-4 w-4"
           />
-          <img
-            v-else
-            src="../assets/false-icon.svg"
-            class="text-shadow text-shadow relative -left-[4px] -top-[1px]"
-          />
+          <img v-else src="../assets/false-icon.svg" class="text-shadow text-shadow h-4 w-4" />
         </div>
       </div>
       <!-- Garden -->
@@ -134,22 +131,16 @@
         <div class="flex items-center gap-2">
           <FeatureIcon
             :classes="
-              'h-8 w-8' +
-              ' ' +
-              (postStore.postState.__t === 'sale' ? 'fill-sigma' : 'fill-sgreen-300')
+              defineFeatureStyles(postStore.postState.__t, postStore.postState.features.garden)
             "
             icon="garden"
           />
           <img
             v-if="postStore.postState.features.garden"
             src="../assets/true-icon.svg"
-            class="text-shadow relative -left-[4px] -top-[1px]"
+            class="text-shadow h-4 w-4"
           />
-          <img
-            v-else
-            src="../assets/false-icon.svg"
-            class="text-shadow relative -left-[4px] -top-[1px]"
-          />
+          <img v-else src="../assets/false-icon.svg" class="text-shadow h-4 w-4" />
         </div>
       </div>
       <!-- Pool -->
@@ -158,22 +149,16 @@
         <div class="flex items-center gap-2">
           <FeatureIcon
             :classes="
-              'h-8 w-8' +
-              ' ' +
-              (postStore.postState.__t === 'sale' ? 'fill-sigma' : 'fill-sgreen-300')
+              defineFeatureStyles(postStore.postState.__t, postStore.postState.features.pool)
             "
             icon="pool"
           />
           <img
             v-if="postStore.postState.features.pool"
             src="../assets/true-icon.svg"
-            class="text-shadow relative -left-[4px] -top-[1px]"
+            class="text-shadow h-4 w-4"
           />
-          <img
-            v-else
-            src="../assets/false-icon.svg"
-            class="text-shadow relative -left-[4px] -top-[1px]"
-          />
+          <img v-else src="../assets/false-icon.svg" class="text-shadow h-4 w-4" />
         </div>
       </div>
       <!-- Furnished -->
@@ -182,22 +167,16 @@
         <div class="flex items-center gap-2">
           <FeatureIcon
             :classes="
-              'h-8 w-8' +
-              ' ' +
-              (postStore.postState.__t === 'sale' ? 'fill-sigma' : 'fill-sgreen-300')
+              defineFeatureStyles(postStore.postState.__t, postStore.postState.features.furnished)
             "
             icon="furnished"
           />
           <img
             v-if="postStore.postState.features.furnished"
             src="../assets/true-icon.svg"
-            class="text-shadow relative -left-[4px] -top-[1px]"
+            class="text-shadow h-4 w-4"
           />
-          <img
-            v-else
-            src="../assets/false-icon.svg"
-            class="text-shadow relative -left-[4px] -top-[1px]"
-          />
+          <img v-else src="../assets/false-icon.svg" class="text-shadow h-4 w-4" />
         </div>
       </div>
     </div>
