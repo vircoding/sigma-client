@@ -1,3 +1,4 @@
 export const formatAmount = (amount) => {
-  return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  if (amount.toString().length >= 5) return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  else return amount;
 };
