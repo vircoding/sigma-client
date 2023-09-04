@@ -20,9 +20,15 @@
     await postStore.favorite(postStore.postState._id);
   };
 
-  const defineFeatureStyles = (type, count) => {
+  const color = computed(() => {
+    if (postStore.postState.__t === "sale") return "fill-sigma";
+    else if (postStore.postState.__t === "rent") return "fill-sgreen-300";
+    else if (postStore.postState.__t === "exchange") return "fill-solive-300";
+  });
+
+  const defineFeatureStyles = (count) => {
     let fill;
-    if (Boolean(count)) fill = type === "sale" ? "fill-sigma" : "fill-sgreen-300";
+    if (Boolean(count)) fill = color.value;
     else fill = "fill-sgray-200";
     return `h-8 w-8 ${fill}`;
   };
@@ -78,9 +84,7 @@
         <span>Cuartos</span>
         <div class="flex items-center gap-2">
           <FeatureIcon
-            :classes="
-              defineFeatureStyles(postStore.postState.__t, postStore.postState.features.bed_room)
-            "
+            :classes="defineFeatureStyles(postStore.postState.features.bed_room)"
             icon="bed_room"
           />
           <span
@@ -95,9 +99,7 @@
         <span>Baños</span>
         <div class="flex items-center gap-2">
           <FeatureIcon
-            :classes="
-              defineFeatureStyles(postStore.postState.__t, postStore.postState.features.bath_room)
-            "
+            :classes="defineFeatureStyles(postStore.postState.features.bath_room)"
             icon="bath_room"
           />
           <span
@@ -112,15 +114,13 @@
         <span>Garage</span>
         <div class="flex items-center gap-2">
           <FeatureIcon
-            :classes="
-              defineFeatureStyles(postStore.postState.__t, postStore.postState.features.garage)
-            "
+            :classes="defineFeatureStyles(postStore.postState.features.garage)"
             icon="garage"
           />
           <img
             v-if="postStore.postState.features.garage"
             src="../assets/true-icon.svg"
-            class="text-shadow h-4 w-4"
+            class="text-shadow relative bottom-[2px] h-[15px] w-4"
           />
           <img v-else src="../assets/false-icon.svg" class="text-shadow text-shadow h-4 w-4" />
         </div>
@@ -130,15 +130,13 @@
         <span>Jardín</span>
         <div class="flex items-center gap-2">
           <FeatureIcon
-            :classes="
-              defineFeatureStyles(postStore.postState.__t, postStore.postState.features.garden)
-            "
+            :classes="defineFeatureStyles(postStore.postState.features.garden)"
             icon="garden"
           />
           <img
             v-if="postStore.postState.features.garden"
             src="../assets/true-icon.svg"
-            class="text-shadow h-4 w-4"
+            class="text-shadow relative bottom-[2px] h-[15px] w-4"
           />
           <img v-else src="../assets/false-icon.svg" class="text-shadow h-4 w-4" />
         </div>
@@ -148,15 +146,13 @@
         <span>Piscina</span>
         <div class="flex items-center gap-2">
           <FeatureIcon
-            :classes="
-              defineFeatureStyles(postStore.postState.__t, postStore.postState.features.pool)
-            "
+            :classes="defineFeatureStyles(postStore.postState.features.pool)"
             icon="pool"
           />
           <img
             v-if="postStore.postState.features.pool"
             src="../assets/true-icon.svg"
-            class="text-shadow h-4 w-4"
+            class="text-shadow relative bottom-[2px] h-[15px] w-4"
           />
           <img v-else src="../assets/false-icon.svg" class="text-shadow h-4 w-4" />
         </div>
@@ -166,15 +162,13 @@
         <span>Amueblada</span>
         <div class="flex items-center gap-2">
           <FeatureIcon
-            :classes="
-              defineFeatureStyles(postStore.postState.__t, postStore.postState.features.furnished)
-            "
+            :classes="defineFeatureStyles(postStore.postState.features.furnished)"
             icon="furnished"
           />
           <img
             v-if="postStore.postState.features.furnished"
             src="../assets/true-icon.svg"
-            class="text-shadow h-4 w-4"
+            class="text-shadow relative bottom-[2px] h-[15px] w-4"
           />
           <img v-else src="../assets/false-icon.svg" class="text-shadow h-4 w-4" />
         </div>

@@ -1,15 +1,22 @@
 <script setup>
+  import { computed } from "vue";
   import SigmaVerticalIcon from "./icons/SigmaVerticalIcon.vue";
   import FeatureIcon from "./icons/FeatureIcon.vue";
   import { formatAmount } from "../utils/formatAmount.js";
 
-  const props = defineProps(["post", "color"]);
+  const props = defineProps(["post"]);
 
-  const defineFeatureStyles = (type, count) => {
+  const color = computed(() => {
+    if (props.post.__t === "sale") return "fill-sigma";
+    else if (props.post.__t === "rent") return "fill-sgreen-300";
+    else if (props.post.__t === "exchange") return "fill-solive-300";
+  });
+
+  const defineFeatureStyles = (count) => {
     let fill;
-    if (Boolean(count)) fill = type === "sale" ? "fill-sigma" : "fill-sgreen-300";
+    if (Boolean(count)) fill = color.value;
     else fill = "fill-sgray-200";
-    return `h-8 w-8 ${fill}`;
+    return `h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px] ${fill}`;
   };
 </script>
 
@@ -58,62 +65,76 @@
           >{{ props.post.address.municipality }}, {{ props.post.address.province }}</span
         >
       </div>
+      <!-- Features -->
       <div
         class="feature-container grid h-[60px] flex-shrink-0 grid-cols-3 grid-rows-2 place-items-center"
       >
+        <!-- Bed Room -->
         <div class="flex items-center gap-[2px]">
           <FeatureIcon
-            :classes="
-              'h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]' + ' ' + props.color
-            "
+            :classes="defineFeatureStyles(props.post.features.bed_room)"
             icon="bed_room"
           />
-          <span class="text-xs text-sgray-400">x2</span>
+          <span
+            class="text-shadow text-xs"
+            :class="props.post.features.bed_room > 0 ? 'text-sgray-400' : 'text-sgray-200'"
+            >x{{ props.post.features.bed_room }}</span
+          >
         </div>
+        <!-- Bath Room -->
         <div class="flex items-center gap-[2px]">
           <FeatureIcon
-            :classes="
-              'h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]' + ' ' + props.color
-            "
+            :classes="defineFeatureStyles(props.post.features.bath_room)"
             icon="bath_room"
           />
-          <span class="text-xs text-sgray-400">x2</span>
+          <span
+            class="text-shadow text-xs"
+            :class="props.post.features.bed_room > 0 ? 'text-sgray-400' : 'text-sgray-200'"
+            >x{{ props.post.features.bath_room }}</span
+          >
         </div>
+        <!-- Garage -->
         <div class="flex items-center gap-[2px]">
-          <FeatureIcon
-            :classes="
-              'h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]' + ' ' + props.color
-            "
-            icon="garage"
+          <FeatureIcon :classes="defineFeatureStyles(props.post.features.garage)" icon="garage" />
+          <img
+            v-if="props.post.features.garage"
+            src="../assets/true-icon-light.svg"
+            class="text-shadow relative bottom-[1px] h-[10px] w-3"
           />
-          <span class="text-xs text-sgray-400">x2</span>
+          <img v-else src="../assets/false-icon.svg" class="text-shadow text-shadow h-3 w-3" />
         </div>
+        <!-- Garden -->
         <div class="flex items-center gap-[2px]">
-          <FeatureIcon
-            :classes="
-              'h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]' + ' ' + props.color
-            "
-            icon="garden"
+          <FeatureIcon :classes="defineFeatureStyles(props.post.features.garden)" icon="garden" />
+          <img
+            v-if="props.post.features.garden"
+            src="../assets/true-icon-light.svg"
+            class="text-shadow relative bottom-[1px] h-[10px] w-3"
           />
-          <span class="text-xs text-sgray-400">x2</span>
+          <img v-else src="../assets/false-icon.svg" class="text-shadow text-shadow h-3 w-3" />
         </div>
+        <!-- Pool -->
         <div class="flex items-center gap-[2px]">
-          <FeatureIcon
-            :classes="
-              'h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]' + ' ' + props.color
-            "
-            icon="pool"
+          <FeatureIcon :classes="defineFeatureStyles(props.post.features.pool)" icon="pool" />
+          <img
+            v-if="props.post.features.pool"
+            src="../assets/true-icon-light.svg"
+            class="text-shadow relative bottom-[1px] h-[10px] w-3"
           />
-          <span class="text-xs text-sgray-400">x2</span>
+          <img v-else src="../assets/false-icon.svg" class="text-shadow text-shadow h-3 w-3" />
         </div>
+        <!-- Furnished -->
         <div class="flex items-center gap-[2px]">
           <FeatureIcon
-            :classes="
-              'h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px]' + ' ' + props.color
-            "
+            :classes="defineFeatureStyles(props.post.features.furnished)"
             icon="furnished"
           />
-          <span class="text-xs text-sgray-400">x2</span>
+          <img
+            v-if="props.post.features.furnished"
+            src="../assets/true-icon-light.svg"
+            class="text-shadow relative bottom-[1px] h-[10px] w-3"
+          />
+          <img v-else src="../assets/false-icon.svg" class="text-shadow text-shadow h-3 w-3" />
         </div>
       </div>
     </div>

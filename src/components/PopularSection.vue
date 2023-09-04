@@ -48,7 +48,7 @@
   <div class="flex flex-col items-center justify-center px-5 py-20">
     <div class="flex flex-col items-center justify-center gap-8 lg:flex-row">
       <RouterLink :to="`/post/${item._id}`" v-for="(item, index) in posts" :key="index">
-        <PostCard :post="item" :color="item.__t === 'sale' ? 'fill-sigma' : 'fill-sgreen-300'" />
+        <PostCard :post="item" />
       </RouterLink>
     </div>
     <RouterLink class="nav-link mt-14 block text-xl font-extrabold" to="/find">Ver Más</RouterLink>

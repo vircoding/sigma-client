@@ -49,7 +49,7 @@
     <ul class="space-y-7 p-5">
       <li v-for="(item, index) in userStore.agentDataState.posts.posts" :key="index">
         <RouterLink :to="`/post/${item._id}`">
-          <PostCard :post="item" :color="item.__t === 'sale' ? 'fill-sigma' : 'fill-sgreen-300'" />
+          <PostCard :post="item" />
         </RouterLink>
       </li>
     </ul>
