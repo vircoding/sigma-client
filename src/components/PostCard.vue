@@ -3,6 +3,7 @@
   import SigmaVerticalIcon from "./icons/SigmaVerticalIcon.vue";
   import FeatureIcon from "./icons/FeatureIcon.vue";
   import { formatAmount } from "../utils/formatAmount.js";
+  import BooleanIcon from "./icons/BooleanIcon.vue";
 
   const props = defineProps(["post"]);
 
@@ -35,7 +36,7 @@
         class="clip flex h-44 w-[85px] flex-shrink-0 flex-col items-center bg-sigma pt-[45px]"
       >
         <h2 class="font-extrabold text-white">VENTA</h2>
-        <span class="text-lg relative top-[1px] font-semibold leading-tight text-white">{{
+        <span class="relative top-[1px] text-lg font-semibold leading-tight text-white">{{
           formatAmount(props.post.price)
         }}</span>
         <span class="uppercase text-white">{{ props.post.currency }}</span>
@@ -45,7 +46,7 @@
         class="clip flex h-44 w-[85px] flex-shrink-0 flex-col items-center bg-sgreen-300 pt-[45px]"
       >
         <h2 class="font-extrabold text-white">RENTA</h2>
-        <span class="text-lg relative top-[1px] font-semibold leading-tight text-white">{{
+        <span class="relative top-[1px] text-lg font-semibold leading-tight text-white">{{
           formatAmount(props.post.tax)
         }}</span>
         <span class="uppercase text-white"
@@ -66,9 +67,7 @@
         >
       </div>
       <!-- Features -->
-      <div
-        class="feature-container grid h-[60px] flex-shrink-0 grid-cols-3 grid-rows-2 place-items-center"
-      >
+      <div class="feature-container grid h-full flex-shrink-0 grid-cols-3 grid-rows-2 gap-x-1">
         <!-- Bed Room -->
         <div class="flex items-center gap-[2px]">
           <FeatureIcon
@@ -96,32 +95,17 @@
         <!-- Garage -->
         <div class="flex items-center gap-[2px]">
           <FeatureIcon :classes="defineFeatureStyles(props.post.features.garage)" icon="garage" />
-          <img
-            v-if="props.post.features.garage"
-            src="../assets/true-icon-light.svg"
-            class="text-shadow relative bottom-[1px] h-[10px] w-3"
-          />
-          <img v-else src="../assets/false-icon.svg" class="text-shadow text-shadow h-3 w-3" />
+          <BooleanIcon :icon="props.post.features.garage" :weigth="'ligth'" />
         </div>
         <!-- Garden -->
         <div class="flex items-center gap-[2px]">
           <FeatureIcon :classes="defineFeatureStyles(props.post.features.garden)" icon="garden" />
-          <img
-            v-if="props.post.features.garden"
-            src="../assets/true-icon-light.svg"
-            class="text-shadow relative bottom-[1px] h-[10px] w-3"
-          />
-          <img v-else src="../assets/false-icon.svg" class="text-shadow text-shadow h-3 w-3" />
+          <BooleanIcon :icon="props.post.features.garden" :weigth="'ligth'" />
         </div>
         <!-- Pool -->
         <div class="flex items-center gap-[2px]">
           <FeatureIcon :classes="defineFeatureStyles(props.post.features.pool)" icon="pool" />
-          <img
-            v-if="props.post.features.pool"
-            src="../assets/true-icon-light.svg"
-            class="text-shadow relative bottom-[1px] h-[10px] w-3"
-          />
-          <img v-else src="../assets/false-icon.svg" class="text-shadow text-shadow h-3 w-3" />
+          <BooleanIcon :icon="props.post.features.pool" :weigth="'ligth'" />
         </div>
         <!-- Furnished -->
         <div class="flex items-center gap-[2px]">
@@ -129,12 +113,7 @@
             :classes="defineFeatureStyles(props.post.features.furnished)"
             icon="furnished"
           />
-          <img
-            v-if="props.post.features.furnished"
-            src="../assets/true-icon-light.svg"
-            class="text-shadow relative bottom-[1px] h-[10px] w-3"
-          />
-          <img v-else src="../assets/false-icon.svg" class="text-shadow text-shadow h-3 w-3" />
+          <BooleanIcon :icon="props.post.features.furnished" :weigth="'ligth'" />
         </div>
       </div>
     </div>

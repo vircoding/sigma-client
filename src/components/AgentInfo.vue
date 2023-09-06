@@ -4,7 +4,6 @@
   import { usePostStore } from "../stores/post";
   import { useLayoutStore } from "../stores/layout";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
-  import PostTableItem from "./PostTableItem.vue";
   import SmallPostCard from "./SmallPostCard.vue";
   import parsePhoneNumber from "libphonenumber-js";
 

@@ -2,7 +2,6 @@
   import { computed, ref } from "vue";
   import { useUserStore } from "../stores/user.js";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
-  import PostTableItem from "./PostTableItem.vue";
 
   const userStore = useUserStore();
 
@@ -187,7 +186,7 @@
         <ul v-else class="space-y-4">
           <li v-for="(item, index) in userStore.userAccountState.favorites.favorites" :key="index">
             <RouterLink :to="`/post/${item._id}`">
-              <PostTableItem :post="item" />
+              <!-- <PostTableItem :post="item" /> -->
             </RouterLink>
           </li>
           <li

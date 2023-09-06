@@ -6,6 +6,7 @@
   import { useLayoutStore } from "../stores/layout";
   import { formatAmount } from "../utils/formatAmount.js";
   import FeatureIcon from "./icons/FeatureIcon.vue";
+  import BooleanIcon from "./icons/BooleanIcon.vue";
 
   const props = defineProps(["post", "type", "index"]);
 
@@ -146,32 +147,17 @@
           <!-- Garage -->
           <div class="flex items-center gap-[2px]">
             <FeatureIcon :classes="defineFeatureStyles(props.post.features.garage)" icon="garage" />
-            <img
-              v-if="props.post.features.garage"
-              src="../assets/true-icon-light.svg"
-              class="text-shadow relative bottom-[1px] h-[10px] w-3"
-            />
-            <img v-else src="../assets/false-icon.svg" class="text-shadow text-shadow h-3 w-3" />
+            <BooleanIcon :icon="props.post.features.garage" :weigth="'ligth'" />
           </div>
           <!-- Garden -->
           <div class="flex items-center gap-[2px]">
             <FeatureIcon :classes="defineFeatureStyles(props.post.features.garden)" icon="garden" />
-            <img
-              v-if="props.post.features.garden"
-              src="../assets/true-icon-light.svg"
-              class="text-shadow relative bottom-[1px] h-[10px] w-3"
-            />
-            <img v-else src="../assets/false-icon.svg" class="text-shadow text-shadow h-3 w-3" />
+            <BooleanIcon :icon="props.post.features.garden" :weigth="'ligth'" />
           </div>
           <!-- Pool -->
           <div class="flex items-center gap-[2px]">
             <FeatureIcon :classes="defineFeatureStyles(props.post.features.pool)" icon="pool" />
-            <img
-              v-if="props.post.features.pool"
-              src="../assets/true-icon-light.svg"
-              class="text-shadow relative bottom-[1px] h-[10px] w-3"
-            />
-            <img v-else src="../assets/false-icon.svg" class="text-shadow text-shadow h-3 w-3" />
+            <BooleanIcon :icon="props.post.features.pool" :weigth="'ligth'" />
           </div>
           <!-- Furnished -->
           <div class="flex items-center gap-[2px]">
@@ -179,12 +165,7 @@
               :classes="defineFeatureStyles(props.post.features.furnished)"
               icon="furnished"
             />
-            <img
-              v-if="props.post.features.furnished"
-              src="../assets/true-icon-light.svg"
-              class="text-shadow relative bottom-[1px] h-[10px] w-3"
-            />
-            <img v-else src="../assets/false-icon.svg" class="text-shadow text-shadow h-3 w-3" />
+            <BooleanIcon :icon="props.post.features.furnished" :weigth="'ligth'" />
           </div>
         </div>
       </div>

@@ -129,7 +129,6 @@ const routes = [
       }
 
       try {
-        console.log("Aqui");
         await postStore.loadPost(to.params.id);
 
         if (!from.name) {

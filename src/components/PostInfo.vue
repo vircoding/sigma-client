@@ -7,6 +7,7 @@
   import ShareButton from "./ShareButton.vue";
   import FeatureIcon from "./icons/FeatureIcon.vue";
   import { formatAmount } from "../utils/formatAmount.js";
+  import BooleanIcon from "./icons/BooleanIcon.vue";
 
   const postStore = usePostStore();
   const userStore = useUserStore();
@@ -117,12 +118,7 @@
             :classes="defineFeatureStyles(postStore.postState.features.garage)"
             icon="garage"
           />
-          <img
-            v-if="postStore.postState.features.garage"
-            src="../assets/true-icon.svg"
-            class="text-shadow relative bottom-[2px] h-[15px] w-4"
-          />
-          <img v-else src="../assets/false-icon.svg" class="text-shadow text-shadow h-4 w-4" />
+          <BooleanIcon :icon="postStore.postState.features.garage" :weigth="'bold'" />
         </div>
       </div>
       <!-- Garden -->
@@ -133,12 +129,7 @@
             :classes="defineFeatureStyles(postStore.postState.features.garden)"
             icon="garden"
           />
-          <img
-            v-if="postStore.postState.features.garden"
-            src="../assets/true-icon.svg"
-            class="text-shadow relative bottom-[2px] h-[15px] w-4"
-          />
-          <img v-else src="../assets/false-icon.svg" class="text-shadow h-4 w-4" />
+          <BooleanIcon :icon="postStore.postState.features.garden" :weigth="'bold'" />
         </div>
       </div>
       <!-- Pool -->
@@ -149,12 +140,7 @@
             :classes="defineFeatureStyles(postStore.postState.features.pool)"
             icon="pool"
           />
-          <img
-            v-if="postStore.postState.features.pool"
-            src="../assets/true-icon.svg"
-            class="text-shadow relative bottom-[2px] h-[15px] w-4"
-          />
-          <img v-else src="../assets/false-icon.svg" class="text-shadow h-4 w-4" />
+          <BooleanIcon :icon="postStore.postState.features.pool" :weigth="'bold'" />
         </div>
       </div>
       <!-- Furnished -->
@@ -165,12 +151,7 @@
             :classes="defineFeatureStyles(postStore.postState.features.furnished)"
             icon="furnished"
           />
-          <img
-            v-if="postStore.postState.features.furnished"
-            src="../assets/true-icon.svg"
-            class="text-shadow relative bottom-[2px] h-[15px] w-4"
-          />
-          <img v-else src="../assets/false-icon.svg" class="text-shadow h-4 w-4" />
+          <BooleanIcon :icon="postStore.postState.features.furnished" :weigth="'bold'" />
         </div>
       </div>
     </div>
