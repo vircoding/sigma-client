@@ -5,6 +5,7 @@
   import { useLayoutStore } from "../stores/layout";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
   import PostTableItem from "./PostTableItem.vue";
+  import SmallPostCard from "./SmallPostCard.vue";
   import parsePhoneNumber from "libphonenumber-js";
 
   const userStore = useUserStore();
@@ -309,113 +310,106 @@
 
     <!-- Posts / Favorites -->
     <section class="mb-20 w-full">
-      <div class="flex items-center">
+      <div class="text-shadow mb-7 flex items-center rounded-md bg-sgray-100">
         <!-- Post Title -->
         <div
-          class="w-1/2 rounded-t-md py-2 text-center"
-          :class="myPostsController ? 'bg-white font-semibold' : 'bg-transparent'"
+          class="w-1/2 rounded-md py-2 text-center tracking-wide"
+          :class="myPostsController ? 'bg-sigma font-semibold text-white' : 'bg-transparent'"
           @click.prevent="myPostEvent"
         >
           <h3 :class="layoutStore.tableSpinnerVisibility ? 'scoped-blur' : ''">Publicaciones</h3>
         </div>
         <!-- Favorites Title -->
         <div
-          class="w-1/2 rounded-t-md py-2 text-center"
-          :class="!myPostsController ? 'bg-white font-semibold' : 'bg-transparent'"
+          class="w-1/2 rounded-md py-2 text-center tracking-wide"
+          :class="!myPostsController ? 'bg-sigma font-semibold text-white' : 'bg-transparent'"
           @click.prevent="favoritesEvent"
         >
           <h3 :class="layoutStore.tableSpinnerVisibility ? 'scoped-blur' : ''">Favoritos</h3>
         </div>
       </div>
-      <!-- Table -->
-      <div
-        class="relative z-50 min-h-[264px] w-full rounded-b-md bg-white px-3 py-[18px]"
-        :class="myPostsController ? 'rounded-tr-md' : 'rounded-tl-md'"
+      <!-- Posts -->
+      <ul
+        v-if="myPostsController"
+        class="space-y-4"
+        :class="layoutStore.tableSpinnerVisibility ? 'scoped-blur' : ''"
       >
-        <!-- Posts -->
-        <ul
-          v-if="myPostsController"
-          class="space-y-4"
-          :class="layoutStore.tableSpinnerVisibility ? 'scoped-blur' : ''"
+        <li v-for="(item, index) in userStore.userAccountState.posts.posts" :key="index">
+          <RouterLink :to="`/post/${item._id}`">
+            <!-- <PostTableItem :type="'post'" :post="item" /> -->
+            <SmallPostCard :index="index" :type="'post'" :post="item" />
+          </RouterLink>
+        </li>
+        <li
+          v-if="userStore.userAccountState.posts.total_posts === 0"
+          class="flex h-[282px] w-full flex-col items-center justify-center gap-2"
         >
-          <li v-for="(item, index) in userStore.userAccountState.posts.posts" :key="index">
-            <RouterLink :to="`/post/${item._id}`">
-              <PostTableItem :type="'post'" :post="item" />
+          <span>Aún no tienes publicaciones</span>
+          <RouterLink to="/insert" class="underline">Publica</RouterLink>
+        </li>
+        <div
+          v-if="!(userStore.userAccountState.posts.total_posts === 0)"
+          class="flex w-full items-center justify-center gap-2"
+        >
+          <button @click.prevent="prevPostsPageEvent" class="select-none">{{ "<" }}</button>
+          <div>
+            <span
+              >{{ userStore.userAccountState.posts.page }} /
+              {{ userStore.userAccountState.posts.total_pages }}</span
+            >
+          </div>
+          <button @click.prevent="nextPostsPageEvent" class="select-none">{{ ">" }}</button>
+        </div>
+      </ul>
+      <!-- Favorites -->
+      <ul :class="layoutStore.tableSpinnerVisibility ? 'scoped-blur' : ''" v-else>
+        <div class="relative space-y-4">
+          <li v-for="(item, index) in userStore.userAccountState.favorites.favorites" :key="index">
+            <div
+              v-if="item.status === 'deleted'"
+              class="flex h-[80px] w-full flex-col items-center justify-center rounded-md border border-sgray-100 bg-background p-6"
+            >
+              <span>Esta publicacion se eliminó</span>
+              <img
+                @click.prevent="removeFavorite(index)"
+                src="../assets/close-icon.svg"
+                class="h-[40px] w-[40px]"
+              />
+            </div>
+            <RouterLink v-else :to="`/post/${item._id}`">
+              <!-- <PostTableItem :index="index" :type="'favorite'" :post="item" /> -->
+              <SmallPostCard :index="index" :type="'favorite'" :post="item" />
             </RouterLink>
           </li>
           <li
-            v-if="userStore.userAccountState.posts.total_posts === 0"
+            v-if="userStore.userAccountState.favorites.total_favorites === 0"
             class="flex h-[282px] w-full flex-col items-center justify-center gap-2"
           >
-            <span>Aún no tienes publicaciones</span>
-            <RouterLink to="/insert" class="underline">Publica</RouterLink>
+            <span>Aún no tienes favoritos</span>
           </li>
           <div
-            v-if="!(userStore.userAccountState.posts.total_posts === 0)"
+            v-if="!(userStore.userAccountState.favorites.total_favorites === 0)"
             class="flex w-full items-center justify-center gap-2"
           >
-            <button @click.prevent="prevPostsPageEvent" class="select-none">{{ "<" }}</button>
+            <button @click.prevent="prevFavoritesPageEvent">{{ "<" }}</button>
             <div>
               <span
-                >{{ userStore.userAccountState.posts.page }} /
-                {{ userStore.userAccountState.posts.total_pages }}</span
+                >{{ userStore.userAccountState.favorites.page }} /
+                {{ userStore.userAccountState.favorites.total_pages }}</span
               >
             </div>
-            <button @click.prevent="nextPostsPageEvent" class="select-none">{{ ">" }}</button>
+            <button @click.prevent="nextFavoritesPageEvent" class="select-none">{{ ">" }}</button>
           </div>
-        </ul>
-        <!-- Favorites -->
-        <ul :class="layoutStore.tableSpinnerVisibility ? 'scoped-blur' : ''" v-else>
-          <div class="relative space-y-4">
-            <li
-              v-for="(item, index) in userStore.userAccountState.favorites.favorites"
-              :key="index"
-            >
-              <div
-                v-if="item.status === 'deleted'"
-                class="flex h-[80px] w-full flex-col items-center justify-center rounded-md border border-sgray-100 bg-background p-6"
-              >
-                <span>Esta publicacion se eliminó</span>
-                <img
-                  @click.prevent="removeFavorite(index)"
-                  src="../assets/close-icon.svg"
-                  class="h-[40px] w-[40px]"
-                />
-              </div>
-              <RouterLink v-else :to="`/post/${item._id}`">
-                <PostTableItem :index="index" :type="'favorite'" :post="item" />
-              </RouterLink>
-            </li>
-            <li
-              v-if="userStore.userAccountState.favorites.total_favorites === 0"
-              class="flex h-[282px] w-full flex-col items-center justify-center gap-2"
-            >
-              <span>Aún no tienes favoritos</span>
-            </li>
-            <div
-              v-if="!(userStore.userAccountState.favorites.total_favorites === 0)"
-              class="flex w-full items-center justify-center gap-2"
-            >
-              <button @click.prevent="prevFavoritesPageEvent">{{ "<" }}</button>
-              <div>
-                <span
-                  >{{ userStore.userAccountState.favorites.page }} /
-                  {{ userStore.userAccountState.favorites.total_pages }}</span
-                >
-              </div>
-              <button @click.prevent="nextFavoritesPageEvent" class="select-none">{{ ">" }}</button>
-            </div>
-          </div>
-        </ul>
-        <!-- Spinner Container -->
-        <div
-          class="absolute bottom-0 left-0 right-0 top-0 flex items-center justify-center"
-          :class="layoutStore.tableSpinnerVisibility ? 'block' : 'hidden'"
-        >
-          <div
-            class="spinner h-[35px] w-[35px] rounded-full border-4 border-solid border-x-sgray-200 border-b-sgray-200 border-t-white"
-          ></div>
         </div>
+      </ul>
+      <!-- Spinner Container -->
+      <div
+        class="absolute bottom-0 left-0 right-0 top-0 flex items-center justify-center"
+        :class="layoutStore.tableSpinnerVisibility ? 'block' : 'hidden'"
+      >
+        <div
+          class="spinner h-[35px] w-[35px] rounded-full border-4 border-solid border-x-sgray-200 border-b-sgray-200 border-t-white"
+        ></div>
       </div>
     </section>
   </div>

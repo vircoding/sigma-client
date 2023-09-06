@@ -8,6 +8,7 @@
   const postStore = usePostStore();
 
   onBeforeUnmount(() => {
+    console.log("Before unmount");
     postStore.$reset();
   });
 </script>
@@ -28,5 +29,4 @@
       <FooterSection />
     </footer>
   </div>
-  {{ postStore.postState }}
 </template>

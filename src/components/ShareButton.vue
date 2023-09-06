@@ -8,14 +8,12 @@
       url: props.url,
     };
 
-    navigator
-      .share(shareData)
-      .catch((error) => console.log("Share Failed", error));
+    navigator.share(shareData).catch((error) => console.log("Share Failed", error));
   };
 </script>
 
 <template>
   <button @click.prevent="shareLink">
-    <img src="../assets/share-icon.svg" />
+    <img src="../assets/share-icon.svg" class="h-[18px] w-[18px]" />
   </button>
 </template>
