@@ -70,58 +70,26 @@
     <!-- Ligth -->
     <svg
       v-if="props.weigth === 'ligth'"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      version="1.1"
-      id="svg1"
+      class="h-4 w-[13px]"
+      width="26"
+      height="32"
+      viewBox="0 0 26 32"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      xmlns:svg="http://www.w3.org/2000/svg"
-      class="text-shadow h-[13px] w-[13px]"
     >
-      <defs id="defs1" />
-      <g id="layer1" transform="translate(-1486)">
-        <path
-          style="
-            color: #000000;
-            fill: #959595;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            -inkscape-stroke: none;
-            paint-order: stroke markers fill;
-          "
-          d="m 1489.9551,11 a 1,1 0 0 0 -1,1 1,1 0 0 0 1,1 h 16.0898 a 1,1 0 0 0 1,-1 1,1 0 0 0 -1,-1 z"
-          id="path67"
-        />
-      </g>
+      <path d="M4 16L22 16" stroke="#959595" stroke-width="2" stroke-linecap="round" />
     </svg>
     <!-- Bold -->
     <svg
       v-if="props.weigth === 'bold'"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      version="1.1"
-      id="svg1"
+      class="h-6 w-6"
+      width="48"
+      height="48"
+      viewBox="0 0 48 48"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      xmlns:svg="http://www.w3.org/2000/svg"
-      class="text-shadow text-shadow relative right-[1px] h-[18px] w-[18px]"
     >
-      <defs id="defs1" />
-      <g id="layer1" transform="translate(-1452)">
-        <path
-          style="
-            color: #000000;
-            fill: #959595;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            -inkscape-stroke: none;
-            paint-order: stroke markers fill;
-          "
-          d="m 1455.9551,10.25 a 1.75,1.75 0 0 0 -1.75,1.75 1.75,1.75 0 0 0 1.75,1.75 h 16.0898 a 1.75,1.75 0 0 0 1.75,-1.75 1.75,1.75 0 0 0 -1.75,-1.75 z"
-          id="path66"
-        />
-      </g>
+      <path d="M3 24L31 24" stroke="#959595" stroke-width="5" stroke-linecap="round" />
     </svg>
   </div>
 </template>
