@@ -3,13 +3,22 @@
   import UpdatePostForm from "../components/UpdatePostForm.vue";
   import FooterSection from "../components/FooterSection.vue";
   import { usePostStore } from "../stores/post";
-  import { onBeforeUnmount } from "vue";
+  import { onBeforeRouteLeave } from "vue-router";
+  import { onBeforeUnmount, ref } from "vue";
 
   const postStore = usePostStore();
 
+  const resetPostStore = ref(true);
+
   onBeforeUnmount(() => {
-    console.log("Before unmount");
-    postStore.$reset();
+    if (resetPostStore.value) {
+      postStore.$reset;
+      console.log("Reset postStore");
+    }
+  });
+
+  onBeforeRouteLeave((to, from) => {
+    if (to.name === "post") resetPostStore.value = false;
   });
 </script>
 

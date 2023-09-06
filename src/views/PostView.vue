@@ -5,13 +5,23 @@
   import FullScreenGallery from "../components/FullScreenGallery.vue";
   import { useLayoutStore } from "../stores/layout.js";
   import { usePostStore } from "../stores/post.js";
-  import { onBeforeUnmount } from "vue";
+  import { onBeforeRouteLeave } from "vue-router";
+  import { onBeforeUnmount, ref } from "vue";
 
   const postStore = usePostStore();
   const layoutStore = useLayoutStore();
 
+  const resetPostStore = ref(true);
+
   onBeforeUnmount(() => {
-    postStore.$reset();
+    if (resetPostStore.value) {
+      postStore.$reset;
+      console.log("Reset postStore");
+    }
+  });
+
+  onBeforeRouteLeave((to, from) => {
+    if (to.name === "edit-post") resetPostStore.value = false;
   });
 </script>
 
