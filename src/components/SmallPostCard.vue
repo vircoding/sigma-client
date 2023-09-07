@@ -194,9 +194,7 @@
             class="h-[18px] w-[18px]"
           />
         </div>
-        <button
-          class="gradient w-full rounded-md bg-sigma py-[3px] text-sm font-semibold text-sgray-300"
-        >
+        <button class="gradient w-full rounded-md bg-sigma py-[3px] text-sm font-semibold">
           <span class="text-shadow">VENDIDA</span>
         </button>
       </div>
