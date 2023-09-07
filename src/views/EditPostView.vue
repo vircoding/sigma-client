@@ -13,7 +13,6 @@
   onBeforeUnmount(() => {
     if (resetPostStore.value) {
       postStore.$reset;
-      console.log("Reset postStore");
     }
   });
 

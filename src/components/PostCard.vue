@@ -36,9 +36,11 @@
         class="clip flex h-44 w-[85px] flex-shrink-0 flex-col items-center bg-sigma pt-[45px]"
       >
         <h2 class="font-extrabold text-white">VENTA</h2>
-        <span class="relative top-[1px] text-lg font-semibold leading-tight text-white">{{
-          formatAmount(props.post.price)
-        }}</span>
+        <span
+          :class="props.post.tax >= 2000000 ? 'text-base' : 'text-lg'"
+          class="relative top-[1px] font-semibold leading-tight text-white"
+          >{{ formatAmount(props.post.price, true) }}</span
+        >
         <span class="uppercase text-white">{{ props.post.currency }}</span>
       </div>
       <div
@@ -46,9 +48,11 @@
         class="clip flex h-44 w-[85px] flex-shrink-0 flex-col items-center bg-sgreen-300 pt-[45px]"
       >
         <h2 class="font-extrabold text-white">RENTA</h2>
-        <span class="relative top-[1px] text-lg font-semibold leading-tight text-white">{{
-          formatAmount(props.post.tax)
-        }}</span>
+        <span
+          :class="props.post.tax >= 2000000 ? 'text-base' : 'text-lg'"
+          class="relative top-[1px] font-semibold leading-tight text-white"
+          >{{ formatAmount(props.post.tax, true) }}</span
+        >
         <span class="uppercase text-white"
           >{{ props.post.currency }} /
           <span class="lowercase">{{

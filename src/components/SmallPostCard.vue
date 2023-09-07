@@ -99,7 +99,7 @@
       >
         <span class="font-extrabold">VENTA</span>
         <span class="relative top-[1px] text-base font-semibold leading-tight">{{
-          formatAmount(props.post.price)
+          formatAmount(props.post.price, true)
         }}</span>
         <span class="uppercase">{{ props.post.currency }}</span>
       </div>
@@ -110,7 +110,7 @@
       >
         <span class="font-extrabold">RENTA</span>
         <span class="relative top-[1px] text-base font-semibold leading-tight">{{
-          formatAmount(props.post.tax)
+          formatAmount(props.post.tax, true)
         }}</span>
         <span
           ><span class="uppercase">{{ props.post.currency }}</span> /
