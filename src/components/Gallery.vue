@@ -119,7 +119,7 @@
       </div>
       <img
         @click.prevent="EnterFullScreen"
-        class="custom-shadow absolute bottom-0 right-0 mb-2 mr-3 h-5 w-5"
+        class="custom-shadow absolute bottom-0 right-0 mb-[10px] mr-3 h-5 w-5"
         src="../assets/fullscreen-icon.svg"
       />
     </div>
