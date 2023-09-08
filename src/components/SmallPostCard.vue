@@ -173,7 +173,7 @@
       <div class="flex h-full w-[28%] flex-col items-center justify-center gap-2 px-2 py-3">
         <div class="flex items-center justify-center gap-2">
           <!-- Edit -->
-          <RouterLink :to="`/post/edit/${post._id}`">
+          <RouterLink v-if="props.type === 'post'" :to="`/post/edit/${post._id}`">
             <img src="../assets/edit-icon.svg" class="h-[18px] w-[18px]" />
           </RouterLink>
 
@@ -191,10 +191,14 @@
             v-if="props.type === 'favorite'"
             @click.prevent="removeFavorite"
             src="../assets/close-icon.svg"
-            class="h-[18px] w-[18px]"
+            class="h-[16px] w-[16px]"
           />
         </div>
-        <button class="gradient w-full rounded-md bg-sigma py-[3px] text-sm font-semibold">
+        <!-- Sell -->
+        <button
+          v-if="props.type === 'post'"
+          class="gradient w-full rounded-md bg-sigma py-[3px] text-sm font-semibold"
+        >
           <span class="text-shadow">VENDIDA</span>
         </button>
       </div>
