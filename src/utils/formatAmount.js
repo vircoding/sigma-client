@@ -4,7 +4,7 @@ export const formatAmount = (amount, withSuffix = false) => {
 
   if (digitsNumber >= 7 && withSuffix) {
     const prefix = string.slice(0, -6);
-    const suffix = prefix === "1" ? "millón" : "millones";
+    const suffix = prefix === "1" ? "millón" : "mill.";
     return `${prefix} ${suffix}`;
   }
 
