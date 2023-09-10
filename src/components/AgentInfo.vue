@@ -12,6 +12,7 @@
   const layoutStore = useLayoutStore();
 
   const myPostsController = ref(true);
+  const updateFavoritesController = ref(true);
 
   const favoritesList = computed(() => {
     return userStore.userState.favorites;
@@ -97,7 +98,9 @@
 
   const logoutEvent = async () => {
     try {
+      updateFavoritesController.value = false;
       await userStore.logoutUser();
+      updateFavoritesController.value = true;
     } catch (error) {
       console.log(error);
     }
