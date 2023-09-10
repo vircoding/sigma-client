@@ -10,18 +10,13 @@
     username: userStore.userState.info.username,
   });
 
-  const errors = ref({
-    username: false,
-  });
-
-  watch(newUser.value, () => {
-    if (!(newUser.value.username.length >= 3 && newUser.value.username.length <= 20))
-      errors.value.username = true;
-    else errors.value.username = false;
+  const usernameError = computed(() => {
+    if (!(newUser.value.username.length >= 3 && newUser.value.username.length <= 20)) return true;
+    return false;
   });
 
   const disableSubmit = computed(() => {
-    return errors.value.username || newUser.value.username === userStore.userState.info.username;
+    return usernameError.value || newUser.value.username === userStore.userState.info.username;
   });
 
   const formSubmit = async () => {
@@ -35,6 +30,7 @@
 
 <template>
   <form
+    id="update_client_form"
     @submit.prevent="formSubmit"
     novalidate
     class="mb-7 flex w-full grid-cols-2 grid-rows-6 flex-col lg:mb-0 lg:grid lg:gap-x-8 lg:gap-y-2"
@@ -48,14 +44,14 @@
         v-model.trim="newUser.username"
         class="w-full rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
         :class="
-          errors.username
+          usernameError
             ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
             : 'ring-sigma'
         "
         placeholder="Nombre de Usuario"
       />
       <span
-        :class="errors.username ? 'visible' : 'invisible'"
+        :class="usernameError ? 'visible' : 'invisible'"
         class="text-shadow top-1 px-4 font-archivo text-sm italic text-alert"
         >Nombre de usuario Inválido</span
       >
