@@ -102,7 +102,7 @@
         <!-- Post Title -->
         <div
           class="w-1/2 rounded-md py-2 text-center tracking-wide"
-          :class="myPostsController ? 'bg-sigma font-semibold text-white' : 'bg-transparent'"
+          :class="myPostsController ? 'bg-sgray-400 font-semibold text-white' : 'bg-transparent'"
           @click.prevent="myPostEvent"
         >
           <h3 :class="layoutStore.tableSpinnerVisibility ? 'scoped-blur' : ''">Publicaciones</h3>
@@ -110,7 +110,7 @@
         <!-- Favorites Title -->
         <div
           class="w-1/2 rounded-md py-2 text-center tracking-wide"
-          :class="!myPostsController ? 'bg-sigma font-semibold text-white' : 'bg-transparent'"
+          :class="!myPostsController ? 'bg-sgray-400 font-semibold text-white' : 'bg-transparent'"
           @click.prevent="favoritesEvent"
         >
           <h3 :class="layoutStore.tableSpinnerVisibility ? 'scoped-blur' : ''">Favoritos</h3>
