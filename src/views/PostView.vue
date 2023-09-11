@@ -6,10 +6,17 @@
   import { useLayoutStore } from "../stores/layout.js";
   import { usePostStore } from "../stores/post.js";
   import { onBeforeRouteLeave } from "vue-router";
-  import { onBeforeUnmount, ref } from "vue";
+  import { computed, onBeforeUnmount, ref } from "vue";
 
   const postStore = usePostStore();
   const layoutStore = useLayoutStore();
+
+  const footerColors = computed(() => {
+    if (postStore.postState.__t === "sale") return { background: "#1183ea", text: "#bae0fa" };
+    else if (postStore.postState.__t === "rent") return { background: "#2eab9e", text: "#ccede9" };
+    else if (postStore.postState.__t === "exchange")
+      return { background: "#bf6b0d", text: "#f7dec4" };
+  });
 
   const resetPostStore = ref(true);
 
@@ -41,7 +48,11 @@
         </main>
       </div>
       <footer class="lg:mb-2.5">
-        <FooterSection />
+        <FooterSection
+          :background="footerColors.background"
+          :text="footerColors.text"
+          title="#ffffff"
+        />
       </footer>
     </div>
   </div>

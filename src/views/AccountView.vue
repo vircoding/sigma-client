@@ -27,7 +27,7 @@
       </main>
     </div>
     <footer class="lg:mb-2.5">
-      <FooterSection />
+      <FooterSection background="#333333" text="#dcdcdc" title="#ffffff" />
     </footer>
   </div>
 </template>

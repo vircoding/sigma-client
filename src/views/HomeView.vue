@@ -7,8 +7,17 @@
   import PopularSection from "../components/PopularSection.vue";
   import FooterSection from "../components/FooterSection.vue";
   import { useUserStore } from "../stores/user";
+  import { computed } from "vue";
 
   const userStore = useUserStore();
+
+  const footerColors = computed(() => {
+    if (userStore.userState.credentials.role === "client")
+      return { background: "#1183ea", text: "#bae0fa", title: "#ffffff" };
+    else if (userStore.userState.credentials.role === "agent")
+      return { background: "#ededed", text: "#333333", title: "#333333" };
+    else return {background: "#1183ea", text: "#bae0fa", title: "#ffffff"}
+  });
 </script>
 
 <template>
@@ -42,7 +51,11 @@
       </section>
     </main>
     <footer>
-      <FooterSection :role="userStore.userState.credentials.role" />
+      <FooterSection
+        :background="footerColors.background"
+        :text="footerColors.text"
+        :title="footerColors.title"
+      />
     </footer>
   </div>
 </template>

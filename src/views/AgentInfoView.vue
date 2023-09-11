@@ -17,7 +17,7 @@
       </main>
     </div>
     <footer class="lg:mb-2.5">
-      <FooterSection />
+      <FooterSection background="sigma" text="#bae0fa" title="#ffffff" />
     </footer>
   </div>
 </template>
