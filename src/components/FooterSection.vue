@@ -2,8 +2,14 @@
   import { RouterLink } from "vue-router";
   import SigmaIcon from "./icons/SigmaIcon.vue";
   import BrandIcon from "./icons/BrandIcon.vue";
+  import { computed } from "vue";
 
   const props = defineProps(["background", "title", "text"]);
+
+  const sigmaIconFill = computed(() => {
+    if (props.title === "#333333") return "fill-sgray-400";
+    else return "fill-white";
+  });
 
   const year = new Date().getFullYear();
 </script>
@@ -63,10 +69,7 @@
       </a>
     </nav>
     <div class="mt-5 flex h-[30px] w-full items-center justify-center gap-5">
-      <SigmaIcon
-        class="w-20 lg:w-56"
-        :class="props.role === 'agent' ? 'fill-sgray-400' : 'fill-sgray-100'"
-      />
+      <SigmaIcon class="w-20 lg:w-56" :class="sigmaIconFill" />
       <div class="h-[25px] border-r" :style="`border-color: ${props.title}`"></div>
       <div class="text-center">
         <span :style="`color: ${props.title}`" class="relative top-[2px] text-xs"
