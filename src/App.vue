@@ -8,15 +8,16 @@
 
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
+
+  const moveSwipe = (event) => {
+    if ((layoutStore.sideMenuVisibility || layoutStore.spinnerVisibility) && event.cancelable) {
+      event.preventDefault();
+    }
+  };
 </script>
 
 <template>
-  <div
-    class="h-screen"
-    :class="
-      layoutStore.sideMenuVisibility || layoutStore.spinnerVisibility ? 'overflow-hidden' : ''
-    "
-  >
+  <div class="h-screen" @touchmove="moveSwipe($event)">
     <SideMenu
       class="side-menu fixed right-0 z-30 translate-x-full bg-white will-change-transform lg:hidden"
       :class="layoutStore.sideMenuVisibility ? 'visiblle transition' : 'invisible'"
