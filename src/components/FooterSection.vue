@@ -42,18 +42,24 @@
       </div>
     </div>
     <!-- TODO: improve border and hover -->
-    <nav class="flex justify-center gap-2">
-      <a href="https://www.instagram.com/">
-        <BrandIcon icon="instagram" :role="props.role" />
+    <nav class="flex justify-center gap-[6px]">
+      <a href="https://www.youtube.com/@SigmaCasasCuba">
+        <BrandIcon icon="youtube" :color="props.title" />
       </a>
-      <a href="https://es-la.facebook.com/">
-        <BrandIcon icon="facebook" :role="props.role" />
+      <a href="https://www.instagram.com/sigmacuba/">
+        <BrandIcon icon="instagram" :color="props.title" />
       </a>
-      <a href="https://www.tiktok.com/es/">
-        <BrandIcon icon="tiktok" :role="props.role" />
+      <a href="https://twitter.com/">
+        <BrandIcon icon="twitter-x" :color="props.title" />
       </a>
-      <a href="https://www.youtube.com/">
-        <BrandIcon icon="youtube" :role="props.role" />
+      <a href="https://m.facebook.com/groups/249539844657857">
+        <BrandIcon icon="facebook" :color="props.title" />
+      </a>
+      <a href="https://www.threads.net/@sigmacuba">
+        <BrandIcon icon="threads" :color="props.title" />
+      </a>
+      <a href="https://www.tiktok.com/">
+        <BrandIcon icon="tiktok" :color="props.title" />
       </a>
     </nav>
     <div class="mt-5 flex h-[30px] w-full items-center justify-center gap-5">
