@@ -16,34 +16,6 @@ export const userStore = defineStore("user", () => {
     }, 10 * 60 * 1000); // 10 Minutes
   });
 
-  // Resets
-  const resetCredentials = () => {
-    credentialsState.value = {
-      token: "",
-      tokenExpiration: "",
-      role: "reader",
-    };
-  };
-
-  const resetUser = () => {
-    userState.value = {};
-  };
-
-  const resetUserPosts = () => {
-    userPostsState.value = [];
-  };
-
-  const resetUserFavorites = () => {
-    userFavoritesState.value = [];
-  };
-
-  const $reset = () => {
-    resetCredentials();
-    resetUser();
-    resetUserPosts();
-    resetUserFavorites();
-  };
-
   // States
   const credentialsState = ref({
     token: "",
@@ -164,7 +136,9 @@ export const userStore = defineStore("user", () => {
     }
   };
 
-  // const logout = async () => {}
+  const logout = async () => {
+    console.log("Logout Action");
+  };
 
   const updateUser = async (user) => {
     try {
@@ -253,12 +227,35 @@ export const userStore = defineStore("user", () => {
     }
   };
 
+  // Resets
+  const resetCredentials = () => {
+    credentialsState.value = {
+      token: "",
+      tokenExpiration: "",
+      role: "reader",
+    };
+  };
+
+  const resetUser = () => {
+    userState.value = {};
+  };
+
+  const resetUserPosts = () => {
+    userPostsState.value = [];
+  };
+
+  const resetUserFavorites = () => {
+    userFavoritesState.value = [];
+  };
+
+  const $reset = () => {
+    resetCredentials();
+    resetUser();
+    resetUserPosts();
+    resetUserFavorites();
+  };
+
   return {
-    resetCredentials,
-    resetUser,
-    resetUserPosts,
-    resetUserFavorites,
-    $reset,
     credentialsState,
     userState,
     userPostsState,
@@ -267,6 +264,7 @@ export const userStore = defineStore("user", () => {
     refresh,
     login,
     register,
+    logout,
     updateUser,
     getUser,
     getPosts,
@@ -275,5 +273,10 @@ export const userStore = defineStore("user", () => {
     updatePost,
     deletePost,
     addToFavorites,
+    resetCredentials,
+    resetUser,
+    resetUserPosts,
+    resetUserFavorites,
+    $reset,
   };
 });
