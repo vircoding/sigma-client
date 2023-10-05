@@ -26,10 +26,7 @@ export const userStore = defineStore("user", () => {
   };
 
   const resetUser = () => {
-    userState.value = {
-      info: {},
-      contact_details: undefined,
-    };
+    userState.value = {};
   };
 
   const resetUserPosts = () => {
@@ -54,10 +51,7 @@ export const userStore = defineStore("user", () => {
     role: "reader",
   });
 
-  const userState = ref({
-    info: {},
-    contact_details: undefined,
-  });
+  const userState = ref({});
 
   const userPostsState = ref([]);
 
@@ -105,9 +99,11 @@ export const userStore = defineStore("user", () => {
         credentialsState.value.tokenExpiration.getSeconds() + res.data.credentials.expiresIn
       );
       credentialsState.value.role = res.data.credentials.role;
-      userState.value.info = res.data.info;
-      if (res.data.credentials.role === "agent")
-        userState.value.contact_details = res.data.contact_details;
+      if (res.data.credentials.role === "client") {
+        userState.value = { info: res.data.info };
+      } else if (res.data.credentials.role === "agent") {
+        userState.value = { info: res.data.info, contact_details: res.data.contact_details };
+      }
       userPostsState.value = res.data.posts;
       userFavoritesState.value = res.data.favorites;
 
@@ -141,9 +137,11 @@ export const userStore = defineStore("user", () => {
         credentialsState.value.tokenExpiration.getSeconds() + res.data.credentials.expiresIn
       );
       credentialsState.value.role = res.data.credentials.role;
-      userState.value.info = res.data.info;
-      if (res.data.credentials.role === "agent")
-        userState.value.contact_details = res.data.contact_details;
+      if (res.data.credentials.role === "client") {
+        userState.value = { info: res.data.info };
+      } else if (res.data.credentials.role === "agent") {
+        userState.value = { info: res.data.info, contact_details: res.data.contact_details };
+      }
 
       localStorage.setItem(
         "activeSession",
@@ -172,9 +170,11 @@ export const userStore = defineStore("user", () => {
     try {
       const res = await accountServices.updateUser(user);
       credentialsState.value.role = res.data.credentials.role;
-      userState.value.info = res.data.info;
-      if (res.data.credentials.role === "agent")
-        userState.value.contact_details = res.data.contact_details;
+      if (res.data.credentials.role === "client") {
+        userState.value = { info: res.data.info };
+      } else if (res.data.credentials.role === "agent") {
+        userState.value = { info: res.data.info, contact_details: res.data.contact_details };
+      }
       userPostsState.value = res.data.posts;
       userFavoritesState.value = res.data.favorites;
     } catch (error) {
@@ -186,9 +186,11 @@ export const userStore = defineStore("user", () => {
     try {
       const res = await accountServices.getUser();
       credentialsState.value.role = res.data.credentials.role;
-      userState.value.info = res.data.info;
-      if (res.data.credentials.role === "agent")
-        userState.value.contact_details = res.data.contact_details;
+      if (res.data.credentials.role === "client") {
+        userState.value = { info: res.data.info };
+      } else if (res.data.credentials.role === "agent") {
+        userState.value = { info: res.data.info, contact_details: res.data.contact_details };
+      }
       userPostsState.value = res.data.posts;
       userFavoritesState.value = res.data.favorites;
     } catch (error) {
