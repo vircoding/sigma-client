@@ -33,10 +33,7 @@ export default {
     return authorizedAPI().patch(`/account/posts/${id}`, post);
   },
 
-  addToFavorites(id, remove = false) {
-    if (remove) {
-      return authorizedAPI().put(`/account/favorites/${id}?remove=1`);
-    }
+  addToFavorites(id) {
     return authorizedAPI().put(`/account/favorites/${id}`);
   },
 
