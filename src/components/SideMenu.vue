@@ -1,9 +1,9 @@
 <script setup>
   import { RouterLink } from "vue-router";
-  import { useUserStore } from "../stores/user.js";
+  import { useUserStore } from "../stores/userStore.js";
+  import { useLayoutStore } from "../stores/layoutStore.js";
   import { useRoute } from "vue-router";
   import { computed } from "vue";
-  import { useLayoutStore } from "../stores/layout";
 
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();

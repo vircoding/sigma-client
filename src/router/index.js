@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { useUserStore } from "../stores/user.js";
-import { usePostStore } from "../stores/post.js";
-import { useLayoutStore } from "../stores/layout.js";
+import { useUserStore } from "../stores/userStore.js";
+import { usePostStore } from "../stores/postStore.js";
+import { useLayoutStore } from "../stores/layoutStore.js";
 
 const routes = [
   {
@@ -85,9 +85,9 @@ const routes = [
       const layoutStore = useLayoutStore();
 
       if (!from.name) {
-        layoutStore.unhideLoading();
+        layoutStore.unhideLogoLoading();
       } else {
-        layoutStore.unhideSpinner();
+        layoutStore.unhideSpinnerLoading();
       }
 
       try {
@@ -95,9 +95,9 @@ const routes = [
         await userStore.loadUserFavorites();
 
         if (!from.name) {
-          layoutStore.hideLoading();
+          layoutStore.hideLogoLoading();
         } else {
-          layoutStore.hideSpinner();
+          layoutStore.hideSpinnerLoading();
         }
 
         next();
@@ -105,9 +105,9 @@ const routes = [
         console.log(error);
 
         if (!from.name) {
-          layoutStore.hideLoading();
+          layoutStore.hideLogoLoading();
         } else {
-          layoutStore.hideSpinner();
+          layoutStore.hideSpinnerLoading();
         }
 
         next("/");
@@ -123,26 +123,26 @@ const routes = [
       const layoutStore = useLayoutStore();
 
       if (!from.name) {
-        layoutStore.unhideLoading();
+        layoutStore.unhideLogoLoading();
       } else {
-        layoutStore.unhideSpinner();
+        layoutStore.unhideSpinnerLoading();
       }
 
       try {
         await postStore.loadPost(to.params.id);
 
         if (!from.name) {
-          layoutStore.hideLoading();
+          layoutStore.hideLogoLoading();
         } else {
-          layoutStore.hideSpinner();
+          layoutStore.hideSpinnerLoading();
         }
 
         next();
       } catch (error) {
         if (!from.name) {
-          layoutStore.hideLoading();
+          layoutStore.hideLogoLoading();
         } else {
-          layoutStore.hideSpinner();
+          layoutStore.hideSpinnerLoading();
         }
 
         if (error.message === "Post not founded") {
@@ -163,17 +163,17 @@ const routes = [
       const layoutStore = useLayoutStore();
 
       if (!from.name) {
-        layoutStore.unhideLoading();
+        layoutStore.unhideLogoLoading();
       } else {
-        layoutStore.unhideSpinner();
+        layoutStore.unhideSpinnerLoading();
       }
       try {
         await postStore.loadPost(to.params.id);
 
         if (!from.name) {
-          layoutStore.hideLoading();
+          layoutStore.hideLogoLoading();
         } else {
-          layoutStore.hideSpinner();
+          layoutStore.hideSpinnerLoading();
         }
 
         next();
@@ -181,9 +181,9 @@ const routes = [
         console.log(error);
 
         if (!from.name) {
-          layoutStore.hideLoading();
+          layoutStore.hideLogoLoading();
         } else {
-          layoutStore.hideSpinner();
+          layoutStore.hideSpinnerLoading();
         }
 
         next("/");
@@ -199,18 +199,18 @@ const routes = [
       const layoutStore = useLayoutStore();
 
       if (!from.name) {
-        layoutStore.unhideLoading();
+        layoutStore.unhideLogoLoading();
       } else {
-        layoutStore.unhideSpinner();
+        layoutStore.unhideSpinnerLoading();
       }
 
       try {
         await userStore.loadAgentData(to.params.id);
 
         if (!from.name) {
-          layoutStore.hideLoading();
+          layoutStore.hideLogoLoading();
         } else {
-          layoutStore.hideSpinner();
+          layoutStore.hideSpinnerLoading();
         }
 
         next();
@@ -218,9 +218,9 @@ const routes = [
         console.log(error);
 
         if (!from.name) {
-          layoutStore.hideLoading();
+          layoutStore.hideLogoLoading();
         } else {
-          layoutStore.hideSpinner();
+          layoutStore.hideSpinnerLoading();
         }
 
         next("/");
@@ -250,9 +250,9 @@ router.beforeEach(async (to, from, next) => {
 
   const userStore = useUserStore();
   if (!from.name) {
-    layoutStore.unhideLoading();
-    await userStore.refreshToken(true);
-    layoutStore.hideLoading();
+    layoutStore.unhideLogoLoading();
+    await userStore.refresh(true);
+    layoutStore.hideLogoLoading();
   }
 
   if (to.meta.requiresAuth === true) {

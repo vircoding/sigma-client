@@ -3,7 +3,7 @@ import { ref } from "vue";
 import postsServices from "../services/postsServices.js";
 import { useUserStore } from "./userStore.js";
 
-export const userStore = defineStore("post", () => {
+export const usePostStore = defineStore("post", () => {
   // Settings
   const userStore = useUserStore();
 

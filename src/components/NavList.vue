@@ -1,7 +1,7 @@
 <script setup>
   import { RouterLink } from "vue-router";
-  import { useUserStore } from "../stores/user";
-  import { useLayoutStore } from "../stores/layout";
+  import { useUserStore } from "../stores/userStore.js";
+  import { useLayoutStore } from "../stores/layoutStore.js";
   import { useRoute } from "vue-router";
   import { computed } from "vue";
 

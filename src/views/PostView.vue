@@ -3,8 +3,8 @@
   import PostInfo from "../components/PostInfo.vue";
   import FooterSection from "../components/FooterSection.vue";
   import FullScreenGallery from "../components/FullScreenGallery.vue";
-  import { useLayoutStore } from "../stores/layout.js";
-  import { usePostStore } from "../stores/post.js";
+  import { useLayoutStore } from "../stores/layoutStore.js";
+  import { usePostStore } from "../stores/postStore.js";
   import { onBeforeRouteLeave } from "vue-router";
   import { computed, onBeforeUnmount, ref } from "vue";
 

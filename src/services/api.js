@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useUserStore } from "../stores/user.js";
+import { useUserStore } from "../stores/userStore.js";
 
 export const unauthorizedAPI = () => {
   return axios.create({

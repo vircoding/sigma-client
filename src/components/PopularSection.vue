@@ -1,7 +1,7 @@
 <script setup>
   import PostCard from "../components/PostCard.vue";
-  import { usePostStore } from "../stores/post";
-  import { useLayoutStore } from "../stores/layout";
+  import { usePostStore } from "../stores/postStore.js";
+  import { useLayoutStore } from "../stores/layoutStore.js";
   import { ref, onMounted } from "vue";
 
   const props = defineProps({
@@ -25,9 +25,9 @@
 
   onMounted(async () => {
     try {
-      layoutStore.unhideLoading();
+      layoutStore.unhideLogoLoading();
       await getPosts();
-      layoutStore.hideLoading();
+      layoutStore.hideLogoLoading();
     } catch (error) {
       console.log(error);
     }

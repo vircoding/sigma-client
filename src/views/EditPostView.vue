@@ -2,7 +2,7 @@
   import NavBar from "../components/NavBar.vue";
   import UpdatePostForm from "../components/UpdatePostForm.vue";
   import FooterSection from "../components/FooterSection.vue";
-  import { usePostStore } from "../stores/post";
+  import { usePostStore } from "../stores/postStore.js";
   import { onBeforeRouteLeave } from "vue-router";
   import { onBeforeUnmount, ref } from "vue";
 

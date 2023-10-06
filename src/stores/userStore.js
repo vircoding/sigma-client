@@ -4,7 +4,7 @@ import authServices from "../services/authServices.js";
 import accountServices from "../services/accountServices.js";
 import { usePostStore } from "./postStore.js";
 
-export const userStore = defineStore("user", () => {
+export const useUserStore = defineStore("user", () => {
   // Settings
   const postStore = usePostStore();
 

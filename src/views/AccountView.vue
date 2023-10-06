@@ -1,5 +1,5 @@
 <script setup>
-  import { useUserStore } from "../stores/user.js";
+  import { useUserStore } from "../stores/userStore.js";
   import NavBar from "../components/NavBar.vue";
   import ClientInfo from "../components/ClientInfo.vue";
   import AgentInfo from "../components/AgentInfo.vue";
