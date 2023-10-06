@@ -3,43 +3,43 @@ import { ref } from "vue";
 
 export const useLayoutStore = defineStore("layout", () => {
   // State
-  const sideMenuVisibility = ref(false);
-  const isLoading = ref(false);
-  const spinnerVisibility = ref(false);
-  const tableSpinnerVisibility = ref(false);
+  const sideMenu = ref(false);
+  const logoLoading = ref(false);
+  const spinnerLoading = ref(false);
+  const tableSpinner = ref(false);
   const fullScreenGallery = ref(false);
 
   // Actions
   const unhideSideMenu = () => {
-    sideMenuVisibility.value = true;
+    sideMenu.value = true;
   };
 
   const hideSideMenu = () => {
-    sideMenuVisibility.value = false;
+    sideMenu.value = false;
   };
 
-  const unhideLoading = () => {
-    isLoading.value = true;
+  const unhideLogoLoading = () => {
+    logoLoading.value = true;
   };
 
-  const hideLoading = () => {
-    isLoading.value = false;
+  const hideLogoLoading = () => {
+    logoLoading.value = false;
   };
 
-  const unhideSpinner = () => {
-    spinnerVisibility.value = true;
+  const unhideSpinnerLoading = () => {
+    spinnerLoading.value = true;
   };
 
-  const hideSpinner = () => {
-    spinnerVisibility.value = false;
+  const hideSpinnerLoading = () => {
+    spinnerLoading.value = false;
   };
 
   const unhideTableSpinner = () => {
-    tableSpinnerVisibility.value = true;
+    tableSpinner.value = true;
   };
 
   const hideTableSpinner = () => {
-    tableSpinnerVisibility.value = false;
+    tableSpinner.value = false;
   };
 
   const unhideFullScreenGallery = () => {
@@ -50,21 +50,31 @@ export const useLayoutStore = defineStore("layout", () => {
     fullScreenGallery.value = false;
   };
 
+  // Resets
+  const $reset = () => {
+    sideMenuVisibility.value = false;
+    isLoading.value = false;
+    spinnerVisibility.value = false;
+    tableSpinnerVisibility.value = false;
+    fullScreenGallery.value = false;
+  };
+
   return {
-    sideMenuVisibility,
-    isLoading,
-    spinnerVisibility,
-    tableSpinnerVisibility,
+    sideMenu,
+    logoLoading,
+    spinnerLoading,
+    tableSpinner,
     fullScreenGallery,
     unhideSideMenu,
     hideSideMenu,
-    unhideLoading,
-    hideLoading,
-    unhideSpinner,
-    hideSpinner,
+    unhideLogoLoading,
+    hideLogoLoading,
+    unhideSpinnerLoading,
+    hideSpinnerLoading,
     unhideTableSpinner,
     hideTableSpinner,
     unhideFullScreenGallery,
     hideFullScreenGallery,
+    $reset,
   };
 });
