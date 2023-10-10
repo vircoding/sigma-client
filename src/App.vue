@@ -42,7 +42,7 @@
       class="overlay"
       :class="layoutStore.sideMenu ? 'visible' : 'invisible'"
     ></div>
-    <FormSpinner :class="layoutStore.sideMenu ? 'block' : 'hidden'" class="z-30" />
+    <FormSpinner :class="layoutStore.spinnerLoading ? 'block' : 'hidden'" class="z-30" />
   </div>
 </template>
 

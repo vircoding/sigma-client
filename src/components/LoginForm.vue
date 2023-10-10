@@ -1,10 +1,13 @@
 <script setup>
   import { computed, ref } from "vue";
-  import { useUserStore } from "../stores/user.js";
+  import { useUserStore } from "../stores/userStore.js";
+  import { useLayoutStore } from "../stores/layoutStore";
   import SigmaVerticalIcon from "./icons/SigmaVerticalIcon.vue";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
+  import router from "../router";
 
   const userStore = useUserStore();
+  const layoutStore = useLayoutStore();
 
   const user = ref({
     email: "",
@@ -61,15 +64,21 @@
 
   const formSubmit = async () => {
     try {
-      await userStore.loginUser(user.value);
+      layoutStore.unhideSpinnerLoading();
+      await userStore.login(user.value);
+
+      await router.push("/");
 
       user.value.email = "";
       user.value.password = "";
 
       editedInputs.value.email = false;
       editedInputs.value.password = false;
+
+      layoutStore.hideSpinnerLoading();
     } catch (error) {
       console.log(error);
+      layoutStore.hideSpinnerLoading();
     }
   };
 </script>
