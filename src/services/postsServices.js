@@ -21,6 +21,18 @@ export default {
     return unauthorizedAPI().get(`/posts/${id}`);
   },
 
+  getPopularSales() {
+    return unauthorizedAPI().get("/posts/popular/sales");
+  },
+
+  getPopularRents() {
+    return unauthorizedAPI().get("/posts/popular/rents");
+  },
+
+  getPopularExchanges() {
+    return unauthorizedAPI().get("/posts/popular/exchanges");
+  },
+
   visitPost(id) {
     return unauthorizedAPI().put(`/posts/${id}`);
   },

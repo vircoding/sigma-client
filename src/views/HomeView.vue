@@ -41,13 +41,19 @@
         v-if="!(userStore.credentialsState.role === 'agent')"
         class="first-gradient w-full pt-28"
       >
-        <PopularSection :buy="true" />
+        <PopularSection type="sales" />
       </section>
       <section
         v-if="!(userStore.credentialsState.role === 'agent')"
-        class="second-gradient w-full pb-12 pt-10"
+        class="second-gradient w-full pt-28"
       >
-        <PopularSection />
+        <PopularSection type="rents" />
+      </section>
+      <section
+        v-if="!(userStore.credentialsState.role === 'agent')"
+        class="first-gradient w-full pb-12 pt-10"
+      >
+        <PopularSection type="exchanges" />
       </section>
     </main>
     <footer>

@@ -1,12 +1,8 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import postsServices from "../services/postsServices.js";
-import { useUserStore } from "./userStore.js";
 
 export const usePostStore = defineStore("post", () => {
-  // Settings
-  const userStore = useUserStore();
-
   // States
   const postState = ref(null);
   const updatePostState = ref(null);
@@ -55,6 +51,33 @@ export const usePostStore = defineStore("post", () => {
   const getUserFavorites = async () => {
     try {
       console.log("Get User Favorites Action");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getPopularSales = async () => {
+    try {
+      const res = await postsServices.getPopularSales();
+      popularSalesState.value = res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getPopularRents = async () => {
+    try {
+      const res = await postsServices.getPopularRents();
+      popularRentsState.value = res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getPopularExchanges = async () => {
+    try {
+      const res = await postsServices.getPopularExchanges();
+      popularExchangesState.value = res.data;
     } catch (error) {
       console.log(error);
     }
@@ -127,6 +150,9 @@ export const usePostStore = defineStore("post", () => {
     visitPost,
     getUserPosts,
     getUserFavorites,
+    getPopularSales,
+    getPopularRents,
+    getPopularExchanges,
     setPost,
     setUpdatePost,
     resetUserPosts,
