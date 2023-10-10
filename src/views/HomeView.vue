@@ -13,10 +13,10 @@
 
   const footerColors = computed(() => {
     if (userStore.credentialsState.role === "client")
-      return { background: "#1183ea", text: "#bae0fa", title: "#ffffff" };
+      return { background: "#333333", text: "#dcdcdc", title: "#ffffff" };
     else if (userStore.credentialsState.role === "agent")
       return { background: "#ededed", text: "#333333", title: "#333333" };
-    else return { background: "#1183ea", text: "#bae0fa", title: "#ffffff" };
+    else return { background: "#333333", text: "#dcdcdc", title: "#ffffff" };
   });
 </script>
 
