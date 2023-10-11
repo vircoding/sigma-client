@@ -1,6 +1,6 @@
 <script setup>
   import { ref } from "vue";
-  import { useLayoutStore } from "../stores/layout.js";
+  import { useLayoutStore } from "../stores/layoutStore.js";
   import cardImg from "../assets/card-img.jpg";
   import cardImg2 from "../assets/card-img2.jpg";
   import cardImg3 from "../assets/card-img3.jpg";

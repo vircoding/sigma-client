@@ -1,7 +1,7 @@
 <script setup>
-  import { ref, computed, onMounted } from "vue";
-  import { usePostStore } from "../stores/post";
-  import { useUserStore } from "../stores/user";
+  import { ref, computed } from "vue";
+  import { usePostStore } from "../stores/postStore.js";
+  import { useUserStore } from "../stores/userStore.js";
   import Gallery from "./Gallery.vue";
   import FavoriteIcon from "./icons/FavoriteIcon.vue";
   import ShareButton from "./ShareButton.vue";
@@ -12,9 +12,15 @@
   const postStore = usePostStore();
   const userStore = useUserStore();
 
-  const favorite = ref(
-    Boolean(userStore.userState.favorites.find((item) => item.id === postStore.postState._id))
-  );
+  const favorite = computed(() => {
+    if (userStore.isLoggedIn) {
+      return Boolean(
+        userStore.userState.favorites.find((item) => item.post_id === postStore.postState.id)
+      );
+    } else {
+      return false;
+    }
+  });
 
   const favoriteEvent = async () => {
     favorite.value = !favorite.value;
@@ -22,9 +28,9 @@
   };
 
   const color = computed(() => {
-    if (postStore.postState.__t === "sale") return "fill-sigma";
-    else if (postStore.postState.__t === "rent") return "fill-sgreen-300";
-    else if (postStore.postState.__t === "exchange") return "fill-solive-300";
+    if (postStore.postState.type === "sale") return "fill-sigma";
+    else if (postStore.postState.type === "rent") return "fill-sgreen-300";
+    else if (postStore.postState.type === "exchange") return "fill-solive-300";
   });
 
   const defineFeatureStyles = (count) => {
@@ -48,21 +54,17 @@
       <div class="flex items-center justify-between">
         <!-- Amount -->
         <h2 class="text-shadow text-2xl font-extrabold">
-          {{
-            formatAmount(
-              postStore.postState.__t === "sale"
-                ? postStore.postState.price
-                : postStore.postState.tax
-            )
-          }}
-          <span class="text-xl font-semibold uppercase">{{ postStore.postState.currency }}</span>
-          <span class="text-xl font-semibold lowercase" v-if="postStore.postState.__t === 'rent'">
-            / {{ postStore.postState.frequency === "daily" ? "día" : "mes" }}</span
+          {{ formatAmount(postStore.postState.amount_details.amount) }}
+          <span class="text-xl font-semibold uppercase">{{
+            postStore.postState.amount_details.currency
+          }}</span>
+          <span class="text-xl font-semibold lowercase" v-if="postStore.postState.type === 'rent'">
+            / {{ postStore.postState.amount_details.frequency === "daily" ? "día" : "mes" }}</span
           >
         </h2>
         <!-- Buttons -->
         <div class="flex items-center justify-center gap-1">
-          <ShareButton :url="`http://localhost:5173/post/${postStore.postState._id}`" />
+          <ShareButton :url="`http://localhost:5173/post/${postStore.postState.id}`" />
           <FavoriteIcon
             v-if="userStore.isLoggedIn"
             @click="favoriteEvent"
@@ -73,7 +75,8 @@
       </div>
       <!-- Address -->
       <h3 class="text-shadow font-normal text-sgray-300">
-        {{ postStore.postState.address.municipality }}, {{ postStore.postState.address.province }}
+        {{ postStore.postState.property_details[0].address.municipality }},
+        {{ postStore.postState.property_details[0].address.province }}
       </h3>
     </div>
     <!-- Horizontal Line -->
@@ -85,13 +88,19 @@
         <span>Cuartos</span>
         <div class="flex items-center gap-2">
           <FeatureIcon
-            :classes="defineFeatureStyles(postStore.postState.features.bed_room)"
+            :classes="
+              defineFeatureStyles(postStore.postState.property_details[0].features.bed_room)
+            "
             icon="bed_room"
           />
           <span
             class="text-shadow text-base"
-            :class="postStore.postState.features.bed_room > 0 ? 'text-sgray-300' : 'text-sgray-200'"
-            >x{{ postStore.postState.features.bed_room }}</span
+            :class="
+              postStore.postState.property_details[0].features.bed_room > 0
+                ? 'text-sgray-300'
+                : 'text-sgray-200'
+            "
+            >x{{ postStore.postState.property_details[0].features.bed_room }}</span
           >
         </div>
       </div>
@@ -100,13 +109,19 @@
         <span>Baños</span>
         <div class="flex items-center gap-2">
           <FeatureIcon
-            :classes="defineFeatureStyles(postStore.postState.features.bath_room)"
+            :classes="
+              defineFeatureStyles(postStore.postState.property_details[0].features.bath_room)
+            "
             icon="bath_room"
           />
           <span
             class="text-shadow text-base"
-            :class="postStore.postState.features.bed_room > 0 ? 'text-sgray-300' : 'text-sgray-200'"
-            >x{{ postStore.postState.features.bath_room }}</span
+            :class="
+              postStore.postState.property_details[0].features.bed_room > 0
+                ? 'text-sgray-300'
+                : 'text-sgray-200'
+            "
+            >x{{ postStore.postState.property_details[0].features.bath_room }}</span
           >
         </div>
       </div>
@@ -115,10 +130,13 @@
         <span>Garage</span>
         <div class="flex items-center gap-2">
           <FeatureIcon
-            :classes="defineFeatureStyles(postStore.postState.features.garage)"
+            :classes="defineFeatureStyles(postStore.postState.property_details[0].features.garage)"
             icon="garage"
           />
-          <BooleanIcon :icon="postStore.postState.features.garage" :weigth="'bold'" />
+          <BooleanIcon
+            :icon="postStore.postState.property_details[0].features.garage"
+            :weigth="'bold'"
+          />
         </div>
       </div>
       <!-- Garden -->
@@ -126,10 +144,13 @@
         <span>Jardín</span>
         <div class="flex items-center gap-2">
           <FeatureIcon
-            :classes="defineFeatureStyles(postStore.postState.features.garden)"
+            :classes="defineFeatureStyles(postStore.postState.property_details[0].features.garden)"
             icon="garden"
           />
-          <BooleanIcon :icon="postStore.postState.features.garden" :weigth="'bold'" />
+          <BooleanIcon
+            :icon="postStore.postState.property_details[0].features.garden"
+            :weigth="'bold'"
+          />
         </div>
       </div>
       <!-- Pool -->
@@ -137,10 +158,13 @@
         <span>Piscina</span>
         <div class="flex items-center gap-2">
           <FeatureIcon
-            :classes="defineFeatureStyles(postStore.postState.features.pool)"
+            :classes="defineFeatureStyles(postStore.postState.property_details[0].features.pool)"
             icon="pool"
           />
-          <BooleanIcon :icon="postStore.postState.features.pool" :weigth="'bold'" />
+          <BooleanIcon
+            :icon="postStore.postState.property_details[0].features.pool"
+            :weigth="'bold'"
+          />
         </div>
       </div>
       <!-- Furnished -->
@@ -148,10 +172,15 @@
         <span>Amueblada</span>
         <div class="flex items-center gap-2">
           <FeatureIcon
-            :classes="defineFeatureStyles(postStore.postState.features.furnished)"
+            :classes="
+              defineFeatureStyles(postStore.postState.property_details[0].features.furnished)
+            "
             icon="furnished"
           />
-          <BooleanIcon :icon="postStore.postState.features.furnished" :weigth="'bold'" />
+          <BooleanIcon
+            :icon="postStore.postState.property_details[0].features.furnished"
+            :weigth="'bold'"
+          />
         </div>
       </div>
     </div>
@@ -162,52 +191,6 @@
       <p v-if="!postStore.postState.description.length" class="text-shadow">Sin descripción</p>
       <p v-else class="text-shadow">{{ postStore.postState.description }}</p>
     </div>
-    <!-- Horizontal Line -->
-    <div
-      v-if="postStore.postState.published_by.role === 'agent'"
-      class="w-full border-t border-sgray-100"
-    ></div>
-    <!-- Agent -->
-    <div
-      v-if="postStore.postState.published_by.role === 'agent'"
-      class="mt-2 flex w-full justify-between gap-3"
-    >
-      <!-- Avatar -->
-      <div class="w-1/5">
-        <img
-          src="../assets/agent-avatar.jpg"
-          class="text-shadow rounded-full border-2 border-sgray-100"
-          alt="Avatar del agente"
-        />
-      </div>
-      <div class="flex w-4/5 flex-col gap-2">
-        <div class="mb-[1px] leading-tight">
-          <!-- Name -->
-          <RouterLink :to="`/agents/${postStore.postState.uid}`">
-            <h4 class="text-shadow">
-              Por
-              <span class="font-semibold">{{
-                postStore.postState.published_by.agent.firstname +
-                " " +
-                postStore.postState.published_by.agent.lastname
-              }}</span>
-            </h4>
-          </RouterLink>
-          <!-- Public Email -->
-          <a
-            class="text-sgray-300"
-            :href="`mailto:${postStore.postState.published_by.agent.public_email}`"
-            >{{ postStore.postState.published_by.agent.public_email }}</a
-          >
-        </div>
-        <!-- Horizontal Line -->
-        <div class="w-[98%] border-t border-sgray-100"></div>
-        <!-- Bio -->
-        <span class="text-shadow inline-block w-full">{{
-          postStore.postState.published_by.agent.bio
-        }}</span>
-      </div>
-    </div>
   </div>
   <!-- Phone -->
   <div
@@ -215,7 +198,11 @@
   >
     <img src="../assets/phone-icon.svg" class="text-shadow" />
     <h2 class="text-shadow relative top-[1px] text-lg text-sgray-100">
-      {{ postStore.postState.phone }}
+      {{
+        postStore.postState.contact_details.contact.code +
+        " " +
+        postStore.postState.contact_details.contact.phone
+      }}
     </h2>
   </div>
 </template>

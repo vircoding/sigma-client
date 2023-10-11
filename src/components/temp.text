@@ -1,0 +1,46 @@
+<!-- Horizontal Line -->
+    <div
+      v-if="postStore.postState.published_by.role === 'agent'"
+      class="w-full border-t border-sgray-100"
+    ></div>
+<!-- Agent -->
+    <div
+      v-if="postStore.postState.published_by.role === 'agent'"
+      class="mt-2 flex w-full justify-between gap-3"
+    >
+      <!-- Avatar -->
+      <div class="w-1/5">
+        <img
+          src="../assets/agent-avatar.jpg"
+          class="text-shadow rounded-full border-2 border-sgray-100"
+          alt="Avatar del agente"
+        />
+      </div>
+      <div class="flex w-4/5 flex-col gap-2">
+        <div class="mb-[1px] leading-tight">
+          <!-- Name -->
+          <RouterLink :to="`/agents/${postStore.postState.uid}`">
+            <h4 class="text-shadow">
+              Por
+              <span class="font-semibold">{{
+                postStore.postState.published_by.agent.firstname +
+                " " +
+                postStore.postState.published_by.agent.lastname
+              }}</span>
+            </h4>
+          </RouterLink>
+          <!-- Public Email -->
+          <a
+            class="text-sgray-300"
+            :href="`mailto:${postStore.postState.published_by.agent.public_email}`"
+            >{{ postStore.postState.published_by.agent.public_email }}</a
+          >
+        </div>
+        <!-- Horizontal Line -->
+        <div class="w-[98%] border-t border-sgray-100"></div>
+        <!-- Bio -->
+        <span class="text-shadow inline-block w-full">{{
+          postStore.postState.published_by.agent.bio
+        }}</span>
+      </div>
+    </div>

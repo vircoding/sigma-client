@@ -163,7 +163,7 @@ const routes = [
       }
 
       try {
-        await postStore.loadPost(to.params.id);
+        await postStore.getPost(to.params.id);
 
         if (!from.name) {
           layoutStore.hideLogoLoading();
@@ -173,6 +173,8 @@ const routes = [
 
         next();
       } catch (error) {
+        console.log(error);
+
         if (!from.name) {
           layoutStore.hideLogoLoading();
         } else {

@@ -7,9 +7,11 @@
   import PopularSection from "../components/PopularSection.vue";
   import FooterSection from "../components/FooterSection.vue";
   import { useUserStore } from "../stores/userStore.js";
-  import { computed } from "vue";
+  import { usePostStore } from "../stores/postStore.js";
+  import { computed, onBeforeUnmount } from "vue";
 
   const userStore = useUserStore();
+  const postStore = usePostStore();
 
   const footerColors = computed(() => {
     if (userStore.credentialsState.role === "client")
@@ -17,6 +19,12 @@
     else if (userStore.credentialsState.role === "agent")
       return { background: "#ededed", text: "#333333", title: "#333333" };
     else return { background: "#333333", text: "#dcdcdc", title: "#ffffff" };
+  });
+
+  onBeforeUnmount(() => {
+    postStore.resetPopularSales();
+    postStore.resetPopularRents();
+    postStore.resetPopularExchanges();
   });
 </script>
 

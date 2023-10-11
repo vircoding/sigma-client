@@ -1,6 +1,6 @@
 <script setup>
   import { ref } from "vue";
-  import { useLayoutStore } from "../stores/layout.js";
+  import { useLayoutStore } from "../stores/layoutStore.js";
 
   const layoutStore = useLayoutStore();
 

@@ -5,30 +5,28 @@
   import FullScreenGallery from "../components/FullScreenGallery.vue";
   import { useLayoutStore } from "../stores/layoutStore.js";
   import { usePostStore } from "../stores/postStore.js";
-  import { onBeforeRouteLeave } from "vue-router";
+  // import { onBeforeRouteLeave } from "vue-router";
   import { computed, onBeforeUnmount, ref } from "vue";
 
   const postStore = usePostStore();
   const layoutStore = useLayoutStore();
 
   const footerColors = computed(() => {
-    if (postStore.postState.__t === "sale") return { background: "#1183ea", text: "#bae0fa" };
-    else if (postStore.postState.__t === "rent") return { background: "#2eab9e", text: "#ccede9" };
-    else if (postStore.postState.__t === "exchange")
+    if (postStore.postState.type === "sale") return { background: "#1183ea", text: "#bae0fa" };
+    else if (postStore.postState.type === "rent") return { background: "#2eab9e", text: "#ccede9" };
+    else if (postStore.postState.type === "exchange")
       return { background: "#bf6b0d", text: "#f7dec4" };
   });
 
-  const resetPostStore = ref(true);
+  // const resetPostStore = ref(true);
 
   onBeforeUnmount(() => {
-    if (resetPostStore.value) {
-      postStore.$reset;
-    }
+    postStore.resetPost();
   });
 
-  onBeforeRouteLeave((to, from) => {
-    if (to.name === "edit-post") resetPostStore.value = false;
-  });
+  // onBeforeRouteLeave((to) => {
+  //   if (to.name === "edit-post") resetPostStore.value = false;
+  // });
 </script>
 
 <template>
