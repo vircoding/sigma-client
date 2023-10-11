@@ -20,7 +20,7 @@ export const authorizedAPI = () => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${userStore.userState.credentials.token}`,
+      Authorization: `Bearer ${userStore.credentialsState.token}`,
     },
   });
 };

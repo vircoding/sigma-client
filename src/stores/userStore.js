@@ -53,6 +53,7 @@ export const useUserStore = defineStore("user", () => {
             console.log("Server Error");
           } else {
             console.log("Untracked Error");
+            console.log(error);
           }
         }
       } else {

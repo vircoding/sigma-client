@@ -2,7 +2,7 @@ import { unauthorizedAPI } from "./api.js";
 
 export default {
   refresh() {
-    return unauthorizedAPI().get("/auth/refresh");
+    return unauthorizedAPI().get("/auth");
   },
 
   login(user) {
