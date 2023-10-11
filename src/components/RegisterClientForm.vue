@@ -1,7 +1,7 @@
 <script setup>
   import { computed, ref } from "vue";
   import { useUserStore } from "../stores/userStore.js";
-  import { useLayoutStore } from "../stores/layoutStore";
+  import { useLayoutStore } from "../stores/layoutStore.js";
   import router from "../router";
   import SigmaVerticalIcon from "./icons/SigmaVerticalIcon.vue";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";

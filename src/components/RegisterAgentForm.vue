@@ -1,43 +1,31 @@
 <script setup>
-  import { computed, ref, watch } from "vue";
-  import { useUserStore } from "../stores/user.js";
+  import { computed, ref } from "vue";
+  import { useUserStore } from "../stores/userStore.js";
+  import { useLayoutStore } from "../stores/layoutStore.js";
   import router from "../router";
   import parsePhoneNumber from "libphonenumber-js";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
 
   const userStore = useUserStore();
+  const layoutStore = useLayoutStore();
 
   const user = ref({
+    role: "agent",
     email: "",
     password: "",
     repassword: "",
-    firstname: "",
-    lastname: "",
-    phone: "",
-    public_email: "",
-    bio: "",
-  });
-
-  const phoneInput = ref("");
-  const callCodeInput = ref("+53");
-
-  const formattedPhone = computed(() => {
-    return callCodeInput.value + phoneInput.value;
-  });
-
-  const invalidPhone = ref(true);
-
-  watch(phoneInput, () => {
-    try {
-      const parsedPhoneNumber = parsePhoneNumber(formattedPhone.value);
-      if (!parsedPhoneNumber.isValid()) {
-        throw new Error("Non-valid Phone Number");
-      } else {
-        invalidPhone.value = false;
-      }
-    } catch (error) {
-      invalidPhone.value = true;
-    }
+    info: {
+      firstname: "",
+      lastname: "",
+      bio: "",
+    },
+    contact_details: {
+      public_email: "",
+      whatsapp: {
+        code: "+53",
+        phone: "",
+      },
+    },
   });
 
   const editedInputs = ref({
@@ -46,7 +34,6 @@
     repassword: false,
     firstname: false,
     lastname: false,
-    code: false,
     phone: false,
     public_email: false,
   });
@@ -68,9 +55,6 @@
           break;
         case "lastname":
           editedInputs.value.lastname = true;
-          break;
-        case "code":
-          editedInputs.value.code = true;
           break;
         case "phone":
           editedInputs.value.phone = true;
@@ -109,33 +93,45 @@
   });
 
   const firstnameError = computed(() => {
-    if (editedInputs.value.firstname && !(user.value.firstname.length >= 1)) return true;
+    if (editedInputs.value.firstname && !(user.value.info.firstname.length >= 1)) return true;
     return false;
   });
 
   const lastnameError = computed(() => {
-    if (editedInputs.value.lastname && !(user.value.lastname.length >= 1)) return true;
+    if (editedInputs.value.lastname && !(user.value.info.lastname.length >= 1)) return true;
     return false;
   });
 
   const codeError = computed(() => {
     if (
       editedInputs.value.code &&
-      (!/^\+\d+$/.test(callCodeInput.value) || !(callCodeInput.value.length <= 4))
+      (!/^\+\d+$/.test(user.value.contact_details.whatsapp.code) ||
+        !(user.value.contact_details.whatsapp.code.length <= 4))
     )
       return true;
     return false;
   });
 
   const phoneError = computed(() => {
-    if (editedInputs.value.phone && invalidPhone.value) return true;
-    return false;
+    try {
+      const parsedPhoneNumber = parsePhoneNumber(
+        user.value.contact_details.whatsapp.code + user.value.contact_details.whatsapp.phone
+      );
+      if (!parsedPhoneNumber.isValid()) {
+        throw new Error("Non-valid Phone Number");
+      }
+
+      return false;
+    } catch (error) {
+      if (editedInputs.value.phone) return true;
+      return false;
+    }
   });
 
   const public_emailError = computed(() => {
     if (
       editedInputs.value.public_email &&
-      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user.value.public_email)
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user.value.contact_details.public_email)
     )
       return true;
     return false;
@@ -168,35 +164,34 @@
   });
 
   const formSubmit = async () => {
-    user.value.phone = formattedPhone.value;
+    layoutStore.unhideSpinnerLoading();
     try {
-      await userStore.registerAgent(user.value);
+      await userStore.register(user.value);
 
-      phoneInput.value = "";
-      callCodeInput.value = "+53";
-      invalidPhone.value = true;
+      await router.push("/");
 
       user.value.email = "";
       user.value.password = "";
       user.value.repassword = "";
-      user.value.firstname = "";
-      user.value.lastname = "";
-      user.value.phone = "";
-      user.value.public_email = "";
-      user.value.bio = "";
+      user.value.info.firstname = "";
+      user.value.info.lastname = "";
+      user.value.info.bio = "";
+      user.value.contact_details.public_email = "";
+      user.value.contact_details.whatsapp.phone = "";
+      user.value.contact_details.whatsapp.code = "+53";
 
       editedInputs.value.email = false;
       editedInputs.value.password = false;
       editedInputs.value.repassword = false;
       editedInputs.value.firstname = false;
       editedInputs.value.lastname = false;
-      editedInputs.value.code = false;
       editedInputs.value.phone = false;
       editedInputs.value.public_email = false;
 
-      router.push("/");
+      layoutStore.hideSpinnerLoading();
     } catch (error) {
       console.log(error);
+      layoutStore.hideSpinnerLoading();
     }
   };
 </script>
@@ -288,7 +283,7 @@
         <input
           @focus="editInput('firstname')"
           type="text"
-          v-model.trim="user.firstname"
+          v-model.trim="user.info.firstname"
           class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
           :class="
             firstnameError
@@ -308,7 +303,7 @@
         <input
           @focus="editInput('lastname')"
           type="text"
-          v-model.trim="user.lastname"
+          v-model.trim="user.info.lastname"
           class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
           :class="
             lastnameError
@@ -327,9 +322,8 @@
       <div class="relative col-start-2 row-start-3 mb-2 flex flex-col lg:mb-0">
         <div class="flex w-full items-center gap-2 lg:gap-4">
           <input
-            @focus="editInput('code')"
             type="text"
-            v-model.trim="callCodeInput"
+            v-model.trim="user.contact_details.whatsapp.code"
             class="inline-block w-[70px] rounded-md border border-sgray-100 bg-transparent py-2 text-center font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
             :class="
               codeError
@@ -342,7 +336,7 @@
           <input
             @focus="editInput('phone')"
             type="tel"
-            v-model.trim="phoneInput"
+            v-model.trim="user.contact_details.whatsapp.phone"
             class="grow rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
             :class="
               phoneError
@@ -363,7 +357,7 @@
         <input
           @focus="editInput('public_email')"
           type="email"
-          v-model.trim="user.public_email"
+          v-model.trim="user.contact_details.public_email"
           class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
           :class="
             public_emailError
@@ -382,7 +376,7 @@
       <div class="col-start-1 row-span-2 row-start-4 mb-2 flex flex-col lg:mb-0">
         <textarea
           maxlength="160"
-          v-model.trim="user.bio"
+          v-model.trim="user.info.bio"
           class="h-[120px] resize-none rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:h-full lg:text-lg"
           placeholder="Biografía (160 carácteres máximo)"
         ></textarea>
