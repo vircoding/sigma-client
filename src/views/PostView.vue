@@ -5,10 +5,12 @@
   import FullScreenGallery from "../components/FullScreenGallery.vue";
   import { useLayoutStore } from "../stores/layoutStore.js";
   import { usePostStore } from "../stores/postStore.js";
+  import { useAgentStore } from "../stores/agentStore.js";
   // import { onBeforeRouteLeave } from "vue-router";
   import { computed, onBeforeUnmount, ref } from "vue";
 
   const postStore = usePostStore();
+  const agentStore = useAgentStore();
   const layoutStore = useLayoutStore();
 
   const footerColors = computed(() => {
@@ -22,6 +24,7 @@
 
   onBeforeUnmount(() => {
     postStore.resetPost();
+    agentStore.resetAuthor();
   });
 
   // onBeforeRouteLeave((to) => {
