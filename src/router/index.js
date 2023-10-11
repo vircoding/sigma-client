@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useUserStore } from "../stores/userStore.js";
 import { usePostStore } from "../stores/postStore.js";
+import { useAgentStore } from "../stores/agentStore.js";
 import { useLayoutStore } from "../stores/layoutStore.js";
 
 const routes = [
@@ -154,6 +155,7 @@ const routes = [
     component: () => import("../views/PostView.vue"),
     beforeEnter: async (to, from, next) => {
       const postStore = usePostStore();
+      const agentStore = useAgentStore();
       const layoutStore = useLayoutStore();
 
       if (!from.name) {
@@ -164,6 +166,7 @@ const routes = [
 
       try {
         await postStore.getPost(to.params.id);
+        await agentStore.getAuthor(postStore.postState.uid);
 
         if (!from.name) {
           layoutStore.hideLogoLoading();

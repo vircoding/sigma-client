@@ -1,7 +1,8 @@
 <script setup>
-  import { ref, computed } from "vue";
+  import { computed } from "vue";
   import { usePostStore } from "../stores/postStore.js";
   import { useUserStore } from "../stores/userStore.js";
+  import { useAgentStore } from "../stores/agentStore.js";
   import Gallery from "./Gallery.vue";
   import FavoriteIcon from "./icons/FavoriteIcon.vue";
   import ShareButton from "./ShareButton.vue";
@@ -9,8 +10,9 @@
   import { formatAmount } from "../utils/formatAmount.js";
   import BooleanIcon from "./icons/BooleanIcon.vue";
 
-  const postStore = usePostStore();
   const userStore = useUserStore();
+  const postStore = usePostStore();
+  const agentStore = useAgentStore();
 
   const favorite = computed(() => {
     if (userStore.isLoggedIn) {
@@ -191,7 +193,50 @@
       <p v-if="!postStore.postState.description.length" class="text-shadow">Sin descripción</p>
       <p v-else class="text-shadow">{{ postStore.postState.description }}</p>
     </div>
+    <!-- Horizontal Line -->
+    <div
+      v-if="agentStore.authorState.role === 'agent'"
+      class="w-full border-t border-sgray-100"
+    ></div>
+    <!-- Agent -->
+    <div
+      v-if="agentStore.authorState.role === 'agent'"
+      class="mt-2 flex w-full justify-between gap-3"
+    >
+      <!-- Avatar -->
+      <div class="w-1/5">
+        <img
+          src="../assets/agent-avatar.jpg"
+          class="text-shadow rounded-full border-2 border-sgray-100"
+          alt="Avatar del agente"
+        />
+      </div>
+      <div class="flex w-4/5 flex-col gap-2">
+        <div class="mb-[1px] leading-tight">
+          <!-- Name -->
+          <RouterLink :to="`/agents/${agentStore.authorState.id}`">
+            <h4 class="text-shadow">
+              Por
+              <span class="font-semibold">{{
+                agentStore.authorState.info.firstname + " " + agentStore.authorState.info.lastname
+              }}</span>
+            </h4>
+          </RouterLink>
+          <!-- Public Email -->
+          <a
+            class="text-sgray-300"
+            :href="`mailto:${agentStore.authorState.contact_details.public_email}`"
+            >{{ agentStore.authorState.contact_details.public_email }}</a
+          >
+        </div>
+        <!-- Horizontal Line -->
+        <div class="w-[98%] border-t border-sgray-100"></div>
+        <!-- Bio -->
+        <span class="text-shadow inline-block w-full">{{ agentStore.authorState.info.bio }}</span>
+      </div>
+    </div>
   </div>
+
   <!-- Phone -->
   <div
     class="sticky inset-x-0 bottom-0 flex h-12 items-center gap-[5px] bg-sgray-300 px-5 shadow-[0_-7px_6px_rgba(0,_0,_0,_0.1)]"
