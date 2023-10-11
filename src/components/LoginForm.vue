@@ -63,8 +63,8 @@
   });
 
   const formSubmit = async () => {
+    layoutStore.unhideSpinnerLoading();
     try {
-      layoutStore.unhideSpinnerLoading();
       await userStore.login(user.value);
 
       await router.push("/");

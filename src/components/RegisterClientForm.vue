@@ -1,17 +1,22 @@
 <script setup>
   import { computed, ref } from "vue";
-  import { useUserStore } from "../stores/user.js";
+  import { useUserStore } from "../stores/userStore.js";
+  import { useLayoutStore } from "../stores/layoutStore";
   import router from "../router";
   import SigmaVerticalIcon from "./icons/SigmaVerticalIcon.vue";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
 
   const userStore = useUserStore();
+  const layoutStore = useLayoutStore();
 
   const user = ref({
-    username: "",
+    role: "client",
     email: "",
     password: "",
     repassword: "",
+    info: {
+      username: "",
+    },
   });
 
   const editedInputs = ref({
@@ -45,7 +50,7 @@
   const usernameError = computed(() => {
     if (
       editedInputs.value.username &&
-      !(user.value.username.length >= 3 && user.value.username.length <= 20)
+      !(user.value.info.username.length >= 3 && user.value.info.username.length <= 20)
     )
       return true;
     return false;
@@ -91,10 +96,13 @@
   });
 
   const formSubmit = async () => {
+    layoutStore.unhideSpinnerLoading();
     try {
-      await userStore.registerClient(user.value);
+      await userStore.register(user.value);
 
-      user.value.username = "";
+      await router.push("/");
+
+      user.value.info.username = "";
       user.value.email = "";
       user.value.password = "";
       user.value.repassword = "";
@@ -104,9 +112,10 @@
       editedInputs.value.password = false;
       editedInputs.value.repassword = false;
 
-      router.push("/");
+      layoutStore.hideSpinnerLoading();
     } catch (error) {
       console.log(error);
+      layoutStore.hideSpinnerLoading();
     }
   };
 </script>
@@ -138,7 +147,7 @@
           <input
             @focus="editInput('username')"
             type="text"
-            v-model.trim="user.username"
+            v-model.trim="user.info.username"
             class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
             :class="
               usernameError
