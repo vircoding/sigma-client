@@ -31,8 +31,8 @@
         <span class="relative top-[1px] text-lg font-semibold leading-tight text-white">{{
           formatAmount(props.rent.amount_details.amount, true)
         }}</span>
-        <span class="uppercase text-white"
-          >{{ props.rent.amount_details.currency }} /
+        <span class="text-white"
+          ><span class="uppercase">{{ props.rent.amount_details.currency }}</span> /
           {{ props.rent.amount_details.frequency === "daily" ? "día" : "mes" }}</span
         >
       </div>

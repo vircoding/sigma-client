@@ -7,7 +7,7 @@
   import { usePostStore } from "../stores/postStore.js";
   import { useAgentStore } from "../stores/agentStore.js";
   // import { onBeforeRouteLeave } from "vue-router";
-  import { computed, onBeforeUnmount, ref } from "vue";
+  import { computed, onBeforeUnmount } from "vue";
 
   const postStore = usePostStore();
   const agentStore = useAgentStore();
@@ -17,7 +17,7 @@
     if (postStore.postState.type === "sale") return { background: "#1183ea", text: "#bae0fa" };
     else if (postStore.postState.type === "rent") return { background: "#2eab9e", text: "#ccede9" };
     else if (postStore.postState.type === "exchange")
-      return { background: "#bf6b0d", text: "#f7dec4" };
+      return { background: "#8cb059", text: "#edf5d4" };
   });
 
   // const resetPostStore = ref(true);
