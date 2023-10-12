@@ -142,7 +142,9 @@
         <span class="relative top-[1px] text-lg font-semibold leading-tight text-white">
           {{ props.exchange.offer_details.offers }}
         </span>
-        <span class="text-xs text-white">propiedades</span>
+        <span class="text-xs text-white">{{
+          props.exchange.offer_details.offers > 1 ? "propiedades" : "propiedad"
+        }}</span>
       </div>
     </div>
   </div>
