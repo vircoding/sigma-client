@@ -1,16 +1,21 @@
 <script setup>
-  import { ref, computed } from "vue";
+  import { computed } from "vue";
   import SigmaHouseIcon from "./icons/SigmaHouseIcon.vue";
+  import CheckboxIcon from "./icons/CheckboxIcon.vue";
 
-  const props = defineProps(["modelValue", "type"]);
+  const props = defineProps(["modelValue"]);
   defineEmits(["update:modelValue"]);
 
-  const saleFill = computed(() => {
+  const checkSale = computed(() => {
     return props.modelValue === "sale";
   });
 
-  const rentFill = computed(() => {
+  const checkRent = computed(() => {
     return props.modelValue === "rent";
+  });
+
+  const checkExchange = computed(() => {
+    return props.modelValue === "exchange";
   });
 
   const mnFill = computed(() => {
@@ -31,7 +36,8 @@
 </script>
 
 <template>
-  <div v-if="type === 'type'" class="flex flex-row gap-1">
+  <div class="flex flex-col gap-1">
+    <!-- Sale (Default) -->
     <input
       type="radio"
       id="type-sale"
@@ -42,10 +48,26 @@
       @input="$emit('update:modelValue', $event.target.value)"
       class="hidden"
     />
-    <label for="type-sale" class="flex w-[70px] flex-row items-center">
-      <SigmaHouseIcon class="h-6" :class="saleFill ? 'fill-sgray-400' : 'fill-sgray-200'" />
+    <label for="type-sale" class="flex w-[70px] flex-row items-center gap-1">
+      <CheckboxIcon :status="checkSale" />
       <span class="font-medium text-sgray-300 lg:text-lg">Venta</span>
     </label>
+    <!-- Exchange -->
+    <input
+      type="radio"
+      id="type-exchange"
+      :checked="props.modelValue === 'exchange'"
+      name="type"
+      value="exchange"
+      :value="props.modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
+      class="hidden"
+    />
+    <label for="type-exchange" class="flex w-[70px] flex-row items-center gap-1">
+      <CheckboxIcon :status="checkExchange" />
+      <span class="font-medium text-sgray-300 lg:text-lg">Permuta</span>
+    </label>
+    <!-- Rent -->
     <input
       type="radio"
       id="type-rent"
@@ -56,13 +78,13 @@
       @input="$emit('update:modelValue', $event.target.value)"
       class="hidden"
     />
-    <label for="type-rent" class="flex w-[70px] flex-row items-center">
-      <SigmaHouseIcon class="h-6" :class="rentFill ? 'fill-sgray-400' : 'fill-sgray-200'" />
+    <label for="type-rent" class="flex w-[70px] flex-row items-center gap-1">
+      <CheckboxIcon :status="checkRent" />
       <span class="font-medium text-sgray-300 lg:text-lg">Renta</span>
     </label>
   </div>
-
-  <div v-else-if="type === 'currency'" class="flex flex-row gap-1">
+  <!-- 
+  <div class="flex flex-row gap-1">
     <input
       type="radio"
       id="currency-mn"
@@ -94,7 +116,7 @@
     </label>
   </div>
 
-  <div v-else-if="type === 'frequency'" class="flex flex-row gap-1">
+  <div class="flex flex-row gap-1">
     <input
       type="radio"
       id="frequency-monthly"
@@ -123,5 +145,5 @@
       <SigmaHouseIcon class="h-6" :class="dailyFill ? 'fill-sgray-400' : 'fill-sgray-200'" />
       <span class="font-medium text-sgray-300 lg:text-lg">Diario</span>
     </label>
-  </div>
+  </div> -->
 </template>

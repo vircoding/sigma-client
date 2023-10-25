@@ -195,7 +195,7 @@ export const useUserStore = defineStore("user", () => {
     try {
       const res = await accountServices.insertPost(post);
       userPostsState.value = res.data.posts;
-      postStore.setPostState(res.data.post);
+      postStore.setPost(res.data.post);
     } catch (error) {
       console.log(error);
     }
