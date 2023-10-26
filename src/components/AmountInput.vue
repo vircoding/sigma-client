@@ -5,12 +5,14 @@
 
 <template>
   <div class="flex flex-col">
-    <label class="pl-2 font-medium text-sgray-300" for="amount"
+    <label
+      :for="props.type === 'sale' ? 'sale-amount' : 'rent-amount'"
+      class="pl-2 font-medium text-sgray-300"
       >{{ props.type === "sale" ? "Precio" : "Tarifa" }}:</label
     >
     <input
       type="number"
-      id="amount"
+      :id="props.type === 'sale' ? 'sale-amount' : 'rent-amount'"
       name="amount"
       min="1"
       :value="props.modelValue"

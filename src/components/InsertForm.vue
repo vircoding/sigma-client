@@ -5,6 +5,10 @@
   import CurrencyRadioInput from "./CurrencyRadioInput.vue";
   import FrequencyRadioInput from "./FrequencyRadioInput.vue";
   import AmountInput from "./AmountInput.vue";
+  import OffersSelectInput from "./OffersSelectInput.vue";
+  import NeedsSelectInput from "./NeedsSelectInput.vue";
+  import ProvinceSelectInput from "./ProvinceSelectInput.vue";
+  import MunicipalitySelectInput from "./MunicipalitySelectInput.vue";
   import NumberInput from "./NumberInput.vue";
   import RadioInput from "./RadioInput.vue";
   import SelectInput from "./SelectInput.vue";
@@ -17,35 +21,82 @@
   const userStore = useUserStore();
 
   const type = ref("sale");
+
   const saleDetails = ref({
     currency: "usd",
     amount: "",
   });
+
   const rentDetails = ref({
     currency: "usd",
     amount: "",
     frequency: "daily",
   });
+
   const exchangeDetails = ref({
     offers: 1,
-    needs: {
-      enable: true,
-      count: 1,
+    needs: 1,
+  });
+
+  const propertyDetails = ref([
+    {
+      address: {
+        municipality: "La Habana Vieja",
+        province: "La Habana",
+      },
+      features: {
+        bed_room: 0,
+        bath_room: 0,
+        garage: false,
+        garden: false,
+        pool: false,
+        furnished: false,
+      },
     },
+    {
+      address: {
+        municipality: "La Habana Vieja",
+        province: "La Habana",
+      },
+      features: {
+        bed_room: 0,
+        bath_room: 0,
+        garage: false,
+        garden: false,
+        pool: false,
+        furnished: false,
+      },
+    },
+    {
+      address: {
+        municipality: "La Habana Vieja",
+        province: "La Habana",
+      },
+      features: {
+        bed_room: 0,
+        bath_room: 0,
+        garage: false,
+        garden: false,
+        pool: false,
+        furnished: false,
+      },
+    },
+  ]);
+
+  const propertyLength = computed(() => {
+    if (type.value === "sale") return 1;
+    else if (type.value === "rent") return 1;
+    else if (type.value === "exchange") return parseInt(exchangeDetails.value.offers);
   });
 
   const formSubmit = async () => {
     layoutStore.unhideSpinnerLoading();
     try {
-      await userStore.login(user.value);
+      // await userStore.login(user.value);
+
+      // Reset Refs Here...
 
       await router.push("/");
-
-      user.value.email = "";
-      user.value.password = "";
-
-      editedInputs.value.email = false;
-      editedInputs.value.password = false;
 
       layoutStore.hideSpinnerLoading();
     } catch (error) {
@@ -70,6 +121,7 @@
       >
     </div>
     <form @submit.prevent="formSubmit" novalidate class="flex w-full flex-col text-base">
+      <!-- Amount/Offer Details -->
       <div
         class="mb-4 flex h-[160px] w-full flex-row items-center rounded-md border border-sgray-100 px-5 py-3"
       >
@@ -107,8 +159,102 @@
 
         <!-- Exchange Details -->
         <div v-else-if="type === 'exchange'" class="flex flex-grow flex-col">
-          <!-- Inputs Here... -->
+          <OffersSelectInput v-model="exchangeDetails.offers" class="mb-1" />
+          <NeedsSelectInput v-model="exchangeDetails.needs" />
         </div>
+      </div>
+
+      <!-- Property Details -->
+      <div
+        v-for="(item, index) in new Array(propertyLength)"
+        :key="index"
+        class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 py-3"
+      >
+        <!-- Province -->
+        <ProvinceSelectInput
+          v-model="propertyDetails[index].address.province"
+          :index="index"
+          class="mb-2 w-full"
+        />
+
+        <!-- Municipality -->
+        <MunicipalitySelectInput
+          v-model="propertyDetails[index].address.municipality"
+          :index="index"
+          :province="propertyDetails[index].address.province"
+          class="mb-[14px] w-full"
+        />
+
+        <!-- Features -->
+        <div
+          class="flex items-center justify-between rounded-md border border-sgray-100 px-5 pb-1 pt-2"
+        >
+          <!-- Number Inputs -->
+          <div class="mb-4 flex flex-col gap-1">
+            <!-- Bed Room -->
+            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
+              <span>Cuartos:</span>
+              <NumberInput v-model="propertyDetails[index].features.bed_room" />
+            </div>
+
+            <!-- Bathroom -->
+            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
+              <span>Baños:</span>
+              <NumberInput v-model="propertyDetails[index].features.bath_room" />
+            </div>
+          </div>
+
+          <!-- Vertical Line -->
+          <div class="h-[100px] w-0 border-e border-sgray-100"></div>
+
+          <!-- Checkboxs -->
+          <div class="relative bottom-[2px] space-y-1">
+            <!-- Garage -->
+            <div class="flex gap-2">
+              <input
+                v-model="propertyDetails[index].features.garage"
+                type="checkbox"
+                name="garage"
+                :id="'garage-' + index"
+              />
+              <label :for="'garage-' + index">Garage</label>
+            </div>
+
+            <!-- Garden -->
+            <div class="flex gap-2">
+              <input
+                v-model="propertyDetails[index].features.garden"
+                type="checkbox"
+                name="garden"
+                :id="'garden-' + index"
+              />
+              <label :for="'garden-' + index">Jardín</label>
+            </div>
+
+            <!-- Pool -->
+            <div class="flex gap-2">
+              <input
+                v-model="propertyDetails[index].features.pool"
+                type="checkbox"
+                name="pool"
+                :id="'pool-' + index"
+              />
+              <label :for="'pool-' + index">Piscina</label>
+            </div>
+
+            <!-- Furnished -->
+            <div class="flex gap-2">
+              <input
+                v-model="propertyDetails[index].features.furnished"
+                type="checkbox"
+                name="furnished"
+                :id="'furnished-' + index"
+              />
+              <label :for="'furnished-' + index">Amueblada</label>
+            </div>
+          </div>
+        </div>
+        <!-- Inputs Here -->
       </div>
     </form>
   </div>
