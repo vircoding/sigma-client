@@ -10,8 +10,7 @@
   import ProvinceSelectInput from "./ProvinceSelectInput.vue";
   import MunicipalitySelectInput from "./MunicipalitySelectInput.vue";
   import NumberInput from "./NumberInput.vue";
-  import RadioInput from "./RadioInput.vue";
-  import SelectInput from "./SelectInput.vue";
+  import FeatureCheckboxInput from "./FeatureCheckboxInput.vue";
   import { provinceList, municipalityList } from "../utils/provinces";
   import { ref, computed, watch } from "vue";
   import parsePhoneNumber from "libphonenumber-js";
@@ -47,7 +46,7 @@
       features: {
         bed_room: 0,
         bath_room: 0,
-        garage: false,
+        garage: true,
         garden: false,
         pool: false,
         furnished: false,
@@ -208,50 +207,38 @@
           <div class="h-[100px] w-0 border-e border-sgray-100"></div>
 
           <!-- Checkboxs -->
-          <div class="relative bottom-[2px] space-y-1">
+          <div class="relative bottom-[2px] flex flex-col">
             <!-- Garage -->
-            <div class="flex gap-2">
-              <input
-                v-model="propertyDetails[index].features.garage"
-                type="checkbox"
-                name="garage"
-                :id="'garage-' + index"
-              />
-              <label :for="'garage-' + index">Garage</label>
-            </div>
+            <FeatureCheckboxInput
+              v-model="propertyDetails[index].features.garage"
+              :index="index"
+              feature="garage"
+              string="Garage"
+            />
 
             <!-- Garden -->
-            <div class="flex gap-2">
-              <input
-                v-model="propertyDetails[index].features.garden"
-                type="checkbox"
-                name="garden"
-                :id="'garden-' + index"
-              />
-              <label :for="'garden-' + index">Jardín</label>
-            </div>
+            <FeatureCheckboxInput
+              v-model="propertyDetails[index].features.garden"
+              :index="index"
+              feature="garden"
+              string="Jardín"
+            />
 
             <!-- Pool -->
-            <div class="flex gap-2">
-              <input
-                v-model="propertyDetails[index].features.pool"
-                type="checkbox"
-                name="pool"
-                :id="'pool-' + index"
-              />
-              <label :for="'pool-' + index">Piscina</label>
-            </div>
+            <FeatureCheckboxInput
+              v-model="propertyDetails[index].features.pool"
+              :index="index"
+              feature="pool"
+              string="Piscina"
+            />
 
             <!-- Furnished -->
-            <div class="flex gap-2">
-              <input
-                v-model="propertyDetails[index].features.furnished"
-                type="checkbox"
-                name="furnished"
-                :id="'furnished-' + index"
-              />
-              <label :for="'furnished-' + index">Amueblada</label>
-            </div>
+            <FeatureCheckboxInput
+              v-model="propertyDetails[index].features.furnished"
+              :index="index"
+              feature="furnished"
+              string="Amueblada"
+            />
           </div>
         </div>
         <!-- Inputs Here -->
