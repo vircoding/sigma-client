@@ -167,7 +167,7 @@
       <div
         v-for="(item, index) in new Array(propertyLength)"
         :key="index"
-        class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 py-3"
+        class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 pb-5 pt-4"
       >
         <!-- Province -->
         <ProvinceSelectInput
@@ -186,10 +186,10 @@
 
         <!-- Features -->
         <div
-          class="flex items-center justify-between rounded-md border border-sgray-100 px-5 pb-1 pt-2"
+          class="flex w-full flex-row items-center rounded-md border border-sgray-100 px-5 pb-[18px] pt-3"
         >
           <!-- Number Inputs -->
-          <div class="mb-4 flex flex-col gap-1">
+          <div class="flex w-[80px] flex-col space-y-1">
             <!-- Bed Room -->
             <FeatureNumberInput
               v-model="propertyDetails[index].features.bed_room"
@@ -212,10 +212,10 @@
           </div>
 
           <!-- Vertical Line -->
-          <div class="h-[100px] w-0 border-e border-sgray-100"></div>
+          <!-- <div class="h-[100px] w-0 border-e border-sgray-100"></div> -->
 
           <!-- Checkboxs -->
-          <div class="relative bottom-[2px] flex flex-col">
+          <div class="relative flex flex-grow flex-col pl-5 min-[400px]:pl-12">
             <!-- Garage -->
             <FeatureCheckboxInput
               v-model="propertyDetails[index].features.garage"

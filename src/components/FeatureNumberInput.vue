@@ -5,7 +5,7 @@
 
 <template>
   <div class="flex flex-col">
-    <label :for="props.feature + '-' + props.index" class="pl-2 font-medium text-sgray-300"
+    <label :for="props.feature + '-' + props.index" class="pl-[6px] font-medium text-sgray-300"
       >{{ string }}:</label
     >
     <input
