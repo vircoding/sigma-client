@@ -11,6 +11,7 @@
   import MunicipalitySelectInput from "./MunicipalitySelectInput.vue";
   import FeatureNumberInput from "./FeatureNumberInput.vue";
   import FeatureCheckboxInput from "./FeatureCheckboxInput.vue";
+  import DescriptionTextAreaInput from "./DescriptionTextAreaInput.vue";
   import { provinceList, municipalityList } from "../utils/provinces";
   import { ref, computed, watch } from "vue";
   import parsePhoneNumber from "libphonenumber-js";
@@ -46,7 +47,7 @@
       features: {
         bed_room: "0",
         bath_room: "0",
-        garage: true,
+        garage: false,
         garden: false,
         pool: false,
         furnished: false,
@@ -81,6 +82,10 @@
       },
     },
   ]);
+
+  const postDetails = ref({
+    description: "",
+  });
 
   const propertyLength = computed(() => {
     if (type.value === "sale") return 1;
@@ -197,10 +202,6 @@
               feature="bed_room"
               string="Cuartos"
             />
-            <!-- <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Cuartos:</span>
-              <NumberInput v-model="propertyDetails[index].features.bed_room" />
-            </div> -->
 
             <!-- Bathroom -->
             <FeatureNumberInput
@@ -210,9 +211,6 @@
               string="Baños"
             />
           </div>
-
-          <!-- Vertical Line -->
-          <!-- <div class="h-[100px] w-0 border-e border-sgray-100"></div> -->
 
           <!-- Checkboxs -->
           <div class="relative flex flex-grow flex-col pl-5 min-[400px]:pl-12">
@@ -249,7 +247,11 @@
             />
           </div>
         </div>
-        <!-- Inputs Here -->
+      </div>
+
+      <!-- Here -->
+      <div class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 pb-5 pt-4">
+        <DescriptionTextAreaInput v-model="postDetails.description" />
       </div>
     </form>
   </div>
