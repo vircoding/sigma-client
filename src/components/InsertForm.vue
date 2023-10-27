@@ -9,7 +9,7 @@
   import NeedsSelectInput from "./NeedsSelectInput.vue";
   import ProvinceSelectInput from "./ProvinceSelectInput.vue";
   import MunicipalitySelectInput from "./MunicipalitySelectInput.vue";
-  import NumberInput from "./NumberInput.vue";
+  import FeatureNumberInput from "./FeatureNumberInput.vue";
   import FeatureCheckboxInput from "./FeatureCheckboxInput.vue";
   import { provinceList, municipalityList } from "../utils/provinces";
   import { ref, computed, watch } from "vue";
@@ -44,8 +44,8 @@
         province: "La Habana",
       },
       features: {
-        bed_room: 0,
-        bath_room: 0,
+        bed_room: "0",
+        bath_room: "0",
         garage: true,
         garden: false,
         pool: false,
@@ -58,8 +58,8 @@
         province: "La Habana",
       },
       features: {
-        bed_room: 0,
-        bath_room: 0,
+        bed_room: "0",
+        bath_room: "0",
         garage: false,
         garden: false,
         pool: false,
@@ -72,8 +72,8 @@
         province: "La Habana",
       },
       features: {
-        bed_room: 0,
-        bath_room: 0,
+        bed_room: "0",
+        bath_room: "0",
         garage: false,
         garden: false,
         pool: false,
@@ -191,16 +191,24 @@
           <!-- Number Inputs -->
           <div class="mb-4 flex flex-col gap-1">
             <!-- Bed Room -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
+            <FeatureNumberInput
+              v-model="propertyDetails[index].features.bed_room"
+              :index="index"
+              feature="bed_room"
+              string="Cuartos"
+            />
+            <!-- <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
               <span>Cuartos:</span>
               <NumberInput v-model="propertyDetails[index].features.bed_room" />
-            </div>
+            </div> -->
 
             <!-- Bathroom -->
-            <div class="flex w-[73px] flex-col text-xs min-[420px]:w-[83px] min-[420px]:text-sm">
-              <span>Baños:</span>
-              <NumberInput v-model="propertyDetails[index].features.bath_room" />
-            </div>
+            <FeatureNumberInput
+              v-model="propertyDetails[index].features.bath_room"
+              :index="index"
+              feature="bath_room"
+              string="Baños"
+            />
           </div>
 
           <!-- Vertical Line -->
