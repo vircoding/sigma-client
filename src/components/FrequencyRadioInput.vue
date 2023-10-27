@@ -28,7 +28,7 @@
   />
   <label for="frequency-daily" class="flex w-[70px] flex-row items-center gap-1">
     <CheckboxIcon :status="checkDaily" />
-    <span class="font-medium text-sgray-300 lg:text-lg">Diario</span>
+    <span class="font-medium lg:text-lg">Diario</span>
   </label>
 
   <!-- Monthly -->
@@ -44,6 +44,6 @@
   />
   <label for="frequency-monthly" class="flex w-[70px] flex-row items-center gap-1">
     <CheckboxIcon :status="checkMonthly" />
-    <span class="font-medium text-sgray-300 lg:text-lg">Mensual</span>
+    <span class="font-medium lg:text-lg">Mensual</span>
   </label>
 </template>

@@ -12,9 +12,10 @@
   import FeatureNumberInput from "./FeatureNumberInput.vue";
   import FeatureCheckboxInput from "./FeatureCheckboxInput.vue";
   import DescriptionTextAreaInput from "./DescriptionTextAreaInput.vue";
-  import { provinceList, municipalityList } from "../utils/provinces";
-  import { ref, computed, watch } from "vue";
-  import parsePhoneNumber from "libphonenumber-js";
+  import CodeInput from "./CodeInput.vue";
+  import PhoneInput from "./PhoneInput.vue";
+  import WhatsappCheckboxInput from "./WhatsappCheckboxInput.vue";
+  import { ref, computed } from "vue";
   import router from "../router";
 
   const layoutStore = useLayoutStore();
@@ -85,6 +86,16 @@
 
   const postDetails = ref({
     description: "",
+    contact_details: {
+      contact: {
+        code: "+53",
+        phone: "",
+      },
+      contact_types: {
+        phone: true,
+        whatsapp: true,
+      },
+    },
   });
 
   const propertyLength = computed(() => {
@@ -249,9 +260,19 @@
         </div>
       </div>
 
-      <!-- Here -->
+      <!-- Description -->
       <div class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 pb-5 pt-4">
         <DescriptionTextAreaInput v-model="postDetails.description" />
+      </div>
+
+      <!-- Contact -->
+      <div class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 py-4">
+        <label for="phone" class="mb-1 pl-2 font-medium">Teléfono:</label>
+        <div class="mb-[8px] flex w-full gap-2">
+          <CodeInput v-model="postDetails.contact_details.contact.code" />
+          <PhoneInput v-model="postDetails.contact_details.contact.phone" />
+        </div>
+        <WhatsappCheckboxInput v-model="postDetails.contact_details.contact_types.whatsapp" />
       </div>
     </form>
   </div>
