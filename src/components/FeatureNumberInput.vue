@@ -5,9 +5,9 @@
 
 <template>
   <div class="flex flex-col">
-    <label :for="props.feature + '-' + props.index" class="pl-[6px] font-medium"
-      >{{ string }}:</label
-    >
+    <label :for="props.feature + '-' + props.index" class="pl-[6px] font-medium">{{
+      string
+    }}</label>
     <input
       type="number"
       :id="props.feature + '-' + props.index"

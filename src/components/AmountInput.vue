@@ -5,9 +5,9 @@
 
 <template>
   <div class="flex flex-col">
-    <label :for="props.type === 'sale' ? 'sale-amount' : 'rent-amount'" class="pl-2 font-medium"
-      >{{ props.type === "sale" ? "Precio" : "Tarifa" }}:</label
-    >
+    <label :for="props.type === 'sale' ? 'sale-amount' : 'rent-amount'" class="pl-2 font-medium">{{
+      props.type === "sale" ? "Precio" : "Tarifa"
+    }}</label>
     <input
       type="number"
       :id="props.type === 'sale' ? 'sale-amount' : 'rent-amount'"

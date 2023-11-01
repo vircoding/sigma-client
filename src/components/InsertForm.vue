@@ -15,6 +15,7 @@
   import CodeInput from "./CodeInput.vue";
   import PhoneInput from "./PhoneInput.vue";
   import WhatsappCheckboxInput from "./WhatsappCheckboxInput.vue";
+  import PhotoBoxInput from "./PhotoBoxInput.vue";
   import { ref, computed } from "vue";
   import router from "../router";
 
@@ -104,6 +105,17 @@
     else if (type.value === "exchange") return parseInt(exchangeDetails.value.offers);
   });
 
+  const photos = ref([]);
+
+  const addPhoto = () => {
+    photos.value.push("img_001.jpg");
+  };
+
+  const removePhoto = (index) => {
+    console.log("removed", index);
+    photos.value.splice(index, 1);
+  };
+
   const formSubmit = async () => {
     layoutStore.unhideSpinnerLoading();
     try {
@@ -131,9 +143,9 @@
       >
         Publica tu casa!
       </h1>
-      <span class="block text-center text-sgray-300 lg:text-left lg:text-lg"
-        >Define si vendes, permutas, o rentas tu casa y agrega los datos requeridos</span
-      >
+      <p class="block text-center text-sgray-300 lg:text-left lg:text-lg">
+        Define si vendes, permutas, o rentas tu casa y agrega los datos requeridos
+      </p>
     </div>
     <form @submit.prevent="formSubmit" novalidate class="flex w-full flex-col text-base">
       <!-- Amount/Offer Details -->
@@ -267,12 +279,52 @@
 
       <!-- Contact -->
       <div class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 py-4">
-        <label for="phone" class="mb-1 pl-2 font-medium">Teléfono:</label>
+        <label for="phone" class="mb-1 pl-2 font-medium">Teléfono</label>
         <div class="mb-[8px] flex w-full gap-2">
           <CodeInput v-model="postDetails.contact_details.contact.code" />
           <PhoneInput v-model="postDetails.contact_details.contact.phone" />
         </div>
         <WhatsappCheckboxInput v-model="postDetails.contact_details.contact_types.whatsapp" />
+      </div>
+
+      <!-- Photos -->
+      <div class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 py-4">
+        <span class="mb-1 pl-2 font-medium"
+          >Fotos <span v-if="photos.length">{{ photos.length }}/10</span></span
+        >
+        <div class="flex w-full flex-wrap gap-x-2 gap-y-1">
+          <PhotoBoxInput
+            v-for="(item, index) in photos"
+            :key="index"
+            :path="item"
+            @remove="removePhoto(index)"
+          />
+
+          <!-- Add with Text -->
+          <div
+            v-if="!photos.length"
+            class="flex items-center gap-[10px] rounded-md bg-sgray-400 px-2 py-[5px]"
+            @click.prevent="addPhoto"
+          >
+            <span class="text-sm text-sgray-100">Añadir foto</span>
+            <img
+              src="../assets/exit-fullscreen-icon.svg"
+              class="h-[14px] w-[14px] rotate-[135deg]"
+            />
+          </div>
+
+          <!-- Add without Text -->
+          <div
+            v-if="photos.length > 0 && photos.length < 10"
+            class="flex h-[30px] w-[30px] items-center justify-center gap-[10px] rounded-md bg-sgray-400"
+          >
+            <img
+              src="../assets/exit-fullscreen-icon.svg"
+              class="h-[14px] w-[14px] rotate-[135deg]"
+              @click.prevent="addPhoto"
+            />
+          </div>
+        </div>
       </div>
     </form>
   </div>

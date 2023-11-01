@@ -5,7 +5,7 @@
 
 <template>
   <div class="flex flex-col">
-    <label for="offers" class="pl-2 font-medium">Ofreces:</label>
+    <label for="offers" class="pl-2 font-medium">Ofreces</label>
     <select
       name="offers"
       id="offers"
