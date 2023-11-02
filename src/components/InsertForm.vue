@@ -116,9 +116,59 @@
     photos.value.splice(index, 1);
   };
 
+  const buildPost = () => {
+    const post = {
+      type: type.value,
+      description: postDetails.value.description,
+      contact_details: {
+        contact_types: {
+          phone: postDetails.value.contact_details.contact_types.phone,
+          whatsapp: postDetails.value.contact_details.contact_types.whatsapp,
+        },
+        contact: {
+          code: postDetails.value.contact_details.contact.code,
+          phone: postDetails.value.contact_details.contact.phone,
+        },
+      },
+    };
+
+    if (type.value === "sale") {
+      post.amount_details = {
+        amount: parseInt(saleDetails.value.amount),
+        currency: saleDetails.value.currency,
+      };
+      post.propertyDetails = [propertyDetails.value[0]];
+    } else if (type.value === "rent") {
+      post.amount_details = {
+        amount: parseInt(rentDetails.value.amount),
+        currency: rentDetails.value.currency,
+        frequency: rentDetails.value.frequency,
+      };
+      post.propertyDetails = [propertyDetails.value[0]];
+    } else if (type.value === "exchange") {
+      post.offer_details = {
+        offers: parseInt(exchangeDetails.value.offers),
+        needs: {
+          enable: parseInt(exchangeDetails.value.needs) === 0 ? false : true,
+          count: parseInt(exchangeDetails.value.needs),
+        },
+      };
+      post.propertyDetails = propertyDetails.value.slice(0, exchangeDetails.value.offers);
+    }
+
+    post.propertyDetails.forEach((item) => {
+      item.features.bed_room = parseInt(item.features.bed_room);
+      item.features.bath_room = parseInt(item.features.bath_room);
+    });
+
+    return post;
+  };
+
   const formSubmit = async () => {
     layoutStore.unhideSpinnerLoading();
     try {
+      const post = buildPost();
+      console.log(post);
       // await userStore.login(user.value);
 
       // Reset Refs Here...
