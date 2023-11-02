@@ -274,7 +274,7 @@
 
       <!-- Description -->
       <div class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 pb-5 pt-4">
-        <DescriptionTextAreaInput v-model="postDetails.description" />
+        <DescriptionTextAreaInput v-model.trim="postDetails.description" />
       </div>
 
       <!-- Contact -->
@@ -326,6 +326,13 @@
           </div>
         </div>
       </div>
+
+      <button
+        type="submit"
+        class="mb-5 flex h-[38px] w-full items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 pt-[2px] text-center font-semibold text-sgray-100 transition-all duration-200 ease-out hover:bg-black hover:text-white disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 lg:h-10 lg:w-44 lg:text-lg"
+      >
+        Publicar
+      </button>
     </form>
   </div>
 </template>
