@@ -1,6 +1,11 @@
 <script setup>
   const props = defineProps(["modelValue", "index", "feature", "string"]);
   defineEmits(["update:modelValue"]);
+
+  const parseValue = (value) => {
+    if (parseInt(value)) return parseInt(value);
+    else return value;
+  };
 </script>
 
 <template>
@@ -16,7 +21,7 @@
       max="10"
       pattern="[0-9]*"
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="$emit('update:modelValue', parseValue($event.target.value))"
       class="w-full rounded-md border border-sgray-100 bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:border-sgray-300 focus:bg-white"
     />
   </div>

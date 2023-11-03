@@ -19,27 +19,25 @@
   import { ref, computed } from "vue";
   import router from "../router";
 
+  // Stores
   const layoutStore = useLayoutStore();
   const userStore = useUserStore();
 
+  // Refs
   const type = ref("sale");
-
   const saleDetails = ref({
-    currency: "usd",
     amount: "",
+    currency: "usd",
   });
-
   const rentDetails = ref({
-    currency: "usd",
     amount: "",
+    currency: "usd",
     frequency: "daily",
   });
-
   const exchangeDetails = ref({
     offers: 1,
     needs: 1,
   });
-
   const propertyDetails = ref([
     {
       address: {
@@ -47,8 +45,8 @@
         province: "La Habana",
       },
       features: {
-        bed_room: "0",
-        bath_room: "0",
+        bed_room: 0,
+        bath_room: 0,
         garage: false,
         garden: false,
         pool: false,
@@ -61,8 +59,8 @@
         province: "La Habana",
       },
       features: {
-        bed_room: "0",
-        bath_room: "0",
+        bed_room: 0,
+        bath_room: 0,
         garage: false,
         garden: false,
         pool: false,
@@ -75,8 +73,8 @@
         province: "La Habana",
       },
       features: {
-        bed_room: "0",
-        bath_room: "0",
+        bed_room: 0,
+        bath_room: 0,
         garage: false,
         garden: false,
         pool: false,
@@ -84,7 +82,6 @@
       },
     },
   ]);
-
   const postDetails = ref({
     description: "",
     contact_details: {
@@ -98,21 +95,33 @@
       },
     },
   });
+  const photos = ref([]);
+  const editedInputs = ref({});
 
+  // Comps
   const propertyLength = computed(() => {
     if (type.value === "sale") return 1;
     else if (type.value === "rent") return 1;
     else if (type.value === "exchange") return parseInt(exchangeDetails.value.offers);
   });
 
-  const photos = ref([]);
+  // Errors
+  const typeError = computed(() => {
+    if (type.value !== "sale" && type.value !== "rent" && type.value !== "exchange") return true;
+    else return false;
+  });
 
+  const descriptionError = computed(() => {
+    // if(condition) return true
+    // else return false
+  });
+
+  // Methods
   const addPhoto = () => {
     photos.value.push("img_001.jpg");
   };
 
   const removePhoto = (index) => {
-    console.log("removed", index);
     photos.value.splice(index, 1);
   };
 
@@ -134,32 +143,27 @@
 
     if (type.value === "sale") {
       post.amount_details = {
-        amount: parseInt(saleDetails.value.amount),
+        amount: saleDetails.value.amount,
         currency: saleDetails.value.currency,
       };
       post.propertyDetails = [propertyDetails.value[0]];
     } else if (type.value === "rent") {
       post.amount_details = {
-        amount: parseInt(rentDetails.value.amount),
+        amount: rentDetails.value.amount,
         currency: rentDetails.value.currency,
         frequency: rentDetails.value.frequency,
       };
       post.propertyDetails = [propertyDetails.value[0]];
     } else if (type.value === "exchange") {
       post.offer_details = {
-        offers: parseInt(exchangeDetails.value.offers),
+        offers: exchangeDetails.value.offers,
         needs: {
-          enable: parseInt(exchangeDetails.value.needs) === 0 ? false : true,
-          count: parseInt(exchangeDetails.value.needs),
+          enable: exchangeDetails.value.needs === 0 ? false : true,
+          count: exchangeDetails.value.needs,
         },
       };
       post.propertyDetails = propertyDetails.value.slice(0, exchangeDetails.value.offers);
     }
-
-    post.propertyDetails.forEach((item) => {
-      item.features.bed_room = parseInt(item.features.bed_room);
-      item.features.bath_room = parseInt(item.features.bath_room);
-    });
 
     return post;
   };
@@ -187,6 +191,7 @@
   <div
     class="flex h-full w-full flex-col items-center py-7 max-[1023px]:px-[10%] max-[499px]:px-[5%] lg:items-start lg:justify-center lg:gap-7 lg:px-24 lg:py-0 xl:px-32 2xl:px-44"
   >
+    <!-- Hero -->
     <div class="text-shadow mb-4 lg:mb-0">
       <h1
         class="mb-2 text-center text-4xl font-extrabold max-[1023px]:text-4xl max-[505px]:text-3xl lg:mb-0 lg:text-left lg:text-4xl"
@@ -197,6 +202,8 @@
         Define si vendes, permutas, o rentas tu casa y agrega los datos requeridos
       </p>
     </div>
+
+    <!-- Form -->
     <form @submit.prevent="formSubmit" novalidate class="flex w-full flex-col text-base">
       <!-- Amount/Offer Details -->
       <div
@@ -377,9 +384,10 @@
         </div>
       </div>
 
+      <!-- Submit Button -->
       <button
         type="submit"
-        class="mb-5 flex h-[38px] w-full items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 pt-[2px] text-center font-semibold text-sgray-100 transition-all duration-200 ease-out hover:bg-black hover:text-white disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 lg:h-10 lg:w-44 lg:text-lg"
+        class="mb-9 flex h-[38px] w-full items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 pt-[2px] text-center font-semibold text-sgray-100 transition-all duration-200 ease-out hover:bg-black hover:text-white disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 lg:h-10 lg:w-44 lg:text-lg"
       >
         Publicar
       </button>
