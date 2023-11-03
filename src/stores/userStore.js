@@ -193,6 +193,7 @@ export const useUserStore = defineStore("user", () => {
 
   const insertPost = async (post) => {
     try {
+      console.log(post);
       const res = await accountServices.insertPost(post);
       userPostsState.value = res.data.posts;
       postStore.setPost(res.data.post);

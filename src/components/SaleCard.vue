@@ -69,7 +69,7 @@
           <span
             class="text-shadow text-xs"
             :class="
-              props.sale.property_details[0].features.bed_room > 0
+              props.sale.property_details[0].features.bath_room > 0
                 ? 'text-sgray-400'
                 : 'text-sgray-200'
             "

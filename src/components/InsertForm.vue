@@ -281,14 +281,14 @@
         amount: saleDetails.value.amount,
         currency: saleDetails.value.currency,
       };
-      post.propertyDetails = [propertyDetails.value[0]];
+      post.property_details = [propertyDetails.value[0]];
     } else if (type.value === "rent") {
       post.amount_details = {
         amount: rentDetails.value.amount,
         currency: rentDetails.value.currency,
         frequency: rentDetails.value.frequency,
       };
-      post.propertyDetails = [propertyDetails.value[0]];
+      post.property_details = [propertyDetails.value[0]];
     } else if (type.value === "exchange") {
       post.offer_details = {
         offers: exchangeDetails.value.offers,
@@ -297,7 +297,7 @@
           count: exchangeDetails.value.needs,
         },
       };
-      post.propertyDetails = propertyDetails.value.slice(0, exchangeDetails.value.offers);
+      post.property_details = propertyDetails.value.slice(0, exchangeDetails.value.offers);
     }
 
     return post;
@@ -307,8 +307,7 @@
     layoutStore.unhideSpinnerLoading();
     try {
       const post = buildPost();
-      console.log(post);
-      // await userStore.login(user.value);
+      await userStore.insertPost(post);
 
       // Reset Refs Here...
 

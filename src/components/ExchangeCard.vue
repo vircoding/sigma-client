@@ -90,7 +90,7 @@
           <FeatureIcon :classes="defineFeatureStyles(item.features.bath_room)" icon="bath_room" />
           <span
             class="text-shadow text-xs"
-            :class="item.features.bed_room > 0 ? 'text-sgray-400' : 'text-sgray-200'"
+            :class="item.features.bath_room > 0 ? 'text-sgray-400' : 'text-sgray-200'"
             >x{{ item.features.bath_room }}</span
           >
         </div>
