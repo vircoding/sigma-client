@@ -217,3 +217,42 @@ export const municipalityList = {
   ],
   "Isla de la Juventud": ["Isla de la Juventud"],
 };
+
+export const defaultMunicipality = (province) => {
+  switch (province) {
+    case "Pinar del Rio":
+      return "Pinar del Río";
+    case "Artemisa":
+      return "Artemisa";
+    case "La Habana":
+      return "La Habana Vieja";
+    case "Mayabeque":
+      return "San José de las Lajas";
+    case "Matanzas":
+      return "Matanzas";
+    case "Villa Clara":
+      return "Santa Clara";
+    case "Cienfuegos":
+      return "Cienfuegos";
+    case "Sancti Spíritus":
+      return "Sancti Spíritus";
+    case "Ciego de Ávila":
+      return "Ciego de Ávila";
+    case "Camagüey":
+      return "Camagüey";
+    case "Las Tunas":
+      return "Las Tunas";
+    case "Holguín":
+      return "Holguín";
+    case "Granma":
+      return "Bayamo";
+    case "Santiago de Cuba":
+      return "Santiago de Cuba";
+    case "Guantánamo":
+      return "Guantánamo";
+    case "Isla de la Juventud":
+      return "Isla de la Juventud";
+    default:
+      return "";
+  }
+};

@@ -1,6 +1,8 @@
 <script setup>
+  import { ref, computed, watch } from "vue";
   import { useLayoutStore } from "../stores/layoutStore.js";
   import { useUserStore } from "../stores/userStore.js";
+  import { defaultMunicipality } from "../utils/provinces.js";
   import TypeRadioInput from "./TypeRadioInput.vue";
   import CurrencyRadioInput from "./CurrencyRadioInput.vue";
   import FrequencyRadioInput from "./FrequencyRadioInput.vue";
@@ -16,7 +18,7 @@
   import PhoneInput from "./PhoneInput.vue";
   import WhatsappCheckboxInput from "./WhatsappCheckboxInput.vue";
   import PhotoBoxInput from "./PhotoBoxInput.vue";
-  import { ref, computed } from "vue";
+  import parsePhoneNumber from "libphonenumber-js";
   import router from "../router";
 
   // Stores
@@ -96,7 +98,11 @@
     },
   });
   const photos = ref([]);
-  const editedInputs = ref({});
+  const filledInputs = ref({
+    saleAmount: false,
+    rentAmount: false,
+    phone: false,
+  });
 
   // Comps
   const propertyLength = computed(() => {
@@ -105,18 +111,113 @@
     else if (type.value === "exchange") return parseInt(exchangeDetails.value.offers);
   });
 
-  // Errors
-  const typeError = computed(() => {
-    if (type.value !== "sale" && type.value !== "rent" && type.value !== "exchange") return true;
-    else return false;
+  const getFirstProvince = computed(() => propertyDetails.value[0].address.province);
+  const getSecondProvince = computed(() => propertyDetails.value[1].address.province);
+  const getThirdProvince = computed(() => propertyDetails.value[2].address.province);
+
+  const formattedPhone = computed(() => {
+    return (
+      postDetails.value.contact_details.contact.code +
+      postDetails.value.contact_details.contact.phone
+    );
   });
 
+  // Errors
+  const saleAmountError = computed(() => {
+    if (saleDetails.value.amount === "") return true;
+    if (!saleDetails.value.amount) return true;
+    else if (saleDetails.value.amount < 1 || saleDetails.value.amount > 999999999) return true;
+    else return false;
+  }); // Error: Máx. 999 999 999
+
+  const rentAmountError = computed(() => {
+    if (rentDetails.value.amount === "") return true;
+    else if (!rentDetails.value.amount) return true;
+    else if (rentDetails.value.amount < 1 || rentDetails.value.amount > 999999999) return true;
+    else return false;
+  }); // Error: Máx. 999 999 999
+
+  const BedRoomError = computed(() => {
+    const errors = [false, false, false];
+    propertyDetails.value.forEach((item, index) => {
+      if (item.features.bed_room === "" || item.features.bed_room < 0 || item.features.bed_room > 9)
+        errors[index] = true;
+    });
+
+    return errors;
+  }); // Error: Valores entre 0 y 9
+
+  const BathRoomError = computed(() => {
+    const errors = [false, false, false];
+    propertyDetails.value.forEach((item, index) => {
+      if (
+        item.features.bath_room === "" ||
+        item.features.bath_room < 0 ||
+        item.features.bath_room > 9
+      )
+        errors[index] = true;
+    });
+
+    return errors;
+  }); // Error: Valores entre 0 y 9
+
   const descriptionError = computed(() => {
-    // if(condition) return true
-    // else return false
+    if (postDetails.value.description.length > 1200) return true;
+    else return false;
+  }); // Error: No más de 1200 caracteres
+
+  const codeError = computed(() => {
+    const regex = /^\+\d+$/;
+    if (postDetails.value.contact_details.contact.code.length > 4) return true;
+    else if (!regex.test(postDetails.value.contact_details.contact.code)) return true;
+    else return false;
+  }); // Error: Teléfono no válido
+
+  const phoneError = ref(true); // Error: Teléfono no válido
+
+  // Watchs
+  watch(getFirstProvince, () => {
+    propertyDetails.value[0].address.municipality = defaultMunicipality(getFirstProvince.value);
+  });
+
+  watch(getSecondProvince, () => {
+    propertyDetails.value[1].address.municipality = defaultMunicipality(getSecondProvince.value);
+  });
+
+  watch(getThirdProvince, () => {
+    propertyDetails.value[2].address.municipality = defaultMunicipality(getThirdProvince.value);
+  });
+
+  watch(formattedPhone, () => {
+    try {
+      const parsedPhoneNumber = parsePhoneNumber(formattedPhone.value);
+      if (!parsedPhoneNumber.isValid()) {
+        throw new Error("Non-valid Phone Number");
+      } else {
+        phoneError.value = false;
+      }
+    } catch (error) {
+      phoneError.value = true;
+    }
   });
 
   // Methods
+  const fillInput = (input) => {
+    setTimeout(() => {
+      switch (input) {
+        case "saleAmount":
+          filledInputs.value.saleAmount = true;
+          break;
+        case "rentAmount":
+          filledInputs.value.rentAmount = true;
+          break;
+        case "phone":
+          filledInputs.value.phone = true;
+          break;
+      }
+    }, 2500);
+  };
+
   const addPhoto = () => {
     photos.value.push("img_001.jpg");
   };
@@ -222,7 +323,7 @@
           </div>
 
           <!-- Amount -->
-          <AmountInput v-model="saleDetails.amount" type="sale" />
+          <AmountInput v-model="saleDetails.amount" type="sale" @focus="fillInput('saleAmount')" />
         </div>
 
         <!-- Rent Details -->
@@ -238,7 +339,7 @@
           </div>
 
           <!-- Amount -->
-          <AmountInput v-model="rentDetails.amount" type="rent" />
+          <AmountInput v-model="rentDetails.amount" type="rent" @focus="fillInput('rentAmount')" />
         </div>
 
         <!-- Exchange Details -->
@@ -339,7 +440,10 @@
         <label for="phone" class="mb-1 pl-2 font-medium">Teléfono</label>
         <div class="mb-[8px] flex w-full gap-2">
           <CodeInput v-model="postDetails.contact_details.contact.code" />
-          <PhoneInput v-model="postDetails.contact_details.contact.phone" />
+          <PhoneInput
+            v-model="postDetails.contact_details.contact.phone"
+            @focus="fillInput('phone')"
+          />
         </div>
         <WhatsappCheckboxInput v-model="postDetails.contact_details.contact_types.whatsapp" />
       </div>

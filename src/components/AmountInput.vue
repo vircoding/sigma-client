@@ -3,8 +3,8 @@
   defineEmits(["update:modelValue"]);
 
   const parseValue = (value) => {
-    if (parseInt(value)) return parseInt(value);
-    else return value;
+    if (parseInt(value) >= 1) return parseInt(value);
+    else return "";
   };
 </script>
 

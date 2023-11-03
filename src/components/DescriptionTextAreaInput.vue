@@ -14,7 +14,7 @@
     <div class="flex w-full justify-between">
       <label for="description" class="mb-1 pl-2 font-medium">Descripción</label>
       <span class="relative top-[2px] pr-2 text-sm font-medium"
-        >{{ valueLength }}/1500 caracteres</span
+        >{{ valueLength }}/1200 caracteres</span
       >
     </div>
     <textarea
