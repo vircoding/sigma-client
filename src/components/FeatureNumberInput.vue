@@ -1,5 +1,5 @@
 <script setup>
-  const props = defineProps(["modelValue", "index", "feature", "string"]);
+  const props = defineProps(["modelValue", "index", "feature", "string", "error"]);
   defineEmits(["update:modelValue"]);
 
   const parseValue = (value) => {
@@ -22,7 +22,8 @@
       pattern="[0-9]*"
       :value="modelValue"
       @input="$emit('update:modelValue', parseValue($event.target.value))"
-      class="w-full rounded-md border border-sgray-100 bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:border-sgray-300 focus:bg-white"
+      class="w-full rounded-md border bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:bg-white"
+      :class="props.error ? 'border-alert' : 'border-sgray-100 focus:border-sgray-300'"
     />
   </div>
 </template>

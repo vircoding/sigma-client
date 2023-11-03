@@ -1,6 +1,6 @@
 <script setup>
-  const props = defineProps(["modelValue"]);
-  defineEmits(["update:modelValue"]);
+  const props = defineProps(["modelValue", "error"]);
+  defineEmits(["update:modelValue", "focused"]);
 </script>
 
 <template>
@@ -11,6 +11,8 @@
     autocomplete="tel"
     :value="props.modelValue"
     @input="$emit('update:modelValue', $event.target.value)"
-    class="w-full rounded-md border border-sgray-100 bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:border-sgray-300 focus:bg-white"
+    @focus="$emit('focused')"
+    class="w-full rounded-md border bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:bg-white"
+    :class="props.error ? 'border-alert' : 'border-sgray-100 focus:border-sgray-300'"
   />
 </template>

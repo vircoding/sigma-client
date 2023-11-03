@@ -323,7 +323,12 @@
           </div>
 
           <!-- Amount -->
-          <AmountInput v-model="saleDetails.amount" type="sale" @focus="fillInput('saleAmount')" />
+          <AmountInput
+            v-model="saleDetails.amount"
+            type="sale"
+            :error="filledInputs.saleAmount && saleAmountError"
+            @focused="fillInput('saleAmount')"
+          />
         </div>
 
         <!-- Rent Details -->
@@ -339,7 +344,12 @@
           </div>
 
           <!-- Amount -->
-          <AmountInput v-model="rentDetails.amount" type="rent" @focus="fillInput('rentAmount')" />
+          <AmountInput
+            v-model="rentDetails.amount"
+            type="rent"
+            :error="filledInputs.rentAmount && rentAmountError"
+            @focused="fillInput('rentAmount')"
+          />
         </div>
 
         <!-- Exchange Details -->
@@ -382,6 +392,7 @@
               :index="index"
               feature="bed_room"
               string="Cuartos"
+              :error="BedRoomError[index]"
             />
 
             <!-- Bathroom -->
@@ -390,6 +401,7 @@
               :index="index"
               feature="bath_room"
               string="Baños"
+              :error="BathRoomError[index]"
             />
           </div>
 
@@ -432,17 +444,27 @@
 
       <!-- Description -->
       <div class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 pb-5 pt-4">
-        <DescriptionTextAreaInput v-model.trim="postDetails.description" />
+        <DescriptionTextAreaInput
+          v-model.trim="postDetails.description"
+          :error="descriptionError"
+        />
       </div>
 
       <!-- Contact -->
       <div class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 py-4">
-        <label for="phone" class="mb-1 pl-2 font-medium">Teléfono</label>
+        <label
+          v-if="codeError || (filledInputs.phone && phoneError)"
+          for="phone"
+          class="mb-1 pl-2 font-medium text-alert"
+          >Teléfono no válido</label
+        >
+        <label v-else for="phone" class="mb-1 pl-2 font-medium">Teléfono</label>
         <div class="mb-[8px] flex w-full gap-2">
-          <CodeInput v-model="postDetails.contact_details.contact.code" />
+          <CodeInput v-model="postDetails.contact_details.contact.code" :error="codeError" />
           <PhoneInput
             v-model="postDetails.contact_details.contact.phone"
-            @focus="fillInput('phone')"
+            @focused="fillInput('phone')"
+            :error="filledInputs.phone && phoneError"
           />
         </div>
         <WhatsappCheckboxInput v-model="postDetails.contact_details.contact_types.whatsapp" />
