@@ -122,6 +122,40 @@
     );
   });
 
+  const disableSubmit = computed(() => {
+    if (type.value === "sale") {
+      if (
+        saleAmountError.value ||
+        BedRoomError.value[0] ||
+        BathRoomError.value[0] ||
+        descriptionError.value ||
+        codeError.value ||
+        phoneError.value
+      )
+        return true;
+    } else if (type.value === "rent") {
+      if (
+        rentAmountError.value ||
+        BedRoomError.value[0] ||
+        BathRoomError.value[0] ||
+        descriptionError.value ||
+        codeError.value ||
+        phoneError.value
+      )
+        return true;
+    } else if (type.value === "exchange") {
+      if (descriptionError.value || codeError.value || phoneError.value) return true;
+      else {
+        if (
+          BedRoomError.value.slice(0, exchangeDetails.value.offers).includes(true) ||
+          BathRoomError.value.slice(0, exchangeDetails.value.offers).includes(true)
+        )
+          return true;
+      }
+    }
+    return false;
+  });
+
   // Errors
   const saleAmountError = computed(() => {
     if (saleDetails.value.amount === "") return true;
@@ -513,6 +547,7 @@
       <!-- Submit Button -->
       <button
         type="submit"
+        :disabled="disableSubmit"
         class="mb-9 flex h-[38px] w-full items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 pt-[2px] text-center font-semibold text-sgray-100 transition-all duration-200 ease-out hover:bg-black hover:text-white disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 lg:h-10 lg:w-44 lg:text-lg"
       >
         Publicar
