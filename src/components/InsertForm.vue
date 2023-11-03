@@ -128,14 +128,14 @@
     if (!saleDetails.value.amount) return true;
     else if (saleDetails.value.amount < 1 || saleDetails.value.amount > 999999999) return true;
     else return false;
-  }); // Error: Máx. 999 999 999
+  });
 
   const rentAmountError = computed(() => {
     if (rentDetails.value.amount === "") return true;
     else if (!rentDetails.value.amount) return true;
     else if (rentDetails.value.amount < 1 || rentDetails.value.amount > 999999999) return true;
     else return false;
-  }); // Error: Máx. 999 999 999
+  });
 
   const BedRoomError = computed(() => {
     const errors = [false, false, false];
@@ -145,7 +145,7 @@
     });
 
     return errors;
-  }); // Error: Valores entre 0 y 9
+  });
 
   const BathRoomError = computed(() => {
     const errors = [false, false, false];
@@ -159,21 +159,21 @@
     });
 
     return errors;
-  }); // Error: Valores entre 0 y 9
+  });
 
   const descriptionError = computed(() => {
     if (postDetails.value.description.length > 1200) return true;
     else return false;
-  }); // Error: No más de 1200 caracteres
+  });
 
   const codeError = computed(() => {
     const regex = /^\+\d+$/;
     if (postDetails.value.contact_details.contact.code.length > 4) return true;
     else if (!regex.test(postDetails.value.contact_details.contact.code)) return true;
     else return false;
-  }); // Error: Teléfono no válido
+  });
 
-  const phoneError = ref(true); // Error: Teléfono no válido
+  const phoneError = ref(true);
 
   // Watchs
   watch(getFirstProvince, () => {

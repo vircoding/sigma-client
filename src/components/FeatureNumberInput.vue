@@ -10,9 +10,18 @@
 
 <template>
   <div class="flex flex-col">
-    <label :for="props.feature + '-' + props.index" class="pl-[6px] font-medium">{{
-      string
-    }}</label>
+    <label
+      v-if="!props.error"
+      :for="props.feature + '-' + props.index"
+      class="pl-[6px] font-medium"
+      >{{ props.string }}</label
+    >
+    <label
+      v-else
+      :for="props.feature + '-' + props.index"
+      class="pl-[6px] font-medium italic text-alert"
+      >{{ props.string }} [0-9]</label
+    >
     <input
       type="number"
       :id="props.feature + '-' + props.index"
