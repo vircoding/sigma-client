@@ -62,6 +62,14 @@
     return false;
   });
 
+  const resetComponent = () => {
+    user.value.email = "";
+    user.value.password = "";
+
+    editedInputs.value.email = false;
+    editedInputs.value.password = false;
+  };
+
   const formSubmit = async () => {
     layoutStore.unhideSpinnerLoading();
     try {
@@ -69,11 +77,7 @@
 
       await router.push("/");
 
-      user.value.email = "";
-      user.value.password = "";
-
-      editedInputs.value.email = false;
-      editedInputs.value.password = false;
+      resetComponent();
 
       layoutStore.hideSpinnerLoading();
     } catch (error) {

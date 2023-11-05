@@ -18,7 +18,7 @@
   const favorite = computed(() => {
     if (userStore.isLoggedIn) {
       return Boolean(
-        userStore.userState.favorites.find((item) => item.post_id === postStore.postState.id)
+        userStore.userFavoritesState.find((item) => item.post_id === postStore.postState.id)
       );
     } else {
       return false;

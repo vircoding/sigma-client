@@ -193,10 +193,11 @@ export const useUserStore = defineStore("user", () => {
 
   const insertPost = async (post) => {
     try {
-      console.log(post);
       const res = await accountServices.insertPost(post);
       userPostsState.value = res.data.posts;
       postStore.setPost(res.data.post);
+
+      return res.data.post.id;
     } catch (error) {
       console.log(error);
     }
@@ -205,7 +206,7 @@ export const useUserStore = defineStore("user", () => {
   const updatePost = async (post, id) => {
     try {
       const res = await accountServices.updatePost(post, id);
-      postStore.setPostState(res.data);
+      postStore.setPost(res.data);
     } catch (error) {
       console.log(error);
     }

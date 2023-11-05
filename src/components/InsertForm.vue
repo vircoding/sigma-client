@@ -303,15 +303,53 @@
     return post;
   };
 
+  const resetComponent = () => {
+    type.value = "sale";
+
+    saleDetails.value.amount = "";
+    saleDetails.value.currency = "usd";
+
+    rentDetails.value.amount = "";
+    rentDetails.value.currency = "usd";
+    rentDetails.value.frequency = "daily";
+
+    exchangeDetails.value.offers = 1;
+    exchangeDetails.value.needs = 1;
+
+    propertyDetails.value.forEach((item) => {
+      item.address.municipality = "La Habana Vieja";
+      item.address.province = "La Habana";
+      item.features.bed_room = 0;
+      item.features.bath_room = 0;
+      item.features.garage = false;
+      item.features.garden = false;
+      item.features.pool = false;
+      item.features.furnished = false;
+    });
+
+    postDetails.value.description = "";
+    postDetails.value.contact_details.contact.code = "+53";
+    postDetails.value.contact_details.contact.phone = "";
+    postDetails.value.contact_details.contact_types.phone = true;
+    postDetails.value.contact_details.contact_types.whatsapp = true;
+
+    photos.value = [];
+
+    filledInputs.value.saleAmount = false;
+    filledInputs.value.rentAmount = false;
+
+    phoneError.value = true;
+  };
+
   const formSubmit = async () => {
     layoutStore.unhideSpinnerLoading();
     try {
       const post = buildPost();
-      await userStore.insertPost(post);
+      const id = await userStore.insertPost(post);
 
-      // Reset Refs Here...
+      await router.push(`/post/${id}`);
 
-      await router.push("/");
+      resetComponent();
 
       layoutStore.hideSpinnerLoading();
     } catch (error) {
