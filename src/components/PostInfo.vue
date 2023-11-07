@@ -231,15 +231,22 @@
 
   <!-- Phone -->
   <div
-    class="sticky inset-x-0 bottom-0 flex h-12 items-center gap-[5px] bg-sgray-300 px-5 shadow-[0_-7px_6px_rgba(0,_0,_0,_0.1)]"
+    class="sticky inset-x-0 bottom-0 flex items-center gap-3 bg-white px-3 py-[10px] shadow-[0_-7px_6px_rgba(0,_0,_0,_0.2)]"
   >
-    <img src="../assets/phone-icon.svg" class="text-shadow" />
-    <h2 class="text-shadow relative top-[1px] text-lg text-sgray-100">
-      {{
-        postStore.postState.contact_details.contact.code +
-        " " +
-        postStore.postState.contact_details.contact.phone
-      }}
-    </h2>
+    <!-- Phone -->
+    <div
+      class="flex w-full items-center justify-center gap-1 rounded-md bg-sigma py-[5px] text-center"
+    >
+      <img src="../assets/phone-icon.svg" />
+      <span class="font-semibold tracking-wide text-white">54017747</span>
+    </div>
+
+    <!-- Whatsapp -->
+    <div
+      class="flex w-full items-center justify-center gap-1 rounded-md bg-sgray-100 py-[5px] text-center"
+    >
+      <img src="../assets/whatsapp-icon.svg" />
+      <span class="font-semibold tracking-wide">54017747</span>
+    </div>
   </div>
 </template>
