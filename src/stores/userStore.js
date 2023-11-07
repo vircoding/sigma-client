@@ -224,6 +224,7 @@ export const useUserStore = defineStore("user", () => {
   const addToFavorites = async (id) => {
     try {
       const res = await accountServices.addToFavorites(id);
+      console.log(res.data);
       userFavoritesState.value = res.data.favorites;
     } catch (error) {
       console.log(error);

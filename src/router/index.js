@@ -165,10 +165,9 @@ const routes = [
       }
 
       try {
-        if (from.name !== "insert") {
+        if (!postStore.isPostState) {
           await postStore.getPost(to.params.id);
         }
-
         await agentStore.getAuthor(postStore.postState.uid);
 
         if (!from.name) {

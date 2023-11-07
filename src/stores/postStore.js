@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import postsServices from "../services/postsServices.js";
 
 export const usePostStore = defineStore("post", () => {
@@ -12,6 +12,9 @@ export const usePostStore = defineStore("post", () => {
   const agentPostsState = ref(null);
   const userPostsState = ref(null);
   const userFavoritesState = ref(null);
+
+  // Computed
+  const isPostState = computed(() => !!postState.value);
 
   // Actions
   const getPost = async (id) => {
@@ -145,6 +148,7 @@ export const usePostStore = defineStore("post", () => {
     popularExchangesState,
     postState,
     agentPostsState,
+    isPostState,
     getPost,
     getUpdatePost,
     visitPost,

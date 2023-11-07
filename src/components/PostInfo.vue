@@ -1,5 +1,5 @@
 <script setup>
-  import { computed } from "vue";
+  import { ref, computed } from "vue";
   import { usePostStore } from "../stores/postStore.js";
   import { useUserStore } from "../stores/userStore.js";
   import { useAgentStore } from "../stores/agentStore.js";
@@ -15,19 +15,13 @@
   const postStore = usePostStore();
   const agentStore = useAgentStore();
 
-  const favorite = computed(() => {
-    if (userStore.isLoggedIn) {
-      return Boolean(
-        userStore.userFavoritesState.find((item) => item.post_id === postStore.postState.id)
-      );
-    } else {
-      return false;
-    }
-  });
+  const favorite = ref(
+    Boolean(userStore.userFavoritesState.find((item) => item.post_id === postStore.postState.id))
+  );
 
   const favoriteEvent = async () => {
     favorite.value = !favorite.value;
-    await postStore.favorite(postStore.postState._id);
+    await userStore.addToFavorites(postStore.postState.id);
   };
 
   const color = computed(() => {
