@@ -3,13 +3,14 @@
   import { usePostStore } from "../stores/postStore.js";
   import { useUserStore } from "../stores/userStore.js";
   import { useAgentStore } from "../stores/agentStore.js";
+  import { formatAmount } from "../utils/formatAmount.js";
+  import { formatOffer } from "../utils/formatOffer.js";
   import Gallery from "./Gallery.vue";
   import FavoriteIcon from "./icons/FavoriteIcon.vue";
   import ShareButton from "./ShareButton.vue";
   import FeatureIcon from "./icons/FeatureIcon.vue";
-  import { formatAmount } from "../utils/formatAmount.js";
-  import { formatOffer } from "../utils/formatOffer.js";
   import BooleanIcon from "./icons/BooleanIcon.vue";
+  import PhoneBox from "./PhoneBox.vue";
 
   const userStore = useUserStore();
   const postStore = usePostStore();
@@ -230,23 +231,5 @@
   </div>
 
   <!-- Phone -->
-  <div
-    class="sticky inset-x-0 bottom-0 flex items-center gap-3 bg-white px-3 py-[10px] shadow-[0_-7px_6px_rgba(0,_0,_0,_0.2)]"
-  >
-    <!-- Phone -->
-    <div
-      class="flex w-full items-center justify-center gap-1 rounded-md bg-sigma py-[5px] text-center"
-    >
-      <img src="../assets/phone-icon.svg" />
-      <span class="font-semibold tracking-wide text-white">54017747</span>
-    </div>
-
-    <!-- Whatsapp -->
-    <div
-      class="flex w-full items-center justify-center gap-1 rounded-md bg-sgray-100 py-[5px] text-center"
-    >
-      <img src="../assets/whatsapp-icon.svg" />
-      <span class="font-semibold tracking-wide">54017747</span>
-    </div>
-  </div>
+  <PhoneBox :type="postStore.postState.type" />
 </template>

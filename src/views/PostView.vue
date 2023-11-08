@@ -49,11 +49,7 @@
         </main>
       </div>
       <footer class="lg:mb-2.5">
-        <FooterSection
-          :background="footerColors.background"
-          :text="footerColors.text"
-          title="#ffffff"
-        />
+        <FooterSection background="#333333" text="#dcdcdc" title="#ffffff" />
       </footer>
     </div>
   </div>
