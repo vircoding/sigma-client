@@ -1,8 +1,8 @@
 <script setup>
   import { computed, ref, watch } from "vue";
-  import { useUserStore } from "../stores/user.js";
-  import { usePostStore } from "../stores/post";
-  import { useLayoutStore } from "../stores/layout";
+  import { useUserStore } from "../stores/userStore.js";
+  import { usePostStore } from "../stores/postStore.js";
+  import { useLayoutStore } from "../stores/layoutStore.js";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
   import SmallPostCard from "./SmallPostCard.vue";
   import parsePhoneNumber from "libphonenumber-js";

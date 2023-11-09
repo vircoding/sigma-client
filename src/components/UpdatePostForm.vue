@@ -1,9 +1,9 @@
 <script setup>
-  import { usePostStore } from "../stores/post";
+  import { usePostStore } from "../stores/postStore.js";
   import NumberInput from "./NumberInput.vue";
   import RadioInput from "./RadioInput.vue";
   import SelectInput from "./SelectInput.vue";
-  import { provinceList, municipalityList } from "../utils/provinces";
+  import { provinceList, municipalityList } from "../utils/provinces.js";
   import { ref, computed, watch } from "vue";
   import parsePhoneNumber from "libphonenumber-js";
   import { useRoute } from "vue-router";

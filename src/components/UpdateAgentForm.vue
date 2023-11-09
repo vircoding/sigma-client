@@ -1,6 +1,6 @@
 <script setup>
   import { ref, watch, computed } from "vue";
-  import { useUserStore } from "../stores/user";
+  import { useUserStore } from "../stores/userStore.js";
   import parsePhoneNumber from "libphonenumber-js";
 
   defineEmits(["logout"]);

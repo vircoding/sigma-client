@@ -1,9 +1,9 @@
 <script setup>
   import { ref, computed } from "vue";
   import ShareButton from "./ShareButton.vue";
-  import { useUserStore } from "../stores/user";
-  import { usePostStore } from "../stores/post.js";
-  import { useLayoutStore } from "../stores/layout";
+  import { useUserStore } from "../stores/userStore.js";
+  import { usePostStore } from "../stores/postStore.js";
+  import { useLayoutStore } from "../stores/layoutStore.js";
   import { formatAmount } from "../utils/formatAmount.js";
   import FeatureIcon from "./icons/FeatureIcon.vue";
   import BooleanIcon from "./icons/BooleanIcon.vue";

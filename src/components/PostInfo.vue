@@ -11,6 +11,7 @@
   import FeatureIcon from "./icons/FeatureIcon.vue";
   import BooleanIcon from "./icons/BooleanIcon.vue";
   import PhoneBox from "./PhoneBox.vue";
+  import { formatDescription } from "../utils/formatDescription.js";
 
   const userStore = useUserStore();
   const postStore = usePostStore();
@@ -183,8 +184,16 @@
     <div class="w-full border-t border-sgray-100"></div>
     <!-- Description -->
     <div class="mb-1 mt-1 w-full break-words">
-      <p v-if="!postStore.postState.description.length" class="text-shadow">Sin descripción</p>
-      <p v-else class="text-shadow">{{ postStore.postState.description }}</p>
+      <span v-if="!postStore.postState.description.length" class="text-shadow"
+        >Sin descripción</span
+      >
+      <span
+        v-else
+        v-for="item in formatDescription(postStore.postState.description)"
+        class="text-shadow"
+      >
+        {{ item }}<br />
+      </span>
     </div>
     <!-- Horizontal Line -->
     <div

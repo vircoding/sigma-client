@@ -126,8 +126,8 @@ const routes = [
       }
 
       try {
-        await userStore.loadUserPosts();
-        await userStore.loadUserFavorites();
+        // await userStore.loadUserPosts();
+        // await userStore.loadUserFavorites();
 
         if (!from.name) {
           layoutStore.hideLogoLoading();

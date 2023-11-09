@@ -6,6 +6,11 @@
   import cardImg3 from "../assets/card-img3.jpg";
   import cardImg4 from "../assets/card-img4.jpg";
   import cardImg5 from "../assets/card-img5.jpg";
+  import cardImg6 from "../assets/card-img6.jpg";
+  import cardImg7 from "../assets/card-img7.jpg";
+  import cardImg8 from "../assets/card-img8.jpg";
+  import cardImg9 from "../assets/card-img9.jpg";
+  import cardImg10 from "../assets/card-img10.jpg";
   import GalleryIndicator from "./GalleryIndicator.vue";
 
   const layoutStore = useLayoutStore();
@@ -16,11 +21,11 @@
     cardImg3,
     cardImg4,
     cardImg5,
-    cardImg,
-    cardImg2,
-    cardImg3,
-    cardImg4,
-    cardImg5,
+    cardImg6,
+    cardImg7,
+    cardImg8,
+    cardImg9,
+    cardImg10,
   ];
 
   const activeIndex = ref(0);
