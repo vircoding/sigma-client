@@ -234,7 +234,11 @@
         <!-- Horizontal Line -->
         <div class="w-[98%] border-t border-sgray-100"></div>
         <!-- Bio -->
-        <span class="text-shadow inline-block w-full">{{ agentStore.authorState.info.bio }}</span>
+        <span
+          v-for="item in formatDescription(agentStore.authorState.info.bio)"
+          class="text-shadow inline-block w-full"
+          >{{ item }}<br
+        /></span>
       </div>
     </div>
   </div>
