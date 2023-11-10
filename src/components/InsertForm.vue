@@ -379,7 +379,7 @@
     <form @submit.prevent="formSubmit" novalidate class="flex w-full flex-col text-base">
       <!-- Amount/Offer Details -->
       <div
-        class="mb-4 flex h-[160px] w-full flex-row items-center rounded-md border border-sgray-100 px-5 py-3"
+        class="mb-4 flex h-[160px] w-full flex-row items-center rounded-md border border-sgray-100 px-5 py-3 max-[345px]:px-3"
       >
         <!-- Type -->
         <div class="flex w-[35%] flex-col">
@@ -387,7 +387,7 @@
         </div>
 
         <!-- Sale Details -->
-        <div v-if="type === 'sale'" class="flex flex-grow flex-col">
+        <div v-if="type === 'sale'" class="flex w-[65%] flex-col">
           <!-- Currency -->
           <div class="mb-1 flex w-full flex-row">
             <CurrencyRadioInput v-model="saleDetails.currency" />
@@ -403,7 +403,7 @@
         </div>
 
         <!-- Rent Details -->
-        <div v-else-if="type === 'rent'" class="flex flex-grow flex-col">
+        <div v-else-if="type === 'rent'" class="flex w-[65%] flex-col">
           <!-- Currency -->
           <div class="flex w-full flex-row gap-2">
             <CurrencyRadioInput v-model="rentDetails.currency" />
@@ -424,7 +424,7 @@
         </div>
 
         <!-- Exchange Details -->
-        <div v-else-if="type === 'exchange'" class="flex flex-grow flex-col">
+        <div v-else-if="type === 'exchange'" class="flex w-[65%] flex-col">
           <OffersSelectInput v-model="exchangeDetails.offers" class="mb-1" />
           <NeedsSelectInput v-model="exchangeDetails.needs" />
         </div>
@@ -434,7 +434,7 @@
       <div
         v-for="(item, index) in new Array(propertyLength)"
         :key="index"
-        class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 pb-5 pt-4"
+        class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 pb-5 pt-4 max-[345px]:px-3"
       >
         <!-- Province -->
         <ProvinceSelectInput
@@ -514,7 +514,9 @@
       </div>
 
       <!-- Description -->
-      <div class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 pb-5 pt-4">
+      <div
+        class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 pb-5 pt-4 max-[345px]:px-3"
+      >
         <DescriptionTextAreaInput
           v-model.trim="postDetails.description"
           :error="descriptionError"
@@ -522,7 +524,9 @@
       </div>
 
       <!-- Contact -->
-      <div class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 py-4">
+      <div
+        class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 py-4 max-[345px]:px-3"
+      >
         <label
           v-if="codeError || (filledInputs.phone && phoneError)"
           for="phone"
@@ -542,7 +546,9 @@
       </div>
 
       <!-- Photos -->
-      <div class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 py-4">
+      <div
+        class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 py-4 max-[345px]:px-3"
+      >
         <span class="mb-1 pl-2 font-medium"
           >Fotos <span v-if="photos.length">{{ photos.length }}/10</span></span
         >
