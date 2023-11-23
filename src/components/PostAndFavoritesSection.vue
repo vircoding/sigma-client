@@ -10,8 +10,10 @@
   const postsActive = ref(true);
 
   const switchEvent = (isPost) => {
-    if (isPost) postsActive.value = true;
-    else postsActive.value = false;
+    if (!layoutStore.tableSpinner) {
+      if (isPost) postsActive.value = true;
+      else postsActive.value = false;
+    }
   };
 
   const prevPostsPageEvent = async () => {
@@ -87,83 +89,90 @@
       </div>
     </div>
 
-    <!-- Posts -->
-    <ul v-if="postsActive" class="space-y-4" :class="layoutStore.tableSpinner ? 'scoped-blur' : ''">
-      <li v-for="(item, index) in userStore.myAccountState.posts.posts" :key="index">
-        <RouterLink :to="`/post/${item.id}`">
-          <SmallPostCard :index="index" :favorite="false" :post="item" />
-        </RouterLink>
-      </li>
-      <li
-        v-if="userStore.myAccountState.posts.total_posts === 0"
-        class="flex h-[282px] w-full flex-col items-center justify-center gap-2"
+    <div class="relative">
+      <!-- Posts -->
+      <ul
+        v-if="postsActive"
+        class="relative space-y-4"
+        :class="layoutStore.tableSpinner ? 'scoped-blur' : ''"
       >
-        <span>Aún no tienes publicaciones</span>
-        <RouterLink to="/insert" class="underline">Publica</RouterLink>
-      </li>
-      <div
-        v-if="!(userStore.myAccountState.posts.total_posts === 0)"
-        class="flex w-full items-center justify-center gap-2"
-      >
-        <button @click.prevent="prevPostsPageEvent" class="select-none">{{ "<" }}</button>
-        <div>
-          <span
-            >{{ userStore.myAccountState.posts.page }} /
-            {{ userStore.myAccountState.posts.total_pages }}</span
-          >
-        </div>
-        <button @click.prevent="nextPostsPageEvent" class="select-none">{{ ">" }}</button>
-      </div>
-    </ul>
-
-    <!-- Favorites -->
-    <ul v-else class="space-y-4">
-      <li v-for="(item, index) in userStore.myAccountState.favorites.favorites" :key="index">
-        <!-- Deleted Post -->
-        <div
-          v-if="userStore.userFavoritesState[index].status === 'deleted'"
-          class="flex h-[80px] w-full flex-col items-center justify-center rounded-md border border-sgray-100 bg-background p-6"
+        <li v-for="(item, index) in userStore.myAccountState.posts.posts" :key="index">
+          <RouterLink :to="`/post/${item.id}`">
+            <SmallPostCard :index="index" :favorite="false" :post="item" />
+          </RouterLink>
+        </li>
+        <li
+          v-if="userStore.myAccountState.posts.total_posts === 0"
+          class="flex h-[282px] w-full flex-col items-center justify-center gap-2"
         >
-          <span>Esta publicacion se eliminó</span>
-          <img
-            @click.prevent="removeFavorite(index)"
-            src="../assets/close-icon.svg"
-            class="h-[40px] w-[40px]"
-          />
+          <span>Aún no tienes publicaciones</span>
+          <RouterLink to="/insert" class="underline">Publica</RouterLink>
+        </li>
+        <div
+          v-if="!(userStore.myAccountState.posts.total_posts === 0)"
+          class="flex w-full items-center justify-center gap-2"
+        >
+          <button @click.prevent="prevPostsPageEvent" class="select-none">{{ "<" }}</button>
+          <div>
+            <span
+              >{{ userStore.myAccountState.posts.page }} /
+              {{ userStore.myAccountState.posts.total_pages }}</span
+            >
+          </div>
+          <button @click.prevent="nextPostsPageEvent" class="select-none">{{ ">" }}</button>
         </div>
-        <RouterLink v-else :to="`/post/${item.id}`">
-          <SmallPostCard :index="index" :favorite="true" :post="item" />
-        </RouterLink>
-      </li>
-      <li
-        v-if="userStore.myAccountState.favorites.total_favorites === 0"
-        class="flex h-[282px] w-full flex-col items-center justify-center gap-2"
-      >
-        <span>Aún no tienes favoritos</span>
-      </li>
-      <div
-        v-if="!(userStore.myAccountState.favorites.total_favorites === 0)"
-        class="flex w-full items-center justify-center gap-2"
-      >
-        <button @click.prevent="prevFavoritesPageEvent" class="select-none">{{ "<" }}</button>
-        <div>
-          <span
-            >{{ userStore.myAccountState.favorites.page }} /
-            {{ userStore.myAccountState.favorites.total_pages }}</span
-          >
-        </div>
-        <button @click.prevent="nextFavoritesPageEvent" class="select-none">{{ ">" }}</button>
-      </div>
-    </ul>
+      </ul>
 
-    <!-- Spinner -->
-    <div
-      class="absolute bottom-0 left-0 right-0 top-0 flex items-center justify-center"
-      :class="layoutStore.tableSpinner ? 'block' : 'hidden'"
-    >
+      <!-- Favorites -->
+      <ul v-else class="relative space-y-4">
+        <li v-for="(item, index) in userStore.myAccountState.favorites.favorites" :key="index">
+          <!-- Deleted Post -->
+          <div
+            v-if="userStore.userFavoritesState[index].status === 'deleted'"
+            class="flex h-[80px] w-full flex-col items-center justify-center rounded-md border border-sgray-100 bg-background p-6"
+          >
+            <span>Esta publicacion se eliminó</span>
+            <img
+              @click.prevent="removeFavorite(index)"
+              src="../assets/close-icon.svg"
+              class="h-[40px] w-[40px]"
+            />
+          </div>
+          <RouterLink v-else :to="`/post/${item.id}`">
+            <SmallPostCard :index="index" :favorite="true" :post="item" />
+          </RouterLink>
+        </li>
+        <li
+          v-if="userStore.myAccountState.favorites.total_favorites === 0"
+          class="flex h-[282px] w-full flex-col items-center justify-center gap-2"
+        >
+          <span>Aún no tienes favoritos</span>
+        </li>
+        <div
+          v-if="!(userStore.myAccountState.favorites.total_favorites === 0)"
+          class="flex w-full items-center justify-center gap-2"
+        >
+          <button @click.prevent="prevFavoritesPageEvent" class="select-none">{{ "<" }}</button>
+          <div>
+            <span
+              >{{ userStore.myAccountState.favorites.page }} /
+              {{ userStore.myAccountState.favorites.total_pages }}</span
+            >
+          </div>
+          <button @click.prevent="nextFavoritesPageEvent" class="select-none">{{ ">" }}</button>
+        </div>
+      </ul>
+
+      <!-- Spinner -->
       <div
-        class="spinner h-[35px] w-[35px] rounded-full border-4 border-solid border-x-sgray-200 border-b-sgray-200 border-t-white"
-      ></div>
+        id="spinner_container"
+        class="absolute bottom-0 left-0 right-0 top-0 flex items-center justify-center"
+        :class="layoutStore.tableSpinner ? 'block' : 'hidden'"
+      >
+        <div
+          class="spinner h-[35px] w-[35px] rounded-full border-4 border-solid border-x-sgray-200 border-b-sgray-200 border-t-white"
+        ></div>
+      </div>
     </div>
   </section>
 </template>
