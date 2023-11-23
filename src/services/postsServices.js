@@ -1,4 +1,4 @@
-import { unauthorizedAPI } from "./api";
+import { authorizedAPI, unauthorizedAPI } from "./api";
 
 export default {
   getPosts() {
@@ -19,6 +19,14 @@ export default {
 
   getPost(id) {
     return unauthorizedAPI().get(`/posts/${id}`);
+  },
+
+  getAccountPosts(page) {
+    return authorizedAPI().get(`/posts/user/posts?page=${page}`);
+  },
+
+  getAccountFavorites(page) {
+    return authorizedAPI().get(`/posts/user/favorites?page=${page}`);
   },
 
   getPopularSales() {

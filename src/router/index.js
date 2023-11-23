@@ -113,7 +113,7 @@ const routes = [
   {
     path: "/account",
     name: "account",
-    component: () => import("../views/AccountView.vue"),
+    component: () => import("../views/MyAccountView.vue"),
     meta: { requiresAuth: true },
     beforeEnter: async (to, from, next) => {
       const userStore = useUserStore();
@@ -127,6 +127,7 @@ const routes = [
 
       try {
         // await userStore.loadUserPosts();
+        await userStore.getMyAccount();
         // await userStore.loadUserFavorites();
 
         if (!from.name) {

@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { computed, onMounted, ref } from "vue";
 import authServices from "../services/authServices.js";
 import accountServices from "../services/accountServices.js";
+import postsServices from "../services/postsServices.js";
 import { usePostStore } from "./postStore.js";
 
 export const useUserStore = defineStore("user", () => {
@@ -28,6 +29,8 @@ export const useUserStore = defineStore("user", () => {
   const userPostsState = ref([]);
 
   const userFavoritesState = ref([]);
+
+  const myAccountState = ref(null);
 
   // Getters
   const isLoggedIn = computed(() => !!credentialsState.value.token);
@@ -182,6 +185,39 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
+  const getMyAccount = async () => {
+    const myAccount = {};
+
+    if (credentialsState.value.role === "client") {
+      myAccount.info = { username: userState.value.info.username };
+    } else if (credentialsState.value.role === "agent") {
+      myAccount.info = {
+        bio: userState.value.info.bio,
+        firstname: userState.value.info.firstname,
+        lastname: userState.value.info.lastname,
+      };
+      myAccount.contact_details = {
+        public_email: userState.value.contact_details.public_email,
+        whatsapp: {
+          code: userState.value.contact_details.whatsapp.code,
+          phone: userState.value.contact_details.whatsapp.phone,
+        },
+      };
+    }
+
+    try {
+      const posts_res = await postsServices.getAccountPosts(1);
+      const favorites_res = await postsServices.getAccountFavorites(1);
+
+      myAccount.posts = posts_res.data;
+      myAccount.favorites = favorites_res.data;
+
+      myAccountState.value = myAccount;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getFavorites = async () => {
     try {
       const res = await accountServices.getFavorites();
@@ -251,11 +287,16 @@ export const useUserStore = defineStore("user", () => {
     userFavoritesState.value = [];
   };
 
+  const resetMyAccount = () => {
+    myAccountState.value = null;
+  };
+
   const $reset = () => {
     resetCredentials();
     resetUser();
     resetUserPosts();
     resetUserFavorites();
+    resetMyAccount();
   };
 
   return {
@@ -263,6 +304,7 @@ export const useUserStore = defineStore("user", () => {
     userState,
     userPostsState,
     userFavoritesState,
+    myAccountState,
     isLoggedIn,
     refresh,
     login,
@@ -272,6 +314,7 @@ export const useUserStore = defineStore("user", () => {
     getUser,
     getPosts,
     getFavorites,
+    getMyAccount,
     insertPost,
     updatePost,
     deletePost,
@@ -280,6 +323,7 @@ export const useUserStore = defineStore("user", () => {
     resetUser,
     resetUserPosts,
     resetUserFavorites,
+    resetMyAccount,
     $reset,
   };
 });

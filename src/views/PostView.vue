@@ -20,16 +20,10 @@
       return { background: "#8cb059", text: "#edf5d4" };
   });
 
-  // const resetPostStore = ref(true);
-
   onBeforeUnmount(() => {
     postStore.resetPost();
     agentStore.resetAuthor();
   });
-
-  // onBeforeRouteLeave((to) => {
-  //   if (to.name === "edit-post") resetPostStore.value = false;
-  // });
 </script>
 
 <template>
