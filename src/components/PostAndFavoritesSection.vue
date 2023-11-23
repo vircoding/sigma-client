@@ -8,11 +8,28 @@
   const layoutStore = useLayoutStore();
 
   const postsActive = ref(true);
+  const alertVisibility = ref(false);
+  const startPositionY = ref(null);
 
   const switchEvent = (isPost) => {
     if (!layoutStore.tableSpinner) {
       if (isPost) postsActive.value = true;
       else postsActive.value = false;
+    }
+  };
+
+  const startSwipe = (event) => {
+    startPositionY.value = event.touches[0].clientY;
+  };
+
+  const moveSwipe = (event) => {
+    const movePosY = event.touches[0].clientY;
+    const diffY = Math.abs(movePosY - startPositionY.value);
+
+    if (diffY > 0) {
+      if (event.cancelable) {
+        event.preventDefault();
+      }
     }
   };
 
@@ -48,23 +65,15 @@
     layoutStore.hideTableSpinner();
   };
 
-  const removeFavorite = async (index) => {
-    try {
-      layoutStore.unhideTableSpinner();
-      await postStore.removeFavorite(userStore.userAccountState.favorites.favorites[index]._id);
-      if (
-        userStore.userAccountState.favorites.favorites.length === 1 &&
-        userStore.userAccountState.favorites.page > 1
-      ) {
-        await userStore.loadUserFavorites(userStore.userAccountState.favorites.page - 1);
-      } else {
-        await userStore.loadUserFavorites(userStore.userAccountState.favorites.page);
-      }
-      layoutStore.hideTableSpinner();
-    } catch (error) {
-      console.log(error);
-    }
+  const unhideAlert = (id) => {
+    alertVisibility.value = true;
   };
+
+  const hideAlert = () => {
+    alertVisibility.value = false;
+  };
+
+  const removeFavorite = async (index) => {};
 </script>
 
 <template>
@@ -97,8 +106,8 @@
         :class="layoutStore.tableSpinner ? 'scoped-blur' : ''"
       >
         <li v-for="(item, index) in userStore.myAccountState.posts.posts" :key="index">
-          <RouterLink :to="`/post/${item.id}`">
-            <SmallPostCard :index="index" :favorite="false" :post="item" />
+          <RouterLink class="select-none outline-none" :to="`/post/${item.id}`">
+            <SmallPostCard @delete="unhideAlert" :index="index" :favorite="false" :post="item" />
           </RouterLink>
         </li>
         <li
@@ -175,6 +184,36 @@
       </div>
     </div>
   </section>
+
+  <!-- Alert -->
+  <div
+    v-if="alertVisibility"
+    @touchstart="startSwipe($event)"
+    @touchmove="moveSwipe($event)"
+    class="text-shadow fixed inset-0 z-50 flex items-center justify-center overflow-y-auto"
+  >
+    <div @click.prevent="hideAlert" class="overlay absolute h-full w-full"></div>
+    <div
+      class="border-md z-20 flex h-[215px] w-[300px] flex-col items-center justify-center gap-5 rounded-md bg-white p-5 text-center text-lg"
+    >
+      <span
+        >¿Estás <span class="font-semibold">seguro</span> que deseas
+        <span class="font-semibold">eliminar</span> esta
+        <span class="font-semibold">publicación</span>?</span
+      >
+      <div class="flex w-full items-center justify-evenly">
+        <button
+          @click.prevent
+          class="w-[115px] rounded-md bg-sgray-400 py-1 font-semibold text-white"
+        >
+          Eliminar
+        </button>
+        <button @click.prevent="hideAlert" class="w-[115px] rounded-md bg-sgray-100 py-1">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -184,6 +223,11 @@
 
   .spinner {
     animation: spin 0.75s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  }
+
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.45);
+    filter: blur(2px);
   }
 
   @keyframes spin {
