@@ -39,7 +39,6 @@
     <ul class="space-y-4">
       <li v-for="(item, index) in userStore.myAccountState.posts.posts" :key="index">
         <RouterLink :to="`/post/${item.id}`">
-          <!-- <SmallPostCard :index="index" :type="'post'" :post="item" /> -->
           <SmallPostCard :index="index" :favorite="false" :post="item" />
         </RouterLink>
       </li>
