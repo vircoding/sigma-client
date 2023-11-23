@@ -7,7 +7,7 @@
 
   const defineFeatureStyles = (count) => {
     let fill;
-    if (Boolean(count)) fill = "fill-violet-800";
+    if (Boolean(count)) fill = "fill-violet-950";
     else fill = "fill-sgray-200";
     return `h-[20px] w-[20px] ${fill}`;
   };
@@ -19,7 +19,7 @@
     <div class="flex h-[80px] w-full items-center justify-center bg-white">
       <!-- Sale Info -->
       <div
-        class="flex h-full w-[28%] flex-col items-center justify-center bg-violet-800 px-2 py-3 text-center text-white"
+        class="flex h-full w-[28%] flex-col items-center justify-center bg-violet-950 px-2 py-3 text-center text-white"
       >
         <span class="font-extrabold">PERMUTA</span>
         <div
@@ -161,7 +161,7 @@
         <!-- Sell -->
         <button
           v-if="!props.favorite"
-          class="gradient w-full rounded-md bg-violet-800 py-[3px] text-sm font-semibold"
+          class="gradient w-full rounded-md bg-violet-950 py-[3px] text-sm font-semibold"
         >
           <span class="text-shadow text-white">VENDIDA</span>
         </button>

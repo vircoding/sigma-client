@@ -185,6 +185,15 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
+  const getFavorites = async () => {
+    try {
+      const res = await accountServices.getFavorites();
+      userFavoritesState.value = res.data.favorites;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getMyAccount = async () => {
     const myAccount = {};
 
@@ -218,10 +227,21 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const getFavorites = async () => {
+  const getMyAccountPosts = async (page) => {
     try {
-      const res = await accountServices.getFavorites();
-      userFavoritesState.value = res.data.favorites;
+      const res = await postsServices.getAccountPosts(page);
+
+      myAccountState.value.posts = res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getMyAccountFavorites = async (page) => {
+    try {
+      const res = await postsServices.getAccountFavorites(page);
+
+      myAccountState.value.favorites = res.data;
     } catch (error) {
       console.log(error);
     }
@@ -315,6 +335,8 @@ export const useUserStore = defineStore("user", () => {
     getPosts,
     getFavorites,
     getMyAccount,
+    getMyAccountPosts,
+    getMyAccountFavorites,
     insertPost,
     updatePost,
     deletePost,
