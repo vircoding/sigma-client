@@ -52,10 +52,10 @@ export const useLayoutStore = defineStore("layout", () => {
 
   // Resets
   const $reset = () => {
-    sideMenuVisibility.value = false;
-    isLoading.value = false;
-    spinnerVisibility.value = false;
-    tableSpinnerVisibility.value = false;
+    sideMenu.value = false;
+    logoLoading.value = false;
+    spinnerLoading.value = false;
+    tableSpinner.value = false;
     fullScreenGallery.value = false;
   };
 
