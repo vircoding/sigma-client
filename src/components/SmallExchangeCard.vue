@@ -1,7 +1,6 @@
 <script setup>
   import ShareButton from "./ShareButton.vue";
   import FeatureIcon from "./icons/FeatureIcon.vue";
-  import { formatAmount } from "../utils/formatAmount.js";
   import BooleanIcon from "./icons/BooleanIcon.vue";
 
   const props = defineProps(["index", "favorite", "exchange"]);

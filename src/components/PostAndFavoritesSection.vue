@@ -36,7 +36,7 @@
     </div>
 
     <!-- Posts -->
-    <ul class="space-y-4">
+    <ul v-if="postsActive" class="space-y-4">
       <li v-for="(item, index) in userStore.myAccountState.posts.posts" :key="index">
         <RouterLink :to="`/post/${item.id}`">
           <SmallPostCard :index="index" :favorite="false" :post="item" />
@@ -58,6 +58,42 @@
           <span
             >{{ userStore.myAccountState.posts.page }} /
             {{ userStore.myAccountState.posts.total_pages }}</span
+          >
+        </div>
+        <button @click.prevent="nextPostsPageEvent" class="select-none">{{ ">" }}</button>
+      </div>
+    </ul>
+
+    <!-- Favorites -->
+    <ul v-else class="space-y-4">
+      <li v-for="(item, index) in userStore.myAccountState.favorites.favorites" :key="index">
+        <!-- Deleted Post -->
+        <div
+          v-if="userStore.userFavoritesState[index].status === 'deleted'"
+          class="flex h-[80px] w-full flex-col items-center justify-center rounded-md border border-sgray-100 bg-background p-6"
+        >
+          <span>Esta publicacion se eliminó</span>
+          <img src="../assets/close-icon.svg" class="h-[40px] w-[40px]" />
+        </div>
+        <RouterLink v-else :to="`/post/${item.id}`">
+          <SmallPostCard :index="index" :favorite="true" :post="item" />
+        </RouterLink>
+      </li>
+      <li
+        v-if="userStore.myAccountState.favorites.total_favorites === 0"
+        class="flex h-[282px] w-full flex-col items-center justify-center gap-2"
+      >
+        <span>Aún no tienes favoritos</span>
+      </li>
+      <div
+        v-if="!(userStore.myAccountState.favorites.total_favorites === 0)"
+        class="flex w-full items-center justify-center gap-2"
+      >
+        <button class="select-none">{{ "<" }}</button>
+        <div>
+          <span
+            >{{ userStore.myAccountState.favorites.page }} /
+            {{ userStore.myAccountState.favorites.total_pages }}</span
           >
         </div>
         <button @click.prevent="nextPostsPageEvent" class="select-none">{{ ">" }}</button>
