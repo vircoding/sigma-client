@@ -9,6 +9,7 @@
 
   const postsActive = ref(true);
   const alertVisibility = ref(false);
+  const alertId = ref(null);
   const startPositionY = ref(null);
 
   const switchEvent = (isPost) => {
@@ -34,43 +35,65 @@
   };
 
   const prevPostsPageEvent = async () => {
-    layoutStore.unhideTableSpinner();
+    layoutStore.unhideSpinnerLoading();
     if (userStore.myAccountState.posts.page !== 1) {
       await userStore.getMyAccountPosts(userStore.myAccountState.posts.page - 1);
     }
-    layoutStore.hideTableSpinner();
+    layoutStore.hideSpinnerLoading();
   };
 
   const nextPostsPageEvent = async () => {
-    layoutStore.unhideTableSpinner();
+    layoutStore.unhideSpinnerLoading();
     if (userStore.myAccountState.posts.page < userStore.myAccountState.posts.total_pages) {
       await userStore.getMyAccountPosts(userStore.myAccountState.posts.page + 1);
     }
-    layoutStore.hideTableSpinner();
+    layoutStore.hideSpinnerLoading();
   };
 
   const prevFavoritesPageEvent = async () => {
-    layoutStore.unhideTableSpinner();
+    layoutStore.unhideSpinnerLoading();
     if (userStore.myAccountState.favorites.page !== 1) {
       await userStore.getMyAccountFavorites(userStore.myAccountState.favorites.page - 1);
     }
-    layoutStore.hideTableSpinner();
+    layoutStore.hideSpinnerLoading();
   };
 
   const nextFavoritesPageEvent = async () => {
-    layoutStore.unhideTableSpinner();
+    layoutStore.unhideSpinnerLoading();
     if (userStore.myAccountState.favorites.page < userStore.myAccountState.favorites.total_pages) {
       await userStore.getMyAccountFavorites(userStore.myAccountState.favorites.page + 1);
     }
-    layoutStore.hideTableSpinner();
+    layoutStore.hideSpinnerLoading();
   };
 
   const unhideAlert = (id) => {
+    alertId.value = id;
     alertVisibility.value = true;
   };
 
   const hideAlert = () => {
     alertVisibility.value = false;
+  };
+
+  const deletePost = async () => {
+    hideAlert();
+    layoutStore.unhideSpinnerLoading();
+    try {
+      await userStore.deletePost(alertId.value);
+      if (
+        userStore.myAccountState.posts.posts.length === 1 &&
+        userStore.myAccountState.posts.page > 1
+      ) {
+        await userStore.getMyAccountPosts(userStore.myAccountState.posts.page - 1);
+      } else {
+        await userStore.getMyAccountPosts(userStore.myAccountState.posts.page);
+      }
+      alertId.value = null;
+      layoutStore.hideSpinnerLoading();
+    } catch (error) {
+      console.log(error);
+      layoutStore.hideSpinnerLoading();
+    }
   };
 
   const removeFavorite = async (index) => {};
@@ -203,7 +226,7 @@
       >
       <div class="flex w-full items-center justify-evenly">
         <button
-          @click.prevent
+          @click.prevent="deletePost"
           class="w-[115px] rounded-md bg-sgray-400 py-1 font-semibold text-white"
         >
           Eliminar
