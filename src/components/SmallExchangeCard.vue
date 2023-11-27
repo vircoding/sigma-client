@@ -1,9 +1,11 @@
 <script setup>
+  import { ref } from "vue";
   import ShareButton from "./ShareButton.vue";
   import FeatureIcon from "./icons/FeatureIcon.vue";
   import BooleanIcon from "./icons/BooleanIcon.vue";
 
   const props = defineProps(["index", "favorite", "exchange"]);
+  defineEmits(["delete"]);
 
   const defineFeatureStyles = (count) => {
     let fill;
@@ -144,7 +146,7 @@
           <!-- Delete Post -->
           <img
             v-if="!props.favorite"
-            @click.prevent="unhideAlert"
+            @click.prevent="$emit('delete', props.exchange.id)"
             src="../assets/delete-icon.svg"
             class="h-[18px] w-[18px]"
           />

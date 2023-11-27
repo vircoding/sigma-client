@@ -8,8 +8,6 @@
   const props = defineProps(["index", "favorite", "sale"]);
   defineEmits(["delete"]);
 
-  const alertVisibility = ref(false);
-
   const defineFeatureStyles = (count) => {
     let fill;
     if (Boolean(count)) fill = "fill-sigma";
