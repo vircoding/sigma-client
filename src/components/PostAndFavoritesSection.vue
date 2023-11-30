@@ -67,7 +67,7 @@
   };
 
   const unhideAlert = (id) => {
-    alertId.value = id;
+    deletePostId.value = id;
     alertVisibility.value = true;
   };
 
@@ -80,6 +80,7 @@
     layoutStore.unhideSpinnerLoading();
     try {
       await userStore.deletePost(deletePostId.value);
+      await userStore.getFavorites();
       if (
         userStore.myAccountState.posts.posts.length === 1 &&
         userStore.myAccountState.posts.page > 1
@@ -89,7 +90,7 @@
         await userStore.getMyAccountPosts(userStore.myAccountState.posts.page);
       }
       await userStore.getMyAccountFavorites(userStore.myAccountState.favorites.page);
-      alertId.value = null;
+      deletePostId.value = null;
       layoutStore.hideSpinnerLoading();
     } catch (error) {
       console.log(error);
