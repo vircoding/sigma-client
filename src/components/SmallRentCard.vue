@@ -6,7 +6,7 @@
   import BooleanIcon from "./icons/BooleanIcon.vue";
 
   const props = defineProps(["index", "favorite", "rent"]);
-  defineEmits(["delete"]);
+  defineEmits(["delete", "remove"]);
 
   const defineFeatureStyles = (count) => {
     let fill;
@@ -134,7 +134,7 @@
           <!-- Remove Favorite -->
           <img
             v-else
-            @click.prevent="removeFavorite"
+            @click.prevent="$emit('remove', props.rent.id)"
             src="../assets/close-icon.svg"
             class="h-[16px] w-[16px]"
           />

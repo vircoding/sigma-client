@@ -1,6 +1,5 @@
 <script setup>
   import { computed } from "vue";
-  import SigmaHouseIcon from "./icons/SigmaHouseIcon.vue";
   import CheckboxIcon from "./icons/CheckboxIcon.vue";
 
   const props = defineProps(["modelValue"]);

@@ -9,7 +9,7 @@
 
   const postsActive = ref(true);
   const alertVisibility = ref(false);
-  const alertId = ref(null);
+  const deletePostId = ref(null);
   const startPositionY = ref(null);
 
   const switchEvent = (isPost) => {
@@ -79,7 +79,7 @@
     hideAlert();
     layoutStore.unhideSpinnerLoading();
     try {
-      await userStore.deletePost(alertId.value);
+      await userStore.deletePost(deletePostId.value);
       if (
         userStore.myAccountState.posts.posts.length === 1 &&
         userStore.myAccountState.posts.page > 1
@@ -88,6 +88,7 @@
       } else {
         await userStore.getMyAccountPosts(userStore.myAccountState.posts.page);
       }
+      await userStore.getMyAccountFavorites(userStore.myAccountState.favorites.page);
       alertId.value = null;
       layoutStore.hideSpinnerLoading();
     } catch (error) {
@@ -96,7 +97,24 @@
     }
   };
 
-  const removeFavorite = async (index) => {};
+  const removeFavorite = async (id) => {
+    layoutStore.unhideSpinnerLoading();
+    try {
+      await userStore.addToFavorites(id);
+      if (
+        userStore.myAccountState.favorites.favorites.length === 1 &&
+        userStore.myAccountState.favorites.page
+      ) {
+        await userStore.getMyAccountFavorites(userStore.myAccountState.favorites.page - 1);
+      } else {
+        await userStore.getMyAccountFavorites(userStore.myAccountState.favorites.page);
+      }
+      layoutStore.hideSpinnerLoading();
+    } catch (error) {
+      console.log(error);
+      layoutStore.hideSpinnerLoading();
+    }
+  };
 </script>
 
 <template>
@@ -160,18 +178,18 @@
         <li v-for="(item, index) in userStore.myAccountState.favorites.favorites" :key="index">
           <!-- Deleted Post -->
           <div
-            v-if="userStore.userFavoritesState[index].status === 'deleted'"
+            v-if="userStore.userFavoritesState[index]?.status === 'deleted'"
             class="flex h-[80px] w-full flex-col items-center justify-center rounded-md border border-sgray-100 bg-background p-6"
           >
             <span>Esta publicacion se eliminó</span>
             <img
-              @click.prevent="removeFavorite(index)"
+              @click.prevent="removeFavorite(userStore.userFavoritesState[index].post_id)"
               src="../assets/close-icon.svg"
-              class="h-[40px] w-[40px]"
+              class="h-[25px] w-[25px]"
             />
           </div>
           <RouterLink v-else :to="`/post/${item.id}`">
-            <SmallPostCard :index="index" :favorite="true" :post="item" />
+            <SmallPostCard @remove="removeFavorite" :index="index" :favorite="true" :post="item" />
           </RouterLink>
         </li>
         <li
