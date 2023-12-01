@@ -145,7 +145,7 @@
           v-if="!props.favorite"
           class="gradient w-full rounded-md bg-sgreen-300 py-[3px] text-sm font-semibold"
         >
-          <span class="text-shadow text-white">VENDIDA</span>
+          <span class="text-shadow text-white">RENTADA</span>
         </button>
       </div>
     </div>

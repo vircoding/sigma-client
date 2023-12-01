@@ -101,6 +101,7 @@
         />
       </div>
     </div>
+
     <!-- Property Details -->
     <div
       v-for="(item, index) in postStore.postState.property_details"
@@ -108,6 +109,10 @@
       class="space-y-2"
       :class="index === postStore.postState.property_details.length - 1 ? 'mb-2' : 'mb-6'"
     >
+      <!-- Poperty Counter -->
+      <div>
+        <h4 class="text-shadow font-semibold">Propiedad - {{ index + 1 }}</h4>
+      </div>
       <!-- Address -->
       <h3 class="text-shadow font-normal text-sgray-300">
         {{ item.address.municipality }},

@@ -20,7 +20,7 @@
       v-else
       :for="props.feature + '-' + props.index"
       class="pl-[6px] font-medium italic text-alert"
-      >{{ props.string }} [0-9]</label
+      >[0-9]</label
     >
     <input
       type="number"
