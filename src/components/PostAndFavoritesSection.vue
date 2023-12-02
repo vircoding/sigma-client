@@ -144,7 +144,7 @@
       <!-- Posts -->
       <ul
         v-if="postsActive"
-        class="relative space-y-4"
+        class="relative mb-6 space-y-4"
         :class="layoutStore.tableSpinner ? 'scoped-blur' : ''"
       >
         <li v-for="(item, index) in userStore.myAccountState.posts.posts" :key="index">
@@ -159,23 +159,25 @@
           <span>Aún no tienes publicaciones</span>
           <RouterLink to="/insert" class="underline">Publica</RouterLink>
         </li>
-        <div
-          v-if="!(userStore.myAccountState.posts.total_posts === 0)"
-          class="flex w-full items-center justify-center gap-2"
-        >
-          <button @click.prevent="prevPostsPageEvent" class="select-none">{{ "<" }}</button>
-          <div>
-            <span
-              >{{ userStore.myAccountState.posts.page }} /
-              {{ userStore.myAccountState.posts.total_pages }}</span
-            >
-          </div>
-          <button @click.prevent="nextPostsPageEvent" class="select-none">{{ ">" }}</button>
-        </div>
       </ul>
 
+      <!-- Pages -->
+      <div
+        v-if="!(userStore.myAccountState.posts.total_posts === 0)"
+        class="flex w-full items-center justify-center gap-2"
+      >
+        <button @click.prevent="prevPostsPageEvent" class="select-none">{{ "<" }}</button>
+        <div>
+          <span
+            >{{ userStore.myAccountState.posts.page }} /
+            {{ userStore.myAccountState.posts.total_pages }}</span
+          >
+        </div>
+        <button @click.prevent="nextPostsPageEvent" class="select-none">{{ ">" }}</button>
+      </div>
+
       <!-- Favorites -->
-      <ul v-else class="relative space-y-4">
+      <ul v-else class="relative mb-6 space-y-4">
         <li v-for="(item, index) in userStore.myAccountState.favorites.favorites" :key="index">
           <!-- Deleted Post -->
           <div
@@ -199,20 +201,22 @@
         >
           <span>Aún no tienes favoritos</span>
         </li>
-        <div
-          v-if="!(userStore.myAccountState.favorites.total_favorites === 0)"
-          class="flex w-full items-center justify-center gap-2"
-        >
-          <button @click.prevent="prevFavoritesPageEvent" class="select-none">{{ "<" }}</button>
-          <div>
-            <span
-              >{{ userStore.myAccountState.favorites.page }} /
-              {{ userStore.myAccountState.favorites.total_pages }}</span
-            >
-          </div>
-          <button @click.prevent="nextFavoritesPageEvent" class="select-none">{{ ">" }}</button>
-        </div>
       </ul>
+
+      <!-- Pages -->
+      <div
+        v-if="!(userStore.myAccountState.favorites.total_favorites === 0)"
+        class="flex w-full items-center justify-center gap-2"
+      >
+        <button @click.prevent="prevFavoritesPageEvent" class="select-none">{{ "<" }}</button>
+        <div>
+          <span
+            >{{ userStore.myAccountState.favorites.page }} /
+            {{ userStore.myAccountState.favorites.total_pages }}</span
+          >
+        </div>
+        <button @click.prevent="nextFavoritesPageEvent" class="select-none">{{ ">" }}</button>
+      </div>
 
       <!-- Spinner -->
       <div
