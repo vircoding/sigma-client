@@ -1,6 +1,7 @@
 <script setup>
   import { useUserStore } from "../stores/userStore.js";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
+  import UpdateAgentForm from "./UpdateAgentForm.vue";
   import PostAndFavoritesSection from "./PostAndFavoritesSection.vue";
 </script>
 
@@ -12,6 +13,9 @@
     <div class="text-shadow col-span-6">
       <SigmaIsotypeIcon class="h-[100px] w-[320px] fill-sgray-200 lg:hidden" />
     </div>
+
+    <!-- Update Form -->
+    <UpdateAgentForm class="mb-7" />
 
     <!-- Post/Favorites Section -->
     <PostAndFavoritesSection />
