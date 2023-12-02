@@ -119,8 +119,21 @@
 </script>
 
 <template>
-  <section class="mb-20 w-full">
-    <div class="text-shadow mb-7 flex items-center rounded-md bg-sgray-100">
+  <section class="mb-20 w-full text-base">
+    <!-- Hero -->
+    <div class="text-shadow mb-10 text-sm lg:mb-0">
+      <h1
+        class="mb-2 text-center text-4xl font-extrabold max-[1023px]:text-4xl max-[505px]:text-3xl lg:mb-0 lg:text-left lg:text-4xl"
+      >
+        Publicaciones
+      </h1>
+      <p class="block text-center text-sgray-300 lg:text-left lg:text-lg">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione.
+      </p>
+    </div>
+
+    <!-- Table -->
+    <div class="text-shadow mb-10 flex items-center rounded-md bg-sgray-100">
       <!-- Posts Table Button -->
       <div
         class="w-1/2 rounded-md py-2 text-center tracking-wide"

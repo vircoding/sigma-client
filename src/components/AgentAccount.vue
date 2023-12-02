@@ -15,7 +15,10 @@
     </div>
 
     <!-- Update Form -->
-    <UpdateAgentForm class="mb-7" />
+    <UpdateAgentForm class="mb-12" />
+
+    <!-- Horizontal Line -->
+    <div class="mb-8 h-[1px] w-5/6 bg-sgray-100"></div>
 
     <!-- Post/Favorites Section -->
     <PostAndFavoritesSection />
