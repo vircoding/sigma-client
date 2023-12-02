@@ -9,6 +9,7 @@ export default {
     },
     extend: {
       colors: {
+        sviolet: "#4b2b64",
         sigma: "#1183ea",
         background: "#ededed",
         alert: "#aa1530",

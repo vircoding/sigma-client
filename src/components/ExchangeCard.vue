@@ -7,7 +7,7 @@
 
   const defineFeatureStyles = (count) => {
     let fill;
-    if (Boolean(count)) fill = "fill-solive-300";
+    if (Boolean(count)) fill = "fill-sviolet";
     else fill = "fill-sgray-200";
     return `h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px] ${fill}`;
   };
@@ -36,7 +36,7 @@
       <!-- Clip -->
       <div
         v-if="props.exchange.offer_details.offers === 1"
-        class="clip flex h-44 w-[85px] flex-shrink-0 flex-col items-center bg-solive-300 pt-[45px]"
+        class="clip flex h-44 w-[85px] flex-shrink-0 flex-col items-center bg-sviolet pt-[45px]"
       >
         <h2 class="font-extrabold text-white">PERMUTA</h2>
         <div
@@ -121,7 +121,7 @@
 
     <div
       v-if="props.exchange.offer_details.offers !== 1"
-      class="clip absolute bottom-0 flex w-[85px] flex-shrink-0 flex-col items-center justify-center bg-solive-300"
+      class="clip absolute bottom-0 flex w-[85px] flex-shrink-0 flex-col items-center justify-center bg-sviolet"
       :class="defineClipHeight(props.exchange.property_details.length)"
     >
       <h2 class="font-extrabold text-white">PERMUTA</h2>

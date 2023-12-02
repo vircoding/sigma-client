@@ -7,7 +7,7 @@
   const color = computed(() => {
     if (postStore.postState.type === "sale") return "sigma";
     else if (postStore.postState.type === "rent") return "sgreen-300";
-    else if (postStore.postState.type === "exchange") return "solive-300";
+    else if (postStore.postState.type === "exchange") return "sviolet";
   });
 </script>
 

@@ -29,7 +29,7 @@
   const color = computed(() => {
     if (postStore.postState.type === "sale") return "fill-sigma";
     else if (postStore.postState.type === "rent") return "fill-sgreen-300";
-    else if (postStore.postState.type === "exchange") return "fill-solive-300";
+    else if (postStore.postState.type === "exchange") return "fill-sviolet";
   });
 
   const defineFeatureStyles = (count) => {
@@ -111,7 +111,12 @@
     >
       <!-- Poperty Counter -->
       <div>
-        <h4 class="text-shadow font-semibold">Propiedad - {{ index + 1 }}</h4>
+        <h4
+          v-if="postStore.postState.property_details.length !== 1"
+          class="text-shadow font-semibold"
+        >
+          Propiedad - {{ index + 1 }}
+        </h4>
       </div>
       <!-- Address -->
       <h3 class="text-shadow font-normal text-sgray-300">

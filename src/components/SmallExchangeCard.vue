@@ -1,5 +1,4 @@
 <script setup>
-  import { ref } from "vue";
   import ShareButton from "./ShareButton.vue";
   import FeatureIcon from "./icons/FeatureIcon.vue";
   import BooleanIcon from "./icons/BooleanIcon.vue";
@@ -9,7 +8,7 @@
 
   const defineFeatureStyles = (count) => {
     let fill;
-    if (Boolean(count)) fill = "fill-violet-950";
+    if (Boolean(count)) fill = "fill-sviolet";
     else fill = "fill-sgray-200";
     return `h-[20px] w-[20px] ${fill}`;
   };
@@ -21,7 +20,7 @@
     <div class="flex h-[80px] w-full items-center justify-center bg-white">
       <!-- Sale Info -->
       <div
-        class="flex h-full w-[28%] flex-col items-center justify-center bg-violet-950 px-2 py-3 text-center text-white"
+        class="flex h-full w-[28%] flex-col items-center justify-center bg-sviolet px-2 py-3 text-center text-white"
       >
         <span class="font-extrabold">PERMUTA</span>
         <div
@@ -163,7 +162,7 @@
         <!-- Sell -->
         <button
           v-if="!props.favorite"
-          class="gradient w-full rounded-md bg-violet-950 py-[3px] text-sm font-semibold"
+          class="gradient w-full rounded-md bg-sviolet py-[3px] text-sm font-semibold"
         >
           <span class="text-shadow text-white">VENDIDA</span>
         </button>
