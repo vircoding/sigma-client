@@ -81,12 +81,45 @@
     else return false;
   });
 
+  const anyError = computed(() => {
+    if (
+      firstnameError.value ||
+      lastnameError.value ||
+      codeError.value ||
+      phoneError.value ||
+      publicEmailError.value ||
+      bioError.value
+    )
+      return true;
+    else return false;
+  });
+
+  const anyModific = computed(() => {
+    if (
+      newAgent.value.info.firstname !== userStore.userState.info.firstname ||
+      newAgent.value.info.lastname !== userStore.userState.info.lastname ||
+      formattedPhone.value !==
+        userStore.userState.contact_details.whatsapp.code +
+          userStore.userState.contact_details.whatsapp.phone ||
+      newAgent.value.contact_details.public_email !==
+        userStore.userState.contact_details.public_email ||
+      newAgent.value.info.bio !== userStore.userState.info.bio
+    )
+      return true;
+    else return false;
+  });
+
   const disableSubmit = computed(() => {
-    return true;
+    if (anyModific.value && !anyError.value) return false;
+    else return true;
   });
 
   const formSubmit = async () => {
     console.log("Guardar Cambios");
+  };
+
+  const logout = async () => {
+    console.log("Logout Event");
   };
 </script>
 
@@ -176,6 +209,7 @@
     <div class="flex w-full items-center justify-center gap-2">
       <!-- Logout -->
       <button
+        @click.prevent="logout"
         class="flex h-[38px] w-full items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 pt-[2px] text-center text-white transition-all duration-200 ease-out hover:bg-black hover:text-white lg:h-10 lg:w-44 lg:text-lg"
       >
         Cerrar Sesión
