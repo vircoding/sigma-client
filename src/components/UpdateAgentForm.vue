@@ -1,6 +1,7 @@
 <script setup>
   import { ref, computed, watch } from "vue";
   import { useUserStore } from "../stores/userStore.js";
+  import { useLayoutStore } from "../stores/layoutStore.js";
   import parsePhoneNumber from "libphonenumber-js";
   import TextInput from "./TextInput.vue";
   import CodeInput from "./CodeInput.vue";
@@ -9,6 +10,7 @@
   import BioTextAreaInput from "./BioTextAreaInput.vue";
 
   const userStore = useUserStore();
+  const layoutStore = useLayoutStore();
 
   const newAgent = ref({
     role: "agent",
@@ -115,11 +117,18 @@
   });
 
   const formSubmit = async () => {
-    console.log("Guardar Cambios");
+    layoutStore.unhideSpinnerLoading();
+    try {
+      await userStore.updateUser(newAgent.value);
+      layoutStore.hideSpinnerLoading();
+    } catch (error) {
+      console.log(error);
+      layoutStore.hideSpinnerLoading();
+    }
   };
 
   const logout = async () => {
-    console.log("Logout Event");
+    userStore.logout();
   };
 </script>
 
@@ -154,7 +163,6 @@
         <TextInput
           v-model="newAgent.info.firstname"
           type="firstname"
-          :edit="true"
           :error="firstnameError"
           class="mb-4 w-full"
         />
@@ -163,7 +171,6 @@
         <TextInput
           v-model="newAgent.info.lastname"
           type="lastname"
-          :edit="true"
           :error="lastnameError"
           class="w-full"
         />
@@ -179,7 +186,7 @@
         >Whatsapp no válido</label
       >
       <label v-else for="phone" class="mb-1 flex flex-row items-center gap-[6px] pl-2">
-        <img src="../assets/edit-icon.svg" class="w-[14px]" />
+        <!-- <img src="../assets/edit-icon.svg" class="w-[14px]" /> -->
         <span>Whatsapp</span>
       </label>
       <div class="flex w-full items-center gap-4">
@@ -192,18 +199,12 @@
     <EmailInput
       v-model.trim="newAgent.contact_details.public_email"
       type="public"
-      :edit="true"
       :error="publicEmailError"
       class="mb-4 w-full"
     />
 
     <!-- Bio -->
-    <BioTextAreaInput
-      v-model.trim="newAgent.info.bio"
-      :edit="true"
-      :error="bioError"
-      class="mb-4"
-    />
+    <BioTextAreaInput v-model.trim="newAgent.info.bio" :error="bioError" class="mb-4" />
 
     <!-- Buttons -->
     <div class="flex w-full items-center justify-center gap-2">
