@@ -6,19 +6,11 @@
   import { useLayoutStore } from "../stores/layoutStore.js";
   import { usePostStore } from "../stores/postStore.js";
   import { useAgentStore } from "../stores/agentStore.js";
-  // import { onBeforeRouteLeave } from "vue-router";
   import { computed, onBeforeUnmount } from "vue";
 
   const postStore = usePostStore();
   const agentStore = useAgentStore();
   const layoutStore = useLayoutStore();
-
-  const footerColors = computed(() => {
-    if (postStore.postState.type === "sale") return { background: "#1183ea", text: "#bae0fa" };
-    else if (postStore.postState.type === "rent") return { background: "#2eab9e", text: "#ccede9" };
-    else if (postStore.postState.type === "exchange")
-      return { background: "#8cb059", text: "#edf5d4" };
-  });
 
   onBeforeUnmount(() => {
     postStore.resetPost();

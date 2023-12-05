@@ -8,6 +8,7 @@
   import PhoneInput from "./PhoneInput.vue";
   import EmailInput from "./EmailInput.vue";
   import BioTextAreaInput from "./BioTextAreaInput.vue";
+  import router from "../router";
 
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
@@ -116,6 +117,23 @@
     else return true;
   });
 
+  const resetComponent = () => {
+    newAgent.value = {
+      info: {
+        firstname: userStore.userState.info.firstname,
+        lastname: userStore.userState.info.lastname,
+        bio: userStore.userState.info.bio,
+      },
+      contact_details: {
+        public_email: userStore.userState.contact_details.public_email,
+        whatsapp: {
+          code: userStore.userState.contact_details.whatsapp.code,
+          phone: userStore.userState.contact_details.whatsapp.phone,
+        },
+      },
+    };
+  };
+
   const formSubmit = async () => {
     layoutStore.unhideSpinnerLoading();
     try {
@@ -128,7 +146,17 @@
   };
 
   const logout = async () => {
-    userStore.logout();
+    layoutStore.unhideLogoLoading();
+    try {
+      await userStore.logout();
+
+      await router.push("/");
+
+      layoutStore.hideLogoLoading();
+    } catch (error) {
+      console.log(error);
+      layoutStore.hideLogoLoading();
+    }
   };
 </script>
 

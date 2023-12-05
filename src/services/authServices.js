@@ -5,6 +5,10 @@ export default {
     return unauthorizedAPI().get("/auth");
   },
 
+  logout() {
+    return unauthorizedAPI().get("/auth/logout");
+  },
+
   login(user) {
     return unauthorizedAPI().post("/auth/login", user);
   },

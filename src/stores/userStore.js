@@ -141,7 +141,13 @@ export const useUserStore = defineStore("user", () => {
   };
 
   const logout = async () => {
-    console.log("Logout Action");
+    try {
+      await authServices.logout();
+      localStorage.removeItem("activeSession");
+      $reset();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const updateUser = async (user) => {

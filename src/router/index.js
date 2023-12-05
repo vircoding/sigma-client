@@ -16,7 +16,7 @@ const routes = [
       if (!from.name) {
         layoutStore.unhideLogoLoading();
       } else {
-        layoutStore.unhideSpinnerLoading();
+        if (!layoutStore.logoLoading) layoutStore.unhideSpinnerLoading();
       }
 
       try {
