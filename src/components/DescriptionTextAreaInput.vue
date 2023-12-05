@@ -12,7 +12,11 @@
 <template>
   <div class="flex w-full flex-col">
     <div class="flex w-full justify-between">
-      <label v-if="!props.error" for="bio" class="flex items-center gap-[6px] pl-2 font-medium">
+      <label
+        v-if="!props.error"
+        for="description"
+        class="flex items-center gap-[6px] pl-2 font-medium"
+      >
         <img v-if="props.edit" src="../assets/edit-icon.svg" class="w-[14px]" />
         <span>Descripción</span>
       </label>
