@@ -1,5 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@200;400;600;800&display=swap");
 
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-tap-highlight-color: transparent;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
