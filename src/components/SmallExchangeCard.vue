@@ -224,22 +224,22 @@
         class="w-[30px] text-center"
         :class="activeProperty[0] ? 'bg-white' : 'bg-sgray-100'"
       >
-        <span class="relative top-[1px]">1</span>
+        <span class="text-shadow relative top-[1px]">1</span>
       </div>
       <div
         @click.prevent="switchProperty(1)"
         class="w-[30px] text-center"
         :class="activeProperty[1] ? 'bg-white' : 'bg-sgray-100'"
       >
-        <span class="relative top-[1px]">2</span>
+        <span class="text-shadow relative top-[1px]">2</span>
       </div>
       <div
-        @click.prevent="switchProperty(2)"
         v-if="props.exchange.property_details.length > 2"
+        @click.prevent="switchProperty(2)"
         class="w-[30px] text-center"
         :class="activeProperty[2] ? 'bg-white' : 'bg-sgray-100'"
       >
-        <span class="relative top-[1px]">3</span>
+        <span class="text-shadow relative top-[1px]">3</span>
       </div>
     </div>
   </div>

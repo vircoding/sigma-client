@@ -44,7 +44,7 @@
         <SigmaVerticalIcon class="text-shadow w-14 fill-white" />
       </div>
     </div>
-    <div class="flex h-[60px] w-full items-center">
+    <div class="relative flex h-[60px] w-full items-center bg-white">
       <!-- Clip -->
       <div class="clip flex h-44 w-[85px] flex-shrink-0 flex-col items-center bg-sviolet pt-[45px]">
         <h2 class="font-extrabold text-white">PERMUTA</h2>
@@ -72,13 +72,16 @@
       <!-- Address -->
       <div class="flex h-[60px] flex-grow items-center py-[6px] pl-[5px]">
         <span
-          v-if="props.exchange.property_details[0].address.province === 'Isla de la Juventud'"
+          v-if="
+            props.exchange.property_details[propertyIndex].address.province ===
+            'Isla de la Juventud'
+          "
           class="text-xs font-semibold text-sgray-300"
-          >{{ props.exchange.property_details[0].address.province }}</span
+          >{{ props.exchange.property_details[propertyIndex].address.province }}</span
         >
         <span v-else class="text-xs font-semibold text-sgray-300"
-          >{{ props.exchange.property_details[0].address.municipality }},
-          {{ props.exchange.property_details[0].address.province }}</span
+          >{{ props.exchange.property_details[propertyIndex].address.municipality }},
+          {{ props.exchange.property_details[propertyIndex].address.province }}</span
         >
       </div>
 
@@ -87,108 +90,128 @@
         <!-- Bed Room -->
         <div class="flex items-center gap-[2px]">
           <FeatureIcon
-            :classes="defineFeatureStyles(props.exchange.property_details[0].features.bed_room)"
+            :classes="
+              defineFeatureStyles(props.exchange.property_details[propertyIndex].features.bed_room)
+            "
             icon="bed_room"
           />
           <span
             class="text-shadow text-xs"
             :class="
-              props.exchange.property_details[0].features.bed_room > 0
+              props.exchange.property_details[propertyIndex].features.bed_room > 0
                 ? 'text-sgray-400'
                 : 'text-sgray-200'
             "
-            >x{{ props.exchange.property_details[0].features.bed_room }}</span
+            >x{{ props.exchange.property_details[propertyIndex].features.bed_room }}</span
           >
         </div>
         <!-- Bath Room -->
         <div class="flex items-center gap-[2px]">
           <FeatureIcon
-            :classes="defineFeatureStyles(props.exchange.property_details[0].features.bath_room)"
+            :classes="
+              defineFeatureStyles(props.exchange.property_details[propertyIndex].features.bath_room)
+            "
             icon="bath_room"
           />
           <span
             class="text-shadow text-xs"
             :class="
-              props.exchange.property_details[0].features.bath_room > 0
+              props.exchange.property_details[propertyIndex].features.bath_room > 0
                 ? 'text-sgray-400'
                 : 'text-sgray-200'
             "
-            >x{{ props.exchange.property_details[0].features.bath_room }}</span
+            >x{{ props.exchange.property_details[propertyIndex].features.bath_room }}</span
           >
         </div>
         <!-- Garage -->
         <div class="flex items-center gap-[2px]">
           <FeatureIcon
-            :classes="defineFeatureStyles(props.exchange.property_details[0].features.garage)"
+            :classes="
+              defineFeatureStyles(props.exchange.property_details[propertyIndex].features.garage)
+            "
             icon="garage"
           />
           <BooleanIcon
-            :icon="props.exchange.property_details[0].features.garage"
+            :icon="props.exchange.property_details[propertyIndex].features.garage"
             :weigth="'ligth'"
           />
         </div>
         <!-- Garden -->
         <div class="flex items-center gap-[2px]">
           <FeatureIcon
-            :classes="defineFeatureStyles(props.exchange.property_details[0].features.garden)"
+            :classes="
+              defineFeatureStyles(props.exchange.property_details[propertyIndex].features.garden)
+            "
             icon="garden"
           />
           <BooleanIcon
-            :icon="props.exchange.property_details[0].features.garden"
+            :icon="props.exchange.property_details[propertyIndex].features.garden"
             :weigth="'ligth'"
           />
         </div>
         <!-- Pool -->
         <div class="flex items-center gap-[2px]">
           <FeatureIcon
-            :classes="defineFeatureStyles(props.exchange.property_details[0].features.pool)"
+            :classes="
+              defineFeatureStyles(props.exchange.property_details[propertyIndex].features.pool)
+            "
             icon="pool"
           />
-          <BooleanIcon :icon="props.exchange.property_details[0].features.pool" :weigth="'ligth'" />
+          <BooleanIcon
+            :icon="props.exchange.property_details[propertyIndex].features.pool"
+            :weigth="'ligth'"
+          />
         </div>
         <!-- Furnished -->
         <div class="flex items-center gap-[2px]">
           <FeatureIcon
-            :classes="defineFeatureStyles(props.exchange.property_details[0].features.furnished)"
+            :classes="
+              defineFeatureStyles(props.exchange.property_details[propertyIndex].features.furnished)
+            "
             icon="furnished"
           />
           <BooleanIcon
-            :icon="props.exchange.property_details[0].features.furnished"
+            :icon="props.exchange.property_details[propertyIndex].features.furnished"
             :weigth="'ligth'"
           />
         </div>
       </div>
+
+      <!-- Pages -->
+      <div
+        v-if="props.exchange.property_details.length > 1"
+        class="absolute -top-6 left-[85px] flex overflow-hidden rounded-tr-lg min-[400px]:left-[93px]"
+      >
+        <!-- 1 -->
+        <div
+          class="flex h-6 w-7 items-center justify-center"
+          :class="activeProperty[0] ? 'bg-white' : 'bg-sgray-200'"
+          @click.prevent="switchProperty(0)"
+        >
+          <span class="text-shadow relative top-[1px]">1</span>
+        </div>
+
+        <!-- 2 -->
+        <div
+          class="flex h-6 w-7 items-center justify-center"
+          :class="activeProperty[1] ? 'bg-white' : 'bg-sgray-200'"
+          @click.prevent="switchProperty(1)"
+        >
+          <span class="text-shadow relative top-[1px]">2</span>
+        </div>
+
+        <!-- 3 -->
+        <div
+          v-if="props.exchange.property_details.length > 2"
+          class="flex h-6 w-7 items-center justify-center"
+          :class="activeProperty[2] ? 'bg-white' : 'bg-sgray-200'"
+          @click.prevent="switchProperty(2)"
+        >
+          <span class="text-shadow relative top-[1px]">3</span>
+        </div>
+      </div>
     </div>
   </div>
-
-  <!-- <div
-      v-if="props.exchange.offer_details.offers !== 1"
-      class="clip absolute bottom-0 flex w-[85px] flex-shrink-0 flex-col items-center justify-center bg-sviolet"
-      :class="defineClipHeight(props.exchange.property_details.length)"
-    >
-      <h2 class="font-extrabold text-white">PERMUTA</h2>
-      <div
-        v-if="props.exchange.offer_details.needs.enable"
-        class="flex flex-col items-center gap-[2px]"
-      >
-        <span class="relative top-[1px] text-lg font-semibold leading-tight text-white">
-          {{ props.exchange.offer_details.offers }} x
-          {{ props.exchange.offer_details.needs.count }}
-        </span>
-        <span class="text-xs text-white">propiedades</span>
-      </div>
-      <div
-        v-else-if="!props.exchange.offer_details.needs.enable"
-        class="flex flex-col items-center gap-[2px]"
-      >
-        <span class="relative top-[1px] text-lg font-semibold leading-tight text-white">
-          {{ props.exchange.offer_details.offers }}
-        </span>
-        <span class="text-xs text-white">{{
-          props.exchange.offer_details.offers > 1 ? "propiedades" : "propiedad"
-        }}</span>
-      </div>
-    </div> -->
 </template>
 
 <style scoped>
