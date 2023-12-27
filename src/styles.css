@@ -2,11 +2,10 @@
 
 * {
   -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
   -moz-tap-highlight-color: transparent;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  /* user-select: none;
+  -webkit-user-select: none; */
 }
 
 @tailwind base;
