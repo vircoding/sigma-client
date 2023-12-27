@@ -31,6 +31,8 @@
         }}</span>
         <span class="uppercase text-white">{{ props.sale.amount_details.currency }}</span>
       </div>
+
+      <!-- Address -->
       <div class="flex h-[60px] flex-grow items-center py-[6px] pl-[5px]">
         <span
           v-if="props.sale.property_details[0].address.province === 'Isla de la Juventud'"
@@ -42,6 +44,7 @@
           {{ props.sale.property_details[0].address.province }}</span
         >
       </div>
+
       <!-- Features -->
       <div class="feature-container grid h-full flex-shrink-0 grid-cols-3 grid-rows-2 gap-x-1">
         <!-- Bed Room -->

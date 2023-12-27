@@ -1,4 +1,5 @@
 <script setup>
+  import { ref } from "vue";
   import SigmaVerticalIcon from "./icons/SigmaVerticalIcon.vue";
   import FeatureIcon from "./icons/FeatureIcon.vue";
   import BooleanIcon from "./icons/BooleanIcon.vue";
@@ -12,11 +13,26 @@
     return `h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px] ${fill}`;
   };
 
-  const defineClipHeight = (length) => {
-    if (length === 1) return "h-[120px] pt-[21px]";
-    else if (length === 2) return "h-[178px] pt-7";
-    else if (length === 3) return "h-[238px] pt-8";
-    else return "h-0";
+  const activeProperty = ref([true, false, false]);
+  const propertyIndex = ref(0);
+
+  const switchProperty = (index) => {
+    switch (index) {
+      case 0:
+        activeProperty.value = [true, false, false];
+        propertyIndex.value = 0;
+        break;
+      case 1:
+        activeProperty.value = [false, true, false];
+        propertyIndex.value = 1;
+        break;
+      case 2:
+        activeProperty.value = [false, false, true];
+        propertyIndex.value = 2;
+        break;
+      default:
+        break;
+    }
   };
 </script>
 
@@ -28,16 +44,9 @@
         <SigmaVerticalIcon class="text-shadow w-14 fill-white" />
       </div>
     </div>
-    <div
-      v-for="(item, index) in props.exchange.property_details"
-      :key="index"
-      class="relative flex h-[60px] w-full items-center"
-    >
+    <div class="flex h-[60px] w-full items-center">
       <!-- Clip -->
-      <div
-        v-if="props.exchange.offer_details.offers === 1"
-        class="clip flex h-44 w-[85px] flex-shrink-0 flex-col items-center bg-sviolet pt-[45px]"
-      >
+      <div class="clip flex h-44 w-[85px] flex-shrink-0 flex-col items-center bg-sviolet pt-[45px]">
         <h2 class="font-extrabold text-white">PERMUTA</h2>
         <div
           v-if="props.exchange.offer_details.needs.enable"
@@ -59,18 +68,17 @@
           <span class="text-xs text-white">propiedades</span>
         </div>
       </div>
-      <!-- Clip Region -->
-      <div v-else class="clip-region invisible h-full w-[85px] flex-shrink-0 pt-[45px]"></div>
 
       <!-- Address -->
       <div class="flex h-[60px] flex-grow items-center py-[6px] pl-[5px]">
         <span
-          v-if="item.address.province === 'Isla de la Juventud'"
+          v-if="props.exchange.property_details[0].address.province === 'Isla de la Juventud'"
           class="text-xs font-semibold text-sgray-300"
-          >{{ item.address.province }}</span
+          >{{ props.exchange.property_details[0].address.province }}</span
         >
         <span v-else class="text-xs font-semibold text-sgray-300"
-          >{{ item.address.municipality }}, {{ item.address.province }}</span
+          >{{ props.exchange.property_details[0].address.municipality }},
+          {{ props.exchange.property_details[0].address.province }}</span
         >
       </div>
 
@@ -78,48 +86,82 @@
       <div class="feature-container grid h-full flex-shrink-0 grid-cols-3 grid-rows-2 gap-x-1">
         <!-- Bed Room -->
         <div class="flex items-center gap-[2px]">
-          <FeatureIcon :classes="defineFeatureStyles(item.features.bed_room)" icon="bed_room" />
+          <FeatureIcon
+            :classes="defineFeatureStyles(props.exchange.property_details[0].features.bed_room)"
+            icon="bed_room"
+          />
           <span
             class="text-shadow text-xs"
-            :class="item.features.bed_room > 0 ? 'text-sgray-400' : 'text-sgray-200'"
-            >x{{ item.features.bed_room }}</span
+            :class="
+              props.exchange.property_details[0].features.bed_room > 0
+                ? 'text-sgray-400'
+                : 'text-sgray-200'
+            "
+            >x{{ props.exchange.property_details[0].features.bed_room }}</span
           >
         </div>
         <!-- Bath Room -->
         <div class="flex items-center gap-[2px]">
-          <FeatureIcon :classes="defineFeatureStyles(item.features.bath_room)" icon="bath_room" />
+          <FeatureIcon
+            :classes="defineFeatureStyles(props.exchange.property_details[0].features.bath_room)"
+            icon="bath_room"
+          />
           <span
             class="text-shadow text-xs"
-            :class="item.features.bath_room > 0 ? 'text-sgray-400' : 'text-sgray-200'"
-            >x{{ item.features.bath_room }}</span
+            :class="
+              props.exchange.property_details[0].features.bath_room > 0
+                ? 'text-sgray-400'
+                : 'text-sgray-200'
+            "
+            >x{{ props.exchange.property_details[0].features.bath_room }}</span
           >
         </div>
         <!-- Garage -->
         <div class="flex items-center gap-[2px]">
-          <FeatureIcon :classes="defineFeatureStyles(item.features.garage)" icon="garage" />
-          <BooleanIcon :icon="item.features.garage" :weigth="'ligth'" />
+          <FeatureIcon
+            :classes="defineFeatureStyles(props.exchange.property_details[0].features.garage)"
+            icon="garage"
+          />
+          <BooleanIcon
+            :icon="props.exchange.property_details[0].features.garage"
+            :weigth="'ligth'"
+          />
         </div>
         <!-- Garden -->
         <div class="flex items-center gap-[2px]">
-          <FeatureIcon :classes="defineFeatureStyles(item.features.garden)" icon="garden" />
-          <BooleanIcon :icon="item.features.garden" :weigth="'ligth'" />
+          <FeatureIcon
+            :classes="defineFeatureStyles(props.exchange.property_details[0].features.garden)"
+            icon="garden"
+          />
+          <BooleanIcon
+            :icon="props.exchange.property_details[0].features.garden"
+            :weigth="'ligth'"
+          />
         </div>
         <!-- Pool -->
         <div class="flex items-center gap-[2px]">
-          <FeatureIcon :classes="defineFeatureStyles(item.features.pool)" icon="pool" />
-          <BooleanIcon :icon="item.features.pool" :weigth="'ligth'" />
+          <FeatureIcon
+            :classes="defineFeatureStyles(props.exchange.property_details[0].features.pool)"
+            icon="pool"
+          />
+          <BooleanIcon :icon="props.exchange.property_details[0].features.pool" :weigth="'ligth'" />
         </div>
         <!-- Furnished -->
         <div class="flex items-center gap-[2px]">
-          <FeatureIcon :classes="defineFeatureStyles(item.features.furnished)" icon="furnished" />
-          <BooleanIcon :icon="item.features.furnished" :weigth="'ligth'" />
+          <FeatureIcon
+            :classes="defineFeatureStyles(props.exchange.property_details[0].features.furnished)"
+            icon="furnished"
+          />
+          <BooleanIcon
+            :icon="props.exchange.property_details[0].features.furnished"
+            :weigth="'ligth'"
+          />
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Clip -->
-
-    <div
+  <!-- <div
       v-if="props.exchange.offer_details.offers !== 1"
       class="clip absolute bottom-0 flex w-[85px] flex-shrink-0 flex-col items-center justify-center bg-sviolet"
       :class="defineClipHeight(props.exchange.property_details.length)"
@@ -146,8 +188,7 @@
           props.exchange.offer_details.offers > 1 ? "propiedades" : "propiedad"
         }}</span>
       </div>
-    </div>
-  </div>
+    </div> -->
 </template>
 
 <style scoped>
@@ -166,10 +207,6 @@
     .feature-container {
       width: 120px;
       padding-left: 6px;
-    }
-
-    .clip-region {
-      margin-left: 8px;
     }
 
     .clip {
