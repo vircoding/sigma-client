@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 export const useLayoutStore = defineStore("layout", () => {
   // State
@@ -8,6 +8,9 @@ export const useLayoutStore = defineStore("layout", () => {
   const spinnerLoading = ref(false);
   const tableSpinner = ref(false);
   const fullScreenGallery = ref(false);
+  const popup = ref({
+    preInsert: false,
+  });
 
   // Actions
   const unhideSideMenu = () => {
@@ -50,6 +53,29 @@ export const useLayoutStore = defineStore("layout", () => {
     fullScreenGallery.value = false;
   };
 
+  const unhidePopup = (key) => {
+    switch (key) {
+      case "preInsert":
+        popup.value.preInsert = true;
+        break;
+      default:
+        break;
+    }
+  };
+
+  const hidePopup = () => {
+    popup.value = {
+      preInsert: false,
+    };
+  };
+
+  const isPopup = computed(() => {
+    for (let prop in popup.value) {
+      if (popup.value[prop]) return true;
+    }
+    return false;
+  });
+
   // Resets
   const $reset = () => {
     sideMenu.value = false;
@@ -57,6 +83,9 @@ export const useLayoutStore = defineStore("layout", () => {
     spinnerLoading.value = false;
     tableSpinner.value = false;
     fullScreenGallery.value = false;
+    popup.value = {
+      preInsert: false,
+    };
   };
 
   return {
@@ -65,6 +94,8 @@ export const useLayoutStore = defineStore("layout", () => {
     spinnerLoading,
     tableSpinner,
     fullScreenGallery,
+    popup,
+    isPopup,
     unhideSideMenu,
     hideSideMenu,
     unhideLogoLoading,
@@ -75,6 +106,8 @@ export const useLayoutStore = defineStore("layout", () => {
     hideTableSpinner,
     unhideFullScreenGallery,
     hideFullScreenGallery,
+    unhidePopup,
+    hidePopup,
     $reset,
   };
 });

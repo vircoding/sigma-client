@@ -5,22 +5,30 @@
   import SideMenu from "./components/SideMenu.vue";
   import Loading from "./components/Loading.vue";
   import FormSpinner from "./components/FormSpinner.vue";
+  import Popup from "./components/Popup.vue";
 
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
 
   const cancelMove = (event) => {
     if (
-      (layoutStore.sideMenu || layoutStore.spinnerLoading || layoutStore.logoLoading) &&
+      (layoutStore.sideMenu ||
+        layoutStore.spinnerLoading ||
+        layoutStore.logoLoading ||
+        layoutStore.isPopup) &&
       event.cancelable
     ) {
       event.preventDefault();
     }
   };
+
+  const hidePopup = () => {
+    layoutStore.hidePopup();
+  };
 </script>
 
 <template>
-  <div class="h-screen" @touchmove="cancelMove($event)">
+  <div class="h-screen" @click.prevent="hidePopup" @touchmove="cancelMove($event)">
     <SideMenu
       class="side-menu fixed right-0 z-30 translate-x-full bg-white will-change-transform lg:hidden"
       :class="layoutStore.sideMenu ? 'visible transition' : 'invisible'"
@@ -31,6 +39,7 @@
       :class="`${layoutStore.logoLoading ? 'hidden' : 'block'} 
       ${layoutStore.sideMenu ? 'blur' : ''}
       ${layoutStore.spinnerLoading ? 'blur' : ''}
+      ${layoutStore.isPopup ? 'blur' : ''}
       `"
       class="router-view font-poppins text-sm text-sgray-400 lg:text-base"
     >
@@ -40,10 +49,11 @@
     <div
       @click.prevent="layoutStore.hideSideMenu"
       class="overlay"
-      :class="layoutStore.sideMenu ? 'visible' : 'invisible'"
+      :class="layoutStore.sideMenu || layoutStore.isPopup ? 'visible' : 'invisible'"
     ></div>
     <FormSpinner :class="layoutStore.spinnerLoading ? 'block' : 'hidden'" class="z-30" />
   </div>
+  <Popup :type="'pre-insert'" />
 </template>
 
 <style scoped>
