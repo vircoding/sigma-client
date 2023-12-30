@@ -380,7 +380,7 @@
     </div>
 
     <!-- Form -->
-    <form @submit.prevent="formSubmit" novalidate class="flex w-full flex-col text-base">
+    <form @submit.prevent="formSubmit" novalidate class="mb-9 flex w-full flex-col text-base">
       <!-- Amount/Offer Details -->
       <div
         class="mb-4 flex h-[160px] w-full flex-row items-center rounded-md border border-sgray-100 px-5 py-3 max-[345px]:px-3"
@@ -595,10 +595,14 @@
       <button
         type="submit"
         :disabled="disableSubmit"
-        class="mb-9 flex h-[38px] w-full items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 pt-[2px] text-center font-semibold text-sgray-100 transition-all duration-200 ease-out hover:bg-black hover:text-white disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 lg:h-10 lg:w-44 lg:text-lg"
+        class="mb-4 flex h-[38px] w-full items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 pt-[2px] text-center font-semibold text-sgray-100 transition-all duration-200 ease-out hover:bg-black hover:text-white disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 lg:h-10 lg:w-44 lg:text-lg"
       >
         Publicar
       </button>
+      <span class="w-full text-center text-xs"
+        >Si necesites ayuda para publicar tu anuncio no olvides contactarnos a
+        <a href="https://wa.me/+5350009047" class="font-semibold">nuestro Whatsapp</a>.</span
+      >
     </form>
   </div>
 </template>
