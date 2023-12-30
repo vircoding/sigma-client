@@ -3,12 +3,13 @@
   import { useUserStore } from "../stores/userStore.js";
   import { useLayoutStore } from "../stores/layoutStore.js";
   import SmallPostCard from "./SmallPostCard.vue";
+  import Popup from "./Popup.vue";
 
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
 
   const postsActive = ref(true);
-  const alertVisibility = ref(false);
+  // const alertVisibility = ref(false);
   const deletePostId = ref(null);
   const startPositionY = ref(null);
 
@@ -19,20 +20,20 @@
     }
   };
 
-  const startSwipe = (event) => {
-    startPositionY.value = event.touches[0].clientY;
-  };
+  // const startSwipe = (event) => {
+  //   startPositionY.value = event.touches[0].clientY;
+  // };
 
-  const moveSwipe = (event) => {
-    const movePosY = event.touches[0].clientY;
-    const diffY = Math.abs(movePosY - startPositionY.value);
+  // const moveSwipe = (event) => {
+  //   const movePosY = event.touches[0].clientY;
+  //   const diffY = Math.abs(movePosY - startPositionY.value);
 
-    if (diffY > 0) {
-      if (event.cancelable) {
-        event.preventDefault();
-      }
-    }
-  };
+  //   if (diffY > 0) {
+  //     if (event.cancelable) {
+  //       event.preventDefault();
+  //     }
+  //   }
+  // };
 
   const prevPostsPageEvent = async () => {
     layoutStore.unhideSpinnerLoading();
@@ -66,37 +67,37 @@
     layoutStore.hideSpinnerLoading();
   };
 
-  const unhideAlert = (id) => {
-    deletePostId.value = id;
-    alertVisibility.value = true;
+  const unhidePopup = (id) => {
+    layoutStore.setDeletePostId(id);
+    layoutStore.unhidePopup("delete-post");
   };
 
-  const hideAlert = () => {
-    alertVisibility.value = false;
-  };
+  // const hideAlert = () => {
+  //   alertVisibility.value = false;
+  // };
 
-  const deletePost = async () => {
-    hideAlert();
-    layoutStore.unhideSpinnerLoading();
-    try {
-      await userStore.deletePost(deletePostId.value);
-      await userStore.getFavorites();
-      if (
-        userStore.myAccountState.posts.posts.length === 1 &&
-        userStore.myAccountState.posts.page > 1
-      ) {
-        await userStore.getMyAccountPosts(userStore.myAccountState.posts.page - 1);
-      } else {
-        await userStore.getMyAccountPosts(userStore.myAccountState.posts.page);
-      }
-      await userStore.getMyAccountFavorites(userStore.myAccountState.favorites.page);
-      deletePostId.value = null;
-      layoutStore.hideSpinnerLoading();
-    } catch (error) {
-      console.log(error);
-      layoutStore.hideSpinnerLoading();
-    }
-  };
+  // const deletePost = async () => {
+  //   hideAlert();
+  //   layoutStore.unhideSpinnerLoading();
+  //   try {
+  //     await userStore.deletePost(deletePostId.value);
+  //     await userStore.getFavorites();
+  //     if (
+  //       userStore.myAccountState.posts.posts.length === 1 &&
+  //       userStore.myAccountState.posts.page > 1
+  //     ) {
+  //       await userStore.getMyAccountPosts(userStore.myAccountState.posts.page - 1);
+  //     } else {
+  //       await userStore.getMyAccountPosts(userStore.myAccountState.posts.page);
+  //     }
+  //     await userStore.getMyAccountFavorites(userStore.myAccountState.favorites.page);
+  //     deletePostId.value = null;
+  //     layoutStore.hideSpinnerLoading();
+  //   } catch (error) {
+  //     console.log(error);
+  //     layoutStore.hideSpinnerLoading();
+  //   }
+  // };
 
   const removeFavorite = async (id) => {
     layoutStore.unhideSpinnerLoading();
@@ -162,7 +163,7 @@
       >
         <li v-for="(item, index) in userStore.myAccountState.posts.posts" :key="index">
           <RouterLink class="select-none outline-none" :to="`/post/${item.id}`">
-            <SmallPostCard @delete="unhideAlert" :index="index" :favorite="false" :post="item" />
+            <SmallPostCard @delete="unhidePopup" :index="index" :favorite="false" :post="item" />
           </RouterLink>
         </li>
         <li
@@ -243,50 +244,11 @@
       </div>
     </div>
   </section>
-
-  <!-- Alert -->
-  <div
-    v-if="alertVisibility"
-    @touchstart="startSwipe($event)"
-    @touchmove="moveSwipe($event)"
-    class="text-shadow fixed inset-0 z-50 flex items-center justify-center overflow-y-auto"
-  >
-    <div @click.prevent="hideAlert" class="overlay absolute h-full w-full"></div>
-    <div
-      class="border-md z-20 flex h-[215px] w-[300px] flex-col items-center justify-center gap-5 rounded-md bg-white p-5 text-center text-lg"
-    >
-      <span
-        >¿Estás <span class="font-semibold">seguro</span> que deseas
-        <span class="font-semibold">eliminar</span> esta
-        <span class="font-semibold">publicación</span>?</span
-      >
-      <div class="flex w-full items-center justify-evenly">
-        <button
-          @click.prevent="deletePost"
-          class="w-[115px] rounded-md bg-sgray-400 py-1 font-semibold text-white"
-        >
-          Eliminar
-        </button>
-        <button @click.prevent="hideAlert" class="w-[115px] rounded-md bg-sgray-100 py-1">
-          Cancelar
-        </button>
-      </div>
-    </div>
-  </div>
 </template>
 
 <style scoped>
-  .scoped-blur {
-    filter: blur(1px);
-  }
-
   .spinner {
     animation: spin 0.75s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  }
-
-  .overlay {
-    background-color: rgba(0, 0, 0, 0.45);
-    filter: blur(2px);
   }
 
   @keyframes spin {

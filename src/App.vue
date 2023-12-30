@@ -49,7 +49,7 @@
     ></div>
     <FormSpinner :class="layoutStore.spinnerLoading ? 'block' : 'hidden'" class="z-30" />
   </div>
-  <Popup :type="'pre-insert'" />
+  <Popup />
 </template>
 
 <style scoped>

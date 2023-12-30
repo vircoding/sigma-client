@@ -10,7 +10,23 @@ export const useLayoutStore = defineStore("layout", () => {
   const fullScreenGallery = ref(false);
   const popup = ref({
     preInsert: false,
+    deletePost: false,
   });
+
+  const deletePostId = ref(null);
+
+  // Getters
+  const isPopup = computed(() => {
+    for (let prop in popup.value) {
+      if (popup.value[prop]) return true;
+    }
+    return false;
+  });
+
+  // Setters
+  const setDeletePostId = (id) => {
+    deletePostId.value = id;
+  };
 
   // Actions
   const unhideSideMenu = () => {
@@ -54,10 +70,12 @@ export const useLayoutStore = defineStore("layout", () => {
   };
 
   const unhidePopup = (key) => {
-    console.log("Unhiding Popup");
     switch (key) {
       case "pre-insert":
         popup.value.preInsert = true;
+        break;
+      case "delete-post":
+        popup.value.deletePost = true;
         break;
       default:
         break;
@@ -67,17 +85,15 @@ export const useLayoutStore = defineStore("layout", () => {
   const hidePopup = () => {
     popup.value = {
       preInsert: false,
+      deletePost: false,
     };
   };
 
-  const isPopup = computed(() => {
-    for (let prop in popup.value) {
-      if (popup.value[prop]) return true;
-    }
-    return false;
-  });
-
   // Resets
+  const resetDeletePostId = () => {
+    deletePostId.value = null;
+  };
+
   const $reset = () => {
     sideMenu.value = false;
     logoLoading.value = false;
@@ -86,6 +102,7 @@ export const useLayoutStore = defineStore("layout", () => {
     fullScreenGallery.value = false;
     popup.value = {
       preInsert: false,
+      deletePost: false,
     };
   };
 
@@ -96,7 +113,9 @@ export const useLayoutStore = defineStore("layout", () => {
     tableSpinner,
     fullScreenGallery,
     popup,
+    deletePostId,
     isPopup,
+    setDeletePostId,
     unhideSideMenu,
     hideSideMenu,
     unhideLogoLoading,
@@ -109,6 +128,7 @@ export const useLayoutStore = defineStore("layout", () => {
     hideFullScreenGallery,
     unhidePopup,
     hidePopup,
+    resetDeletePostId,
     $reset,
   };
 });
