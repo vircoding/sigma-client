@@ -357,6 +357,10 @@
       layoutStore.hideSpinnerLoading();
     }
   };
+
+  setTimeout(() => {
+    layoutStore.unhidePopup("pre-insert");
+  }, 750);
 </script>
 
 <template>

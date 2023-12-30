@@ -21,14 +21,10 @@
       event.preventDefault();
     }
   };
-
-  const hidePopup = () => {
-    layoutStore.hidePopup();
-  };
 </script>
 
 <template>
-  <div class="h-screen" @click.prevent="hidePopup" @touchmove="cancelMove($event)">
+  <div class="h-screen" @touchmove="cancelMove($event)">
     <SideMenu
       class="side-menu fixed right-0 z-30 translate-x-full bg-white will-change-transform lg:hidden"
       :class="layoutStore.sideMenu ? 'visible transition' : 'invisible'"

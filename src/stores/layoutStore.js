@@ -54,8 +54,9 @@ export const useLayoutStore = defineStore("layout", () => {
   };
 
   const unhidePopup = (key) => {
+    console.log("Unhiding Popup");
     switch (key) {
-      case "preInsert":
+      case "pre-insert":
         popup.value.preInsert = true;
         break;
       default:
