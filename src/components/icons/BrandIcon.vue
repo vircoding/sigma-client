@@ -4,11 +4,7 @@
 
 <template>
   <!-- Facebook -->
-  <div
-    v-if="props.icon === 'facebook'"
-    class="flex items-center justify-center rounded-full border p-[3px]"
-    :style="`border-color: ${props.color}`"
-  >
+  <div v-if="props.icon === 'facebook'" class="flex items-center justify-center p-[3px]">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
@@ -23,11 +19,7 @@
   </div>
 
   <!-- Instagram -->
-  <div
-    v-if="props.icon === 'instagram'"
-    class="flex items-center justify-center rounded-full border p-[3px]"
-    :style="`border-color: ${props.color}`"
-  >
+  <div v-if="props.icon === 'instagram'" class="flex items-center justify-center p-[3px]">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
@@ -46,11 +38,7 @@
   </div>
 
   <!-- YouTube -->
-  <div
-    v-if="props.icon === 'youtube'"
-    class="flex items-center justify-center rounded-full border p-[3px]"
-    :style="`border-color: ${props.color}`"
-  >
+  <div v-if="props.icon === 'youtube'" class="flex items-center justify-center p-[3px]">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
@@ -65,11 +53,7 @@
   </div>
 
   <!-- Threads -->
-  <div
-    v-if="props.icon === 'threads'"
-    class="flex items-center justify-center rounded-full border p-[5px]"
-    :style="`border-color: ${props.color}`"
-  >
+  <div v-if="props.icon === 'threads'" class="flex items-center justify-center p-[5px]">
     <svg
       class="w-5"
       aria-label="Threads"
@@ -85,11 +69,7 @@
   </div>
 
   <!-- TikTok -->
-  <div
-    v-if="props.icon === 'tiktok'"
-    class="flex items-center justify-center rounded-full border p-[4px]"
-    :style="`border-color: ${props.color}`"
-  >
+  <div v-if="props.icon === 'tiktok'" class="flex items-center justify-center p-[4px]">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="22"
@@ -104,11 +84,7 @@
   </div>
 
   <!-- Twitter-X -->
-  <div
-    v-if="props.icon === 'twitter-x'"
-    class="flex items-center justify-center rounded-full border p-[1px]"
-    :style="`border-color: ${props.color}`"
-  >
+  <div v-if="props.icon === 'twitter-x'" class="flex items-center justify-center p-[1px]">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1668.56 1221.19"
