@@ -1,5 +1,4 @@
 <script setup>
-  import { useUserStore } from "../stores/userStore.js";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
   import UpdateAgentForm from "./UpdateAgentForm.vue";
   import PostAndFavoritesSection from "./PostAndFavoritesSection.vue";
