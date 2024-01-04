@@ -12,16 +12,25 @@
     offsetX: 0,
     offsetY: 0,
   });
+  const finishGesture = ref(false);
 
   // const commandScale = ref(1);
 
   const initialScale = ref(1);
   const currentScale = ref(1);
 
+  const transDuration = computed(() => {
+    if (finishGesture.value) return "250ms";
+    else if (touchState.value.isDragging) return "0s";
+    else return "250ms";
+  });
+
   const getImageStyle = () => {
     return `transform: scale(${currentScale.value}) translate(${
-      Math.floor(currentPosition.value.x) / currentScale.value
-    }px, ${Math.floor(currentPosition.value.y) / currentScale.value}px)`;
+      Math.floor(currentPosition.value.x) / (currentScale.value * 0.6)
+    }px, ${
+      Math.floor(currentPosition.value.y) / (currentScale.value * 0.6)
+    }px); transition: transform ${transDuration.value}`;
   };
 
   const onTouchStart = (event) => {
@@ -61,11 +70,16 @@
   const onGestureChange = (event) => {
     currentScale.value = initialScale.value * event.scale;
     if (currentScale.value >= 3) currentScale.value = 3;
-    else if (currentScale.value <= 0.5) currentScale.value = 0.5;
+    else if (currentScale.value <= 1) currentScale.value = 1;
   };
 
   const onGestureEnd = () => {
+    finishGesture.value = true;
     initialScale.value = currentScale.value;
+    currentPosition.value = { x: 0, y: 0 };
+    setTimeout(() => {
+      finishGesture.value = false;
+    }, 300);
   };
 
   const closeFullScreen = () => {
@@ -92,7 +106,6 @@
 </script>
 
 <template>
-  <span class="text-white">{{ currentScale }}</span>
   <div class="fixed top-0 z-10 w-full">
     <nav class="flex h-[68px] justify-end space-x-4 p-4">
       <img
