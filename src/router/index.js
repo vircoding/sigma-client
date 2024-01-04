@@ -179,8 +179,6 @@ const routes = [
 
         next();
       } catch (error) {
-        console.log(error);
-
         if (!from.name) {
           layoutStore.hideLogoLoading();
         } else {
@@ -189,7 +187,11 @@ const routes = [
 
         if (error.message === "Post not founded") {
           next({ name: "404" });
+        } else if (error.message === "Agent not founded") {
+          postStore.setIsClient();
+          next();
         } else {
+          console.log(error);
           next("/");
         }
       }

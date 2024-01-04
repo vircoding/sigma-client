@@ -17,6 +17,7 @@ export const useAgentStore = defineStore("agent", () => {
         info: res.data.info,
       };
     } catch (error) {
+      if (error.response.data.error === "Agent not founded") throw new Error("Agent not founded");
       console.log(error);
     }
   };

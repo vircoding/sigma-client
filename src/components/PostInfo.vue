@@ -76,7 +76,6 @@
         v-else-if="postStore.postState.type === 'exchange'"
         class="text-shadow text-2xl font-extrabold"
       >
-        PERMUTA -
         {{
           formatOffer(
             postStore.postState.offer_details.offers,
@@ -205,50 +204,52 @@
         {{ item }}<br />
       </span>
     </div>
-    <!-- Horizontal Line -->
-    <div
-      v-if="agentStore.authorState.role === 'agent'"
-      class="w-full border-t border-sgray-100"
-    ></div>
-    <!-- Agent -->
-    <div
-      v-if="agentStore.authorState.role === 'agent'"
-      class="mt-2 flex w-full justify-between gap-3"
-    >
-      <!-- Avatar -->
-      <div class="w-1/5">
-        <img
-          src="../assets/agent-avatar.jpg"
-          class="text-shadow rounded-full border-2 border-sgray-100"
-          alt="Avatar del agente"
-        />
-      </div>
-      <div class="flex w-4/5 flex-col gap-2">
-        <div class="mb-[1px] leading-tight">
-          <!-- Name -->
-          <RouterLink :to="`/agents/${agentStore.authorState.id}`">
-            <h4 class="text-shadow">
-              Por
-              <span class="font-semibold">{{
-                agentStore.authorState.info.firstname + " " + agentStore.authorState.info.lastname
-              }}</span>
-            </h4>
-          </RouterLink>
-          <!-- Public Email -->
-          <a
-            class="text-sgray-300"
-            :href="`mailto:${agentStore.authorState.contact_details.public_email}`"
-            >{{ agentStore.authorState.contact_details.public_email }}</a
-          >
+    <div v-if="!postStore.isClientState">
+      <!-- Horizontal Line -->
+      <div
+        v-if="agentStore.authorState.role === 'agent'"
+        class="w-full border-t border-sgray-100"
+      ></div>
+      <!-- Agent -->
+      <div
+        v-if="agentStore.authorState.role === 'agent'"
+        class="mt-2 flex w-full justify-between gap-3"
+      >
+        <!-- Avatar -->
+        <div class="w-1/5">
+          <img
+            src="../assets/agent-avatar.jpg"
+            class="text-shadow rounded-full border-2 border-sgray-100"
+            alt="Avatar del agente"
+          />
         </div>
-        <!-- Horizontal Line -->
-        <div class="w-[98%] border-t border-sgray-100"></div>
-        <!-- Bio -->
-        <span
-          v-for="item in formatDescription(agentStore.authorState.info.bio)"
-          class="text-shadow inline-block w-full"
-          >{{ item }}<br
-        /></span>
+        <div class="flex w-4/5 flex-col gap-2">
+          <div class="mb-[1px] leading-tight">
+            <!-- Name -->
+            <RouterLink :to="`/agents/${agentStore.authorState.id}`">
+              <h4 class="text-shadow">
+                Por
+                <span class="font-semibold">{{
+                  agentStore.authorState.info.firstname + " " + agentStore.authorState.info.lastname
+                }}</span>
+              </h4>
+            </RouterLink>
+            <!-- Public Email -->
+            <a
+              class="text-sgray-300"
+              :href="`mailto:${agentStore.authorState.contact_details.public_email}`"
+              >{{ agentStore.authorState.contact_details.public_email }}</a
+            >
+          </div>
+          <!-- Horizontal Line -->
+          <div class="w-[98%] border-t border-sgray-100"></div>
+          <!-- Bio -->
+          <span
+            v-for="item in formatDescription(agentStore.authorState.info.bio)"
+            class="text-shadow inline-block w-full"
+            >{{ item }}<br
+          /></span>
+        </div>
       </div>
     </div>
   </div>

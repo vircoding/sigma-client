@@ -12,6 +12,7 @@ export const usePostStore = defineStore("post", () => {
   const agentPostsState = ref(null);
   const userPostsState = ref(null);
   const userFavoritesState = ref(null);
+  const isClientState = ref(false);
 
   // Computed
   const isPostState = computed(() => !!postState.value);
@@ -87,6 +88,10 @@ export const usePostStore = defineStore("post", () => {
   };
 
   // Setters
+  const setIsClient = () => {
+    isClientState.value = true;
+  };
+
   const setPost = (post) => {
     postState.value = post;
   };
@@ -96,6 +101,10 @@ export const usePostStore = defineStore("post", () => {
   };
 
   // Resets
+  const resetIsClient = () => {
+    isClientState.value = false;
+  };
+
   const resetUserPosts = () => {
     userPostsState.value = null;
   };
@@ -137,6 +146,7 @@ export const usePostStore = defineStore("post", () => {
     resetPopularExchanges();
     resetPost();
     resetAgentPosts();
+    resetIsClient();
   };
 
   return {
@@ -149,6 +159,7 @@ export const usePostStore = defineStore("post", () => {
     postState,
     agentPostsState,
     isPostState,
+    isClientState,
     getPost,
     getUpdatePost,
     visitPost,
@@ -157,6 +168,7 @@ export const usePostStore = defineStore("post", () => {
     getPopularSales,
     getPopularRents,
     getPopularExchanges,
+    setIsClient,
     setPost,
     setUpdatePost,
     resetUserPosts,
@@ -167,6 +179,7 @@ export const usePostStore = defineStore("post", () => {
     resetPopularExchanges,
     resetPost,
     resetAgentPosts,
+    resetIsClient,
     $reset,
   };
 });

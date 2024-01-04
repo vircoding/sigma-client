@@ -6,7 +6,7 @@
   import { useLayoutStore } from "../stores/layoutStore.js";
   import { usePostStore } from "../stores/postStore.js";
   import { useAgentStore } from "../stores/agentStore.js";
-  import { computed, onBeforeUnmount } from "vue";
+  import { onBeforeUnmount } from "vue";
 
   const postStore = usePostStore();
   const agentStore = useAgentStore();
@@ -14,6 +14,7 @@
 
   onBeforeUnmount(() => {
     postStore.resetPost();
+    postStore.resetIsClient();
     agentStore.resetAuthor();
   });
 </script>

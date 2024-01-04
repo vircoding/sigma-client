@@ -1,5 +1,5 @@
 <script setup>
-  import { ref } from "vue";
+  import { ref, computed } from "vue";
   import { useLayoutStore } from "../stores/layoutStore.js";
 
   const layoutStore = useLayoutStore();
@@ -13,11 +13,15 @@
     offsetY: 0,
   });
 
+  // const commandScale = ref(1);
+
   const initialScale = ref(1);
   const currentScale = ref(1);
 
   const getImageStyle = () => {
-    return `transform: scale(${currentScale.value}) translate(${currentPosition.value.x}px, ${currentPosition.value.y}px)`;
+    return `transform: scale(${currentScale.value}) translate(${
+      Math.floor(currentPosition.value.x) / currentScale.value
+    }px, ${Math.floor(currentPosition.value.y) / currentScale.value}px)`;
   };
 
   const onTouchStart = (event) => {
@@ -56,6 +60,8 @@
 
   const onGestureChange = (event) => {
     currentScale.value = initialScale.value * event.scale;
+    if (currentScale.value >= 3) currentScale.value = 3;
+    else if (currentScale.value <= 0.5) currentScale.value = 0.5;
   };
 
   const onGestureEnd = () => {
@@ -67,29 +73,40 @@
   };
 
   const zoomIn = () => {
-    console.log("Zoom In");
+    if (currentScale.value <= 2.5) {
+      currentScale.value += 0.5;
+    } else {
+      currentScale.value = 3;
+    }
+    currentPosition.value = { x: 0, y: 0 };
   };
 
   const zoomOut = () => {
-    console.log("Zoom Out");
+    if (currentScale.value >= 1.5) {
+      currentScale.value -= 0.5;
+    } else {
+      currentScale.value = 1;
+    }
+    currentPosition.value = { x: 0, y: 0 };
   };
 </script>
 
 <template>
+  <span class="text-white">{{ currentScale }}</span>
   <div class="fixed top-0 z-10 w-full">
-    <nav class="flex h-[68px] justify-end p-4">
-      <!-- <img
+    <nav class="flex h-[68px] justify-end space-x-4 p-4">
+      <img
         @click.prevent="zoomIn"
-        class="custom-shadow mx-[6px] w-5"
+        class="custom-shadow w-6 -translate-x-[2px]"
         src="../assets/zoom-in-icon.svg"
         alt="Zoom In"
       />
       <img
         @click.prevent="zoomOut"
-        class="custom-shadow mx-[6px] w-5"
+        class="custom-shadow w-6 -translate-x-[2px]"
         src="../assets/zoom-out-icon.svg"
         alt="Zoom Out"
-      /> -->
+      />
       <img
         @click.prevent="closeFullScreen"
         class="custom-shadow w-5"
