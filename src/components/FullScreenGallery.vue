@@ -139,7 +139,13 @@
     class="relative flex h-full w-full items-center justify-center px-5"
   >
     <div class="relative">
-      <img ref="image" src="../assets/card-img2.jpg" :style="getImageStyle()" alt="Imagen" />
+      <img
+        ref="image"
+        src="../assets/card-img2.jpg"
+        :style="getImageStyle()"
+        alt="Imagen"
+        class="gallery-shadow rounded border border-sgray-400"
+      />
     </div>
     <div class="arrow-button custom-shadow absolute left-0 ml-2 rounded-full p-2">
       <img
