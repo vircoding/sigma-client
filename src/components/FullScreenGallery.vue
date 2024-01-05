@@ -87,8 +87,8 @@
   };
 
   const zoomIn = () => {
-    if (currentScale.value <= 2.5) {
-      currentScale.value += 0.5;
+    if (currentScale.value <= 2) {
+      currentScale.value += 1;
     } else {
       currentScale.value = 3;
     }
@@ -96,8 +96,8 @@
   };
 
   const zoomOut = () => {
-    if (currentScale.value >= 1.5) {
-      currentScale.value -= 0.5;
+    if (currentScale.value >= 2) {
+      currentScale.value -= 1;
     } else {
       currentScale.value = 1;
     }
