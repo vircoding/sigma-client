@@ -101,15 +101,10 @@
   };
 
   const zoomIn = () => {
-    // if (currentScale.value <= 2) {
-    //   currentScale.value += 1;
-    // } else {
-    //   currentScale.value = 3;
-    // }
     if (currentScale.value < maxScale() - 1) {
       currentScale.value += 1;
     } else {
-      currentScale.value += 1;
+      currentScale.value = maxScale() + 0.5;
       setTimeout(() => {
         currentScale.value = maxScale();
       }, 150);
@@ -161,7 +156,7 @@
     @gesturestart.prevent="onGestureStart"
     @gesturechange.prevent="onGestureChange"
     @gestureend.prevent="onGestureEnd"
-    class="relative flex h-full w-full items-center justify-center px-5"
+    class="absolute flex h-full w-full items-center justify-center px-5"
   >
     <div class="relative">
       <img
