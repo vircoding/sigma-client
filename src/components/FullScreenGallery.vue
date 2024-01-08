@@ -14,10 +14,20 @@
   });
   const finishGesture = ref(false);
 
-  // const commandScale = ref(1);
-
   const initialScale = ref(1);
   const currentScale = ref(1);
+
+  const maxScale = () => {
+    let scale;
+    const screenX = window.screen.width;
+    const screenY = window.screen.height;
+    const initialX = screenX - 40;
+    const initialY = (9 * initialX) / 16;
+
+    scale = screenY / initialY;
+
+    return scale - 0.5;
+  };
 
   const transDuration = computed(() => {
     if (finishGesture.value) return "250ms";
@@ -61,6 +71,10 @@
     touchState.value.isDragging = false;
     touchState.value.offsetX = 0;
     touchState.value.offsetY = 0;
+
+    // if (Math.abs(currentPosition.value.x) >= 21 || Math.abs(currentPosition.value.y) >= 29.25) {
+    //   currentPosition.value = { x: 0, y: 0 };
+    // }
   };
 
   const onGestureStart = (event) => {
@@ -69,7 +83,7 @@
 
   const onGestureChange = (event) => {
     currentScale.value = initialScale.value * event.scale;
-    if (currentScale.value >= 3) currentScale.value = 3;
+    if (currentScale.value >= maxScale) currentScale.value = maxScale;
     else if (currentScale.value <= 1) currentScale.value = 1;
   };
 
@@ -87,10 +101,18 @@
   };
 
   const zoomIn = () => {
-    if (currentScale.value <= 2) {
+    // if (currentScale.value <= 2) {
+    //   currentScale.value += 1;
+    // } else {
+    //   currentScale.value = 3;
+    // }
+    if (currentScale.value < maxScale() - 1) {
       currentScale.value += 1;
     } else {
-      currentScale.value = 3;
+      currentScale.value += 1;
+      setTimeout(() => {
+        currentScale.value = maxScale();
+      }, 150);
     }
     currentPosition.value = { x: 0, y: 0 };
   };
@@ -99,7 +121,10 @@
     if (currentScale.value >= 2) {
       currentScale.value -= 1;
     } else {
-      currentScale.value = 1;
+      currentScale.value = 0.75;
+      setTimeout(() => {
+        currentScale.value = 1;
+      }, 150);
     }
     currentPosition.value = { x: 0, y: 0 };
   };
