@@ -12,7 +12,10 @@
         </div>
       </header>
       <main class="mb-[5px] grow bg-background lg:mb-0">
-        <h6>About View</h6>
+        <h6 id="who">Who Section</h6>
+        <h6 id="team">Team Section</h6>
+        <h6 id="agent">Agent Section</h6>
+        <h6 id="revs">Reviews Section</h6>
       </main>
     </div>
     <footer class="lg:mb-2.5">

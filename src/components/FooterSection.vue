@@ -28,28 +28,35 @@
           <!-- Company -->
           <div class="flex w-full flex-col">
             <h6 class="text-base font-semibold tracking-wide">EMPRESA</h6>
-            <RouterLink to="/support/about" class="hover:underline">¿Quiénes somos?</RouterLink>
-            <RouterLink to="/support/about" class="hover:underline">¿Quiénes somos?</RouterLink>
-            <RouterLink to="/support/about" class="hover:underline">¿Quiénes somos?</RouterLink>
+            <RouterLink to="/support/about#who" class="hover:underline">¿Quiénes somos?</RouterLink>
+            <RouterLink to="/support/about#team" class="hover:underline">Nuestro equipo</RouterLink>
+            <RouterLink to="/support/about#agent" class="hover:underline"
+              >¿Quieres ser agente?</RouterLink
+            >
           </div>
 
           <!-- Help -->
           <div class="flex w-full flex-col">
             <h6 class="text-base font-semibold tracking-wide">AYUDA</h6>
-            <a href="https://www.youtube.com/" class="hover:underline">¿Cómo funciona el sitio?</a>
-            <a href="https://wa.me/+5350009047" class="hover:underline"
-              >Quiero contratar un agente</a
+            <RouterLink to="/support/help#video" class="hover:underline"
+              >¿Cómo funciona el sitio?</RouterLink
             >
             <a href="https://wa.me/+5350009047" class="hover:underline"
               >Quiero contratar un agente</a
+            >
+            <RouterLink to="/support/help#faq" class="hover:underline"
+              >Preguntas frecuentes</RouterLink
             >
           </div>
 
           <!-- Contact Us -->
           <div class="flex w-full flex-col">
             <h6 class="text-base font-semibold tracking-wide">CONTÁCTANOS</h6>
-            <a href="mailto:hola@sigmacuba.com">hola@sigmacuba.com</a>
-            <a href="https://wa.me/+5350009047" class="hover:underline">+53 50009047</a>
+            <a href="mailto:sigmacuba2023@gmail.com">sigmacuba2023@gmail.com</a>
+            <a href="https://wa.me/+5350009047" class="flex items-center gap-1 hover:underline">
+              <img src="../assets/whatsapp-icon.svg" />
+              <span>50009047</span>
+            </a>
           </div>
         </div>
 
