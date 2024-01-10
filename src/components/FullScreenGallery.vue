@@ -29,6 +29,15 @@
     return scale - 0.5;
   };
 
+  const figureDimentions = () => {
+    const screenX = window.screen.width;
+    const screenY = window.screen.height;
+    const initialX = screenX - 40;
+    const initialY = (9 * initialX) / 16;
+
+    return { x: initialX * currentScale.value, y: initialY * currentScale.value };
+  };
+
   const transDuration = computed(() => {
     if (finishGesture.value) return "250ms";
     else if (touchState.value.isDragging) return "0s";
@@ -54,17 +63,28 @@
     if (!touchState.value.isDragging) return;
     const touch = event.touches[0];
     const offsetX = touch.clientX - touchState.value.startX;
-    const offsetY = touch.clientY - touchState.value.startY;
+    // const offsetY = touch.clientY - touchState.value.startY;
     touchState.value.offsetX = offsetX;
-    touchState.value.offsetY = offsetY;
+    // touchState.value.offsetY = offsetY;
 
-    currentPosition.value = {
-      x: currentPosition.value.x + offsetX,
-      y: currentPosition.value.y + offsetY,
-    };
+    if (
+      Math.floor(currentPosition.value.x / (currentScale.value * 0.6) >= 90 + 20) &&
+      offsetX >= 0
+    ) {
+    } else if (
+      Math.floor(currentPosition.value.x / (currentScale.value * 0.6) <= -90 - 20) &&
+      offsetX <= 0
+    ) {
+    } else {
+      currentPosition.value = {
+        x: currentPosition.value.x + offsetX,
+        // y: currentPosition.value.y + offsetY,
+        y: 0,
+      };
+    }
 
     touchState.value.startX = touch.clientX;
-    touchState.value.startY = touch.clientY;
+    // touchState.value.startY = touch.clientY;
   };
 
   const onTouchEnd = () => {
@@ -72,9 +92,19 @@
     touchState.value.offsetX = 0;
     touchState.value.offsetY = 0;
 
-    // if (Math.abs(currentPosition.value.x) >= 21 || Math.abs(currentPosition.value.y) >= 29.25) {
-    //   currentPosition.value = { x: 0, y: 0 };
-    // }
+    const screenWidth = window.screen.width;
+
+    const { x, y } = figureDimentions();
+
+    if (x <= screenWidth - 40) {
+      currentPosition.value = { x: 0, y: 0 };
+    } else {
+      if (Math.floor(currentPosition.value.x) / (currentScale.value * 0.6) > 90) {
+        currentPosition.value.x = 90 + 20;
+      } else if (Math.floor(currentPosition.value.x) / (currentScale.value * 0.6) < -90) {
+        currentPosition.value.x = -90 - 20;
+      }
+    }
   };
 
   const onGestureStart = (event) => {
@@ -83,7 +113,7 @@
 
   const onGestureChange = (event) => {
     currentScale.value = initialScale.value * event.scale;
-    if (currentScale.value >= maxScale) currentScale.value = maxScale;
+    if (currentScale.value >= maxScale()) currentScale.value = maxScale();
     else if (currentScale.value <= 1) currentScale.value = 1;
   };
 
@@ -113,13 +143,17 @@
   };
 
   const zoomOut = () => {
-    if (currentScale.value >= 2) {
+    if (currentScale.value - 1 >= 1) {
       currentScale.value -= 1;
     } else {
-      currentScale.value = 0.75;
-      setTimeout(() => {
+      if (currentScale.value === 1) {
+        currentScale.value = 0.75;
+        setTimeout(() => {
+          currentScale.value = 1;
+        }, 150);
+      } else {
         currentScale.value = 1;
-      }, 150);
+      }
     }
     currentPosition.value = { x: 0, y: 0 };
   };
