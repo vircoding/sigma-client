@@ -30,7 +30,7 @@
         <ul class="mb-20 flex w-full flex-col items-center justify-center space-y-4">
           <!-- Whatsapp -->
           <li
-            class="text-shadow flex w-full items-center justify-center rounded-md border bg-white p-4"
+            class="text-shadow flex w-full items-center justify-center rounded-xl border bg-white p-4"
           >
             <figure class="flex w-[30%] flex-col items-center justify-center">
               <img src="../assets/color-whatsapp-icon.svg" class="w-12" />
@@ -42,7 +42,7 @@
 
           <!-- Gmail -->
           <li
-            class="text-shadow flex w-full items-center justify-center rounded-md border bg-white p-4"
+            class="text-shadow flex w-full items-center justify-center rounded-xl border bg-white p-4"
           >
             <figure class="flex w-[30%] flex-col items-center justify-center">
               <img src="../assets/color-gmail-icon.svg" class="w-12" />
@@ -54,7 +54,7 @@
 
           <!-- Instagram -->
           <li
-            class="text-shadow flex w-full items-center justify-center rounded-md border bg-white p-4"
+            class="text-shadow flex w-full items-center justify-center rounded-xl border bg-white p-4"
           >
             <figure class="flex w-[30%] flex-col items-center justify-center">
               <img src="../assets/color-instagram-icon.svg" class="w-12" />
@@ -66,7 +66,7 @@
 
           <!-- Facebook -->
           <li
-            class="text-shadow flex w-full items-center justify-center rounded-md border bg-white p-4"
+            class="text-shadow flex w-full items-center justify-center rounded-xl border bg-white p-4"
           >
             <figure class="flex w-[30%] flex-col items-center justify-center">
               <img src="../assets/color-facebook-icon.svg" class="w-12" />
@@ -78,7 +78,7 @@
 
           <!-- YouTube -->
           <li
-            class="text-shadow flex w-full items-center justify-center rounded-md border bg-white p-4"
+            class="text-shadow flex w-full items-center justify-center rounded-xl border bg-white p-4"
           >
             <figure class="flex w-[30%] flex-col items-center justify-center">
               <img src="../assets/color-youtube-icon-2.svg" class="w-12" />
@@ -90,7 +90,7 @@
 
           <!-- X -->
           <li
-            class="text-shadow flex w-full items-center justify-center rounded-md border bg-white p-4"
+            class="text-shadow flex w-full items-center justify-center rounded-xl border bg-white p-4"
           >
             <figure class="flex w-[30%] flex-col items-center justify-center">
               <img src="../assets/color-x-icon.svg" class="w-12" />
@@ -102,7 +102,7 @@
 
           <!-- TikTok -->
           <li
-            class="text-shadow flex w-full items-center justify-center rounded-md border bg-white p-4"
+            class="text-shadow flex w-full items-center justify-center rounded-xl border bg-white p-4"
           >
             <figure class="flex w-[30%] flex-col items-center justify-center">
               <img src="../assets/color-tiktok-icon.svg" class="w-12" />
@@ -114,7 +114,7 @@
 
           <!-- Threads -->
           <li
-            class="text-shadow flex w-full items-center justify-center rounded-md border bg-white p-4"
+            class="text-shadow flex w-full items-center justify-center rounded-xl border bg-white p-4"
           >
             <figure class="flex w-[30%] flex-col items-center justify-center">
               <img src="../assets/color-threads-icon.svg" class="w-12" />
