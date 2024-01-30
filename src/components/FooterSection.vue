@@ -1,8 +1,9 @@
 <script setup>
+  import { computed } from "vue";
   import { RouterLink } from "vue-router";
   import SigmaIcon from "./icons/SigmaIcon.vue";
   import BrandIcon from "./icons/BrandIcon.vue";
-  import { computed } from "vue";
+  import WhatsappIcon from "./icons/WhatsappIcon.vue";
 
   const props = defineProps(["background", "title", "text"]);
 
@@ -54,7 +55,7 @@
             <h6 class="text-base font-semibold tracking-wide">CONTÁCTANOS</h6>
             <a href="mailto:sigmacuba2023@gmail.com">sigmacuba2023@gmail.com</a>
             <a href="https://wa.me/+5350009047" class="flex items-center gap-1 hover:underline">
-              <img src="../assets/whatsapp-icon.svg" />
+              <WhatsappIcon :color="sigmaIconFill" />
               <span>50009047</span>
             </a>
           </div>
