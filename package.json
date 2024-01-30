@@ -26,7 +26,8 @@
     "libphonenumber-js": "^1.10.28",
     "pinia": "^2.0.28",
     "vue": "^3.2.45",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vue-zoomer": "^0.3.10"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
