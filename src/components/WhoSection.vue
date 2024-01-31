@@ -1,5 +1,3 @@
-<script setup></script>
-
 <template>
   <div id="who" class="mb-[5px] bg-white text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]">
     <!-- Hero -->
@@ -9,7 +7,7 @@
       >
         ¿Quiénes somos?
       </h2>
-      <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
+      <p class="text-shadow block text-center text-base text-sgray-300 lg:text-left lg:text-lg">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil repellat doloribus ratione
         debitis reprehenderit delectus distinctio facere amet nisi magni, iusto in nostrum. Laborum
         iusto qui laudantium illo, a odit!

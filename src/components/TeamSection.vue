@@ -1,9 +1,7 @@
-<script setup></script>
-
 <template>
   <div
     id="team"
-    class="mb-[5px] bg-background text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]"
+    class="mb-[5px] overflow-hidden bg-background text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]"
   >
     <!-- Hero -->
     <div class="py-10">
@@ -17,7 +15,7 @@
       </p>
     </div>
     <!-- Main -->
-    <ul class="w-full space-y-10 pb-10">
+    <ul class="w-full space-y-10 pb-12">
       <!-- Enmanuel Diez -->
       <li class="relative right-8 flex w-full flex-col items-center justify-center text-center">
         <figure
