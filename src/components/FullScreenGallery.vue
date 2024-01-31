@@ -47,7 +47,16 @@
   </VueZoomer>
 
   <!-- Indicators -->
-  <div class="sticky top-full flex w-full items-center justify-center pb-14">
+  <div
+    @touchstart.prevent
+    @touchmove.prevent
+    @touchend.prevent
+    @touchcancel.prevent
+    @gesturestart.prevent
+    @gesturechange.prevent
+    @gestureend.prevent
+    class="sticky top-full flex w-full items-center justify-center pb-14"
+  >
     <div class="flex justify-center gap-[6px] rounded-full bg-stransparent px-5 py-2">
       <GalleryIndicator :enable="true" size="max" />
       <GalleryIndicator :enable="false" size="max" />
