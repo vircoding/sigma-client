@@ -1,6 +1,10 @@
 <script setup>
   import NavBar from "../components/NavBar.vue";
+  import WhoSection from "../components/WhoSection.vue";
+  import TeamSection from "../components/TeamSection.vue";
+  import ReviewsSection from "../components/ReviewsSection.vue";
   import FooterSection from "../components/FooterSection.vue";
+  import AboutAgentSection from "../components/AboutAgentSection.vue";
 </script>
 
 <template>
@@ -11,11 +15,18 @@
           <NavBar class="z-20" />
         </div>
       </header>
-      <main class="mb-[5px] grow bg-background lg:mb-0">
-        <h6 id="who">Who Section</h6>
-        <h6 id="team">Team Section</h6>
-        <h6 id="agent">Agent Section</h6>
-        <h6 id="revs">Reviews Section</h6>
+      <main class="mb-[5px] flex grow flex-col bg-background lg:mb-0">
+        <!-- Who Section -->
+        <WhoSection />
+
+        <!-- Team Section -->
+        <TeamSection />
+
+        <!-- Agent Section -->
+        <AboutAgentSection />
+
+        <!-- Reviews Section -->
+        <ReviewsSection />
       </main>
     </div>
     <footer class="lg:mb-2.5">
