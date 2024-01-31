@@ -133,6 +133,7 @@
         v-for="(image, index) in images"
         :key="index"
         @click="directMove(index)"
+        size="min"
         :enable="index === activeIndex ? true : false"
       />
     </div>

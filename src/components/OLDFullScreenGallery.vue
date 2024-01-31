@@ -68,7 +68,9 @@
     // touchState.value.offsetY = offsetY;
 
     if (
-      Math.floor(currentPosition.value.x / (currentScale.value * 0.6) >= 90 + 20) &&
+      Math.floor(
+        currentPosition.value.x / (currentScale.value * 0.6) >= (currentScale.value - 1) * 90 + 20
+      ) &&
       offsetX >= 0
     ) {
     } else if (

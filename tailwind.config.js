@@ -13,6 +13,7 @@ export default {
         sigma: "#1183ea",
         background: "#ededed",
         alert: "#aa1530",
+        stransparent: "rgba(0, 0, 0, 0.4)",
         solive: {
           100: "#edf5d4",
           200: "#c2d199",
