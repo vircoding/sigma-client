@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div id="agent" class="mb-[5px] bg-white text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]">
+  <div class="mb-[5px] bg-white text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]">
     <!-- Hero -->
     <div class="pb-8 pt-10">
       <h2

@@ -1,5 +1,5 @@
 <template>
-  <div id="who" class="mb-[5px] bg-white text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]">
+  <div class="mb-[5px] bg-white text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]">
     <!-- Hero -->
     <div class="py-10">
       <h2

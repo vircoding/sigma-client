@@ -1,6 +1,5 @@
 <template>
   <div
-    id="team"
     class="mb-[5px] overflow-hidden bg-background text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]"
   >
     <!-- Hero -->

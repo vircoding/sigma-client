@@ -17,16 +17,24 @@
       </header>
       <main class="mb-[5px] flex grow flex-col bg-background lg:mb-0">
         <!-- Who Section -->
-        <WhoSection />
+        <section id="who">
+          <WhoSection />
+        </section>
 
         <!-- Team Section -->
-        <TeamSection />
+        <section id="team">
+          <TeamSection />
+        </section>
 
         <!-- Agent Section -->
-        <AboutAgentSection />
+        <section id="agent">
+          <AboutAgentSection />
+        </section>
 
         <!-- Reviews Section -->
-        <ReviewsSection />
+        <section id="feedback">
+          <ReviewsSection />
+        </section>
       </main>
     </div>
     <footer class="lg:mb-2.5">
