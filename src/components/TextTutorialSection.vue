@@ -18,7 +18,7 @@
     <div class="flex w-full flex-col items-center justify-center space-y-8 pb-12 text-center">
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="aspect-[9/16] w-4/5 bg-sgray-400"></div>
+        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
         <h6 class="text-lg font-semibold">1. Inicia Sesión</h6>
         <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
@@ -28,7 +28,7 @@
 
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="aspect-[9/16] w-4/5 bg-sgray-400"></div>
+        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
         <h6 class="text-lg font-semibold">2. Inicia Sesión</h6>
         <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
@@ -38,7 +38,7 @@
 
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="aspect-[9/16] w-4/5 bg-sgray-400"></div>
+        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
         <h6 class="text-lg font-semibold">3. Inicia Sesión</h6>
         <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
@@ -48,7 +48,7 @@
 
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="aspect-[9/16] w-4/5 bg-sgray-400"></div>
+        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
         <h6 class="text-lg font-semibold">4. Inicia Sesión</h6>
         <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
@@ -58,7 +58,7 @@
 
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="aspect-[9/16] w-4/5 bg-sgray-400"></div>
+        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
         <h6 class="text-lg font-semibold">5. Inicia Sesión</h6>
         <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
@@ -68,7 +68,7 @@
 
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="aspect-[9/16] w-4/5 bg-sgray-400"></div>
+        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
         <h6 class="text-lg font-semibold">6. Inicia Sesión</h6>
         <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
@@ -78,7 +78,7 @@
 
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="aspect-[9/16] w-4/5 bg-sgray-400"></div>
+        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
         <h6 class="text-lg font-semibold">7. Inicia Sesión</h6>
         <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
@@ -88,7 +88,7 @@
 
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="aspect-[9/16] w-4/5 bg-sgray-400"></div>
+        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
         <h6 class="text-lg font-semibold">8. Inicia Sesión</h6>
         <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
@@ -98,7 +98,7 @@
 
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="aspect-[9/16] w-4/5 bg-sgray-400"></div>
+        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
         <h6 class="text-lg font-semibold">9. Inicia Sesión</h6>
         <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
@@ -108,7 +108,7 @@
 
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="aspect-[9/16] w-4/5 bg-sgray-400"></div>
+        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
         <h6 class="text-lg font-semibold">10. Inicia Sesión</h6>
         <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
@@ -118,7 +118,7 @@
 
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="aspect-[9/16] w-4/5 bg-sgray-400"></div>
+        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
         <h6 class="text-lg font-semibold">11. Inicia Sesión</h6>
         <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
@@ -128,7 +128,7 @@
 
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="aspect-[9/16] w-4/5 bg-sgray-400"></div>
+        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
         <h6 class="text-lg font-semibold">12. Inicia Sesión</h6>
         <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
@@ -138,7 +138,7 @@
 
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="aspect-[9/16] w-4/5 bg-sgray-400"></div>
+        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
         <h6 class="text-lg font-semibold">13. Inicia Sesión</h6>
         <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
@@ -148,7 +148,7 @@
 
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="aspect-[9/16] w-4/5 bg-sgray-400"></div>
+        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
         <h6 class="text-lg font-semibold">14. Inicia Sesión</h6>
         <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,

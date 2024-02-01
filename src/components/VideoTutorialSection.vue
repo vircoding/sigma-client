@@ -16,7 +16,9 @@
 
     <!-- Video -->
     <div class="w-full pb-12">
-      <figure class="relative flex aspect-video w-full flex-col items-center justify-center">
+      <figure
+        class="text-shadow relative flex aspect-video w-full flex-col items-center justify-center"
+      >
         <div class="absolute aspect-video w-full rounded-2xl bg-sgray-400"></div>
         <img src="../assets/color-youtube-icon.svg" class="z-10 w-20" />
       </figure>
