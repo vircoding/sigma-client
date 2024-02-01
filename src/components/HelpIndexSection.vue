@@ -1,9 +1,7 @@
-<script setup></script>
-
 <template>
   <!-- Container -->
   <div
-    class="mb-[5px] bg-background pb-10 pt-9 text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]"
+    class="mb-[5px] bg-background pb-12 pt-9 text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]"
   >
     <!-- Border -->
     <div
