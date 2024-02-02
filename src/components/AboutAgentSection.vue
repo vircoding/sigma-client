@@ -17,7 +17,7 @@
     </div>
 
     <!-- Whatsapp -->
-    <div class="mb-11 flex w-full items-center justify-center">
+    <div class="text-shadow mb-11 flex w-full items-center justify-center">
       <a
         href="https:/wa.me/+5350009047"
         class="flex w-1/2 items-center justify-center gap-[1px] rounded-xl bg-sigma py-2"

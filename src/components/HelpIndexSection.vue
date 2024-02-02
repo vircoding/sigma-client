@@ -11,7 +11,7 @@
       <ul class="flex w-full flex-col justify-center bg-white px-7 text-left">
         <li class="flex w-full items-center justify-between border-b border-sgray-100 pb-3 pt-4">
           <h2 class="text-base font-semibold text-sgray-400">Índice</h2>
-          <img src="../assets/down-arrow.svg" class="w-3" />
+          <img src="../assets/down-arrow-icon.svg" class="w-3" />
         </li>
 
         <!-- Video Tutorial -->
