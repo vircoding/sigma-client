@@ -161,7 +161,8 @@
       <li class="w-full">
         <div
           @click.prevent="activateQuestion(5)"
-          class="flex w-full items-center justify-between border-b border-sgray-100 pb-3 pt-4"
+          class="flex w-full items-center justify-between border-sgray-100 pb-4 pt-4"
+          :class="activeIndex === 5 ? 'border-b' : ''"
         >
           <h2 class="text-base font-semibold text-sgray-400">¿Pregunta frecuente?</h2>
           <!-- Right Arrow -->

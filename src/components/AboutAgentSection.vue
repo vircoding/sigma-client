@@ -3,9 +3,11 @@
 </script>
 
 <template>
-  <div class="mb-[5px] bg-white text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]">
+  <div
+    class="mb-[5px] overflow-hidden bg-white text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]"
+  >
     <!-- Hero -->
-    <div class="pb-8 pt-10">
+    <div class="py-10">
       <h2
         class="text-shadow mb-5 text-center text-4xl font-extrabold max-[1023px]:text-4xl max-[505px]:text-3xl lg:mb-0 lg:text-left lg:text-4xl"
       >

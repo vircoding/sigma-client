@@ -31,7 +31,7 @@
             <h6 class="text-base font-semibold tracking-wide">EMPRESA</h6>
             <RouterLink to="/support/about#who" class="hover:underline">¿Quiénes somos?</RouterLink>
             <RouterLink to="/support/about#team" class="hover:underline">Nuestro equipo</RouterLink>
-            <RouterLink to="/support/about#agent" class="hover:underline"
+            <RouterLink to="/support/about#beanagent" class="hover:underline"
               >¿Quieres ser agente?</RouterLink
             >
           </div>
@@ -42,8 +42,8 @@
             <RouterLink to="/support/help#video" class="hover:underline"
               >¿Cómo funciona el sitio?</RouterLink
             >
-            <a href="https://wa.me/+5350009047" class="hover:underline"
-              >Quiero contratar un agente</a
+            <RouterLink to="/support/help#findagent" class="hover:underline"
+              >¿Quieres ser agente?</RouterLink
             >
             <RouterLink to="/support/help#faq" class="hover:underline"
               >Preguntas frecuentes</RouterLink
