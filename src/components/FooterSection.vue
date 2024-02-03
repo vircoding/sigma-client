@@ -31,7 +31,7 @@
             <h6 class="text-base font-semibold tracking-wide">EMPRESA</h6>
             <RouterLink to="/support/about#who" class="hover:underline">¿Quiénes somos?</RouterLink>
             <RouterLink to="/support/about#team" class="hover:underline">Nuestro equipo</RouterLink>
-            <RouterLink to="/support/about#beanagent" class="hover:underline"
+            <RouterLink to="/support/about#agent" class="hover:underline"
               >¿Quieres ser agente?</RouterLink
             >
           </div>
@@ -39,7 +39,7 @@
           <!-- Help -->
           <div class="flex w-full flex-col">
             <h6 class="text-base font-semibold tracking-wide">AYUDA</h6>
-            <RouterLink to="/support/help#video" class="hover:underline"
+            <RouterLink to="/support/help#videotut" class="hover:underline"
               >¿Cómo funciona el sitio?</RouterLink
             >
             <RouterLink to="/support/help#findagent" class="hover:underline"

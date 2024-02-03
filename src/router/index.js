@@ -287,7 +287,12 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: "smooth",
+      };
+    } else if (savedPosition) {
       return savedPosition;
     } else {
       return { left: 0, top: 0 };
@@ -295,6 +300,7 @@ const router = createRouter({
   },
 });
 
+// NEW BeforeEach
 router.beforeEach(async (to, from, next) => {
   const layoutStore = useLayoutStore();
   layoutStore.hideSideMenu();
@@ -304,6 +310,17 @@ router.beforeEach(async (to, from, next) => {
     layoutStore.unhideLogoLoading();
     await userStore.refresh(true);
     layoutStore.hideLogoLoading();
+  }
+
+  if (to.hash) {
+    console.log(to.hash);
+    const targetElement = document.getElementById(to.hash.slice(1));
+    if (targetElement) {
+      // Utiliza el método scrollIntoView para desplazar la ventana a la sección deseada
+      targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      next(false); // Detiene temporalmente la navegación para permitir el desplazamiento
+      return;
+    }
   }
 
   if (to.meta.requiresAuth === true) {
@@ -316,5 +333,28 @@ router.beforeEach(async (to, from, next) => {
     next();
   }
 });
+
+// OLD BeforeEach
+// router.beforeEach(async (to, from, next) => {
+//   const layoutStore = useLayoutStore();
+//   layoutStore.hideSideMenu();
+
+//   const userStore = useUserStore();
+//   if (!from.name) {
+//     layoutStore.unhideLogoLoading();
+//     await userStore.refresh(true);
+//     layoutStore.hideLogoLoading();
+//   }
+
+//   if (to.meta.requiresAuth === true) {
+//     if (userStore.isLoggedIn) {
+//       next();
+//     } else {
+//       next("/auth/login");
+//     }
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;

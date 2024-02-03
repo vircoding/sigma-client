@@ -27,7 +27,7 @@
         </section>
 
         <!-- Agent Section -->
-        <section id="beanagent">
+        <section id="agent">
           <AboutAgentSection />
         </section>
 
