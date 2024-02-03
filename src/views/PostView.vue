@@ -1,12 +1,12 @@
 <script setup>
   import NavBar from "../components/NavBar.vue";
+  import { onBeforeUnmount } from "vue";
   import PostInfo from "../components/PostInfo.vue";
   import FooterSection from "../components/FooterSection.vue";
   import FullScreenGallery from "../components/FullScreenGallery.vue";
   import { useLayoutStore } from "../stores/layoutStore.js";
   import { usePostStore } from "../stores/postStore.js";
   import { useAgentStore } from "../stores/agentStore.js";
-  import { onBeforeUnmount } from "vue";
 
   const postStore = usePostStore();
   const agentStore = useAgentStore();

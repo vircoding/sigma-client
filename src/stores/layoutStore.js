@@ -8,12 +8,13 @@ export const useLayoutStore = defineStore("layout", () => {
   const spinnerLoading = ref(false);
   const tableSpinner = ref(false);
   const fullScreenGallery = ref(false);
+  const imageCropper = ref(false);
   const popup = ref({
     preInsert: false,
     deletePost: false,
   });
-
   const deletePostId = ref(null);
+  const cropFileURLState = ref(null);
 
   // Getters
   const isPopup = computed(() => {
@@ -23,9 +24,17 @@ export const useLayoutStore = defineStore("layout", () => {
     return false;
   });
 
+  const getCropFileURL = computed(() => {
+    return cropFileURLState.value;
+  });
+
   // Setters
   const setDeletePostId = (id) => {
     deletePostId.value = id;
+  };
+
+  const setCropFileURL = (url) => {
+    cropFileURLState.value = url;
   };
 
   // Actions
@@ -69,6 +78,14 @@ export const useLayoutStore = defineStore("layout", () => {
     fullScreenGallery.value = false;
   };
 
+  const unhideImageCropper = () => {
+    imageCropper.value = true;
+  };
+
+  const hideImageCropper = () => {
+    imageCropper.value = false;
+  };
+
   const unhidePopup = (key) => {
     switch (key) {
       case "pre-insert":
@@ -94,16 +111,23 @@ export const useLayoutStore = defineStore("layout", () => {
     deletePostId.value = null;
   };
 
+  const resetCropFileURL = () => {
+    cropFileURLState.value = null;
+  };
+
   const $reset = () => {
     sideMenu.value = false;
     logoLoading.value = false;
     spinnerLoading.value = false;
     tableSpinner.value = false;
     fullScreenGallery.value = false;
+    imageCropper.value = false;
     popup.value = {
       preInsert: false,
       deletePost: false,
     };
+    resetDeletePostId();
+    resetCropFileURL();
   };
 
   return {
@@ -112,10 +136,14 @@ export const useLayoutStore = defineStore("layout", () => {
     spinnerLoading,
     tableSpinner,
     fullScreenGallery,
+    imageCropper,
     popup,
+    cropFileURLState,
     deletePostId,
     isPopup,
+    getCropFileURL,
     setDeletePostId,
+    setCropFileURL,
     unhideSideMenu,
     hideSideMenu,
     unhideLogoLoading,
@@ -126,9 +154,12 @@ export const useLayoutStore = defineStore("layout", () => {
     hideTableSpinner,
     unhideFullScreenGallery,
     hideFullScreenGallery,
+    unhideImageCropper,
+    hideImageCropper,
     unhidePopup,
     hidePopup,
     resetDeletePostId,
+    resetCropFileURL,
     $reset,
   };
 });

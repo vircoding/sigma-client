@@ -103,6 +103,20 @@
     rentAmount: false,
     phone: false,
   });
+  const fileInput = ref(null);
+
+  const openImageDialog = () => {
+    fileInput.value.click();
+  };
+
+  const loadImage = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageURL = URL.createObjectURL(file);
+      layoutStore.setCropFileURL(imageURL);
+      layoutStore.unhideImageCropper();
+    }
+  };
 
   // Comps
   const propertyLength = computed(() => {
@@ -553,6 +567,9 @@
       <div
         class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 py-4 max-[345px]:px-3"
       >
+        <!-- File Input (Hidden) -->
+        <input type="file" @change="loadImage" class="hidden" ref="fileInput" accept="image/*" />
+
         <span class="mb-1 pl-2 font-medium"
           >Fotos <span v-if="photos.length">{{ photos.length }}/10</span></span
         >
@@ -568,7 +585,7 @@
           <div
             v-if="!photos.length"
             class="flex items-center gap-[10px] rounded-md bg-sgray-400 px-2 py-[5px]"
-            @click.prevent="addPhoto"
+            @click.prevent="openImageDialog"
           >
             <span class="text-sm text-sgray-100">Añadir foto</span>
             <img
