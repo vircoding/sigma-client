@@ -313,7 +313,6 @@ router.beforeEach(async (to, from, next) => {
   }
 
   if (to.hash) {
-    console.log(to.hash);
     const targetElement = document.getElementById(to.hash.slice(1));
     if (targetElement) {
       // Utiliza el método scrollIntoView para desplazar la ventana a la sección deseada
