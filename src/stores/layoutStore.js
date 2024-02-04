@@ -15,6 +15,7 @@ export const useLayoutStore = defineStore("layout", () => {
   });
   const deletePostId = ref(null);
   const cropFileURLState = ref(null);
+  const blobImagesURLState = ref([]);
 
   // Getters
   const isPopup = computed(() => {
@@ -37,7 +38,19 @@ export const useLayoutStore = defineStore("layout", () => {
     cropFileURLState.value = url;
   };
 
+  const setBlobImageURL = (url) => {
+    if (blobImagesURLState.value.length < 10) {
+      blobImagesURLState.value.push(url);
+    }
+  };
+
   // Actions
+  const removeBlobImageURL = (index) => {
+    if (index >= 0 && index < blobImagesURLState.value.length) {
+      blobImagesURLState.value.splice(index, 1);
+    }
+  };
+
   const unhideSideMenu = () => {
     sideMenu.value = true;
   };
@@ -139,11 +152,14 @@ export const useLayoutStore = defineStore("layout", () => {
     imageCropper,
     popup,
     cropFileURLState,
+    blobImagesURLState,
     deletePostId,
     isPopup,
     getCropFileURL,
     setDeletePostId,
+    setBlobImageURL,
     setCropFileURL,
+    removeBlobImageURL,
     unhideSideMenu,
     hideSideMenu,
     unhideLogoLoading,

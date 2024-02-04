@@ -14,7 +14,7 @@
 </script>
 
 <template>
-  <div class="lg:px-2.5" :class="layoutStore.imageCropper ? 'h-screen overflow-hidden' : ''">
+  <div class="lg:px-2.5" :class="layoutStore.imageCropper ? 'h-screen' : ''">
     <div class="overlay" v-if="layoutStore.imageCropper">
       <ImageCropper />
     </div>
@@ -44,8 +44,6 @@
   .overlay {
     will-change: transform;
     position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);

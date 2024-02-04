@@ -97,7 +97,6 @@
       },
     },
   });
-  const photos = ref([]);
   const filledInputs = ref({
     saleAmount: false,
     rentAmount: false,
@@ -266,12 +265,8 @@
     }, 2500);
   };
 
-  const addPhoto = () => {
-    photos.value.push("img_001.jpg");
-  };
-
-  const removePhoto = (index) => {
-    photos.value.splice(index, 1);
+  const removeImage = (index) => {
+    layoutStore.removeBlobImageURL(index);
   };
 
   const buildPost = () => {
@@ -346,8 +341,6 @@
     postDetails.value.contact_details.contact.phone = "";
     postDetails.value.contact_details.contact_types.phone = true;
     postDetails.value.contact_details.contact_types.whatsapp = true;
-
-    photos.value = [];
 
     filledInputs.value.saleAmount = false;
     filledInputs.value.rentAmount = false;
@@ -571,40 +564,31 @@
         <input type="file" @change="loadImage" class="hidden" ref="fileInput" accept="image/*" />
 
         <span class="mb-1 pl-2 font-medium"
-          >Fotos <span v-if="photos.length">{{ photos.length }}/10</span></span
+          >Fotos
+          <span v-if="layoutStore.blobImagesURLState.length"
+            >{{ layoutStore.blobImagesURLState.length }}/10</span
+          ></span
         >
-        <div class="flex w-full flex-wrap gap-x-2 gap-y-1">
+        <div class="flex w-full flex-wrap gap-y-2">
           <PhotoBoxInput
-            v-for="(item, index) in photos"
+            v-for="(item, index) in layoutStore.blobImagesURLState"
             :key="index"
-            :path="item"
-            @remove="removePhoto(index)"
+            :url="item"
+            @remove="removeImage(index)"
           />
 
-          <!-- Add with Text -->
-          <div
-            v-if="!photos.length"
-            class="flex items-center gap-[10px] rounded-md bg-sgray-400 px-2 py-[5px]"
+          <!-- Add -->
+          <button
+            v-if="!layoutStore.blobImagesURLState.length < 10"
+            class="flex w-full items-center justify-center gap-[10px] rounded-md bg-sgray-400 px-2 py-[7px]"
             @click.prevent="openImageDialog"
           >
-            <span class="text-sm text-sgray-100">Añadir foto</span>
+            <span class="relative top-[1px] text-sgray-100">Añadir foto</span>
             <img
               src="../assets/exit-fullscreen-icon.svg"
               class="h-[14px] w-[14px] rotate-[135deg]"
             />
-          </div>
-
-          <!-- Add without Text -->
-          <div
-            v-if="photos.length > 0 && photos.length < 10"
-            class="flex h-[30px] w-[30px] items-center justify-center gap-[10px] rounded-md bg-sgray-400"
-          >
-            <img
-              src="../assets/exit-fullscreen-icon.svg"
-              class="h-[14px] w-[14px] rotate-[135deg]"
-              @click.prevent="addPhoto"
-            />
-          </div>
+          </button>
         </div>
       </div>
 
