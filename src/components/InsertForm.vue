@@ -112,7 +112,7 @@
     const file = event.target.files[0];
     if (file) {
       const imageURL = URL.createObjectURL(file);
-      layoutStore.setCropFileURL(imageURL);
+      layoutStore.setSingleImageURLState(imageURL);
       layoutStore.unhideImageCropper();
     }
   };
@@ -266,7 +266,7 @@
   };
 
   const removeImage = (index) => {
-    layoutStore.removeBlobImageURL(index);
+    layoutStore.removePostImageURL(index);
   };
 
   const buildPost = () => {
@@ -565,21 +565,21 @@
 
         <span class="mb-1 pl-2 font-medium"
           >Fotos
-          <span v-if="layoutStore.blobImagesURLState.length"
-            >{{ layoutStore.blobImagesURLState.length }}/10</span
+          <span v-if="layoutStore.postImagesURLState.length"
+            >{{ layoutStore.postImagesURLState.length }}/10</span
           ></span
         >
         <div class="flex w-full flex-wrap gap-y-2">
           <PhotoBoxInput
-            v-for="(item, index) in layoutStore.blobImagesURLState"
+            v-for="(item, index) in layoutStore.postImagesURLState"
             :key="index"
-            :url="item"
+            :url="item.cropped"
             @remove="removeImage(index)"
           />
 
           <!-- Add -->
           <button
-            v-if="!layoutStore.blobImagesURLState.length < 10"
+            v-if="!layoutStore.postImagesURLState.length < 10"
             class="flex w-full items-center justify-center gap-[10px] rounded-md bg-sgray-400 px-2 py-[7px]"
             @click.prevent="openImageDialog"
           >

@@ -14,8 +14,8 @@ export const useLayoutStore = defineStore("layout", () => {
     deletePost: false,
   });
   const deletePostId = ref(null);
-  const cropFileURLState = ref(null);
-  const blobImagesURLState = ref([]);
+  const singleImageURLState = ref(null);
+  const postImagesURLState = ref([]);
 
   // Getters
   const isPopup = computed(() => {
@@ -25,8 +25,8 @@ export const useLayoutStore = defineStore("layout", () => {
     return false;
   });
 
-  const getCropFileURL = computed(() => {
-    return cropFileURLState.value;
+  const getSingleImageURLState = computed(() => {
+    return singleImageURLState.value;
   });
 
   // Setters
@@ -34,20 +34,23 @@ export const useLayoutStore = defineStore("layout", () => {
     deletePostId.value = id;
   };
 
-  const setCropFileURL = (url) => {
-    cropFileURLState.value = url;
+  const setSingleImageURLState = (url) => {
+    singleImageURLState.value = url;
   };
 
-  const setBlobImageURL = (url) => {
-    if (blobImagesURLState.value.length < 10) {
-      blobImagesURLState.value.push(url);
+  const setPostImageURL = (url) => {
+    if (postImagesURLState.value.length < 10) {
+      postImagesURLState.value.push({
+        cropped: url,
+        original: singleImageURLState.value,
+      });
     }
   };
 
   // Actions
-  const removeBlobImageURL = (index) => {
-    if (index >= 0 && index < blobImagesURLState.value.length) {
-      blobImagesURLState.value.splice(index, 1);
+  const removePostImageURL = (index) => {
+    if (index >= 0 && index < postImagesURLState.value.length) {
+      postImagesURLState.value.splice(index, 1);
     }
   };
 
@@ -124,10 +127,6 @@ export const useLayoutStore = defineStore("layout", () => {
     deletePostId.value = null;
   };
 
-  const resetCropFileURL = () => {
-    cropFileURLState.value = null;
-  };
-
   const $reset = () => {
     sideMenu.value = false;
     logoLoading.value = false;
@@ -139,8 +138,9 @@ export const useLayoutStore = defineStore("layout", () => {
       preInsert: false,
       deletePost: false,
     };
+    singleImageURLState.value = null;
+    postImagesURLState.value = [];
     resetDeletePostId();
-    resetCropFileURL();
   };
 
   return {
@@ -151,15 +151,15 @@ export const useLayoutStore = defineStore("layout", () => {
     fullScreenGallery,
     imageCropper,
     popup,
-    cropFileURLState,
-    blobImagesURLState,
     deletePostId,
+    singleImageURLState,
+    postImagesURLState,
     isPopup,
-    getCropFileURL,
+    getSingleImageURLState,
     setDeletePostId,
-    setBlobImageURL,
-    setCropFileURL,
-    removeBlobImageURL,
+    setSingleImageURLState,
+    setPostImageURL,
+    removePostImageURL,
     unhideSideMenu,
     hideSideMenu,
     unhideLogoLoading,
@@ -175,7 +175,6 @@ export const useLayoutStore = defineStore("layout", () => {
     unhidePopup,
     hidePopup,
     resetDeletePostId,
-    resetCropFileURL,
     $reset,
   };
 });

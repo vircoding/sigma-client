@@ -33,7 +33,7 @@
     cropper.getCroppedCanvas().toBlob(
       (blob) => {
         const imageURL = URL.createObjectURL(blob);
-        layoutStore.setBlobImageURL(imageURL);
+        layoutStore.setPostImageURL(imageURL);
       },
       "image/jpeg",
       1
@@ -71,7 +71,7 @@
     <div class="flex h-full w-full flex-col items-center justify-center object-contain px-5">
       <!-- Cropper Container -->
       <div class="">
-        <img ref="img" :src="layoutStore.getCropFileURL" class="block max-w-full" />
+        <img ref="img" :src="layoutStore.getSingleImageURLState" class="block max-w-full" />
       </div>
     </div>
   </div>
