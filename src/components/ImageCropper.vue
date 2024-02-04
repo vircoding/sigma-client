@@ -13,7 +13,7 @@
     cropper = new Cropper(img.value, {
       aspectRatio: 16 / 9,
       viewMode: 3,
-      minCropBoxWidth: 256,
+      minCropBoxWidth: 160,
       dragMode: "move",
       background: false,
       autoCrop: true,
