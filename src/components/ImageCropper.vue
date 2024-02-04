@@ -26,6 +26,10 @@
   });
 
   const closeImageCropper = () => {
+    if (layoutStore.editImage.status) {
+      layoutStore.resetEditImage();
+    }
+    layoutStore.resetSingleImageURLState();
     layoutStore.hideImageCropper();
   };
 
@@ -35,6 +39,7 @@
         const imageURL = URL.createObjectURL(blob);
         if (layoutStore.editImage.status) {
           layoutStore.editPostImageURL(layoutStore.editImage.index, imageURL);
+          layoutStore.resetEditImage();
         } else {
           layoutStore.setPostImageURL(imageURL);
         }
