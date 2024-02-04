@@ -1,7 +1,30 @@
 <script setup>
+  import { ref, onMounted, onUnmounted, watch } from "vue";
   import { useLayoutStore } from "../stores/layoutStore.js";
+  import Cropper from "cropperjs";
 
   const layoutStore = useLayoutStore();
+
+  let cropper = null;
+
+  const img = ref(null);
+
+  onMounted(() => {
+    cropper = new Cropper(img.value, {
+      aspectRatio: 1,
+      minCropBoxWidth: 256,
+      minCropBoxHeight: 256,
+      viewMode: 3,
+      dragMode: "move",
+      background: false,
+      cropBoxMovable: false,
+      cropBoxResizable: false,
+    });
+  });
+
+  onUnmounted(() => {
+    cropper.destroy();
+  });
 
   const closeImageCropper = () => {
     layoutStore.hideImageCropper();
@@ -21,10 +44,15 @@
     </nav>
   </div>
 
-  <!-- Vue-Zoomer: https://github.com/jarvisniu/vue-zoomer -->
+  <!--Cropper.js: https://github.com/fengyuanchen/cropperjs -->
   <div class="absolute flex h-full w-full items-center justify-center">
     <div class="flex h-full w-full flex-col items-center justify-center object-contain px-5">
-      <img :src="layoutStore.getCropFileURL" class="object-contain" />
+      <!-- Cropper Container -->
+      <div class="w-full object-contain">
+        <img ref="img" :src="layoutStore.getCropFileURL" class="hidden object-contain" />
+      </div>
     </div>
   </div>
 </template>
+
+<style scoped></style>

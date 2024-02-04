@@ -15,7 +15,7 @@
 
 <template>
   <div class="lg:px-2.5" :class="layoutStore.imageCropper ? 'h-screen overflow-hidden' : ''">
-    <div class="overlay" :class="layoutStore.imageCropper ? 'visible' : 'invisible'">
+    <div class="overlay" v-if="layoutStore.imageCropper">
       <ImageCropper />
     </div>
     <div :class="layoutStore.imageCropper ? 'blur' : ''">

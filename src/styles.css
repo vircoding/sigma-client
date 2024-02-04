@@ -1,3 +1,4 @@
+@import "../node_modules/cropperjs/dist/cropper.css";
 @import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@200;400;600;800&display=swap");
 
 * {
