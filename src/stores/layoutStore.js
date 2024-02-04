@@ -16,6 +16,10 @@ export const useLayoutStore = defineStore("layout", () => {
   const deletePostId = ref(null);
   const singleImageURLState = ref(null);
   const postImagesURLState = ref([]);
+  const editImage = ref({
+    status: false,
+    index: null,
+  });
 
   // Getters
   const isPopup = computed(() => {
@@ -45,6 +49,17 @@ export const useLayoutStore = defineStore("layout", () => {
         original: singleImageURLState.value,
       });
     }
+  };
+
+  const editPostImageURL = (index, url) => {
+    postImagesURLState.value[index].cropped = url;
+  };
+
+  const setEditImage = (index) => {
+    editImage.value = {
+      status: true,
+      index: index,
+    };
   };
 
   // Actions
@@ -127,6 +142,17 @@ export const useLayoutStore = defineStore("layout", () => {
     deletePostId.value = null;
   };
 
+  const resetEditImage = () => {
+    editImage.value = {
+      status: false,
+      index: null,
+    };
+  };
+
+  const resetSingleImageURLState = () => {
+    singleImageURLState.value = null;
+  };
+
   const $reset = () => {
     sideMenu.value = false;
     logoLoading.value = false;
@@ -140,6 +166,10 @@ export const useLayoutStore = defineStore("layout", () => {
     };
     singleImageURLState.value = null;
     postImagesURLState.value = [];
+    editImage.value = {
+      status: false,
+      index: null,
+    };
     resetDeletePostId();
   };
 
@@ -156,10 +186,13 @@ export const useLayoutStore = defineStore("layout", () => {
     postImagesURLState,
     isPopup,
     getSingleImageURLState,
+    editImage,
     setDeletePostId,
     setSingleImageURLState,
     setPostImageURL,
+    setEditImage,
     removePostImageURL,
+    editPostImageURL,
     unhideSideMenu,
     hideSideMenu,
     unhideLogoLoading,
@@ -175,6 +208,8 @@ export const useLayoutStore = defineStore("layout", () => {
     unhidePopup,
     hidePopup,
     resetDeletePostId,
+    resetSingleImageURLState,
+    resetEditImage,
     $reset,
   };
 });

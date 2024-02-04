@@ -33,7 +33,12 @@
     cropper.getCroppedCanvas().toBlob(
       (blob) => {
         const imageURL = URL.createObjectURL(blob);
-        layoutStore.setPostImageURL(imageURL);
+        if (layoutStore.editImage.status) {
+          layoutStore.editPostImageURL(layoutStore.editImage.index, imageURL);
+        } else {
+          layoutStore.setPostImageURL(imageURL);
+        }
+        layoutStore.resetSingleImageURLState();
       },
       "image/jpeg",
       1

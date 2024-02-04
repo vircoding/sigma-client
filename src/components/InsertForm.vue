@@ -115,6 +115,13 @@
       layoutStore.setSingleImageURLState(imageURL);
       layoutStore.unhideImageCropper();
     }
+    event.target.value = null;
+  };
+
+  const editImage = (index) => {
+    layoutStore.setEditImage(index);
+    layoutStore.setSingleImageURLState(layoutStore.postImagesURLState[index].original);
+    layoutStore.unhideImageCropper();
   };
 
   // Comps
@@ -575,6 +582,7 @@
             :key="index"
             :url="item.cropped"
             @remove="removeImage(index)"
+            @edit="editImage(index)"
           />
 
           <!-- Add -->
