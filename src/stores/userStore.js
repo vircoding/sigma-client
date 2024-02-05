@@ -253,9 +253,15 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const insertPost = async (post) => {
+  const insertPost = async (post, images) => {
     try {
-      const res = await accountServices.insertPost(post);
+      const formData = new FormData();
+      images.forEach((item, index) => {
+        formData.append("images", item, `img_${index + 1}.jpg`);
+      });
+      formData.append("data", JSON.stringify(post));
+
+      const res = await accountServices.insertPost(formData);
       userPostsState.value = res.data.posts;
       postStore.setPost(res.data.post);
 

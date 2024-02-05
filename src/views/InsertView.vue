@@ -9,7 +9,9 @@
   const layoutStore = useLayoutStore();
 
   onBeforeUnmount(() => {
-    layoutStore.resetCropFileURL();
+    layoutStore.resetEditImage();
+    layoutStore.resetSingleImageURLState();
+    layoutStore.resetPostImagesURLState();
   });
 </script>
 

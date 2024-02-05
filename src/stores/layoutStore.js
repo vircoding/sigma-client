@@ -42,17 +42,19 @@ export const useLayoutStore = defineStore("layout", () => {
     singleImageURLState.value = url;
   };
 
-  const setPostImageURL = (url) => {
+  const setPostImageURL = (url, file) => {
     if (postImagesURLState.value.length < 10) {
       postImagesURLState.value.push({
         cropped: url,
         original: singleImageURLState.value,
+        file,
       });
     }
   };
 
-  const editPostImageURL = (index, url) => {
+  const editPostImageURL = (index, url, file) => {
     postImagesURLState.value[index].cropped = url;
+    postImagesURLState.value[index].file = file;
   };
 
   const setEditImage = (index) => {
@@ -153,6 +155,10 @@ export const useLayoutStore = defineStore("layout", () => {
     singleImageURLState.value = null;
   };
 
+  const resetPostImagesURLState = () => {
+    postImagesURLState.value = [];
+  };
+
   const $reset = () => {
     sideMenu.value = false;
     logoLoading.value = false;
@@ -164,12 +170,9 @@ export const useLayoutStore = defineStore("layout", () => {
       preInsert: false,
       deletePost: false,
     };
-    singleImageURLState.value = null;
-    postImagesURLState.value = [];
-    editImage.value = {
-      status: false,
-      index: null,
-    };
+    resetPostImagesURLState();
+    resetEditImage();
+    resetSingleImageURLState();
     resetDeletePostId();
   };
 
@@ -208,6 +211,7 @@ export const useLayoutStore = defineStore("layout", () => {
     unhidePopup,
     hidePopup,
     resetDeletePostId,
+    resetPostImagesURLState,
     resetSingleImageURLState,
     resetEditImage,
     $reset,

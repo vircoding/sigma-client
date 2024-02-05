@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useUserStore } from "../stores/userStore.js";
 import { authorizedAPI } from "./api.js";
 
 export default {
@@ -21,9 +23,9 @@ export default {
     return authorizedAPI().get("account/favorites");
   },
 
-  insertPost(post) {
-    return authorizedAPI().post("/account/posts", post);
-  },
+  // insertPost(post) {
+  //   return authorizedAPI().post("/account/posts", post);
+  // },
 
   updateUser(user) {
     return authorizedAPI().patch("/account", user);
@@ -39,5 +41,15 @@ export default {
 
   deletePost(id) {
     return authorizedAPI().delete(`/account/posts/${id}`);
+  },
+
+  insertPost(formData) {
+    const userStore = useUserStore();
+    return axios.post("https://sigma-api-ehki.onrender.com/api/v1/account/posts", formData, {
+      headers: {
+        "Contet-Type": "multipart/form-data",
+        Authorization: `Bearer ${userStore.credentialsState.token}`,
+      },
+    });
   },
 };

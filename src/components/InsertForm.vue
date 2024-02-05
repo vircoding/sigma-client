@@ -276,7 +276,7 @@
     layoutStore.removePostImageURL(index);
   };
 
-  const buildPost = () => {
+  const buildPost = (urls) => {
     const post = {
       type: type.value,
       description: postDetails.value.description,
@@ -353,13 +353,18 @@
     filledInputs.value.rentAmount = false;
 
     phoneError.value = true;
+
+    layoutStore.resetEditImage();
+    layoutStore.resetSingleImageURLState();
+    layoutStore.resetPostImagesURLState();
   };
 
   const formSubmit = async () => {
     layoutStore.unhideSpinnerLoading();
     try {
+      const images = layoutStore.postImagesURLState.map((item) => item.file);
       const post = buildPost();
-      const id = await userStore.insertPost(post);
+      const id = await userStore.insertPost(post, images);
 
       await router.push(`/post/${id}`);
 
