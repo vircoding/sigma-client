@@ -204,17 +204,12 @@
         {{ item }}<br />
       </span>
     </div>
-    <div v-if="!postStore.isClientState">
+    <!-- Author -->
+    <div v-if="postStore.postState.author_role === 'agent'">
       <!-- Horizontal Line -->
-      <div
-        v-if="agentStore.authorState.role === 'agent'"
-        class="w-full border-t border-sgray-100"
-      ></div>
+      <div class="w-full border-t border-sgray-100"></div>
       <!-- Agent -->
-      <div
-        v-if="agentStore.authorState.role === 'agent'"
-        class="mt-2 flex w-full justify-between gap-3"
-      >
+      <div class="mt-2 flex w-full justify-between gap-3">
         <!-- Avatar -->
         <div class="w-1/5">
           <img

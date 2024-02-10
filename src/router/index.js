@@ -169,7 +169,9 @@ const routes = [
         if (!postStore.isPostState) {
           await postStore.getPost(to.params.id);
         }
-        await agentStore.getAuthor(postStore.postState.uid);
+
+        if (postStore.postState.author_role === "agent")
+          await agentStore.getAuthor(postStore.postState.uid);
 
         if (!from.name) {
           layoutStore.hideLogoLoading();

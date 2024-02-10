@@ -14,7 +14,6 @@
 
   onBeforeUnmount(() => {
     postStore.resetPost();
-    postStore.resetIsClient();
     agentStore.resetAuthor();
   });
 </script>
