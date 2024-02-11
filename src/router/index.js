@@ -102,7 +102,38 @@ const routes = [
     path: "/find",
     name: "find",
     component: () => import("../views/FindView.vue"),
-    meta: { requiresAuth: true },
+    beforeEnter: async (to, from, next) => {
+      const layoutStore = useLayoutStore();
+      const postStore = usePostStore();
+
+      if (!from.name) {
+        layoutStore.unhideLogoLoading();
+      } else {
+        layoutStore.unhideSpinnerLoading();
+      }
+
+      try {
+        await postStore.findPosts(1, undefined, undefined, undefined, undefined, undefined);
+
+        if (!from.name) {
+          layoutStore.hideLogoLoading();
+        } else {
+          layoutStore.hideSpinnerLoading();
+        }
+
+        next();
+      } catch (error) {
+        console.log(error);
+
+        if (!from.name) {
+          layoutStore.hideLogoLoading();
+        } else {
+          layoutStore.hideSpinnerLoading();
+        }
+
+        next("/");
+      }
+    },
   },
   {
     path: "/insert",

@@ -12,11 +12,45 @@ export const usePostStore = defineStore("post", () => {
   const agentPostsState = ref(null);
   const userPostsState = ref(null);
   const userFavoritesState = ref(null);
+  const findedPostsState = ref(null);
+  const filterTypeState = ref("sale");
 
   // Computed
   const isPostState = computed(() => !!postState.value);
 
   // Actions
+  const findPosts = async (
+    page = 1,
+    province = undefined,
+    municipality = undefined,
+    currency = undefined,
+    frequency = undefined,
+    infl = undefined,
+    supl = undefined
+  ) => {
+    try {
+      let res;
+      if (filterTypeState.value === "sale") {
+        res = await postsServices.getSales(page, province, municipality, currency, infl, supl);
+      } else if (filterTypeState.value === "rent") {
+        res = await postsServices.getRents(
+          page,
+          province,
+          municipality,
+          currency,
+          frequency,
+          infl,
+          supl
+        );
+      } else {
+        res = await postsServices.getExchanges(page, province, municipality);
+      }
+      findedPostsState.value = res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getPost = async (id) => {
     try {
       const res = await postsServices.getPost(id);
@@ -87,6 +121,10 @@ export const usePostStore = defineStore("post", () => {
   };
 
   // Setters
+  const setFilterType = (type = "sale") => {
+    filterTypeState.value = type;
+  };
+
   const setPost = (post) => {
     postState.value = post;
   };
@@ -128,6 +166,14 @@ export const usePostStore = defineStore("post", () => {
     agentPostsState.value = null;
   };
 
+  const resetFindedPosts = () => {
+    findedPostsState.value = null;
+  };
+
+  const resetFilterType = () => {
+    filterTypeState.value = "sale";
+  };
+
   const $reset = () => {
     resetUserPosts();
     resetUserFavorites();
@@ -137,6 +183,8 @@ export const usePostStore = defineStore("post", () => {
     resetPopularExchanges();
     resetPost();
     resetAgentPosts();
+    resetFindedPosts();
+    resetFilterType();
   };
 
   return {
@@ -148,7 +196,10 @@ export const usePostStore = defineStore("post", () => {
     popularExchangesState,
     postState,
     agentPostsState,
+    findedPostsState,
+    filterTypeState,
     isPostState,
+    findPosts,
     getPost,
     getUpdatePost,
     visitPost,
@@ -159,6 +210,7 @@ export const usePostStore = defineStore("post", () => {
     getPopularExchanges,
     setPost,
     setUpdatePost,
+    setFilterType,
     resetUserPosts,
     resetUserFavorites,
     resetUpdatePost,
@@ -167,6 +219,8 @@ export const usePostStore = defineStore("post", () => {
     resetPopularExchanges,
     resetPost,
     resetAgentPosts,
+    resetFindedPosts,
+    resetFilterType,
     $reset,
   };
 });

@@ -5,16 +5,38 @@ export default {
     return unauthorizedAPI().get("/posts");
   },
 
-  getSales() {
-    return unauthorizedAPI().get("/posts/sales");
+  getSales(page, province, municipality, currency, infl, supl) {
+    let query = `?page=${page}`;
+
+    if (province) query = query + `&province=${encodeURIComponent(province)}`;
+    if (municipality) query = query + `&municipality=${encodeURIComponent(municipality)}`;
+    if (currency) query = query + `&currency=${currency}`;
+    if (infl) query = query + `&infl=${infl}`;
+    if (supl) query = query + `&supl=${supl}`;
+
+    return unauthorizedAPI().get(`/posts/sales${query}`);
   },
 
-  getRents() {
-    return unauthorizedAPI().get("/posts/rents");
+  getRents(page, province, municipality, currency, frequency, infl, supl) {
+    let query = `?page=${page}`;
+
+    if (province) query = query + `&province=${encodeURIComponent(province)}`;
+    if (municipality) query = query + `&municipality=${encodeURIComponent(municipality)}`;
+    if (currency) query = query + `&currency=${currency}`;
+    if (frequency) query = query + `&frequency=${frequency}`;
+    if (infl) query = query + `&infl=${infl}`;
+    if (supl) query = query + `&supl=${supl}`;
+
+    return unauthorizedAPI().get(`/posts/rents${query}`);
   },
 
-  getExchanges() {
-    return unauthorizedAPI().get("/posts/exchanges");
+  getExchanges(page, province, municipalty) {
+    let query = `?page=${page}`;
+
+    if (province) query = query + `&province=${encodeURIComponent(province)}`;
+    if (municipalty) query = query + `&municipality=${encodeURIComponent(municipalty)}`;
+
+    return unauthorizedAPI().get(`/posts/exchanges${query}`);
   },
 
   getPost(id) {
