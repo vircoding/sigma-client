@@ -16,9 +16,27 @@
 
   const type = ref("sale");
 
+  const saleFilters = ref({
+    province: "none",
+    municipality: "none",
+  });
+
+  const rentFilters = ref({
+    province: "none",
+    municipality: "none",
+  });
+
   const exchangeFilters = ref({
     province: "none",
     municipality: "none",
+  });
+
+  const getSaleProvince = computed(() => {
+    return saleFilters.value.province;
+  });
+
+  const getRentProvince = computed(() => {
+    return rentFilters.value.province;
   });
 
   const getExchangeProvince = computed(() => {
@@ -29,26 +47,57 @@
     postStore.setFilterType(type.value);
   });
 
+  watch(getSaleProvince, () => {
+    saleFilters.value.municipality = "none";
+  });
+
+  watch(getRentProvince, () => {
+    rentFilters.value.municipality = "none";
+  });
+
   watch(getExchangeProvince, () => {
     exchangeFilters.value.municipality = "none";
   });
 
   const reset = () => {
-    type.value = "sale";
-    exchangeFilters.value = {
-      province: "none",
-      municipality: "none",
-    };
+    if (type.value === "sale") {
+      saleFilters.value = {
+        province: "none",
+        municipality: "none",
+      };
+    } else if (type.value === "rent") {
+      rentFilters.value = {
+        province: "none",
+        municipality: "none",
+      };
+    } else if (type.value === "exchange") {
+      exchangeFilters.value = {
+        province: "none",
+        municipality: "none",
+      };
+    }
   };
 
   const findPosts = async () => {
     try {
       layoutStore.unhideSpinnerLoading();
-      await postStore.findPosts(
-        1,
-        exchangeFilters.value.province,
-        exchangeFilters.value.municipality
-      );
+
+      // Sales
+      if (postStore.filterTypeState === "sale")
+        await postStore.findPosts(1, saleFilters.value.province, saleFilters.value.municipality);
+
+      // Rents
+      if (postStore.filterTypeState === "rent")
+        await postStore.findPosts(1, rentFilters.value.province, rentFilters.value.municipality);
+
+      // Exchanges
+      if (postStore.filterTypeState === "exchange")
+        await postStore.findPosts(
+          1,
+          exchangeFilters.value.province,
+          exchangeFilters.value.municipality
+        );
+
       layoutStore.hideSpinnerLoading();
     } catch (error) {
       console.log(error);
@@ -68,10 +117,25 @@
     </div>
 
     <!-- Sales Filters -->
-    <div v-if="postStore.filterTypeState === 'sale'" class="w-full"></div>
+    <div v-if="postStore.filterTypeState === 'sale'" class="mb-[10px] flex w-full flex-col gap-3">
+      <!-- Province -->
+      <ProvinceFilter v-model="saleFilters.province" />
+
+      <!-- Municipality -->
+      <MuncipalityFilter v-model="saleFilters.municipality" :province="saleFilters.province" />
+    </div>
 
     <!-- Rents Filters -->
-    <div v-else-if="postStore.filterTypeState === 'rent'" class="w-full"></div>
+    <div
+      v-else-if="postStore.filterTypeState === 'rent'"
+      class="mb-[10px] flex w-full flex-col gap-3"
+    >
+      <!-- Province -->
+      <ProvinceFilter v-model="rentFilters.province" />
+
+      <!-- Municipality -->
+      <MuncipalityFilter v-model="rentFilters.municipality" :province="rentFilters.province" />
+    </div>
 
     <!-- Exchanges Filters -->
     <div
@@ -80,6 +144,8 @@
     >
       <!-- Province -->
       <ProvinceFilter v-model="exchangeFilters.province" />
+
+      <!-- Municipality -->
       <MuncipalityFilter
         v-model="exchangeFilters.municipality"
         :province="exchangeFilters.province"
