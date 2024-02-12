@@ -28,6 +28,9 @@ export const usePostStore = defineStore("post", () => {
     infl = undefined,
     supl = undefined
   ) => {
+    if (province === "none") province = undefined;
+    if (municipality === "none") municipality = undefined;
+
     try {
       let res;
       if (filterTypeState.value === "sale") {
