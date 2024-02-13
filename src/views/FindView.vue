@@ -10,7 +10,7 @@
 
   onBeforeUnmount(() => {
     postStore.resetFindedPosts();
-    postStore.resetFilterType();
+    postStore.resetLastFilter();
   });
 </script>
 

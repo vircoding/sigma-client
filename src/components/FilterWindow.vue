@@ -68,10 +68,6 @@
     return exchangeFilters.value.province;
   });
 
-  watch(type, () => {
-    postStore.setFilterType(type.value);
-  });
-
   watch(getSaleProvince, () => {
     saleFilters.value.municipality = "none";
   });
@@ -115,7 +111,7 @@
       layoutStore.unhideSpinnerLoading();
 
       // Sales
-      if (postStore.filterTypeState === "sale") {
+      if (type.value === "sale") {
         let reqInfl, reqSupl;
 
         if (saleFilters.value.currency === "none") {
@@ -139,6 +135,7 @@
         }
 
         await postStore.findPosts(
+          "sale",
           1,
           saleFilters.value.province,
           saleFilters.value.municipality,
@@ -149,7 +146,7 @@
       }
 
       // Rents
-      if (postStore.filterTypeState === "rent") {
+      if (type.value === "rent") {
         let reqInfl, reqSupl;
 
         if (rentFilters.value.currency === "none" || rentFilters.value.frequency === "none") {
@@ -173,6 +170,7 @@
         }
 
         await postStore.findPosts(
+          "rent",
           1,
           rentFilters.value.province,
           rentFilters.value.municipality,
@@ -184,8 +182,9 @@
       }
 
       // Exchanges
-      if (postStore.filterTypeState === "exchange")
+      if (type.value === "exchange")
         await postStore.findPosts(
+          "exchange",
           1,
           exchangeFilters.value.province,
           exchangeFilters.value.municipality
@@ -210,7 +209,7 @@
     </div>
 
     <!-- Sales Filters -->
-    <div v-if="postStore.filterTypeState === 'sale'" class="mb-[10px] flex w-full flex-col gap-3">
+    <div v-if="type === 'sale'" class="mb-[10px] flex w-full flex-col gap-3">
       <!-- Province -->
       <ProvinceFilter v-model="saleFilters.province" />
 
@@ -239,10 +238,7 @@
     </div>
 
     <!-- Rents Filters -->
-    <div
-      v-else-if="postStore.filterTypeState === 'rent'"
-      class="mb-[10px] flex w-full flex-col gap-3"
-    >
+    <div v-else-if="type === 'rent'" class="mb-[10px] flex w-full flex-col gap-3">
       <!-- Province -->
       <ProvinceFilter v-model="rentFilters.province" />
 
@@ -285,10 +281,7 @@
     </div>
 
     <!-- Exchanges Filters -->
-    <div
-      v-else-if="postStore.filterTypeState === 'exchange'"
-      class="mb-[10px] flex w-full flex-col gap-3"
-    >
+    <div v-else-if="type === 'exchange'" class="mb-[10px] flex w-full flex-col gap-3">
       <!-- Province -->
       <ProvinceFilter v-model="exchangeFilters.province" />
 

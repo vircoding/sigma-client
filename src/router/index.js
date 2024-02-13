@@ -113,7 +113,7 @@ const routes = [
       }
 
       try {
-        await postStore.findPosts(1, undefined, undefined, undefined, undefined, undefined);
+        await postStore.findPosts("sale", 1, undefined, undefined, undefined, undefined, undefined);
 
         if (!from.name) {
           layoutStore.hideLogoLoading();

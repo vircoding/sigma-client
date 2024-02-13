@@ -13,13 +13,22 @@ export const usePostStore = defineStore("post", () => {
   const userPostsState = ref(null);
   const userFavoritesState = ref(null);
   const findedPostsState = ref(null);
-  const filterTypeState = ref("sale");
+  const lastFilterState = ref({
+    type: "sale",
+    province: undefined,
+    municipality: undefined,
+    currency: undefined,
+    infl: undefined,
+    supl: undefined,
+    frequency: undefined,
+  });
 
   // Computed
   const isPostState = computed(() => !!postState.value);
 
   // Actions
   const findPosts = async (
+    type = "sale",
     page = 1,
     province = undefined,
     municipality = undefined,
@@ -35,9 +44,9 @@ export const usePostStore = defineStore("post", () => {
 
     try {
       let res;
-      if (filterTypeState.value === "sale") {
+      if (type === "sale") {
         res = await postsServices.getSales(page, province, municipality, currency, infl, supl);
-      } else if (filterTypeState.value === "rent") {
+      } else if (type === "rent") {
         res = await postsServices.getRents(
           page,
           province,
@@ -47,10 +56,20 @@ export const usePostStore = defineStore("post", () => {
           infl,
           supl
         );
-      } else {
+      } else if (type === "exchange") {
         res = await postsServices.getExchanges(page, province, municipality);
       }
       findedPostsState.value = res.data;
+      lastFilterState.value = {
+        type,
+        page,
+        province,
+        municipality,
+        currency,
+        infl,
+        supl,
+        frequency,
+      };
     } catch (error) {
       console.log(error);
     }
@@ -126,10 +145,6 @@ export const usePostStore = defineStore("post", () => {
   };
 
   // Setters
-  const setFilterType = (type = "sale") => {
-    filterTypeState.value = type;
-  };
-
   const setPost = (post) => {
     postState.value = post;
   };
@@ -175,8 +190,16 @@ export const usePostStore = defineStore("post", () => {
     findedPostsState.value = null;
   };
 
-  const resetFilterType = () => {
-    filterTypeState.value = "sale";
+  const resetLastFilter = () => {
+    lastFilterState.value = {
+      type: "sale",
+      province: undefined,
+      municipality: undefined,
+      currency: undefined,
+      infl: undefined,
+      supl: undefined,
+      frequency: undefined,
+    };
   };
 
   const $reset = () => {
@@ -190,6 +213,7 @@ export const usePostStore = defineStore("post", () => {
     resetAgentPosts();
     resetFindedPosts();
     resetFilterType();
+    resetLastFilter();
   };
 
   return {
@@ -202,7 +226,7 @@ export const usePostStore = defineStore("post", () => {
     postState,
     agentPostsState,
     findedPostsState,
-    filterTypeState,
+    lastFilterState,
     isPostState,
     findPosts,
     getPost,
@@ -215,7 +239,6 @@ export const usePostStore = defineStore("post", () => {
     getPopularExchanges,
     setPost,
     setUpdatePost,
-    setFilterType,
     resetUserPosts,
     resetUserFavorites,
     resetUpdatePost,
@@ -225,7 +248,7 @@ export const usePostStore = defineStore("post", () => {
     resetPost,
     resetAgentPosts,
     resetFindedPosts,
-    resetFilterType,
+    resetLastFilter,
     $reset,
   };
 });
