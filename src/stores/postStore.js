@@ -24,12 +24,14 @@ export const usePostStore = defineStore("post", () => {
     province = undefined,
     municipality = undefined,
     currency = undefined,
-    frequency = undefined,
     infl = undefined,
-    supl = undefined
+    supl = undefined,
+    frequency = undefined
   ) => {
     if (province === "none") province = undefined;
     if (municipality === "none") municipality = undefined;
+    if (currency === "none") currency = undefined;
+    if (frequency === "none") frequency = undefined;
 
     try {
       let res;

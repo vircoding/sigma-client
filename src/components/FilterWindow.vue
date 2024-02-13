@@ -5,11 +5,8 @@
   import TypeRadioInput from "./TypeRadioInput.vue";
   import ProvinceFilter from "./ProvinceFilter.vue";
   import MuncipalityFilter from "./MunicipalityFilter.vue";
-  import CurrencyRadioInput from "./CurrencyRadioInput.vue";
-  import AmountInput from "./AmountInput.vue";
-  import FrequencyRadioInput from "./FrequencyRadioInput.vue";
-  import OffersSelectInput from "./OffersSelectInput.vue";
-  import NeedsSelectInput from "./NeedsSelectInput.vue";
+  import CurrencyFilter from "./CurrencyFilter.vue";
+  import FrequencyFilter from "./FrequencyFilter.vue";
 
   const postStore = usePostStore();
   const layoutStore = useLayoutStore();
@@ -19,11 +16,13 @@
   const saleFilters = ref({
     province: "none",
     municipality: "none",
+    currency: "none",
   });
 
   const rentFilters = ref({
     province: "none",
     municipality: "none",
+    currency: "none",
   });
 
   const exchangeFilters = ref({
@@ -64,11 +63,13 @@
       saleFilters.value = {
         province: "none",
         municipality: "none",
+        currency: "none",
       };
     } else if (type.value === "rent") {
       rentFilters.value = {
         province: "none",
         municipality: "none",
+        currency: "none",
       };
     } else if (type.value === "exchange") {
       exchangeFilters.value = {
@@ -84,11 +85,24 @@
 
       // Sales
       if (postStore.filterTypeState === "sale")
-        await postStore.findPosts(1, saleFilters.value.province, saleFilters.value.municipality);
+        await postStore.findPosts(
+          1,
+          saleFilters.value.province,
+          saleFilters.value.municipality,
+          saleFilters.value.currency
+        );
 
       // Rents
       if (postStore.filterTypeState === "rent")
-        await postStore.findPosts(1, rentFilters.value.province, rentFilters.value.municipality);
+        await postStore.findPosts(
+          1,
+          rentFilters.value.province,
+          rentFilters.value.municipality,
+          rentFilters.value.currency,
+          undefined,
+          undefined,
+          rentFilters.value.frequency
+        );
 
       // Exchanges
       if (postStore.filterTypeState === "exchange")
@@ -123,6 +137,17 @@
 
       <!-- Municipality -->
       <MuncipalityFilter v-model="saleFilters.municipality" :province="saleFilters.province" />
+
+      <!-- Currency -->
+      <div class="flex w-full flex-col">
+        <!-- Label -->
+        <span class="mb-1 pl-2 font-medium">Moneda</span>
+
+        <!-- Input -->
+        <div class="p flex w-full items-center justify-start gap-3">
+          <CurrencyFilter v-model="saleFilters.currency" />
+        </div>
+      </div>
     </div>
 
     <!-- Rents Filters -->
@@ -135,6 +160,28 @@
 
       <!-- Municipality -->
       <MuncipalityFilter v-model="rentFilters.municipality" :province="rentFilters.province" />
+
+      <!-- Currency -->
+      <div class="flex w-full flex-col">
+        <!-- Label -->
+        <span class="mb-1 pl-2 font-medium">Moneda</span>
+
+        <!-- Input -->
+        <div class="p flex w-full items-center justify-start gap-3">
+          <CurrencyFilter v-model="rentFilters.currency" />
+        </div>
+      </div>
+
+      <!-- Frequency -->
+      <div class="flex w-full flex-col">
+        <!-- Label -->
+        <span class="mb-1 pl-2 font-medium">Frecuencia</span>
+
+        <!-- Input -->
+        <div class="p flex w-full items-center justify-start gap-3">
+          <FrequencyFilter v-model="rentFilters.frequency" />
+        </div>
+      </div>
     </div>
 
     <!-- Exchanges Filters -->
