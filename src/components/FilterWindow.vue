@@ -7,6 +7,7 @@
   import MuncipalityFilter from "./MunicipalityFilter.vue";
   import CurrencyFilter from "./CurrencyFilter.vue";
   import FrequencyFilter from "./FrequencyFilter.vue";
+  import LimitsFilter from "./LimitsFilter.vue";
 
   const postStore = usePostStore();
   const layoutStore = useLayoutStore();
@@ -17,18 +18,43 @@
     province: "none",
     municipality: "none",
     currency: "none",
+    infl: "",
+    supl: "",
   });
 
   const rentFilters = ref({
     province: "none",
     municipality: "none",
     currency: "none",
+    frequency: "none",
+    infl: "",
+    supl: "",
   });
 
   const exchangeFilters = ref({
     province: "none",
     municipality: "none",
   });
+
+  // const saleInflError = computed(() => {
+  //   if (saleFilters.value.infl < 1 && saleFilters.value.infl > 999999999) return true;
+  //   else return false;
+  // });
+
+  // const saleSuplError = computed(() => {
+  //   if (saleFilters.value.supl < 1 && saleFilters.value.supl > 999999999) return true;
+  //   else return false;
+  // });
+
+  // const rentInflError = computed(() => {
+  //   if (rentFilters.value.infl < 1 && rentFilters.value.infl > 999999999) return true;
+  //   else return false;
+  // });
+
+  // const rentSuplError = computed(() => {
+  //   if (rentFilters.value.supl < 1 && rentFilters.value.supl > 999999999) return true;
+  //   else return false;
+  // });
 
   const getSaleProvince = computed(() => {
     return saleFilters.value.province;
@@ -64,12 +90,17 @@
         province: "none",
         municipality: "none",
         currency: "none",
+        infl: "",
+        supl: "",
       };
     } else if (type.value === "rent") {
       rentFilters.value = {
         province: "none",
         municipality: "none",
         currency: "none",
+        frequency: "none",
+        infl: "",
+        supl: "",
       };
     } else if (type.value === "exchange") {
       exchangeFilters.value = {
@@ -84,25 +115,73 @@
       layoutStore.unhideSpinnerLoading();
 
       // Sales
-      if (postStore.filterTypeState === "sale")
+      if (postStore.filterTypeState === "sale") {
+        let reqInfl, reqSupl;
+
+        if (saleFilters.value.currency === "none") {
+          reqInfl = undefined;
+          reqSupl = undefined;
+        } else {
+          // Inf. Limit Validations
+          if (saleFilters.value.infl < 1 || saleFilters.value.infl > 999999999) reqInfl = undefined;
+          else reqInfl = saleFilters.value.infl;
+
+          // Sup. Limit Validations
+          if (saleFilters.value.supl < 1 || saleFilters.value.infl > 999999999) reqSupl = undefined;
+          else reqSupl = saleFilters.value.supl;
+
+          // Sorter Validation
+          if (reqInfl && reqSupl) {
+            if (reqInfl > reqSupl) {
+              [reqInfl, reqSupl] = [reqSupl, reqInfl];
+            }
+          }
+        }
+
         await postStore.findPosts(
           1,
           saleFilters.value.province,
           saleFilters.value.municipality,
-          saleFilters.value.currency
+          saleFilters.value.currency,
+          reqInfl,
+          reqSupl
         );
+      }
 
       // Rents
-      if (postStore.filterTypeState === "rent")
+      if (postStore.filterTypeState === "rent") {
+        let reqInfl, reqSupl;
+
+        if (rentFilters.value.currency === "none" || rentFilters.value.frequency === "none") {
+          reqInfl = undefined;
+          reqSupl = undefined;
+        } else {
+          // Inf. Limit Validations
+          if (rentFilters.value.infl < 1 || rentFilters.value.infl > 999999999) reqInfl = undefined;
+          else reqInfl = rentFilters.value.infl;
+
+          // Sup. Limit Validations
+          if (rentFilters.value.supl < 1 || rentFilters.value.infl > 999999999) reqSupl = undefined;
+          else reqSupl = rentFilters.value.supl;
+
+          // Sorter Validation
+          if (reqInfl && reqSupl) {
+            if (reqInfl > reqSupl) {
+              [reqInfl, reqSupl] = [reqSupl, reqInfl];
+            }
+          }
+        }
+
         await postStore.findPosts(
           1,
           rentFilters.value.province,
           rentFilters.value.municipality,
           rentFilters.value.currency,
-          undefined,
-          undefined,
+          reqInfl,
+          reqSupl,
           rentFilters.value.frequency
         );
+      }
 
       // Exchanges
       if (postStore.filterTypeState === "exchange")
@@ -148,6 +227,15 @@
           <CurrencyFilter v-model="saleFilters.currency" />
         </div>
       </div>
+
+      <!-- Limits -->
+      <div v-if="saleFilters.currency !== 'none'" class="flex w-full gap-2">
+        <!-- Inf. -->
+        <LimitsFilter v-model="saleFilters.infl" type="infl" :error="false" />
+
+        <!-- Sup. -->
+        <LimitsFilter v-model="saleFilters.supl" type="supl" :error="false" />
+      </div>
     </div>
 
     <!-- Rents Filters -->
@@ -181,6 +269,18 @@
         <div class="p flex w-full items-center justify-start gap-3">
           <FrequencyFilter v-model="rentFilters.frequency" />
         </div>
+      </div>
+
+      <!-- Limits -->
+      <div
+        v-if="rentFilters.currency !== 'none' && rentFilters.frequency !== 'none'"
+        class="flex w-full gap-2"
+      >
+        <!-- Inf. -->
+        <LimitsFilter v-model="rentFilters.infl" type="infl" :error="false" />
+
+        <!-- Sup. -->
+        <LimitsFilter v-model="rentFilters.supl" type="supl" :error="false" />
       </div>
     </div>
 

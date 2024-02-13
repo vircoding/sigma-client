@@ -20,10 +20,17 @@
     <FilterWindow class="mb-7" />
 
     <!-- Horizontal Line -->
-    <div class="mb-7 w-[90%] border-b border-sgray-100"></div>
+    <!-- <div class="mb-7 w-[90%] border-b border-sgray-100"></div> -->
 
     <!-- Posts -->
-    <div class="flex flex-col items-center justify-center gap-8 lg:flex-row">
+    <div class="mb-6 flex w-full items-center gap-2 pl-5">
+      <img src="../assets/check-icon.svg" class="w-[18px]" />
+      <span class="text-shadow w-full text-left text-lg"
+        >{{ postStore.findedPostsState.total_posts }}
+        {{ postStore.findedPostsState.total_posts === 1 ? "Resultado" : "Resultados" }}</span
+      >
+    </div>
+    <div class="mb-7 flex flex-col items-center justify-center gap-8 lg:flex-row">
       <RouterLink
         :to="`/post/${item.id}`"
         v-for="(item, index) in postStore.findedPostsState.posts"
