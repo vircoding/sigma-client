@@ -45,7 +45,10 @@
     </div>
 
     <!-- Posts -->
-    <div class="mb-8 flex flex-col items-center justify-center gap-8 lg:flex-row">
+    <div
+      v-if="postStore.findedPostsState.total_posts !== 0"
+      class="mb-8 flex flex-col items-center justify-center gap-8 lg:flex-row"
+    >
       <RouterLink
         :to="`/post/${item.id}`"
         v-for="(item, index) in postStore.findedPostsState.posts"
@@ -56,7 +59,7 @@
     </div>
 
     <!-- Pagination -->
-    <div class="w-full">
+    <div v-if="postStore.findedPostsState.total_posts !== 0" class="w-full">
       <PostsPagination @scroll="scrollView" />
     </div>
   </div>
