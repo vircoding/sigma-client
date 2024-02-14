@@ -194,6 +194,28 @@
       layoutStore.hideSpinnerLoading();
     }
   };
+
+  const fileInput = ref(null);
+
+  const openImageDialog = () => {
+    fileInput.value.click();
+  };
+
+  const loadImage = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageURL = URL.createObjectURL(file);
+      layoutStore.setSingleAvatarURLState(imageURL);
+      layoutStore.unhideImageCropper();
+    }
+    event.target.value = null;
+  };
+
+  const editImage = () => {
+    layoutStore.setEditAvatar();
+    layoutStore.setSingleAvatarURLState(layoutStore.avatarURLState.original);
+    layoutStore.unhideImageCropper();
+  };
 </script>
 
 <template>
@@ -278,45 +300,74 @@
           >Error Message</span
         >
       </div>
-      <!-- First Name -->
-      <div class="col-start-2 row-start-1 mb-2 flex flex-col lg:mb-0">
-        <input
-          @focus="editInput('firstname')"
-          type="text"
-          v-model.trim="user.info.firstname"
-          class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
-          :class="
-            firstnameError
-              ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
-              : 'ring-sigma'
-          "
-          placeholder="Nombre"
-        />
-        <span
-          class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
-          :class="firstnameError ? 'visible' : 'invisible'"
-          >Error Message</span
-        >
-      </div>
-      <!-- Last Name -->
-      <div class="col-start-2 row-start-2 mb-2 flex flex-col lg:mb-0">
-        <input
-          @focus="editInput('lastname')"
-          type="text"
-          v-model.trim="user.info.lastname"
-          class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
-          :class="
-            lastnameError
-              ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
-              : 'ring-sigma'
-          "
-          placeholder="Apellidos"
-        />
-        <span
-          class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
-          :class="lastnameError ? 'visible' : 'invisible'"
-          >Error Message</span
-        >
+
+      <div class="mb-7 flex w-full items-center">
+        <!-- Avatar -->
+        <div class="relative w-[35%]">
+          <!-- File Input (Hidden) -->
+          <input type="file" @change="loadImage" class="hidden" ref="fileInput" accept="image/*" />
+
+          <!-- Default Image -->
+          <img src="../assets/user-icon.svg" class="w-full rounded-full border border-sgray-100" />
+
+          <!-- Image Preview -->
+          <img
+            v-if="layoutStore.avatarURLState"
+            :src="layoutStore.avatarURLState.cropped"
+            class="absolute bottom-0 left-0 right-0 top-0 w-full rounded-full border border-sgray-100"
+          />
+
+          <!-- Add Button -->
+          <button
+            @click.prevent="openImageDialog"
+            class="text-shadow absolute bottom-1 right-1 rounded-full border border-sgray-100 bg-white p-2"
+          >
+            <img src="../assets/edit-icon.svg" class="w-3" />
+          </button>
+        </div>
+        <!-- Names -->
+        <div class="relative top-[10px] flex w-[65%] flex-col justify-center pl-3">
+          <!-- First Name -->
+          <div class="col-start-2 row-start-1 mb-2 flex flex-col lg:mb-0">
+            <input
+              @focus="editInput('firstname')"
+              type="text"
+              v-model.trim="user.info.firstname"
+              class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
+              :class="
+                firstnameError
+                  ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
+                  : 'ring-sigma'
+              "
+              placeholder="Nombre"
+            />
+            <span
+              class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
+              :class="firstnameError ? 'visible' : 'invisible'"
+              >Error Message</span
+            >
+          </div>
+          <!-- Last Name -->
+          <div class="col-start-2 row-start-2 flex flex-col lg:mb-0">
+            <input
+              @focus="editInput('lastname')"
+              type="text"
+              v-model.trim="user.info.lastname"
+              class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
+              :class="
+                lastnameError
+                  ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
+                  : 'ring-sigma'
+              "
+              placeholder="Apellidos"
+            />
+            <span
+              class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
+              :class="lastnameError ? 'visible' : 'invisible'"
+              >Error Message</span
+            >
+          </div>
+        </div>
       </div>
       <!-- Phone -->
       <div class="relative col-start-2 row-start-3 mb-2 flex flex-col lg:mb-0">

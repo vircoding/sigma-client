@@ -11,7 +11,7 @@
 
   onMounted(() => {
     cropper = new Cropper(img.value, {
-      aspectRatio: 16 / 9,
+      aspectRatio: 1,
       viewMode: 3,
       minCropBoxWidth: 160,
       dragMode: "move",
@@ -27,9 +27,9 @@
 
   const closeImageCropper = () => {
     if (layoutStore.editImage.status) {
-      layoutStore.resetEditImage();
+      layoutStore.resetEditAvatar();
     }
-    layoutStore.resetSingleImageURLState();
+    layoutStore.resetSingleAvatarURLState();
     layoutStore.hideImageCropper();
   };
 
@@ -38,13 +38,13 @@
       (blob) => {
         const imageURL = URL.createObjectURL(blob);
 
-        if (layoutStore.editImage.status) {
-          layoutStore.editPostImageURL(layoutStore.editImage.index, imageURL, blob);
-          layoutStore.resetEditImage();
+        if (layoutStore.editAvatar) {
+          layoutStore.editAvatarURL(imageURL, blob);
+          layoutStore.resetEditAvatar();
         } else {
-          layoutStore.setPostImageURL(imageURL, blob);
+          layoutStore.setAvatarImageURL(imageURL, blob);
         }
-        layoutStore.resetSingleImageURLState();
+        layoutStore.resetSingleAvatarURLState();
       },
       "image/jpeg",
       1
@@ -82,7 +82,7 @@
     <div class="flex h-full w-full flex-col items-center justify-center object-contain px-5">
       <!-- Cropper Container -->
       <div class="">
-        <img ref="img" :src="layoutStore.getSingleImageURLState" class="block max-w-full" />
+        <img ref="img" :src="layoutStore.getSingleAvatarURLState" class="block max-w-full" />
       </div>
     </div>
   </div>

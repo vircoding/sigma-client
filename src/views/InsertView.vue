@@ -11,7 +11,7 @@
   onBeforeUnmount(() => {
     layoutStore.resetEditImage();
     layoutStore.resetSingleImageURLState();
-    layoutStore.resetPostImagesURLState();
+    layoutStore.resetPostImagesURL();
   });
 </script>
 

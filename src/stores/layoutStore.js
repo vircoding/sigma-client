@@ -15,11 +15,14 @@ export const useLayoutStore = defineStore("layout", () => {
   });
   const deletePostId = ref(null);
   const singleImageURLState = ref(null);
+  const singleAvatarURLState = ref(null);
   const postImagesURLState = ref([]);
+  const avatarURLState = ref(undefined);
   const editImage = ref({
     status: false,
     index: null,
   });
+  const editAvatar = ref(false);
 
   // Getters
   const isPopup = computed(() => {
@@ -33,6 +36,10 @@ export const useLayoutStore = defineStore("layout", () => {
     return singleImageURLState.value;
   });
 
+  const getSingleAvatarURLState = computed(() => {
+    return singleAvatarURLState.value;
+  });
+
   // Setters
   const setDeletePostId = (id) => {
     deletePostId.value = id;
@@ -40,6 +47,10 @@ export const useLayoutStore = defineStore("layout", () => {
 
   const setSingleImageURLState = (url) => {
     singleImageURLState.value = url;
+  };
+
+  const setSingleAvatarURLState = (url) => {
+    singleAvatarURLState.value = url;
   };
 
   const setPostImageURL = (url, file) => {
@@ -52,9 +63,22 @@ export const useLayoutStore = defineStore("layout", () => {
     }
   };
 
+  const setAvatarImageURL = (url, file) => {
+    avatarURLState.value = {
+      cropped: url,
+      original: singleAvatarURLState.value,
+      file,
+    };
+  };
+
   const editPostImageURL = (index, url, file) => {
     postImagesURLState.value[index].cropped = url;
     postImagesURLState.value[index].file = file;
+  };
+
+  const editAvatarURL = (url, file) => {
+    avatarURLState.value.cropped = url;
+    avatarURLState.value.file = file;
   };
 
   const setEditImage = (index) => {
@@ -62,6 +86,10 @@ export const useLayoutStore = defineStore("layout", () => {
       status: true,
       index: index,
     };
+  };
+
+  const setEditAvatar = () => {
+    editAvatar.value = true;
   };
 
   // Actions
@@ -151,12 +179,24 @@ export const useLayoutStore = defineStore("layout", () => {
     };
   };
 
+  const resetEditAvatar = () => {
+    editAvatar.value = false;
+  };
+
   const resetSingleImageURLState = () => {
     singleImageURLState.value = null;
   };
 
-  const resetPostImagesURLState = () => {
+  const resetSingleAvatarURLState = () => {
+    singleAvatarURLState.value = null;
+  };
+
+  const resetPostImagesURL = () => {
     postImagesURLState.value = [];
+  };
+
+  const resetAvatarURL = () => {
+    avatarURLState.value = undefined;
   };
 
   const $reset = () => {
@@ -186,16 +226,24 @@ export const useLayoutStore = defineStore("layout", () => {
     popup,
     deletePostId,
     singleImageURLState,
+    singleAvatarURLState,
     postImagesURLState,
+    avatarURLState,
     isPopup,
     getSingleImageURLState,
+    getSingleAvatarURLState,
     editImage,
+    editAvatar,
     setDeletePostId,
     setSingleImageURLState,
+    setSingleAvatarURLState,
     setPostImageURL,
+    setAvatarImageURL,
     setEditImage,
+    setEditAvatar,
     removePostImageURL,
     editPostImageURL,
+    editAvatarURL,
     unhideSideMenu,
     hideSideMenu,
     unhideLogoLoading,
@@ -211,8 +259,11 @@ export const useLayoutStore = defineStore("layout", () => {
     unhidePopup,
     hidePopup,
     resetDeletePostId,
-    resetPostImagesURLState,
+    resetPostImagesURL,
+    resetAvatarURL,
     resetSingleImageURLState,
+    resetEditAvatar,
+    resetSingleAvatarURLState,
     resetEditImage,
     $reset,
   };
