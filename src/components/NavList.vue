@@ -1,13 +1,22 @@
 <script setup>
   import { RouterLink } from "vue-router";
   import { useUserStore } from "../stores/userStore.js";
+  import { usePostStore } from "../stores/postStore.js";
   import { useLayoutStore } from "../stores/layoutStore.js";
-  import { useRoute } from "vue-router";
+  import { useRouter, useRoute } from "vue-router";
   import { computed } from "vue";
 
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
+  const postStore = usePostStore();
+  const router = useRouter();
   const route = useRoute();
+
+  const goToFindRent = () => {
+    postStore.setFindingRents();
+    console.log("here");
+    // router.push("/find");
+  };
 
   const actualPath = computed(() => {
     return route.name;
@@ -65,7 +74,7 @@
       <RouterLink to="/find" class="nav-link text-shadow">Compra</RouterLink>
     </li>
     <li>
-      <RouterLink to="/find" class="nav-link text-shadow">Renta</RouterLink>
+      <span @click.prevent="goToFindRent" class="nav-link text-shadow">Renta</span>
     </li>
     <li>
       <RouterLink to="/insert" class="nav-link text-shadow">Vende</RouterLink>

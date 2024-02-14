@@ -2,17 +2,25 @@
   import { RouterLink } from "vue-router";
   import { useUserStore } from "../stores/userStore.js";
   import { useLayoutStore } from "../stores/layoutStore.js";
-  import { useRoute } from "vue-router";
+  import { usePostStore } from "../stores/postStore.js";
+  import { useRoute, useRouter } from "vue-router";
   import { computed } from "vue";
 
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
+  const postStore = usePostStore();
 
   const route = useRoute();
+  const router = useRouter();
 
   const actualPath = computed(() => {
     return route.name;
   });
+
+  const goToFindRent = () => {
+    postStore.setFindingRents();
+    router.push("/find");
+  };
 
   const menuInteraction = () => {
     layoutStore.hideSideMenu();
@@ -30,7 +38,7 @@
         <RouterLink to="/find" class="text-shadow font-poppins text-lg">Compra</RouterLink>
       </li>
       <li v-if="userStore.isLoggedIn">
-        <RouterLink to="/find" class="text-shadow font-poppins text-lg">Renta</RouterLink>
+        <span @click.prevent="goToFindRent" class="text-shadow font-poppins text-lg">Renta</span>
       </li>
       <li v-if="userStore.isLoggedIn">
         <RouterLink to="/insert" class="text-shadow font-poppins text-lg">Vende</RouterLink>

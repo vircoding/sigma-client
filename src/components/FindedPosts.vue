@@ -1,4 +1,5 @@
 <script setup>
+  import { ref } from "vue";
   import { usePostStore } from "../stores/postStore.js";
   import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
   import FilterWindow from "./FilterWindow.vue";
@@ -6,6 +7,17 @@
   import PostsPagination from "./PostsPagination.vue";
 
   const postStore = usePostStore();
+
+  const scrollElement = ref(null);
+
+  const scrollView = () => {
+    if (scrollElement.value) {
+      scrollElement.value.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    }
+  };
 </script>
 
 <template>
@@ -18,14 +30,14 @@
     </div>
 
     <!-- Filter -->
-    <FilterWindow class="mb-7" />
+    <FilterWindow @scroll="scrollView" />
 
     <!-- Horizontal Line -->
     <!-- <div class="mb-7 w-[90%] border-b border-sgray-100"></div> -->
 
     <!-- Results Info -->
-    <div class="mb-6 flex w-full items-center gap-2 pl-5">
-      <img src="../assets/check-icon.svg" class="w-[18px]" />
+    <div ref="scrollElement" class="mb-7 flex w-full items-center gap-1 pl-5 pt-7">
+      <img src="../assets/filter-icon.svg" class="w-[24px]" />
       <span class="text-shadow w-full text-left text-lg"
         >{{ postStore.findedPostsState.total_posts }}
         {{ postStore.findedPostsState.total_posts === 1 ? "Resultado" : "Resultados" }}</span
@@ -45,7 +57,7 @@
 
     <!-- Pagination -->
     <div class="w-full">
-      <PostsPagination />
+      <PostsPagination @scroll="scrollView" />
     </div>
   </div>
 </template>

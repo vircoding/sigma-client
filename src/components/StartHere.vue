@@ -1,5 +1,16 @@
 <script setup>
+  import { usePostStore } from "../stores/postStore.js";
+  import { useRoute, useRouter } from "vue-router";
+
   const props = defineProps(["role"]);
+  const postStore = usePostStore();
+  const route = useRoute();
+  const router = useRouter();
+
+  const goToFindRent = () => {
+    postStore.setFindingRents();
+    router.push("/find");
+  };
 </script>
 
 <template>
@@ -109,10 +120,10 @@
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi, recusandae magni. Laudantium
         deserunt molestias suscipit.
       </p> -->
-      <RouterLink
-        to="/find"
+      <span
+        @click.prevent="goToFindRent"
         class="text-shadow rounded-md border border-sigma px-5 py-2 hover:text-black"
-        >Adelante</RouterLink
+        >Adelante</span
       >
     </div>
   </div>

@@ -4,6 +4,8 @@
   import { useLayoutStore } from "../stores/layoutStore.js";
   import NextArrow from "./icons/NextArrow.vue";
 
+  const emits = defineEmits(["scroll"]);
+
   const postStore = usePostStore();
   const layoutStore = useLayoutStore();
   const activeStyles = "bg-sgray-400 font-semibold text-white";
@@ -13,19 +15,9 @@
 
   const activatePage = async (page) => {
     try {
-      if (page !== pagesBuck) {
+      if (page !== activePage.value) {
         activePage.value = page;
         layoutStore.unhideSpinnerLoading();
-        console.log(
-          postStore.lastFilterState.type,
-          page,
-          postStore.lastFilterState.province,
-          postStore.lastFilterState.municipality,
-          postStore.lastFilterState.currency,
-          postStore.lastFilterState.infl,
-          postStore.lastFilterState.supl,
-          postStore.lastFilterState.frequency
-        );
         await postStore.findPosts(
           postStore.lastFilterState.type,
           page,
@@ -38,6 +30,7 @@
         );
         // spinnerVisibility.value = false;
         layoutStore.hideSpinnerLoading();
+        emits("scroll");
       }
     } catch (error) {
       console.log(error);

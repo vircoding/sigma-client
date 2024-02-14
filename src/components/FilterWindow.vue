@@ -9,6 +9,8 @@
   import FrequencyFilter from "./FrequencyFilter.vue";
   import LimitsFilter from "./LimitsFilter.vue";
 
+  const emits = defineEmits(["scroll"]);
+
   const postStore = usePostStore();
   const layoutStore = useLayoutStore();
 
@@ -191,6 +193,7 @@
         );
 
       layoutStore.hideSpinnerLoading();
+      emits("scroll");
     } catch (error) {
       console.log(error);
       layoutStore.hideSpinnerLoading();

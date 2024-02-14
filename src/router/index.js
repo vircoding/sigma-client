@@ -113,7 +113,31 @@ const routes = [
       }
 
       try {
-        await postStore.findPosts("sale", 1, undefined, undefined, undefined, undefined, undefined);
+        if (postStore.findingRentsState) {
+          await postStore.findPosts(
+            "rent",
+            1,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined
+          );
+
+          postStore.resetFindingRents();
+        } else {
+          await postStore.findPosts(
+            "sale",
+            1,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined
+          );
+        }
 
         if (!from.name) {
           layoutStore.hideLogoLoading();
@@ -124,6 +148,9 @@ const routes = [
         next();
       } catch (error) {
         console.log(error);
+
+        // Prevent reset
+        postStore.resetFindingRents();
 
         if (!from.name) {
           layoutStore.hideLogoLoading();

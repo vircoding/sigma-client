@@ -22,6 +22,7 @@ export const usePostStore = defineStore("post", () => {
     supl: undefined,
     frequency: undefined,
   });
+  const findingRentsState = ref(false);
 
   // Computed
   const isPostState = computed(() => !!postState.value);
@@ -153,6 +154,10 @@ export const usePostStore = defineStore("post", () => {
     updatePostState.value = post;
   };
 
+  const setFindingRents = () => {
+    findingRentsState.value = true;
+  };
+
   // Resets
   const resetUserPosts = () => {
     userPostsState.value = null;
@@ -188,6 +193,10 @@ export const usePostStore = defineStore("post", () => {
 
   const resetFindedPosts = () => {
     findedPostsState.value = null;
+  };
+
+  const resetFindingRents = () => {
+    findingRentsState.value = false;
   };
 
   const resetLastFilter = () => {
@@ -227,6 +236,7 @@ export const usePostStore = defineStore("post", () => {
     agentPostsState,
     findedPostsState,
     lastFilterState,
+    findingRentsState,
     isPostState,
     findPosts,
     getPost,
@@ -238,6 +248,7 @@ export const usePostStore = defineStore("post", () => {
     getPopularRents,
     getPopularExchanges,
     setPost,
+    setFindingRents,
     setUpdatePost,
     resetUserPosts,
     resetUserFavorites,
@@ -249,6 +260,7 @@ export const usePostStore = defineStore("post", () => {
     resetAgentPosts,
     resetFindedPosts,
     resetLastFilter,
+    resetFindingRents,
     $reset,
   };
 });
