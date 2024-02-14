@@ -108,6 +108,10 @@
     fileInput.value.click();
   };
 
+  const imageError = computed(() => {
+    return !layoutStore.postImagesURLState.length;
+  });
+
   const loadImage = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -143,6 +147,7 @@
   });
 
   const disableSubmit = computed(() => {
+    if (imageError.value) return true;
     if (type.value === "sale") {
       if (
         saleAmountError.value ||
