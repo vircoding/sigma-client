@@ -56,14 +56,14 @@
 <template>
   <!-- NavBar -->
   <div class="fixed top-0 z-10 w-full">
-    <nav class="flex h-[68px] justify-end space-x-4 p-4">
+    <nav class="flex h-[68px] items-center justify-end space-x-4 p-4">
+      <img @click.prevent="getCanvas" src="../assets/crop-icon.svg" class="w-8" />
       <img
         @click.prevent="closeImageCropper"
         class="custom-shadow w-5"
         src="../assets/exit-fullscreen-icon.svg"
         alt="Exit Fullscreen"
       />
-      <img @click.prevent="getCanvas" src="../assets/edit-icon.svg" />
     </nav>
   </div>
 
