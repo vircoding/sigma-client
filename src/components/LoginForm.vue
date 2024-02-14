@@ -31,7 +31,7 @@
         default:
           break;
       }
-    }, 6000);
+    }, 3000);
   };
 
   const emailError = computed(() => {
