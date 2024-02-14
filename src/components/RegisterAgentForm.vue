@@ -137,7 +137,12 @@
     return false;
   });
 
+  const avatarError = computed(() => {
+    return !layoutStore.avatarURLState;
+  });
+
   const disableSubmit = computed(() => {
+    if (avatarError.value) return true;
     if (
       !editedInputs.value.email ||
       !editedInputs.value.password ||
@@ -163,30 +168,36 @@
     return false;
   });
 
+  const resetComponent = () => {
+    user.value.email = "";
+    user.value.password = "";
+    user.value.repassword = "";
+    user.value.info.firstname = "";
+    user.value.info.lastname = "";
+    user.value.info.bio = "";
+    user.value.contact_details.public_email = "";
+    user.value.contact_details.whatsapp.phone = "";
+    user.value.contact_details.whatsapp.code = "+53";
+
+    editedInputs.value.email = false;
+    editedInputs.value.password = false;
+    editedInputs.value.repassword = false;
+    editedInputs.value.firstname = false;
+    editedInputs.value.lastname = false;
+    editedInputs.value.phone = false;
+    editedInputs.value.public_email = false;
+  };
+
   const formSubmit = async () => {
     layoutStore.unhideSpinnerLoading();
+
     try {
-      await userStore.register(user.value);
+      const avatar = layoutStore.avatarURLState.file;
+      await userStore.register(user.value, avatar);
 
       await router.push("/");
 
-      user.value.email = "";
-      user.value.password = "";
-      user.value.repassword = "";
-      user.value.info.firstname = "";
-      user.value.info.lastname = "";
-      user.value.info.bio = "";
-      user.value.contact_details.public_email = "";
-      user.value.contact_details.whatsapp.phone = "";
-      user.value.contact_details.whatsapp.code = "+53";
-
-      editedInputs.value.email = false;
-      editedInputs.value.password = false;
-      editedInputs.value.repassword = false;
-      editedInputs.value.firstname = false;
-      editedInputs.value.lastname = false;
-      editedInputs.value.phone = false;
-      editedInputs.value.public_email = false;
+      resetComponent();
 
       layoutStore.hideSpinnerLoading();
     } catch (error) {

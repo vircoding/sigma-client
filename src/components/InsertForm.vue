@@ -361,7 +361,7 @@
 
     layoutStore.resetEditImage();
     layoutStore.resetSingleImageURLState();
-    layoutStore.resetPostImagesURLState();
+    layoutStore.resetPostImagesURL();
   };
 
   const formSubmit = async () => {

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { unauthorizedAPI } from "./api.js";
 
 export default {
@@ -13,7 +14,16 @@ export default {
     return unauthorizedAPI().post("/auth/login", user);
   },
 
-  register(user) {
-    return unauthorizedAPI().post("/auth/register", user);
+  // OLD Register
+  // register(user) {
+  //   return unauthorizedAPI().post("/auth/register", user);
+  // },
+
+  register(formData) {
+    return axios.post("https://sigma-api-ehki.onrender.com/api/v1/auth/register", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   },
 };
