@@ -51,7 +51,9 @@ export const useUserStore = defineStore("user", () => {
           if (firstLoad) await getUser();
         } catch (error) {
           if (error.response.status === 401) {
-            console.log("User not logged in");
+            if (localStorage.getItem("activeSession")) {
+              localStorage.removeItem("activeSession");
+            }
           } else if (error.response.status === 500) {
             console.log("Server Error");
           } else {
