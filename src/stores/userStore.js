@@ -115,8 +115,6 @@ export const useUserStore = defineStore("user", () => {
       formData.append("avatar", avatar, "avatar.jpg");
       formData.append("data", JSON.stringify(user));
 
-      console.log(formData);
-
       const res = await authServices.register(formData);
       credentialsState.value.token = res.data.credentials.token;
       credentialsState.value.tokenExpiration = new Date();

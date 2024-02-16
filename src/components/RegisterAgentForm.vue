@@ -149,7 +149,8 @@
       !editedInputs.value.repassword ||
       !editedInputs.value.firstname ||
       !editedInputs.value.lastname ||
-      !editedInputs.value.phone
+      !editedInputs.value.phone ||
+      !editedInputs.value.public_email
     ) {
       return true;
     }
