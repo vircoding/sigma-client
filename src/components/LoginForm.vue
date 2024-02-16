@@ -126,7 +126,7 @@
           <span
             class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
             :class="emailError ? 'visible' : 'invisible'"
-            >Error Message</span
+            >Correo Electrónico no válido</span
           >
         </div>
         <!-- Password -->
@@ -146,7 +146,7 @@
           <span
             class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
             :class="passwordError ? 'visible' : 'invisible'"
-            >Error Message</span
+            >Contraseña No Válida</span
           >
         </div>
       </div>

@@ -269,7 +269,7 @@
         <span
           class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
           :class="emailError ? 'visible' : 'invisible'"
-          >Error Message</span
+          >Correo Electrónico no válido</span
         >
       </div>
       <!-- Password -->
@@ -289,7 +289,7 @@
         <span
           class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
           :class="passwordError ? 'visible' : 'invisible'"
-          >Error Message</span
+          >Contraseña no válida</span
         >
       </div>
       <!-- Repassword -->
@@ -309,7 +309,7 @@
         <span
           class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
           :class="repasswordError ? 'visible' : 'invisible'"
-          >Error Message</span
+          >Las Contraseñas deben coincidir</span
         >
       </div>
 
@@ -356,7 +356,7 @@
             <span
               class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
               :class="firstnameError ? 'visible' : 'invisible'"
-              >Error Message</span
+              >Nombre no válido</span
             >
           </div>
           <!-- Last Name -->
@@ -376,7 +376,7 @@
             <span
               class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
               :class="lastnameError ? 'visible' : 'invisible'"
-              >Error Message</span
+              >Apellidos no válidos</span
             >
           </div>
         </div>
@@ -406,13 +406,13 @@
                 ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
                 : 'ring-sigma'
             "
-            placeholder="Número De Teléfono"
+            placeholder="Whatsapp"
           />
         </div>
         <span
           class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
           :class="phoneError ? 'visible' : 'invisible'"
-          >Error Message</span
+          >Whatsapp no válido</span
         >
       </div>
       <!-- Public Email -->
@@ -432,7 +432,7 @@
         <span
           class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
           :class="public_emailError ? 'visible' : 'invisible'"
-          >Error Message</span
+          >Correo Electrónico no válido</span
         >
       </div>
       <!-- Bio -->
@@ -445,7 +445,7 @@
         ></textarea>
         <span
           class="text-shadow invisible relative top-1 px-4 font-archivo text-sm italic text-alert"
-          >Error Message</span
+          >Biografía no válida</span
         >
       </div>
       <!-- Submit Button -->

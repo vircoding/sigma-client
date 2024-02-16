@@ -159,7 +159,7 @@
           <span
             class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
             :class="usernameError ? 'visible' : 'invisible'"
-            >Error Message</span
+            >Nombre de Usuario no válido</span
           >
         </div>
         <!-- Email -->
@@ -179,7 +179,7 @@
           <span
             class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
             :class="emailError ? 'visible' : 'invisible'"
-            >Error Message</span
+            >Correo Electrónico no válido</span
           >
         </div>
         <!-- Password -->
@@ -199,7 +199,7 @@
           <span
             class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
             :class="passwordError ? 'visible' : 'invisible'"
-            >Error Message</span
+            >Contraseña no válida</span
           >
         </div>
         <!-- Repassword -->
@@ -219,7 +219,7 @@
           <span
             class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
             :class="repasswordError ? 'visible' : 'invisible'"
-            >Error Message</span
+            >Las Contraseñas deben coincidir</span
           >
         </div>
       </div>
