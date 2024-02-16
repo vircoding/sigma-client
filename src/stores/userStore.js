@@ -58,6 +58,9 @@ export const useUserStore = defineStore("user", () => {
             console.log("Server Error");
           } else {
             console.log("Untracked Error");
+            if (localStorage.getItem("activeSession")) {
+              localStorage.removeItem("activeSession");
+            }
             console.log(error);
           }
         }
