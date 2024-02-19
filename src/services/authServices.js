@@ -20,7 +20,7 @@ export default {
   // },
 
   register(formData) {
-    return axios.post("https://sigma-api-ehki.onrender.com/api/v1/auth/register", formData, {
+    return axios.post("https://sigmacuba.com/api/v1/auth/register", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

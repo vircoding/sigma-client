@@ -3,7 +3,7 @@ import { useUserStore } from "../stores/userStore.js";
 
 export const unauthorizedAPI = () => {
   return axios.create({
-    baseURL: "https://sigma-api-ehki.onrender.com/api/v1",
+    baseURL: "https://sigmacuba.com/api/v1",
     withCredentials: true,
     headers: {
       Accept: "application/json",
@@ -15,7 +15,7 @@ export const unauthorizedAPI = () => {
 export const authorizedAPI = () => {
   const userStore = useUserStore();
   return axios.create({
-    baseURL: "https://sigma-api-ehki.onrender.com/api/v1",
+    baseURL: "https://sigmacuba.com/api/v1",
     withCredentials: true,
     headers: {
       Accept: "application/json",

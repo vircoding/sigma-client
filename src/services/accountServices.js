@@ -45,7 +45,7 @@ export default {
 
   insertPost(formData) {
     const userStore = useUserStore();
-    return axios.post("https://sigma-api-ehki.onrender.com/api/v1/account/posts", formData, {
+    return axios.post("https://sigmacuba.com/api/v1/account/posts", formData, {
       headers: {
         "Contet-Type": "multipart/form-data",
         Authorization: `Bearer ${userStore.credentialsState.token}`,

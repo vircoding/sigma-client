@@ -15,6 +15,7 @@
 
   const newAgent = ref({
     role: "agent",
+    avatar: userStore.userState.avatar,
     info: {
       firstname: userStore.userState.info.firstname,
       lastname: userStore.userState.info.lastname,
@@ -124,6 +125,7 @@
         lastname: userStore.userState.info.lastname,
         bio: userStore.userState.info.bio,
       },
+      avatar: userStore.userState.avatar,
       contact_details: {
         public_email: userStore.userState.contact_details.public_email,
         whatsapp: {
@@ -173,7 +175,7 @@
           <!-- Image -->
           <img
             class="text-shadow w-full rounded-full border border-sgray-100"
-            src="../assets/agent-avatar.jpg"
+            :src="newAgent.avatar"
             alt="Avatar del agente"
           />
 

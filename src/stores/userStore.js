@@ -83,7 +83,11 @@ export const useUserStore = defineStore("user", () => {
       if (res.data.credentials.role === "client") {
         userState.value = { info: res.data.info };
       } else if (res.data.credentials.role === "agent") {
-        userState.value = { info: res.data.info, contact_details: res.data.contact_details };
+        userState.value = {
+          info: res.data.info,
+          contact_details: res.data.contact_details,
+          avatar: res.data.avatar,
+        };
       }
       userPostsState.value = res.data.posts;
       userFavoritesState.value = res.data.favorites;
@@ -125,7 +129,11 @@ export const useUserStore = defineStore("user", () => {
       if (res.data.credentials.role === "client") {
         userState.value = { info: res.data.info };
       } else if (res.data.credentials.role === "agent") {
-        userState.value = { info: res.data.info, contact_details: res.data.contact_details };
+        userState.value = {
+          info: res.data.info,
+          contact_details: res.data.contact_details,
+          avatar: res.data.avatar,
+        };
       }
 
       localStorage.setItem(
@@ -166,7 +174,11 @@ export const useUserStore = defineStore("user", () => {
       if (res.data.credentials.role === "client") {
         userState.value = { info: res.data.info };
       } else if (res.data.credentials.role === "agent") {
-        userState.value = { info: res.data.info, contact_details: res.data.contact_details };
+        userState.value = {
+          info: res.data.info,
+          contact_details: res.data.contact_details,
+          avatar: res.data.avatar,
+        };
       }
       userPostsState.value = res.data.posts;
       userFavoritesState.value = res.data.favorites;
@@ -182,7 +194,11 @@ export const useUserStore = defineStore("user", () => {
       if (res.data.credentials.role === "client") {
         userState.value = { info: res.data.info };
       } else if (res.data.credentials.role === "agent") {
-        userState.value = { info: res.data.info, contact_details: res.data.contact_details };
+        userState.value = {
+          info: res.data.info,
+          contact_details: res.data.contact_details,
+          avatar: res.data.avatar,
+        };
       }
       userPostsState.value = res.data.posts;
       userFavoritesState.value = res.data.favorites;
@@ -227,6 +243,7 @@ export const useUserStore = defineStore("user", () => {
           phone: userState.value.contact_details.whatsapp.phone,
         },
       };
+      myAccount.avatar = userState.value.avatar;
     }
 
     try {
