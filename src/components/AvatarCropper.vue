@@ -47,7 +47,7 @@
         layoutStore.resetSingleAvatarURLState();
       },
       "image/jpeg",
-      1
+      0.5
     );
     layoutStore.hideImageCropper();
   };
