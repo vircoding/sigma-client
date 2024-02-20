@@ -13,6 +13,7 @@ export const useAgentStore = defineStore("agent", () => {
       authorState.value = {
         role: "agent",
         id: res.data.id,
+        avatar: res.data.avatar,
         contact_details: res.data.contact_details,
         info: res.data.info,
       };

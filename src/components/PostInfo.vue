@@ -213,7 +213,7 @@
         <!-- Avatar -->
         <div class="w-1/5">
           <img
-            src="../assets/agent-avatar.jpg"
+            :src="agentStore.authorState.avatar"
             class="text-shadow rounded-full border-2 border-sgray-100"
             alt="Avatar del agente"
           />
