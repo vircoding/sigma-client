@@ -116,8 +116,11 @@ export const useUserStore = defineStore("user", () => {
   const register = async (user, avatar) => {
     try {
       const formData = new FormData();
-      formData.append("avatar", avatar, "avatar.jpg");
       formData.append("data", JSON.stringify(user));
+
+      if (user.role === "agent") {
+        formData.append("avatar", avatar, "avatar.jpg");
+      }
 
       const res = await authServices.register(formData);
       credentialsState.value.token = res.data.credentials.token;
