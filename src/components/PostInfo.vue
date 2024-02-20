@@ -91,7 +91,7 @@
       </h2>
       <!-- Buttons -->
       <div class="flex items-center justify-center gap-1">
-        <ShareButton :url="`http://localhost:5173/post/${postStore.postState.id}`" />
+        <ShareButton :url="`https://sigmacuba.com/post/${postStore.postState.id}`" />
         <FavoriteIcon
           v-if="userStore.isLoggedIn"
           @click="favoriteEvent"

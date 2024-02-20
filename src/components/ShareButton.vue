@@ -3,8 +3,8 @@
 
   const shareLink = () => {
     const shareData = {
-      title: "Sigma Post",
-      text: "Check this house",
+      title: "Publicación en Sigma",
+      text: "Mira esta casa",
       url: props.url,
     };
 
