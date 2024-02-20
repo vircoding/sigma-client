@@ -17,7 +17,7 @@
 <template>
   <div class="text-shadow w-full overflow-hidden rounded-md shadow-md">
     <div class="relative">
-      <img src="../assets/card-img4.jpg" alt="Una Casa" />
+      <img :src="rent.images[0]" alt="Foto de la casa" />
       <div class="absolute right-0 top-0 p-1">
         <SigmaVerticalIcon class="text-shadow w-14 fill-white" />
       </div>
