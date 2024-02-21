@@ -3,7 +3,10 @@ import { useUserStore } from "../stores/userStore.js";
 
 export const unauthorizedAPI = () => {
   return axios.create({
-    baseURL: "https://sigmacuba.com/api/v1",
+    baseURL:
+      import.meta.env.MODE === "development"
+        ? "http://localhost:5000/api/v1"
+        : "https://sigmacuba.com/api/v1",
     withCredentials: true,
     headers: {
       Accept: "application/json",
@@ -15,7 +18,10 @@ export const unauthorizedAPI = () => {
 export const authorizedAPI = () => {
   const userStore = useUserStore();
   return axios.create({
-    baseURL: "https://sigmacuba.com/api/v1",
+    baseURL:
+      import.meta.env.MODE === "development"
+        ? "http://localhost:5000/api/v1"
+        : "https://sigmacuba.com/api/v1",
     withCredentials: true,
     headers: {
       Accept: "application/json",

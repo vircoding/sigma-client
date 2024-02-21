@@ -23,10 +23,6 @@ export default {
     return authorizedAPI().get("account/favorites");
   },
 
-  // insertPost(post) {
-  //   return authorizedAPI().post("/account/posts", post);
-  // },
-
   updateUser(user) {
     return authorizedAPI().patch("/account", user);
   },
@@ -45,11 +41,17 @@ export default {
 
   insertPost(formData) {
     const userStore = useUserStore();
-    return axios.post("https://sigmacuba.com/api/v1/account/posts", formData, {
-      headers: {
-        "Contet-Type": "multipart/form-data",
-        Authorization: `Bearer ${userStore.credentialsState.token}`,
-      },
-    });
+    return axios.post(
+      import.meta.env.MODE === "development"
+        ? "http://localhost:5000/api/v1/account/posts"
+        : "https://sigmacuba.com/api/v1/account/posts",
+      formData,
+      {
+        headers: {
+          "Contet-Type": "multipart/form-data",
+          Authorization: `Bearer ${userStore.credentialsState.token}`,
+        },
+      }
+    );
   },
 };
