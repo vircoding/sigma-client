@@ -54,6 +54,7 @@ export const useUserStore = defineStore("user", () => {
             if (localStorage.getItem("activeSession")) {
               localStorage.removeItem("activeSession");
             }
+            console.log(error);
           } else if (error.response.status === 500) {
             console.log("Server Error");
           } else {

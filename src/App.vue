@@ -37,7 +37,7 @@
       ${layoutStore.spinnerLoading ? 'blur' : ''}
       ${layoutStore.isPopup ? 'blur' : ''}
       `"
-      class="router-view font-poppins text-sm text-sgray-400 lg:text-base"
+      class="router-view bg-background font-poppins text-sgray-400"
     >
       <RouterView />
     </div>

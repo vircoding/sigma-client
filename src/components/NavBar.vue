@@ -9,7 +9,7 @@
     <RouterLink to="/">
       <!-- Beta -->
       <SigmaNavBarIcon
-        class="h-9 fill-sgray-400 drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.15)] transition-[fill,_filter] duration-200 ease-out hover:fill-black hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.5)]"
+        class="h-9 fill-sblue-500 drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.15)] transition-[fill,_filter] duration-200 ease-out hover:fill-black hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.5)]"
       />
     </RouterLink>
     <NavList />

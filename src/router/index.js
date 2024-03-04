@@ -9,40 +9,40 @@ const routes = [
     path: "/",
     name: "home",
     component: () => import("../views/HomeView.vue"),
-    beforeEnter: async (to, from, next) => {
-      const layoutStore = useLayoutStore();
-      const postStore = usePostStore();
+    // beforeEnter: async (to, from, next) => {
+    //   const layoutStore = useLayoutStore();
+    //   const postStore = usePostStore();
 
-      if (!from.name) {
-        layoutStore.unhideLogoLoading();
-      } else {
-        if (!layoutStore.logoLoading) layoutStore.unhideSpinnerLoading();
-      }
+    //   if (!from.name) {
+    //     layoutStore.unhideLogoLoading();
+    //   } else {
+    //     if (!layoutStore.logoLoading) layoutStore.unhideSpinnerLoading();
+    //   }
 
-      try {
-        await postStore.getPopularSales();
-        await postStore.getPopularRents();
-        await postStore.getPopularExchanges();
+    //   try {
+    //     await postStore.getPopularSales();
+    //     await postStore.getPopularRents();
+    //     await postStore.getPopularExchanges();
 
-        if (!from.name) {
-          layoutStore.hideLogoLoading();
-        } else {
-          layoutStore.hideSpinnerLoading();
-        }
+    //     if (!from.name) {
+    //       layoutStore.hideLogoLoading();
+    //     } else {
+    //       layoutStore.hideSpinnerLoading();
+    //     }
 
-        next();
-      } catch (error) {
-        console.log(error);
+    //     next();
+    //   } catch (error) {
+    //     console.log(error);
 
-        if (!from.name) {
-          layoutStore.hideLogoLoading();
-        } else {
-          layoutStore.hideSpinnerLoading();
-        }
+    //     if (!from.name) {
+    //       layoutStore.hideLogoLoading();
+    //     } else {
+    //       layoutStore.hideSpinnerLoading();
+    //     }
 
-        next("/");
-      }
-    },
+    //     next("/");
+    //   }
+    // },
   },
   {
     path: "/support/help",

@@ -1,57 +1,23 @@
-<script setup>
-  const props = defineProps(["role"]);
-</script>
-
 <template>
-  <div class="flex space-x-10 px-[6%] lg:px-[6%] xl:space-x-24 xl:px-[10%] 2xl:space-x-32">
-    <div
-      class="text-shadow relative -top-5 flex w-full flex-col items-center justify-center space-y-5 lg:-top-12 lg:space-y-10"
-    >
-      <h1
-        v-if="props.role === 'agent'"
-        class="w-full text-center text-4xl font-extrabold uppercase lg:text-left lg:text-5xl"
-      >
-        Ya <span class="text-sigma">trabajas</span> con
-        <span class="text-sigma">nosotros</span>
+  <div class="my-20 flex w-full flex-col items-center px-[6%] text-base">
+    <!-- Hero -->
+    <div class="text-shadow mb-5 flex w-full flex-col items-center justify-center">
+      <h1 class="mb-5 w-full text-center text-4xl font-extrabold uppercase">
+        Encuentra tu <span class="text-sigma">casa ideal</span>, un click
+        <span class="text-sigma">más cerca</span>
       </h1>
-      <h1
-        v-else
-        class="w-full text-center text-4xl font-extrabold uppercase lg:text-left lg:text-5xl"
-      >
-        Sigma te <span class="text-sigma">ayuda</span> a
-        <span class="text-sigma">encontrar</span> tu casa <span class="text-sigma">ideal</span>
-      </h1>
-      <p class="w-full text-center font-archivo lg:text-left">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quae ad at pariatur voluptatem est
-        numquam in explicabo a totam esse.
+      <p class="w-full text-center font-archivo text-sgray-300">
+        ¿Sueñas con encontrar la casa perfecta? En Sigma, lo hacemos realidad
       </p>
-      <ul class="w-full text-left font-archivo lg:space-y-2">
-        <li>
-          <div class="flex h-6 items-center justify-center gap-1 lg:justify-start lg:gap-2">
-            <img src="../assets/check-icon.svg" class="h-4 lg:h-6" />
-            <span>Realiza búsquedas personalizadas.</span>
-          </div>
-        </li>
-        <li>
-          <div class="flex h-6 items-center justify-center gap-1 lg:justify-start lg:gap-2">
-            <img src="../assets/check-icon.svg" class="h-4 lg:h-6" />
-            <span>Ponte en contacto con agentes profesionales.</span>
-          </div>
-        </li>
-        <li>
-          <div class="flex h-6 items-center justify-center gap-1 lg:justify-start lg:gap-2">
-            <img src="../assets/check-icon.svg" class="h-4 lg:h-6" />
-            <span>Vende o renta tu casa con unos pocos clicks.</span>
-          </div>
-        </li>
-      </ul>
     </div>
-    <div class="hidden w-full items-center justify-center lg:flex">
+
+    <RouterLink to="/find" class="w-full">
       <div
-        class="relative top-[-48px] flex h-[450px] w-full items-center justify-center rounded-xl bg-white"
+        class="text-shadow flex w-full items-center justify-between overflow-hidden rounded-lg border border-sgray-200 px-5 py-1"
       >
-        <span class="text-shadow text-5xl font-extrabold">DEMO CARD</span>
+        <span class="relative top-[1px]">Descubre nuestras casas</span>
+        <img src="../assets/find-icon.svg" />
       </div>
-    </div>
+    </RouterLink>
   </div>
 </template>

@@ -1,24 +1,17 @@
-<script setup></script>
-
 <template>
-  <div class="mb-[5px] bg-background text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]">
+  <div class="w-full px-5 py-10">
     <!-- Hero -->
-    <div class="py-10">
-      <h2
-        class="text-shadow mb-5 text-center text-4xl font-extrabold max-[1023px]:text-4xl max-[505px]:text-3xl lg:mb-0 lg:text-left lg:text-4xl"
-      >
-        Section Title
+    <div class="mb-6 flex w-full flex-col gap-2 text-center">
+      <h2 class="text-shadow w-full text-2xl font-extrabold uppercase text-sblue-500">
+        Nuestros clientes dicen
       </h2>
-      <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. At, aliquid.
-      </p>
     </div>
 
     <!-- Revs -->
-    <div class="mb-11 w-full space-y-8">
+    <div class="w-full space-y-5">
       <!-- First -->
       <div
-        class="text-shadow w-full space-y-4 rounded-2xl border border-sgray-100 bg-white px-9 py-6"
+        class="text-shadow w-full space-y-3 rounded-2xl border border-sgray-100 bg-white px-6 py-6"
       >
         <!-- Top -->
         <div class="flex w-full items-center justify-center">
@@ -29,14 +22,14 @@
             />
           </figure>
           <div class="flex w-4/5 flex-col items-center justify-center text-left">
-            <span class="w-full pl-4 text-lg font-semibold">Fulanito de Tal</span>
+            <span class="w-full pl-4 text-lg font-semibold text-sblue-500">Fulanito de Tal</span>
             <span class="w-full pl-4 text-sgray-300">Influencer</span>
           </div>
         </div>
 
         <!-- Bottom -->
         <div class="w-full">
-          <blockquote class="w-full text-left italic text-sgray-300">
+          <blockquote class="w-full text-left text-sm italic text-sgray-300">
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam ullam voluptate
             officiis facilis explicabo, ab eligendi sunt repellendus."
           </blockquote>
@@ -45,7 +38,7 @@
 
       <!-- Second -->
       <div
-        class="text-shadow w-full space-y-4 rounded-2xl border border-sgray-100 bg-white px-9 py-6"
+        class="text-shadow w-full space-y-3 rounded-2xl border border-sgray-100 bg-white px-6 py-6"
       >
         <!-- Top -->
         <div class="flex w-full items-center justify-center">
@@ -56,14 +49,14 @@
             />
           </figure>
           <div class="flex w-4/5 flex-col items-center justify-center text-left">
-            <span class="w-full pl-4 text-lg font-semibold">Fulanito de Tal</span>
+            <span class="w-full pl-4 text-lg font-semibold text-sblue-500">Fulanito de Tal</span>
             <span class="w-full pl-4 text-sgray-300">Influencer</span>
           </div>
         </div>
 
         <!-- Bottom -->
         <div class="w-full">
-          <blockquote class="w-full text-left italic text-sgray-300">
+          <blockquote class="w-full text-left text-sm italic text-sgray-300">
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam ullam voluptate
             officiis facilis explicabo, ab eligendi sunt repellendus."
           </blockquote>
@@ -72,7 +65,7 @@
 
       <!-- Third -->
       <div
-        class="text-shadow w-full space-y-4 rounded-2xl border border-sgray-100 bg-white px-9 py-6"
+        class="text-shadow w-full space-y-3 rounded-2xl border border-sgray-100 bg-white px-6 py-6"
       >
         <!-- Top -->
         <div class="flex w-full items-center justify-center">
@@ -83,14 +76,41 @@
             />
           </figure>
           <div class="flex w-4/5 flex-col items-center justify-center text-left">
-            <span class="w-full pl-4 text-lg font-semibold">Fulanito de Tal</span>
+            <span class="w-full pl-4 text-lg font-semibold text-sblue-500">Fulanito de Tal</span>
             <span class="w-full pl-4 text-sgray-300">Influencer</span>
           </div>
         </div>
 
         <!-- Bottom -->
         <div class="w-full">
-          <blockquote class="w-full text-left italic text-sgray-300">
+          <blockquote class="w-full text-left text-sm italic text-sgray-300">
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam ullam voluptate
+            officiis facilis explicabo, ab eligendi sunt repellendus."
+          </blockquote>
+        </div>
+      </div>
+
+      <!-- Fourth -->
+      <div
+        class="text-shadow w-full space-y-3 rounded-2xl border border-sgray-100 bg-white px-6 py-6"
+      >
+        <!-- Top -->
+        <div class="flex w-full items-center justify-center">
+          <figure class="w-1/5">
+            <img
+              src="../assets/agent-avatar.jpg"
+              class="text-shadow w-full rounded-full border-2 border-sgray-100"
+            />
+          </figure>
+          <div class="flex w-4/5 flex-col items-center justify-center text-left">
+            <span class="w-full pl-4 text-lg font-semibold text-sblue-500">Fulanito de Tal</span>
+            <span class="w-full pl-4 text-sgray-300">Influencer</span>
+          </div>
+        </div>
+
+        <!-- Bottom -->
+        <div class="w-full">
+          <blockquote class="w-full text-left text-sm italic text-sgray-300">
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam ullam voluptate
             officiis facilis explicabo, ab eligendi sunt repellendus."
           </blockquote>
