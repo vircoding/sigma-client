@@ -120,7 +120,7 @@
 </script>
 
 <template>
-  <section class="w-full px-5 pb-10 pt-8 text-base">
+  <section class="w-full bg-white px-5 pb-10 pt-8 text-base">
     <!-- Hero -->
     <!-- Hero -->
     <div class="mb-6 flex w-full flex-col gap-2 px-5 text-center">
