@@ -17,7 +17,7 @@
 
 <template>
   <!-- NavBar -->
-  <header class="relative z-20 w-full">
+  <header class="relative z-20 w-full shadow-md">
     <div class="nav-container absolute h-[68px] w-full"></div>
     <NavBar class="absolute" />
   </header>
@@ -66,6 +66,7 @@
     <ReviewsSection />
   </section>
 
+  <!-- Footer -->
   <FooterSection background="#011b33" title="#ffffff" text="#ffffff" />
 </template>
 

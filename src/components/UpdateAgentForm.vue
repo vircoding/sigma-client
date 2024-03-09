@@ -165,7 +165,7 @@
 <template>
   <form
     @submit.prevent="formSubmit"
-    class="flex w-full flex-col items-center justify-center text-base"
+    class="flex w-full flex-col items-center justify-center bg-background px-5"
   >
     <!-- Top -->
     <div class="mb-4 flex w-full">
@@ -209,13 +209,14 @@
 
     <!-- Whatsapp -->
     <div class="mb-4 flex w-full flex-col">
-      <label
-        v-if="codeError || phoneError"
-        for="phone"
-        class="mb-1 pl-2 font-medium italic text-alert"
+      <label v-if="codeError || phoneError" for="phone" class="pl-2 font-medium italic text-alert"
         >Whatsapp no válido</label
       >
-      <label v-else for="phone" class="mb-1 flex flex-row items-center gap-[6px] pl-2">
+      <label
+        v-else
+        for="phone"
+        class="flex flex-row items-center gap-[6px] pl-2 font-medium text-sblue-500"
+      >
         <!-- <img src="../assets/edit-icon.svg" class="w-[14px]" /> -->
         <span>Whatsapp</span>
       </label>
@@ -241,7 +242,7 @@
       <!-- Logout -->
       <button
         @click.prevent="logout"
-        class="flex h-[38px] w-full items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 pt-[2px] text-center text-white transition-all duration-200 ease-out hover:bg-black hover:text-white lg:h-10 lg:w-44 lg:text-lg"
+        class="text-shadow flex h-[38px] w-full items-center justify-center rounded-md border border-sblue-500 bg-sblue-500 pt-[2px] text-center text-white transition-all duration-200 ease-out hover:bg-black hover:text-white lg:h-10 lg:w-44 lg:text-lg"
       >
         Cerrar Sesión
       </button>
@@ -250,7 +251,7 @@
       <button
         type="submit"
         :disabled="disableSubmit"
-        class="flex h-[38px] w-full items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 pt-[2px] text-center text-white transition-all duration-200 ease-out hover:bg-black hover:text-white disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 lg:h-10 lg:w-44 lg:text-lg"
+        class="text-shadow flex h-[38px] w-full items-center justify-center rounded-md border border-sigma bg-sigma pt-[2px] text-center text-white transition-all duration-200 ease-out hover:bg-black hover:text-white disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 lg:h-10 lg:w-44 lg:text-lg"
       >
         Guardar
       </button>

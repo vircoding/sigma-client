@@ -120,15 +120,14 @@
 </script>
 
 <template>
-  <section class="mb-20 w-full text-base">
+  <section class="w-full px-5 pb-10 pt-8 text-base">
     <!-- Hero -->
-    <div class="text-shadow mb-10 text-sm lg:mb-0">
-      <h1
-        class="mb-2 text-center text-4xl font-extrabold max-[1023px]:text-4xl max-[505px]:text-3xl lg:mb-0 lg:text-left lg:text-4xl"
-      >
+    <!-- Hero -->
+    <div class="mb-6 flex w-full flex-col gap-2 px-5 text-center">
+      <h2 class="text-shadow w-full text-2xl font-extrabold uppercase text-sblue-500">
         Publicaciones
-      </h1>
-      <p class="block text-center text-sgray-300 lg:text-left lg:text-lg">
+      </h2>
+      <p class="text-shadow w-full px-2 text-sm text-sgray-300">
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione.
       </p>
     </div>
@@ -138,7 +137,7 @@
       <!-- Posts Table Button -->
       <div
         class="w-1/2 rounded-md py-2 text-center tracking-wide"
-        :class="postsActive ? 'bg-sgray-400 text-white' : 'bg-transparent'"
+        :class="postsActive ? 'bg-sblue-500 text-white' : 'bg-transparent'"
         @click.prevent="switchEvent(true)"
       >
         <h3 :class="layoutStore.tableSpinner ? 'scoped-blur' : ''">Publicaciones</h3>
@@ -147,7 +146,7 @@
       <!-- Favorites Table Button -->
       <div
         class="w-1/2 rounded-md py-2 text-center tracking-wide"
-        :class="!postsActive ? 'bg-sgray-400 text-white' : 'bg-transparent'"
+        :class="!postsActive ? 'bg-sblue-500 text-white' : 'bg-transparent'"
         @click.prevent="switchEvent(false)"
       >
         <h3 :class="layoutStore.tableSpinner ? 'scoped-blur' : ''">Favoritos</h3>
@@ -168,7 +167,7 @@
         </li>
         <li
           v-if="userStore.myAccountState.posts.total_posts === 0"
-          class="flex h-[282px] w-full flex-col items-center justify-center gap-2"
+          class="flex h-[282px] w-full flex-col items-center justify-center gap-2 text-sblue-500"
         >
           <span>Aún no tienes publicaciones</span>
           <RouterLink to="/insert" class="underline">Publica</RouterLink>
@@ -211,7 +210,7 @@
         </li>
         <li
           v-if="userStore.myAccountState.favorites.total_favorites === 0"
-          class="flex h-[282px] w-full flex-col items-center justify-center gap-2"
+          class="flex h-[282px] w-full flex-col items-center justify-center gap-2 text-sblue-500"
         >
           <span>Aún no tienes favoritos</span>
         </li>

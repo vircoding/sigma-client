@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" id="svg1" xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
@@ -9,14 +8,14 @@
          style="stroke-width:3.55542;stroke-dasharray:none">
          <g id="g81">
             <rect
-               style="fill:#333333;fill-opacity:1;stroke:none;stroke-width:1.29589;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+               style="fill:#011b33;fill-opacity:1;stroke:none;stroke-width:1.29589;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
                id="rect75" width="18.745527" height="5.5222173" x="638.0152" y="-5.9182324" ry="0.4268705" />
             <path
-               style="fill:#333333;fill-opacity:1;stroke:none;stroke-width:1.77771;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+               style="fill:#011b33;fill-opacity:1;stroke:none;stroke-width:1.77771;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
                d="m 657.31273,-5.7125546 5.96121,2.2211221 c 0.3096,0.115355 0.3096,0.553263 0,0.6686182 l -5.99074,2.23213125 a 0.38725479,0.38725479 34.782274 0 1 -0.52246,-0.36288243 l -2e-5,-4.37558152 a 0.40915518,0.40915518 145.21749 0 1 0.55201,-0.3834076 z"
                id="path81" transform="translate(0.58735825)" />
             <path
-               style="fill:#333333;fill-opacity:1;stroke:none;stroke-width:1.57759;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+               style="fill:#011b33;fill-opacity:1;stroke:none;stroke-width:1.57759;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
                id="rect78" width="4.9916873" height="5.5222173" x="632.43616" y="-5.9182324"
                d="m 633.75826,-5.9182324 h 3.18976 a 0.47981981,0.47981981 45 0 1 0.47982,0.4798198 v 4.58497537 a 0.45742206,0.45742206 135 0 1 -0.45742,0.45742206 h -3.17944 a 1.3548215,1.3548215 45 0 1 -1.35482,-1.35482153 v -2.8452956 a 1.3221001,1.3221001 135 0 1 1.3221,-1.3221001 z" />
          </g>

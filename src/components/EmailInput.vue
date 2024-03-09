@@ -8,7 +8,7 @@
     <label
       v-if="!props.error"
       :for="props.type"
-      class="flex items-center gap-[6px] pl-2 font-medium"
+      class="flex items-center gap-[6px] pl-2 font-medium text-sblue-500"
     >
       <img v-if="props.edit" src="../assets/edit-icon.svg" class="w-[14px]" />
       <span>{{
@@ -25,8 +25,8 @@
       :value="props.modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       @focus="$emit('focused')"
-      class="w-full rounded-md border bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:bg-white"
-      :class="props.error ? 'border-alert' : 'border-sgray-100 focus:border-sgray-300'"
+      class="w-full rounded-lg border bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:bg-white"
+      :class="props.error ? 'border-alert' : 'border-sgray-100 focus:border-sblue-500'"
     />
   </div>
 </template>
