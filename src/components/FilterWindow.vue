@@ -14,7 +14,7 @@
   const postStore = usePostStore();
   const layoutStore = useLayoutStore();
 
-  const type = ref("sale");
+  const type = ref(postStore.filterTypeState);
 
   const saleFilters = ref({
     province: "none",
@@ -199,6 +199,9 @@
       layoutStore.hideSpinnerLoading();
     }
   };
+
+  // Reset Filter State After Load
+  postStore.setFilterType("sale")
 </script>
 
 <template>

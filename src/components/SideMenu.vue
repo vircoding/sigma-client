@@ -3,26 +3,20 @@
   import { useUserStore } from "../stores/userStore.js";
   import { useLayoutStore } from "../stores/layoutStore.js";
   import { usePostStore } from "../stores/postStore.js";
-  import { useRoute, useRouter } from "vue-router";
-  import { computed } from "vue";
+  import { useRouter } from "vue-router";
 
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
   const postStore = usePostStore();
-
-  const route = useRoute();
   const router = useRouter();
 
-  const actualPath = computed(() => {
-    return route.name;
-  });
-
-  const goToFindRent = () => {
-    postStore.setFindingRents();
-    router.push("/find");
+  const menuInteraction = () => {
+    layoutStore.hideSideMenu();
   };
 
-  const menuInteraction = () => {
+  const goFind = (type) => {
+    postStore.setFilterType(type);
+    router.push("/find");
     layoutStore.hideSideMenu();
   };
 </script>
@@ -81,19 +75,24 @@
 
       <!-- Find -->
       <li class="mb-4 flex w-full flex-col items-end justify-center">
-        <RouterLink
-          to="/find"
-          @click="menuInteraction"
+        <button
+          @click.prevent="goFind('sale')"
           class="mb-2 flex w-full items-center justify-end gap-[6px]"
         >
           <span class="text-shadow relative font-poppins text-lg font-semibold text-sblue-500"
             >Descubre</span
           >
           <img src="../assets/side-menu-filter-icon.svg" class="w-6" />
-        </RouterLink>
-        <span class="mb-1 w-full text-right text-sblue-500">Ventas</span>
-        <span class="w-full text-right text-sblue-500">Rentas</span>
-        <span class="w-full text-right text-sblue-500">Permutas</span>
+        </button>
+        <button @click.prevent="goFind('sale')" class="mb-1 w-full text-right text-sblue-500">
+          Ventas
+        </button>
+        <button @click.prevent="goFind('rent')" class="w-full text-right text-sblue-500">
+          Rentas
+        </button>
+        <button @click.prevent="goFind('exchange')" class="w-full text-right text-sblue-500">
+          Permutas
+        </button>
       </li>
 
       <!-- Register -->
@@ -144,7 +143,7 @@
           class="mb-2 flex w-full items-center justify-end gap-[6px]"
         >
           <span class="text-shadow relative font-poppins text-lg font-semibold text-sblue-500"
-            >Pulica</span
+            >Publica</span
           >
           <img src="../assets/side-menu-insert-icon.svg" class="w-6" />
         </RouterLink>

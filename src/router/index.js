@@ -113,7 +113,7 @@ const routes = [
       }
 
       try {
-        if (postStore.findingRentsState) {
+        if (postStore.filterTypeState === "rent") {
           await postStore.findPosts(
             "rent",
             1,
@@ -124,8 +124,17 @@ const routes = [
             undefined,
             undefined
           );
-
-          postStore.resetFindingRents();
+        } else if (postStore.filterTypeState === "exchange") {
+          await postStore.findPosts(
+            "exchange",
+            1,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined
+          );
         } else {
           await postStore.findPosts(
             "sale",
