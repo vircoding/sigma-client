@@ -57,7 +57,7 @@
               href="mailto:sigmacuba2023@gmail.com"
               class="flex items-center gap-1 hover:underline"
             >
-              <img src="../assets/email-icon.svg" />
+              <img src="../assets/email-icon.svg" class="w-6" />
               <span class="relative top-[1px]">Correo Electrónico</span>
             </a>
             <a href="https://wa.me/+5350009047" class="flex items-center gap-1 hover:underline">
