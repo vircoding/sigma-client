@@ -114,7 +114,7 @@
         <RouterLink
           to="/support/help#videotut"
           @click="menuInteraction"
-          class="mb-1 w-full text-right text-sblue-500"
+          class="w-full text-right text-sblue-500"
           >¿Cómo funciona el sitio?</RouterLink
         >
         <RouterLink
@@ -136,7 +136,7 @@
           >
           <img src="../assets/side-menu-filter-icon.svg" class="w-6" />
         </button>
-        <button @click.prevent="goFind('sale')" class="mb-1 w-full text-right text-sblue-500">
+        <button @click.prevent="goFind('sale')" class="w-full text-right text-sblue-500">
           Ventas
         </button>
         <button @click.prevent="goFind('rent')" class="w-full text-right text-sblue-500">
@@ -162,7 +162,7 @@
         <RouterLink
           to="/auth/register/client"
           @click="menuInteraction"
-          class="mb-1 w-full text-right text-sblue-500"
+          class="w-full text-right text-sblue-500"
           >Propietario</RouterLink
         >
         <RouterLink
@@ -199,7 +199,7 @@
           >
           <img src="../assets/side-menu-insert-icon.svg" class="w-6" />
         </RouterLink>
-        <span class="mb-1 w-full text-right text-sblue-500">Vende</span>
+        <span class="w-full text-right text-sblue-500">Vende</span>
         <span class="w-full text-right text-sblue-500">Renta</span>
         <span class="w-full text-right text-sblue-500">Permuta</span>
       </li>
