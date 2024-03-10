@@ -200,8 +200,20 @@
     }
   };
 
+  const pendingRefreshType = computed(() => {
+    return postStore.pendingRefreshFilterTypeState;
+  });
+
+  watch(pendingRefreshType, () => {
+    if (pendingRefreshType.value) {
+      type.value = postStore.filterTypeState;
+      postStore.resetFilterType();
+      postStore.resetPendingRefreshFilterType();
+    }
+  });
+
   // Reset Filter State After Load
-  postStore.setFilterType("sale")
+  postStore.setFilterType("sale");
 </script>
 
 <template>
@@ -210,7 +222,7 @@
     class="text-shadow flex w-full flex-col items-center justify-center gap-3 rounded-md border border-sgray-100 p-5"
   >
     <!-- Type -->
-    <div class="flex w-full flex-row items-center justify-start">
+    <div class="flex w-full flex-row items-center justify-start gap-3">
       <TypeRadioInput v-model="type" />
     </div>
 

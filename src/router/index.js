@@ -159,7 +159,7 @@ const routes = [
         console.log(error);
 
         // Prevent reset
-        postStore.resetFindingRents();
+        postStore.resetFilterType();
 
         if (!from.name) {
           layoutStore.hideLogoLoading();

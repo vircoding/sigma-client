@@ -3,21 +3,73 @@
   import { useUserStore } from "../stores/userStore.js";
   import { useLayoutStore } from "../stores/layoutStore.js";
   import { usePostStore } from "../stores/postStore.js";
-  import { useRouter } from "vue-router";
+  import { useRouter, useRoute } from "vue-router";
 
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
   const postStore = usePostStore();
   const router = useRouter();
+  const route = useRoute();
 
   const menuInteraction = () => {
     layoutStore.hideSideMenu();
   };
 
-  const goFind = (type) => {
+  const goFind = async (type) => {
     postStore.setFilterType(type);
-    router.push("/find");
-    layoutStore.hideSideMenu();
+    if (route.name === "find") {
+      layoutStore.hideSideMenu();
+      layoutStore.unhideSpinnerLoading();
+      try {
+        if (postStore.filterTypeState === "rent") {
+          await postStore.findPosts(
+            "rent",
+            1,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined
+          );
+        } else if (postStore.filterTypeState === "exchange") {
+          await postStore.findPosts(
+            "exchange",
+            1,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined
+          );
+        } else {
+          await postStore.findPosts(
+            "sale",
+            1,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined
+          );
+        }
+
+        postStore.setPendingRefreshFilterType();
+        layoutStore.hideSpinnerLoading();
+      } catch (error) {
+        console.log(error);
+
+        // Prevent Reset
+        postStore.resetFilterType();
+
+        layoutStore.hideSpinnerLoading();
+      }
+    } else {
+      router.push("/find");
+      layoutStore.hideSideMenu();
+    }
   };
 </script>
 
