@@ -13,7 +13,7 @@
     <label
       v-if="!props.error"
       :for="props.type === 'sale' ? 'sale-amount' : 'rent-amount'"
-      class="pl-2 font-medium"
+      class="pl-2 font-medium text-sblue-500"
       >{{ props.type === "sale" ? "Precio" : "Tarifa" }}</label
     >
     <label
@@ -31,7 +31,7 @@
       @input="$emit('update:modelValue', parseValue($event.target.value))"
       @focus="$emit('focused')"
       class="w-full rounded-md border bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:bg-white"
-      :class="props.error ? 'border-alert' : 'border-sgray-100 focus:border-sgray-300'"
+      :class="props.error ? 'border-alert' : 'border-sgray-100 focus:border-sblue-500'"
     />
   </div>
 </template>

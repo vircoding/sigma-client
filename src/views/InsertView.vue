@@ -16,23 +16,22 @@
 </script>
 
 <template>
-  <div class="lg:px-2.5" :class="layoutStore.imageCropper ? 'h-screen' : ''">
+  <div :class="layoutStore.imageCropper ? 'h-screen' : ''">
     <div class="overlay" v-if="layoutStore.imageCropper">
       <ImageCropper />
     </div>
     <div :class="layoutStore.imageCropper ? 'blur' : ''">
-      <div class="flex min-h-screen flex-col lg:h-screen lg:py-2.5">
-        <header>
-          <div class="relative overflow-hidden bg-background">
-            <NavBar class="z-20" />
-          </div>
+      <div class="flex min-h-screen flex-col">
+        <!-- Header -->
+        <header class="relative z-20 h-[68px] w-full shadow-md">
+          <NavBar class="absolute" />
         </header>
-        <main class="mb-[5px] grow bg-background lg:mb-0">
+        <main class="flex grow flex-col items-center justify-center">
           <InsertForm />
         </main>
       </div>
-      <footer class="lg:mb-2.5">
-        <FooterSection background="#333333" text="#dcdcdc" title="#ffffff" />
+      <footer>
+        <FooterSection background="#011b33" title="#ffffff" text="#ffffff" />
       </footer>
     </div>
   </div>

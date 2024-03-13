@@ -13,7 +13,7 @@
     <label
       v-if="!props.error"
       :for="props.feature + '-' + props.index"
-      class="pl-[6px] font-medium"
+      class="pl-[6px] font-medium text-sblue-500"
       >{{ props.string }}</label
     >
     <label
@@ -32,7 +32,7 @@
       :value="modelValue"
       @input="$emit('update:modelValue', parseValue($event.target.value))"
       class="w-full rounded-md border bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:bg-white"
-      :class="props.error ? 'border-alert' : 'border-sgray-100 focus:border-sgray-300'"
+      :class="props.error ? 'border-alert' : 'border-sgray-100 focus:border-sblue-500'"
     />
   </div>
 </template>

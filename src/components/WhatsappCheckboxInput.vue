@@ -17,7 +17,7 @@
     />
     <label for="whatsapp" class="flex w-full flex-row items-center gap-1">
       <CheckboxIcon :status="props.modelValue" />
-      <span class="relative font-medium lg:text-lg">Contactar por Whatsapp</span>
+      <span class="relative font-medium text-sblue-500">Contactar por Whatsapp</span>
     </label>
   </div>
 </template>

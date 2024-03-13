@@ -20,7 +20,7 @@
       class="flex w-[70px] flex-row items-center gap-1"
     >
       <CheckboxIcon :status="props.modelValue" />
-      <span class="font-medium lg:text-lg">{{ props.string }}</span>
+      <span class="font-medium text-sblue-500">{{ props.string }}</span>
     </label>
   </div>
 </template>

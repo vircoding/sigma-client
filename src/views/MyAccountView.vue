@@ -24,7 +24,7 @@
       <AgentAccount v-if="userStore.credentialsState.role === 'agent'" />
     </main>
   </div>
-  <footer class="lg:mb-2.5">
+  <footer>
     <FooterSection background="#011b33" title="#ffffff" text="#ffffff" />
   </footer>
 </template>

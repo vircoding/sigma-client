@@ -32,7 +32,7 @@
   />
   <label for="type-sale" class="flex w-[70px] flex-row items-center gap-1">
     <CheckboxIcon :status="checkSale" />
-    <span class="font-medium lg:text-lg">Venta</span>
+    <span class="font-medium text-sblue-500">Venta</span>
   </label>
 
   <!-- Rent -->
@@ -48,7 +48,7 @@
   />
   <label for="type-rent" class="flex w-[70px] flex-row items-center gap-1">
     <CheckboxIcon :status="checkRent" />
-    <span class="font-medium lg:text-lg">Renta</span>
+    <span class="font-medium text-sblue-500">Renta</span>
   </label>
 
   <!-- Exchange -->
@@ -64,6 +64,6 @@
   />
   <label for="type-exchange" class="flex w-[70px] flex-row items-center gap-1">
     <CheckboxIcon :status="checkExchange" />
-    <span class="font-medium lg:text-lg">Permuta</span>
+    <span class="font-medium text-sblue-500">Permuta</span>
   </label>
 </template>

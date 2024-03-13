@@ -389,22 +389,21 @@
 
 <template>
   <div
-    class="flex h-full w-full flex-col items-center py-7 max-[1023px]:px-[10%] max-[499px]:px-[5%] lg:items-start lg:justify-center lg:gap-7 lg:px-24 lg:py-0 xl:px-32 2xl:px-44"
+    class="flex h-full w-full flex-col items-center py-10 max-[1023px]:px-[10%] max-[499px]:px-[5%]"
   >
     <!-- Hero -->
-    <div class="text-shadow mb-4 lg:mb-0">
-      <h1
-        class="mb-2 text-center text-4xl font-extrabold max-[1023px]:text-4xl max-[505px]:text-3xl lg:mb-0 lg:text-left lg:text-4xl"
-      >
-        Publica tu casa!
-      </h1>
-      <p class="block text-center text-sgray-300 lg:text-left lg:text-lg">
-        Define si vendes, permutas, o rentas tu casa y agrega los datos requeridos
+    <div class="flex w-full flex-col gap-2 px-5 text-center">
+      <h2 class="text-shadow w-full text-2xl font-extrabold uppercase text-sblue-500">
+        Section Title
+      </h2>
+      <p class="text-shadow w-full px-2 text-sm text-sgray-300">
+        Crea tu cuenta como Propietario si deseas vender o rentar tu casa. Crea tu cuenta como
+        Agente si deseas vender o rentar hasta 10 casas
       </p>
     </div>
 
     <!-- Form -->
-    <form @submit.prevent="formSubmit" novalidate class="mb-9 flex w-full flex-col text-base">
+    <form @submit.prevent="formSubmit" novalidate class="mb-9 flex w-full flex-col py-10 text-base">
       <!-- Amount/Offer Details -->
       <div
         class="mb-4 flex h-[160px] w-full flex-row items-center rounded-md border border-sgray-100 px-5 py-3 max-[345px]:px-3"
@@ -561,7 +560,7 @@
           class="mb-1 pl-2 font-medium text-alert"
           >Teléfono no válido</label
         >
-        <label v-else for="phone" class="mb-1 pl-2 font-medium">Teléfono</label>
+        <label v-else for="phone" class="mb-1 pl-2 font-medium text-sblue-500">Teléfono</label>
         <div class="mb-[8px] flex w-full gap-2">
           <CodeInput v-model="postDetails.contact_details.contact.code" :error="codeError" />
           <PhoneInput
@@ -580,7 +579,7 @@
         <!-- File Input (Hidden) -->
         <input type="file" @change="loadImage" class="hidden" ref="fileInput" accept="image/*" />
 
-        <span class="mb-1 pl-2 font-medium"
+        <span class="mb-1 pl-2 font-medium text-sblue-500"
           >Fotos
           <span v-if="!layoutStore.postImagesURLState.length" class="text-xs">(Mín. 1)</span>
           <span v-else class="text-xs">{{ layoutStore.postImagesURLState.length }}/10</span></span
@@ -597,7 +596,7 @@
           <!-- Add -->
           <button
             v-if="!layoutStore.postImagesURLState.length < 10"
-            class="flex w-full items-center justify-center gap-[10px] rounded-md bg-sgray-400 px-2 py-[7px]"
+            class="flex w-full items-center justify-center gap-[10px] rounded-md bg-sblue-500 px-2 py-[7px]"
             @click.prevent="openImageDialog"
           >
             <span class="relative top-[1px] text-sgray-100">Añadir foto</span>
@@ -613,13 +612,14 @@
       <button
         type="submit"
         :disabled="disableSubmit"
-        class="mb-4 flex h-[38px] w-full items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 pt-[2px] text-center font-semibold text-sgray-100 transition-all duration-200 ease-out hover:bg-black hover:text-white disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 lg:h-10 lg:w-44 lg:text-lg"
+        class="mb-4 flex h-[38px] w-full items-center justify-center rounded-md border border-sigma bg-sigma pt-[2px] text-center font-semibold text-sgray-100 transition-all duration-200 ease-out hover:bg-black hover:text-white disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 lg:h-10 lg:w-44 lg:text-lg"
       >
         Publicar
       </button>
       <span class="w-full text-center text-xs"
-        >Si necesites ayuda para publicar tu anuncio no olvides contactarnos a
-        <a href="https://wa.me/+5350009047" class="font-semibold">nuestro Whatsapp</a>.</span
+        >Si necesites ayuda para publicar tu anuncio, no olvides contactarnos a
+        <a href="https://wa.me/+5350009047" class="font-semibold text-sblue-500">nuestro Whatsapp</a
+        >.</span
       >
     </form>
   </div>
