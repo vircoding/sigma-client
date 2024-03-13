@@ -2,6 +2,7 @@
   import { ref, computed, watch } from "vue";
   import { useLayoutStore } from "../stores/layoutStore.js";
   import { useUserStore } from "../stores/userStore.js";
+  import { usePostStore } from "../stores/postStore.js";
   import { defaultMunicipality } from "../utils/provinces.js";
   import TypeRadioInput from "./TypeRadioInput.vue";
   import CurrencyRadioInput from "./CurrencyRadioInput.vue";
@@ -24,9 +25,10 @@
   // Stores
   const layoutStore = useLayoutStore();
   const userStore = useUserStore();
+  const postStore = usePostStore();
 
   // Refs
-  const type = ref("sale");
+  const type = ref(postStore.insertTypeState);
   const saleDetails = ref({
     amount: "",
     currency: "usd",
@@ -385,6 +387,21 @@
   setTimeout(() => {
     layoutStore.unhidePopup("pre-insert");
   }, 750);
+
+  const pendingRefreshType = computed(() => {
+    return postStore.pendingRefreshInsertTypeState;
+  });
+
+  watch(pendingRefreshType, () => {
+    if (pendingRefreshType.value) {
+      type.value = postStore.insertTypeState;
+      postStore.resetInsertType();
+      postStore.resetPendingRefreshInsertType();
+    }
+  });
+
+  // Reset Insert Type State After Load
+  postStore.setInsertType("sale");
 </script>
 
 <template>
@@ -406,7 +423,7 @@
     <form @submit.prevent="formSubmit" novalidate class="mb-9 flex w-full flex-col py-10 text-base">
       <!-- Amount/Offer Details -->
       <div
-        class="mb-4 flex h-[160px] w-full flex-row items-center rounded-md border border-sgray-100 px-5 py-3 max-[345px]:px-3"
+        class="mb-4 flex h-[160px] w-full flex-row items-center rounded-lg border border-sgray-100 px-5 py-3 max-[345px]:px-3"
       >
         <!-- Type -->
         <div class="flex w-[35%] flex-col">
@@ -461,7 +478,7 @@
       <div
         v-for="(item, index) in new Array(propertyLength)"
         :key="index"
-        class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 pb-5 pt-4 max-[345px]:px-3"
+        class="mb-4 flex w-full flex-col rounded-lg border border-sgray-100 px-5 pb-5 pt-4 max-[345px]:px-3"
       >
         <!-- Province -->
         <ProvinceSelectInput
@@ -480,7 +497,7 @@
 
         <!-- Features -->
         <div
-          class="flex w-full flex-row items-center rounded-md border border-sgray-100 px-5 pb-[18px] pt-3"
+          class="flex w-full flex-row items-center rounded-lg border border-sgray-100 px-5 pb-[18px] pt-3"
         >
           <!-- Number Inputs -->
           <div class="flex w-[80px] flex-col space-y-1">
@@ -542,7 +559,7 @@
 
       <!-- Description -->
       <div
-        class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 pb-5 pt-4 max-[345px]:px-3"
+        class="mb-4 flex w-full flex-col rounded-lg border border-sgray-100 px-5 pb-5 pt-4 max-[345px]:px-3"
       >
         <DescriptionTextAreaInput
           v-model.trim="postDetails.description"
@@ -552,7 +569,7 @@
 
       <!-- Contact -->
       <div
-        class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 py-4 max-[345px]:px-3"
+        class="mb-4 flex w-full flex-col rounded-lg border border-sgray-100 px-5 py-4 max-[345px]:px-3"
       >
         <label
           v-if="codeError || (filledInputs.phone && phoneError)"
@@ -574,7 +591,7 @@
 
       <!-- Photos -->
       <div
-        class="mb-4 flex w-full flex-col rounded-md border border-sgray-100 px-5 py-4 max-[345px]:px-3"
+        class="mb-4 flex w-full flex-col rounded-lg border border-sgray-100 px-5 py-4 max-[345px]:px-3"
       >
         <!-- File Input (Hidden) -->
         <input type="file" @change="loadImage" class="hidden" ref="fileInput" accept="image/*" />
@@ -596,7 +613,7 @@
           <!-- Add -->
           <button
             v-if="!layoutStore.postImagesURLState.length < 10"
-            class="flex w-full items-center justify-center gap-[10px] rounded-md bg-sblue-500 px-2 py-[7px]"
+            class="flex w-full items-center justify-center gap-[10px] rounded-lg bg-sblue-500 px-2 py-[7px]"
             @click.prevent="openImageDialog"
           >
             <span class="relative top-[1px] text-sgray-100">Añadir foto</span>
@@ -612,7 +629,7 @@
       <button
         type="submit"
         :disabled="disableSubmit"
-        class="mb-4 flex h-[38px] w-full items-center justify-center rounded-md border border-sigma bg-sigma pt-[2px] text-center font-semibold text-sgray-100 transition-all duration-200 ease-out hover:bg-black hover:text-white disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 lg:h-10 lg:w-44 lg:text-lg"
+        class="mb-4 flex h-[38px] w-full items-center justify-center rounded-lg border border-sigma bg-sigma pt-[2px] text-center font-semibold text-sgray-100 transition-all duration-200 ease-out hover:bg-black hover:text-white disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 lg:h-10 lg:w-44 lg:text-lg"
       >
         Publicar
       </button>

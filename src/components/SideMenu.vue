@@ -15,6 +15,15 @@
     layoutStore.hideSideMenu();
   };
 
+  const goInsert = async (type) => {
+    postStore.setInsertType(type);
+    if (route.name === "insert") {
+      postStore.setPendingRefreshInsertType();
+    }
+    router.push("/insert");
+    layoutStore.hideSideMenu();
+  };
+
   const goFind = async (type) => {
     postStore.setFilterType(type);
     if (route.name === "find") {
@@ -189,19 +198,24 @@
 
       <!-- Insert -->
       <li v-if="userStore.isLoggedIn" class="mb-4 flex w-full flex-col items-end justify-center">
-        <RouterLink
-          to="/insert"
-          @click="menuInteraction"
+        <button
+          @click.prevent="goInsert('sale')"
           class="mb-2 flex w-full items-center justify-end gap-[6px]"
         >
           <span class="text-shadow relative font-poppins text-lg font-semibold text-sblue-500"
             >Publica</span
           >
           <img src="../assets/side-menu-insert-icon.svg" class="w-6" />
-        </RouterLink>
-        <span class="w-full text-right text-sblue-500">Vende</span>
-        <span class="w-full text-right text-sblue-500">Renta</span>
-        <span class="w-full text-right text-sblue-500">Permuta</span>
+        </button>
+        <button @click.prevent="goInsert('sale')" class="w-full text-right text-sblue-500">
+          Vende
+        </button>
+        <button @click.prevent="goInsert('rent')" class="w-full text-right text-sblue-500">
+          Renta
+        </button>
+        <button @click.prevent="goInsert('exchange')" class="w-full text-right text-sblue-500">
+          Permuta
+        </button>
       </li>
 
       <!-- Account -->

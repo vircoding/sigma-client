@@ -35,7 +35,7 @@
       name="description"
       :value="props.modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
-      class="h-[300px] w-full resize-none rounded-md border bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:bg-white"
+      class="h-[300px] w-full resize-none rounded-lg border bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:bg-white"
       :class="props.error ? 'border-alert' : 'border-sgray-100 focus:border-sblue-500'"
     ></textarea>
   </div>

@@ -23,7 +23,9 @@ export const usePostStore = defineStore("post", () => {
     frequency: undefined,
   });
   const filterTypeState = ref("sale");
+  const insertTypeState = ref("sale");
   const pendingRefreshFilterTypeState = ref(false);
+  const pendingRefreshInsertTypeState = ref(false);
 
   // Computed
   const isPostState = computed(() => !!postState.value);
@@ -159,8 +161,16 @@ export const usePostStore = defineStore("post", () => {
     filterTypeState.value = type;
   };
 
+  const setInsertType = (type = "sale") => {
+    insertTypeState.value = type;
+  };
+
   const setPendingRefreshFilterType = () => {
     pendingRefreshFilterTypeState.value = true;
+  };
+
+  const setPendingRefreshInsertType = () => {
+    pendingRefreshInsertTypeState.value = true;
   };
 
   // Resets
@@ -204,8 +214,16 @@ export const usePostStore = defineStore("post", () => {
     filterTypeState.value = "sale";
   };
 
+  const resetInsertType = () => {
+    insertTypeState.value = "sale";
+  };
+
   const resetPendingRefreshFilterType = () => {
     pendingRefreshFilterTypeState.value = false;
+  };
+
+  const resetPendingRefreshInsertType = () => {
+    pendingRefreshInsertTypeState.value = false;
   };
 
   const resetLastFilter = () => {
@@ -231,7 +249,9 @@ export const usePostStore = defineStore("post", () => {
     resetAgentPosts();
     resetFindedPosts();
     resetFilterType();
+    resetInsertType();
     resetPendingRefreshFilterType();
+    resetPendingRefreshInsertType();
     resetLastFilter();
   };
 
@@ -247,7 +267,9 @@ export const usePostStore = defineStore("post", () => {
     findedPostsState,
     lastFilterState,
     filterTypeState,
+    insertTypeState,
     pendingRefreshFilterTypeState,
+    pendingRefreshInsertTypeState,
     isPostState,
     findPosts,
     getPost,
@@ -260,7 +282,9 @@ export const usePostStore = defineStore("post", () => {
     getPopularExchanges,
     setPost,
     setFilterType,
+    setInsertType,
     setPendingRefreshFilterType,
+    setPendingRefreshInsertType,
     setUpdatePost,
     resetUserPosts,
     resetUserFavorites,
@@ -273,7 +297,9 @@ export const usePostStore = defineStore("post", () => {
     resetFindedPosts,
     resetLastFilter,
     resetFilterType,
+    resetInsertType,
     resetPendingRefreshFilterType,
+    resetPendingRefreshInsertType,
     $reset,
   };
 });
