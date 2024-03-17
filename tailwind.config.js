@@ -6,6 +6,7 @@ export default {
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],
       archivo: ["Archivo", "sans-serif"],
+      ubuntu: ["Ubuntu", "sans-serif"],
     },
     extend: {
       colors: {

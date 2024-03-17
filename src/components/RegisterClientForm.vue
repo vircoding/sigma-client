@@ -1,116 +1,100 @@
 <script setup>
   import { computed, ref } from "vue";
   import { useUserStore } from "../stores/userStore.js";
-  import { useLayoutStore } from "../stores/layoutStore.js";
+  import { useLayoutStore } from "../stores/layoutStore";
+  import EmailInput from "./EmailInput.vue";
+  import PasswordInput from "./PasswordInput.vue";
   import router from "../router";
-  import SigmaVerticalIcon from "./icons/SigmaVerticalIcon.vue";
-  import SigmaIsotypeIcon from "./icons/SigmaIsotypeIcon.vue";
 
+  // Stores
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
 
-  const user = ref({
-    role: "client",
-    email: "",
-    password: "",
-    repassword: "",
-    info: {
-      username: "",
-    },
-  });
+  // Refs
+  const email = ref("");
+  const password = ref("");
+  const repassword = ref("");
 
-  const editedInputs = ref({
-    username: false,
+  const filledInputs = ref({
     email: false,
     password: false,
     repassword: false,
   });
 
-  const editInput = (input) => {
-    setTimeout(() => {
-      switch (input) {
-        case "username":
-          editedInputs.value.username = true;
-          break;
-        case "email":
-          editedInputs.value.email = true;
-          break;
-        case "password":
-          editedInputs.value.password = true;
-          break;
-        case "repassword":
-          editedInputs.value.repassword = true;
-          break;
-        default:
-          break;
-      }
-    }, 3000);
-  };
-
-  const usernameError = computed(() => {
-    if (
-      editedInputs.value.username &&
-      !(user.value.info.username.length >= 3 && user.value.info.username.length <= 20)
-    )
-      return true;
-    return false;
-  });
-
+  // Errors
   const emailError = computed(() => {
-    if (
-      editedInputs.value.email &&
-      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user.value.email)
-    )
-      return true;
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value)) return true;
+
     return false;
   });
 
   const passwordError = computed(() => {
-    if (
-      editedInputs.value.password &&
-      !(user.value.password.length >= 6 && user.value.password.length <= 16)
-    )
-      return true;
+    if (!(password.value.length >= 6 && password.value.length <= 16)) return true;
+
     return false;
   });
 
   const repasswordError = computed(() => {
-    if (editedInputs.value.repassword && !(user.value.password === user.value.repassword))
-      return true;
+    if (!(password.value === repassword.value)) return true;
+
     return false;
   });
 
+  // Methods
   const disableSubmit = computed(() => {
-    if (
-      !editedInputs.value.username ||
-      !editedInputs.value.email ||
-      !editedInputs.value.password ||
-      !editedInputs.value.repassword
-    ) {
-      return true;
-    }
-    if (usernameError.value || emailError.value || passwordError.value || repasswordError.value) {
-      return true;
-    }
+    if (emailError.value || passwordError.value || repasswordError.value) return true;
+
     return false;
   });
+
+  const buildUser = () => {
+    return {
+      role: "client",
+      email: email.value,
+      password: password.value,
+      repassword: repassword.value,
+      info: {
+        username: "new user",
+      },
+    };
+  };
+
+  const fillInput = (input) => {
+    setTimeout(() => {
+      switch (input) {
+        case "email":
+          filledInputs.value.email = true;
+          break;
+        case "password":
+          filledInputs.value.password = true;
+          break;
+        case "repassword":
+          filledInputs.value.repassword = true;
+          break;
+      }
+    }, 2500);
+  };
+
+  const resetComponent = () => {
+    email.value = "";
+    password.value = "";
+    repassword.value = "";
+
+    filledInputs.value.email = false;
+    filledInputs.value.password = false;
+    filledInputs.value.repassword = false;
+  };
 
   const formSubmit = async () => {
     layoutStore.unhideSpinnerLoading();
     try {
-      await userStore.register(user.value);
+      const user = buildUser();
+
+      await userStore.register(user);
 
       await router.push("/");
 
-      user.value.info.username = "";
-      user.value.email = "";
-      user.value.password = "";
-      user.value.repassword = "";
-
-      editedInputs.value.username = false;
-      editedInputs.value.email = false;
-      editedInputs.value.password = false;
-      editedInputs.value.repassword = false;
+      resetComponent();
 
       layoutStore.hideSpinnerLoading();
     } catch (error) {
@@ -122,128 +106,83 @@
 
 <template>
   <div
-    class="relative flex h-full w-full grid-cols-16 flex-col place-items-center items-center justify-start gap-0 max-[1023px]:px-[10%] max-[499px]:px-[5%] lg:-top-6 lg:grid lg:gap-0 lg:px-24 xl:px-32 2xl:px-44"
+    class="relative flex h-full w-full grid-cols-16 flex-col place-items-center items-center justify-start gap-3 py-10 max-[1023px]:px-[10%] max-[499px]:px-[5%]"
   >
-    <div class="text-shadow col-span-6">
-      <SigmaVerticalIcon class="hidden w-full fill-sgray-200 lg:block" />
-      <SigmaIsotypeIcon class="h-[100px] w-[320px] fill-sgray-200 lg:hidden" />
-    </div>
-    <div class="invisible hidden h-3/5 w-[1px] bg-sgray-100 lg:block"></div>
     <!-- Form -->
     <form @submit.prevent="formSubmit" novalidate class="col-span-8 flex w-full flex-col gap-7">
-      <div class="text-shadow">
-        <h1
-          class="mb-2 text-center text-4xl font-extrabold max-[1023px]:text-4xl max-[505px]:text-3xl lg:mb-0 lg:text-left lg:text-4xl"
-        >
-          Bienvenido a Sigma!
+      <!-- Hero -->
+      <div class="flex w-full flex-col gap-2 px-5 text-center">
+        <h1 class="text-shadow w-full font-ubuntu text-4xl font-bold text-sblue-500">
+          Regístrate como Propietario
         </h1>
-        <span class="block text-center text-sgray-300 lg:text-left lg:text-lg"
-          >Crea un nuevo usuario para continuar</span
-        >
+        <p class="text-shadow w-full px-2 text-sm text-sgray-300">
+          Crea tu cuenta como Propietario si deseas vender o rentar tu casa.
+        </p>
       </div>
-      <div class="flex flex-col gap-2">
-        <!-- Username -->
-        <div class="flex flex-col">
-          <input
-            @focus="editInput('username')"
-            type="text"
-            v-model.trim="user.info.username"
-            class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
-            :class="
-              usernameError
-                ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
-                : 'ring-sigma'
-            "
-            placeholder="Nombre de Usuario"
-          />
-          <span
-            class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
-            :class="usernameError ? 'visible' : 'invisible'"
-            >Nombre de Usuario no válido</span
-          >
-        </div>
+
+      <!-- Inputs -->
+      <div class="flex flex-col items-center justify-center">
         <!-- Email -->
-        <div class="flex flex-col">
-          <input
-            @focus="editInput('email')"
-            type="email"
-            v-model.trim="user.email"
-            class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
-            :class="
-              emailError
-                ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
-                : 'ring-sigma'
-            "
-            placeholder="Correo Electrónico"
-          />
-          <span
-            class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
-            :class="emailError ? 'visible' : 'invisible'"
-            >Correo Electrónico no válido</span
-          >
-        </div>
+        <EmailInput
+          v-model.trim="email"
+          type="email"
+          :error="filledInputs.email && emailError"
+          class="mb-4 w-full"
+          @focused="fillInput('email')"
+        />
+
         <!-- Password -->
-        <div class="flex flex-col">
-          <input
-            @focus="editInput('password')"
-            type="password"
-            v-model.trim="user.password"
-            class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
-            :class="
-              passwordError
-                ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
-                : 'ring-sigma'
-            "
-            placeholder="Contraseña"
-          />
-          <span
-            class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
-            :class="passwordError ? 'visible' : 'invisible'"
-            >Contraseña no válida</span
-          >
-        </div>
+        <PasswordInput
+          v-model.trim="password"
+          type="password"
+          :error="filledInputs.password && passwordError"
+          class="mb-4 w-full"
+          @focused="fillInput('password')"
+        />
+
         <!-- Repassword -->
-        <div class="flex flex-col">
-          <input
-            @focus="editInput('repassword')"
-            type="password"
-            v-model.trim="user.repassword"
-            class="rounded-md border border-sgray-100 bg-transparent px-4 py-2 font-medium transition-colors duration-200 placeholder:text-sgray-200 hover:border-sgray-300 hover:bg-gray-100 focus:border-transparent focus:bg-gray-100 focus:shadow-[0_2px_10px_rgba(0,_0,_0,_0.4)] focus:outline-none focus:ring-1 lg:text-lg"
-            :class="
-              repasswordError
-                ? 'border-transparent ring-2 ring-alert hover:border-transparent focus:border-transparent focus:ring-2'
-                : 'ring-sigma'
-            "
-            placeholder="Repetir Contraseña"
-          />
-          <span
-            class="text-shadow relative top-1 px-4 font-archivo text-sm italic text-alert"
-            :class="repasswordError ? 'visible' : 'invisible'"
-            >Las Contraseñas deben coincidir</span
+        <PasswordInput
+          v-model.trim="repassword"
+          type="repassword"
+          :error="filledInputs.repassword && repasswordError"
+          class="mb-4 w-full"
+          @focused="fillInput('repassword')"
+        />
+      </div>
+
+      <!-- CTAs -->
+      <div class="relative -top-5 flex flex-col items-center justify-start gap-7">
+        <div class="space-y-4">
+          <button
+            type="submit"
+            :disabled="disableSubmit"
+            class="flex h-[38px] w-full items-center justify-center rounded-lg border border-sigma bg-sigma text-center text-white transition-all duration-200 ease-out disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 disabled:shadow-[0_0_10px_rgba(0,_0,_0,_0)]"
+          >
+            Registrarse
+          </button>
+
+          <!-- Terms -->
+          <span class="block text-center text-xs text-sgray-300"
+            >Al registrarte en nuestro sitio, aceptas nuestras
+            <a class="font-semibold text-sblue-500" href="#">políticas de cookies</a> y
+            <a class="font-semibold text-sblue-500" href="#">privacidad</a>.</span
+          >
+        </div>
+
+        <!-- Links -->
+        <div class="flex flex-col items-center justify-center gap-1">
+          <RouterLink
+            to="/auth/login"
+            class="text-shadow w-fit text-sblue-500 transition-all duration-200 after:block after:h-px after:w-0 after:bg-sblue-500 after:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] after:transition-[width] after:duration-200 after:ease-in-out hover:text-sblue-500 hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] hover:after:w-full"
+            >¿Ya tienes cuenta?</RouterLink
+          >
+          <RouterLink
+            to="/auth/register/agent"
+            class="text-shadow w-fit text-sblue-500 transition-all duration-200 after:block after:h-px after:w-0 after:bg-sblue-500 after:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] after:transition-[width] after:duration-200 after:ease-in-out hover:text-sblue-500 hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] hover:after:w-full"
+            >¿Eres agente?</RouterLink
           >
         </div>
       </div>
-      <div
-        class="relative -top-5 flex flex-col items-center justify-start gap-7 lg:-top-3 lg:flex-row"
-      >
-        <button
-          type="submit"
-          :disabled="disableSubmit"
-          class="flex h-[38px] w-full items-center justify-center rounded-md border border-sgray-400 bg-sgray-400 text-center font-semibold text-sgray-100 shadow-[0_0_10px_rgba(0,_0,_0,_0.4)] transition-all duration-200 ease-out hover:bg-black hover:text-white hover:shadow-[0_2px_10px_rgba(0,_0,_0,_0.5)] disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 disabled:shadow-[0_0_10px_rgba(0,_0,_0,_0)] lg:h-10 lg:w-44 lg:text-lg"
-        >
-          Registrarse
-        </button>
-        <RouterLink
-          to="/auth/register/agent"
-          class="text-shadow transition-all duration-200 after:block after:h-px after:w-0 after:bg-black after:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] after:transition-[width] after:duration-200 after:ease-in-out hover:text-black hover:drop-shadow-[0_0_5px_rgba(0,_0,_0,_0.3)] hover:after:w-full"
-          >Eres agente?</RouterLink
-        >
-      </div>
-      <span class="relative -top-5 block text-center text-xs text-sgray-300 lg:text-left"
-        >Al registrarte en nuestro sitio, aceptas nuestras
-        <a class="font-semibold text-black" href="#">políticas de cookies</a> y
-        <a class="font-semibold text-black" href="#">privacidad</a>.</span
-      >
     </form>
   </div>
 </template>

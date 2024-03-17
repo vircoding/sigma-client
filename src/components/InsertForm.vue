@@ -99,11 +99,13 @@
       },
     },
   });
+
   const filledInputs = ref({
     saleAmount: false,
     rentAmount: false,
     phone: false,
   });
+
   const fileInput = ref(null);
 
   const openImageDialog = () => {
@@ -358,6 +360,7 @@
 
     filledInputs.value.saleAmount = false;
     filledInputs.value.rentAmount = false;
+    filledInputs.value.phone = false
 
     phoneError.value = true;
 
@@ -629,7 +632,7 @@
       <button
         type="submit"
         :disabled="disableSubmit"
-        class="mb-4 flex h-[38px] w-full items-center justify-center rounded-lg border border-sigma bg-sigma pt-[2px] text-center font-semibold text-sgray-100 transition-all duration-200 ease-out hover:bg-black hover:text-white disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 lg:h-10 lg:w-44 lg:text-lg"
+        class="mb-4 flex h-[38px] w-full items-center justify-center rounded-lg border border-sigma bg-sigma pt-[2px] text-center text-white transition-all duration-200 ease-out hover:bg-black hover:text-white disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 lg:h-10 lg:w-44 lg:text-lg"
       >
         Publicar
       </button>

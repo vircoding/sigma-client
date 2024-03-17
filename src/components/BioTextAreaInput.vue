@@ -20,7 +20,10 @@
         <img v-if="props.edit" src="../assets/edit-icon.svg" class="w-[14px]" />
         <span>Biografía</span>
       </label>
-      <label v-else for="bio" class="pl-2 font-medium text-alert">No más de 250 caracteres</label>
+      <label v-else for="bio" class="flex items-center gap-[3px] pl-2 font-medium text-alert">
+        <img src="../assets/warning-icon.svg" class="relative bottom-[1px] w-[19px]" />
+        <span>No más de 250 caracteres</span>
+      </label>
       <span v-if="!props.error" class="relative top-[2px] pr-2 text-sm font-medium text-sblue-500"
         >{{ valueLength }}/250 caracteres</span
       >
@@ -34,7 +37,7 @@
       :value="props.modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       class="h-[300px] w-full resize-none rounded-lg border bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:bg-white"
-      :class="props.error ? 'border-alert' : 'border-sgray-100 focus:border-sblue-500'"
+      :class="props.error ? 'border-alert' : 'border-sgray-200 focus:border-sigma'"
     ></textarea>
   </div>
 </template>
