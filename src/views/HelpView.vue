@@ -9,7 +9,63 @@
 </script>
 
 <template>
-  <div class="lg:px-2.5">
+  <!-- NavBar -->
+  <header class="relative z-20 h-[68px] w-full shadow-md">
+    <NavBar class="absolute" />
+  </header>
+
+  <main class="w-full">
+    <!-- Hero -->
+    <div class="flex w-full flex-col gap-2 px-5 py-10 text-center">
+      <h2 class="text-shadow w-full font-ubuntu text-4xl font-bold text-sblue-500">Ayuda</h2>
+      <p class="text-shadow w-full px-2 text-sm text-sgray-300">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam delectus officia
+        repudiandae dignissimos!
+      </p>
+    </div>
+
+    <!-- Index -->
+    <section id="index" class="w-full">
+      <HelpIndexSection />
+    </section>
+
+    <!-- Horizontal Line -->
+    <div class="w-full border-b border-sgray-100"></div>
+
+    <!-- Video Tutorial -->
+    <section id="videotut" class="w-full">
+      <VideoTutorialSection />
+    </section>
+
+    <!-- Horizontal Line -->
+    <div class="w-full border-b border-sgray-100"></div>
+
+    <!-- Text Tutorial -->
+    <section id="texttut" class="w-full">
+      <TextTutorialSection />
+    </section>
+
+    <!-- Horizontal Line -->
+    <div class="w-full border-b border-sgray-100"></div>
+
+    <!-- Help Agent -->
+    <section id="findagent" class="w-full">
+      <HelpAgentSection />
+    </section>
+
+    <!-- Horizontal Line -->
+    <div class="w-full border-b border-sgray-100"></div>
+
+    <!-- Help Agent -->
+    <section id="faq" class="w-full">
+      <FAQ />
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <FooterSection background="#011b33" title="#ffffff" text="#ffffff" />
+
+  <!-- <div class="lg:px-2.5">
     <div class="flex min-h-screen flex-col lg:h-screen lg:py-2.5">
       <header>
         <div class="relative overflow-hidden bg-background">
@@ -17,9 +73,9 @@
         </div>
       </header>
       <main class="mb-[5px] flex grow flex-col bg-background lg:mb-0">
-        <div class="mb-[5px] bg-background text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]">
-          <!-- Hero -->
-          <div class="pt-10">
+        <div class="mb-[5px] bg-background text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]"> -->
+  <!-- Hero -->
+  <!-- <div class="pt-10">
             <h2
               class="text-shadow mb-5 text-center text-4xl font-extrabold max-[1023px]:text-4xl max-[505px]:text-3xl lg:mb-0 lg:text-left lg:text-4xl"
             >
@@ -31,30 +87,30 @@
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque omnis odio amet?
             </p>
           </div>
-        </div>
+        </div> -->
 
-        <!-- Index -->
-        <section id="index">
+  <!-- Index -->
+  <!-- <section id="index">
           <HelpIndexSection />
-        </section>
+        </section> -->
 
-        <!-- Video Tutorial -->
-        <section id="videotut">
+  <!-- Video Tutorial -->
+  <!-- <section id="videotut">
           <VideoTutorialSection />
-        </section>
+        </section> -->
 
-        <!-- Text Tutorial -->
-        <section id="texttut">
+  <!-- Text Tutorial -->
+  <!-- <section id="texttut">
           <TextTutorialSection />
-        </section>
+        </section> -->
 
-        <!-- Find Agent -->
-        <section id="findagent">
+  <!-- Find Agent -->
+  <!-- <section id="findagent">
           <HelpAgentSection />
-        </section>
+        </section> -->
 
-        <!-- FAQ -->
-        <section id="faq">
+  <!-- FAQ -->
+  <!-- <section id="faq">
           <FAQ />
         </section>
       </main>
@@ -62,5 +118,5 @@
     <footer class="lg:mb-2.5">
       <FooterSection background="#333333" text="#dcdcdc" title="#ffffff" />
     </footer>
-  </div>
+  </div>-->
 </template>

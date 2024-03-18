@@ -1,26 +1,23 @@
 <template>
-  <div
-    class="mb-[5px] overflow-hidden bg-background text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]"
-  >
+  <div class="overflow-hidden bg-background py-10 text-center">
     <!-- Hero -->
-    <div class="py-10">
-      <h2
-        class="text-shadow mb-5 text-center text-4xl font-extrabold max-[1023px]:text-4xl max-[505px]:text-3xl lg:mb-0 lg:text-left lg:text-4xl"
-      >
+    <div class="mb-6 flex w-full flex-col gap-2 px-5 text-center">
+      <h2 class="text-shadow w-full font-ubuntu text-3xl font-bold text-sblue-500">
         Tutorial Paso a Paso
       </h2>
-      <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. At, aliquid.
+      <p class="text-shadow w-full px-2 text-sm text-sgray-300">
+        Crea tu cuenta como Propietario si deseas vender o rentar tu casa. Crea tu cuenta como
+        Agente si deseas vender o rentar hasta 10 casas
       </p>
     </div>
 
     <!-- Tutorial -->
-    <div class="flex w-full flex-col items-center justify-center space-y-8 pb-12 text-center">
+    <div class="flex w-full flex-col items-center justify-center space-y-8 px-5 text-center">
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-lg font-semibold">1. Inicia Sesión</h6>
-        <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">1. Inicia Sesión</h6>
+        <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.
         </p>
@@ -29,8 +26,8 @@
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-lg font-semibold">2. Inicia Sesión</h6>
-        <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">2. Inicia Sesión</h6>
+        <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.
         </p>
@@ -39,8 +36,8 @@
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-lg font-semibold">3. Inicia Sesión</h6>
-        <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">3. Inicia Sesión</h6>
+        <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.
         </p>
@@ -49,8 +46,8 @@
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-lg font-semibold">4. Inicia Sesión</h6>
-        <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">4. Inicia Sesión</h6>
+        <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.
         </p>
@@ -59,8 +56,8 @@
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-lg font-semibold">5. Inicia Sesión</h6>
-        <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">5. Inicia Sesión</h6>
+        <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.
         </p>
@@ -69,8 +66,8 @@
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-lg font-semibold">6. Inicia Sesión</h6>
-        <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">6. Inicia Sesión</h6>
+        <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.
         </p>
@@ -79,8 +76,8 @@
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-lg font-semibold">7. Inicia Sesión</h6>
-        <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">7. Inicia Sesión</h6>
+        <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.
         </p>
@@ -89,8 +86,8 @@
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-lg font-semibold">8. Inicia Sesión</h6>
-        <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">8. Inicia Sesión</h6>
+        <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.
         </p>
@@ -99,58 +96,8 @@
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-lg font-semibold">9. Inicia Sesión</h6>
-        <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
-          consequatur earum amet accusantium sequi.
-        </p>
-      </div>
-
-      <!-- Item -->
-      <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-lg font-semibold">10. Inicia Sesión</h6>
-        <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
-          consequatur earum amet accusantium sequi.
-        </p>
-      </div>
-
-      <!-- Item -->
-      <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-lg font-semibold">11. Inicia Sesión</h6>
-        <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
-          consequatur earum amet accusantium sequi.
-        </p>
-      </div>
-
-      <!-- Item -->
-      <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-lg font-semibold">12. Inicia Sesión</h6>
-        <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
-          consequatur earum amet accusantium sequi.
-        </p>
-      </div>
-
-      <!-- Item -->
-      <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-lg font-semibold">13. Inicia Sesión</h6>
-        <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
-          consequatur earum amet accusantium sequi.
-        </p>
-      </div>
-
-      <!-- Item -->
-      <div class="flex w-full flex-col items-center justify-center space-y-2">
-        <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-lg font-semibold">14. Inicia Sesión</h6>
-        <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">9. Inicia Sesión</h6>
+        <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.
         </p>

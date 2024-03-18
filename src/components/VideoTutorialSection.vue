@@ -1,21 +1,18 @@
 <template>
-  <div
-    class="mb-[5px] overflow-hidden bg-white text-center max-[1023px]:px-[10%] max-[499px]:px-[5%]"
-  >
+  <div class="overflow-hidden bg-white py-10 text-center">
     <!-- Hero -->
-    <div class="py-10">
-      <h2
-        class="text-shadow mb-5 text-center text-4xl font-extrabold max-[1023px]:text-4xl max-[505px]:text-3xl lg:mb-0 lg:text-left lg:text-4xl"
-      >
+    <div class="mb-6 flex w-full flex-col gap-2 px-5 text-center">
+      <h2 class="text-shadow w-full font-ubuntu text-3xl font-bold text-sblue-500">
         Video Tutorial
       </h2>
-      <p class="text-shadow block text-center text-sgray-300 lg:text-left lg:text-lg">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. At, aliquid.
+      <p class="text-shadow w-full px-2 text-sm text-sgray-300">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt, pariatur? Aliquid, similique
+        aperiam!
       </p>
     </div>
 
     <!-- Video -->
-    <div class="w-full pb-12">
+    <div class="w-full px-5">
       <figure
         class="text-shadow relative flex aspect-video w-full flex-col items-center justify-center"
       >
