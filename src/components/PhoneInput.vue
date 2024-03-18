@@ -16,3 +16,9 @@
     :class="props.error ? 'border-alert' : 'border-sgray-200 focus:border-sigma'"
   />
 </template>
+
+<style scoped>
+  input {
+    color: #011b33;
+  }
+</style>

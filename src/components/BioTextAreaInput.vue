@@ -41,3 +41,9 @@
     ></textarea>
   </div>
 </template>
+
+<style scoped>
+  textarea {
+    color: #011b33;
+  }
+</style>

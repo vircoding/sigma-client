@@ -29,3 +29,9 @@
     />
   </div>
 </template>
+
+<style scoped>
+  input {
+    color: #011b33;
+  }
+</style>
