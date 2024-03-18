@@ -2,9 +2,7 @@
   <div class="w-full bg-white px-5 py-10">
     <!-- Hero -->
     <div class="mb-6 flex w-full flex-col gap-2 text-center">
-      <h2 class="text-shadow w-full text-2xl font-extrabold uppercase text-sblue-500">
-        Powered By
-      </h2>
+      <h2 class="text-shadow w-full font-ubuntu text-3xl font-bold text-sblue-500">Powered By</h2>
     </div>
 
     <!-- Logos -->

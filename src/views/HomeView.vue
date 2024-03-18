@@ -9,10 +9,8 @@
   import ReviewsSection from "../components/ReviewsSection.vue";
   import FooterSection from "../components/FooterSection.vue";
   import { useUserStore } from "../stores/userStore.js";
-  import { usePostStore } from "../stores/postStore.js";
 
   const userStore = useUserStore();
-  const postStore = usePostStore();
 </script>
 
 <template>

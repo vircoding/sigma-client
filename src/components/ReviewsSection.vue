@@ -2,7 +2,7 @@
   <div class="w-full px-5 py-10">
     <!-- Hero -->
     <div class="mb-6 flex w-full flex-col gap-2 text-center">
-      <h2 class="text-shadow w-full text-2xl font-extrabold uppercase text-sblue-500">
+      <h2 class="text-shadow w-full font-ubuntu text-3xl font-bold text-sblue-500">
         Nuestros clientes dicen
       </h2>
     </div>

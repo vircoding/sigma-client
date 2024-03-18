@@ -2,7 +2,7 @@
   <div class="relative w-full bg-white pt-10">
     <!-- Hero -->
     <div class="mb-6 flex w-full flex-col gap-2 px-5 text-center">
-      <h2 class="text-shadow w-full text-2xl font-extrabold uppercase text-sblue-500">
+      <h2 class="text-shadow w-full font-ubuntu text-3xl font-bold text-sblue-500">
         ¿Aún no tienes cuenta?
       </h2>
       <p class="text-shadow w-full px-2 text-sm text-sgray-300">
@@ -25,7 +25,7 @@
           to="auth/register/client"
           class="text-shadow flex w-32 items-center justify-center rounded-lg bg-sblue-500 py-2"
         >
-          <span class="text-sm font-semibold uppercase text-sgray-100">Propietario</span>
+          <span class="text-sm font-semibold uppercase text-white">Propietario</span>
         </RouterLink>
 
         <!-- Agent -->
@@ -33,18 +33,18 @@
           to="auth/register/agent"
           class="text-shadow flex w-32 items-center justify-center rounded-lg bg-sigma py-2"
         >
-          <span class="text-sm font-semibold uppercase text-sgray-100">Agente</span>
+          <span class="text-sm font-semibold uppercase text-white">Agente</span>
         </RouterLink>
       </div>
     </div>
 
     <!-- Terms -->
     <div class="flex w-full items-center justify-between bg-sblue-500 px-5 py-4">
-      <span class="font-semibold text-sgray-100"
+      <span class="font-semibold text-white"
         >Lee nuestros <span class="text-sigma">términos</span></span
       >
       <RouterLink to="/find" class="rounded-md border border-sigma p-3 py-[2px]">
-        <span class="text-sm font-semibold text-sgray-100">ADELANTE</span>
+        <span class="text-sm font-semibold text-white">ADELANTE</span>
       </RouterLink>
     </div>
   </div>

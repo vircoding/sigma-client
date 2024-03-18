@@ -13,11 +13,11 @@
 
 <template>
   <div class="flex w-full items-center justify-between bg-sblue-500 px-5 py-4">
-    <span class="font-semibold text-sgray-100"
+    <span class="font-semibold text-white"
       >Descubre nuestras <span class="text-sigma">casas</span></span
     >
     <button @click.prevent="goFind('sale')" class="rounded-md border border-sigma p-3 py-[2px]">
-      <span class="text-sm font-semibold text-sgray-100">ADELANTE</span>
+      <span class="text-sm font-semibold text-white">ADELANTE</span>
     </button>
   </div>
 </template>
