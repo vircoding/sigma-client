@@ -117,8 +117,13 @@
     else return false;
   });
 
+  const avatarError = computed(() => {
+    return !layoutStore.avatarURLState;
+  });
+
   const anyError = computed(() => {
     if (
+      avatarError.value ||
       emailError.value ||
       passwordError.value ||
       repasswordError.value ||
