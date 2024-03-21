@@ -19,9 +19,11 @@
     <label
       v-else
       :for="props.type === 'sale' ? 'sale-amount' : 'rent-amount'"
-      class="pl-2 font-medium italic text-alert"
-      >Máx. 999 999 999</label
+      class="flex items-center gap-[3px] pl-2 font-medium text-alert"
     >
+      <img src="../assets/warning-icon.svg" class="relative bottom-[1px] w-[19px]" />
+      <span>Máx. 999 999 999</span>
+    </label>
     <input
       type="number"
       :id="props.type === 'sale' ? 'sale-amount' : 'rent-amount'"
@@ -31,7 +33,13 @@
       @input="$emit('update:modelValue', parseValue($event.target.value))"
       @focus="$emit('focused')"
       class="w-full rounded-lg border bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:bg-white"
-      :class="props.error ? 'border-alert' : 'border-sgray-100 focus:border-sblue-500'"
+      :class="props.error ? 'border-alert' : 'border-sgray-200 focus:border-sigma'"
     />
   </div>
 </template>
+
+<style scoped>
+  input {
+    color: #011b33;
+  }
+</style>

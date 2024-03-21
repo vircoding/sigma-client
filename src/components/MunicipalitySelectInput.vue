@@ -13,7 +13,7 @@
       :id="'municipality-' + index"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
-      class="w-full appearance-none rounded-lg border border-sgray-100 bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:border-sblue-500 focus:bg-white"
+      class="w-full appearance-none rounded-lg border border-sgray-200 bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:border-sigma focus:bg-white"
     >
       <option v-for="(item, index) in municipalityList[province]" :key="index" :value="item">
         {{ item }}
@@ -21,3 +21,9 @@
     </select>
   </div>
 </template>
+
+<style scoped>
+  select {
+    color: #011b33;
+  }
+</style>

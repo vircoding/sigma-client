@@ -17,19 +17,26 @@
 
 <template>
   <div :class="layoutStore.imageCropper ? 'h-screen' : ''">
+    <!-- Image Cropper -->
     <div class="overlay" v-if="layoutStore.imageCropper">
       <ImageCropper />
     </div>
+
+    <!-- Main -->
     <div :class="layoutStore.imageCropper ? 'blur' : ''">
       <div class="flex min-h-screen flex-col">
         <!-- Header -->
         <header class="relative z-20 h-[68px] w-full shadow-md">
           <NavBar class="absolute" />
         </header>
+
+        <!-- Form -->
         <main class="flex grow flex-col items-center justify-center">
           <InsertForm />
         </main>
       </div>
+
+      <!-- Footer -->
       <footer>
         <FooterSection background="#011b33" title="#ffffff" text="#ffffff" />
       </footer>

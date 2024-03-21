@@ -360,7 +360,7 @@
 
     filledInputs.value.saleAmount = false;
     filledInputs.value.rentAmount = false;
-    filledInputs.value.phone = false
+    filledInputs.value.phone = false;
 
     phoneError.value = true;
 
@@ -409,24 +409,23 @@
 
 <template>
   <div
-    class="flex h-full w-full flex-col items-center py-10 max-[1023px]:px-[10%] max-[499px]:px-[5%]"
+    class="flex h-full w-full flex-col items-center gap-7 py-10 max-[1023px]:px-[10%] max-[499px]:px-[5%]"
   >
     <!-- Hero -->
     <div class="flex w-full flex-col gap-2 px-5 text-center">
-      <h2 class="text-shadow w-full text-2xl font-extrabold uppercase text-sblue-500">
-        Section Title
-      </h2>
+      <h1 class="text-shadow w-full font-ubuntu text-4xl font-bold text-sblue-500">
+        Publicar anuncio
+      </h1>
       <p class="text-shadow w-full px-2 text-sm text-sgray-300">
-        Crea tu cuenta como Propietario si deseas vender o rentar tu casa. Crea tu cuenta como
-        Agente si deseas vender o rentar hasta 10 casas
+        Crea tu cuenta como Propietario si deseas vender o rentar tu casa.
       </p>
     </div>
 
     <!-- Form -->
-    <form @submit.prevent="formSubmit" novalidate class="mb-9 flex w-full flex-col py-10 text-base">
+    <form @submit.prevent="formSubmit" novalidate class="flex w-full flex-col text-base">
       <!-- Amount/Offer Details -->
       <div
-        class="mb-4 flex h-[160px] w-full flex-row items-center rounded-lg border border-sgray-100 px-5 py-3 max-[345px]:px-3"
+        class="mb-4 flex h-[160px] w-full flex-row items-center rounded-lg border border-sgray-200 px-5 py-3 max-[345px]:px-3"
       >
         <!-- Type -->
         <div class="flex w-[35%] flex-col">
@@ -481,7 +480,7 @@
       <div
         v-for="(item, index) in new Array(propertyLength)"
         :key="index"
-        class="mb-4 flex w-full flex-col rounded-lg border border-sgray-100 px-5 pb-5 pt-4 max-[345px]:px-3"
+        class="mb-4 flex w-full flex-col rounded-lg border border-sgray-200 px-5 pb-5 pt-4 max-[345px]:px-3"
       >
         <!-- Province -->
         <ProvinceSelectInput
@@ -500,7 +499,7 @@
 
         <!-- Features -->
         <div
-          class="flex w-full flex-row items-center rounded-lg border border-sgray-100 px-5 pb-[18px] pt-3"
+          class="flex w-full flex-row items-center rounded-lg border border-sgray-200 px-5 pb-[18px] pt-3"
         >
           <!-- Number Inputs -->
           <div class="flex w-[80px] flex-col space-y-1">
@@ -562,7 +561,7 @@
 
       <!-- Description -->
       <div
-        class="mb-4 flex w-full flex-col rounded-lg border border-sgray-100 px-5 pb-5 pt-4 max-[345px]:px-3"
+        class="mb-4 flex w-full flex-col rounded-lg border border-sgray-200 px-5 pb-5 pt-4 max-[345px]:px-3"
       >
         <DescriptionTextAreaInput
           v-model.trim="postDetails.description"
@@ -572,15 +571,17 @@
 
       <!-- Contact -->
       <div
-        class="mb-4 flex w-full flex-col rounded-lg border border-sgray-100 px-5 py-4 max-[345px]:px-3"
+        class="mb-4 flex w-full flex-col rounded-lg border border-sgray-200 px-5 py-4 max-[345px]:px-3"
       >
         <label
           v-if="codeError || (filledInputs.phone && phoneError)"
           for="phone"
-          class="mb-1 pl-2 font-medium text-alert"
-          >Teléfono no válido</label
+          class="flex items-center gap-[3px] pl-2 font-medium text-alert"
         >
-        <label v-else for="phone" class="mb-1 pl-2 font-medium text-sblue-500">Teléfono</label>
+          <img src="../assets/warning-icon.svg" class="relative bottom-[1px] w-[19px]" />
+          <span>Teléfono no válido</span>
+        </label>
+        <label v-else for="phone" class="pl-2 font-medium text-sblue-500">Teléfono</label>
         <div class="mb-[8px] flex w-full gap-2">
           <CodeInput v-model="postDetails.contact_details.contact.code" :error="codeError" />
           <PhoneInput
@@ -594,7 +595,7 @@
 
       <!-- Photos -->
       <div
-        class="mb-4 flex w-full flex-col rounded-lg border border-sgray-100 px-5 py-4 max-[345px]:px-3"
+        class="mb-4 flex w-full flex-col rounded-lg border border-sgray-200 px-5 py-4 max-[345px]:px-3"
       >
         <!-- File Input (Hidden) -->
         <input type="file" @change="loadImage" class="hidden" ref="fileInput" accept="image/*" />
@@ -632,7 +633,7 @@
       <button
         type="submit"
         :disabled="disableSubmit"
-        class="mb-4 flex h-[38px] w-full items-center justify-center rounded-lg border border-sigma bg-sigma pt-[2px] text-center text-white transition-all duration-200 ease-out hover:bg-black hover:text-white disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 lg:h-10 lg:w-44 lg:text-lg"
+        class="mb-4 flex h-[38px] w-full items-center justify-center rounded-lg border border-sigma bg-sigma pt-[2px] text-center text-white transition-all duration-200 ease-out disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200"
       >
         Publicar
       </button>

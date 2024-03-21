@@ -11,7 +11,7 @@
       id="needs"
       :value="modelValue"
       @input="$emit('update:modelValue', parseInt($event.target.value))"
-      class="w-full appearance-none rounded-lg border border-sgray-100 bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:border-sblue-500 focus:bg-white"
+      class="w-full appearance-none rounded-lg border border-sgray-200 bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:border-sigma focus:bg-white"
     >
       <option value="0">Sin especificar</option>
       <option value="1">1 Propiedad</option>
@@ -20,3 +20,9 @@
     </select>
   </div>
 </template>
+
+<style scoped>
+  select {
+    color: #011b33;
+  }
+</style>
