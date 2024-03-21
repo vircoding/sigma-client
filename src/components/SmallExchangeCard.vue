@@ -39,15 +39,30 @@
 
 <template>
   <div>
-    <div class="text-shadow w-full overflow-hidden rounded-md">
+    <div class="text-shadow w-full overflow-hidden rounded-lg border border-sgray-100">
       <!-- Top -->
       <div class="flex h-[80px] w-full items-center justify-center bg-white">
         <!-- Exchange Info -->
         <div
-          class="flex h-full w-[28%] flex-col items-center justify-center bg-sviolet px-2 py-3 text-center text-white"
+          class="flex h-full w-[28%] flex-col items-center justify-center bg-sviolet text-center text-white"
         >
-          <span class="font-extrabold">PERMUTA</span>
-          <div
+          <span class="text-base font-extrabold">PERMUTA</span>
+          <!-- Needs Enabled -->
+          <span
+            v-if="props.exchange.offer_details.needs.enable"
+            class="relative -top-[2px] font-semibold"
+            >{{ props.exchange.offer_details.offers }} x
+            {{ props.exchange.offer_details.needs.count }}</span
+          >
+          <!-- Needs Disabled -->
+          <span v-else>{{ props.exchange.offer_details.offers }}</span>
+          <!-- Needs Enabled -->
+          <span v-if="props.exchange.offer_details.needs.enable" class="text-xs">propiedades</span>
+          <!-- Needs Disabled -->
+          <span v-else class="text-xs">{{
+            props.exchange.offer_details.offers === 1 ? "propiedad" : "propiedades"
+          }}</span>
+          <!-- <div
             v-if="props.exchange.offer_details.needs.enable"
             class="flex flex-col items-center gap-[2px]"
           >
@@ -55,9 +70,8 @@
               {{ props.exchange.offer_details.offers }} x
               {{ props.exchange.offer_details.needs.count }}
             </span>
-            <span class="text-xs text-white">propiedades</span>
-          </div>
-          <div
+          </div> -->
+          <!-- <div
             v-else-if="!props.exchange.offer_details.needs.enable"
             class="flex flex-col items-center gap-[2px]"
           >
@@ -65,7 +79,7 @@
               {{ props.exchange.offer_details.offers }}
             </span>
             <span class="text-xs text-white">propiedades</span>
-          </div>
+          </div> -->
         </div>
 
         <!-- Features -->
@@ -206,12 +220,12 @@
           </div>
 
           <!-- Sell -->
-          <button
+          <!-- <button
             v-if="!props.favorite"
             class="gradient w-full rounded-md bg-sviolet py-[3px] text-sm font-semibold"
           >
             <span class="text-shadow text-white">VENDIDA</span>
-          </button>
+          </button> -->
         </div>
       </div>
     </div>

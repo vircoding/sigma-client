@@ -17,18 +17,18 @@
 </script>
 
 <template>
-  <div class="text-shadow w-full overflow-hidden rounded-md">
+  <div class="text-shadow w-full overflow-hidden rounded-lg border border-sgray-100">
     <!-- Top -->
     <div class="flex h-[80px] w-full items-center justify-center bg-white">
       <!-- Sale Info -->
       <div
-        class="flex h-full w-[28%] flex-col items-center justify-center bg-sgreen-300 px-2 py-3 text-center text-white"
+        class="flex h-full w-[28%] flex-col items-center justify-center bg-sgreen-300 text-center text-white"
       >
-        <span class="font-extrabold">RENTA</span>
-        <span class="relative top-[1px] text-base font-semibold leading-tight">{{
+        <span class="text-lg font-extrabold">RENTA</span>
+        <span class="relative -top-[2px] font-semibold">{{
           formatAmount(props.rent.amount_details.amount, true)
         }}</span>
-        <span
+        <span class="text-xs"
           ><span class="uppercase">{{ props.rent.amount_details.currency }}</span> /
           {{ props.rent.amount_details.frequency === "daily" ? "día" : "mes" }}</span
         >
@@ -141,12 +141,12 @@
         </div>
 
         <!-- Sell -->
-        <button
+        <!-- <button
           v-if="!props.favorite"
           class="gradient w-full rounded-md bg-sgreen-300 py-[3px] text-sm font-semibold"
         >
           <span class="text-shadow text-white">RENTADA</span>
-        </button>
+        </button> -->
       </div>
     </div>
   </div>

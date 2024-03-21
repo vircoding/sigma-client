@@ -17,18 +17,18 @@
 </script>
 
 <template>
-  <div class="text-shadow w-full overflow-hidden rounded-md">
+  <div class="text-shadow w-full overflow-hidden rounded-lg border border-sgray-100">
     <!-- Top -->
     <div class="flex h-[80px] w-full items-center justify-center bg-white">
       <!-- Sale Info -->
       <div
-        class="flex h-full w-[28%] flex-col items-center justify-center bg-sigma px-2 py-3 text-center text-white"
+        class="flex h-full w-[28%] flex-col items-center justify-center bg-sigma text-center text-white"
       >
-        <span class="font-extrabold">VENTA</span>
-        <span class="relative top-[1px] text-base font-semibold leading-tight">{{
+        <span class="text-lg font-extrabold">VENTA</span>
+        <span class="relative -top-[2px] font-semibold">{{
           formatAmount(props.sale.amount_details.amount, true)
         }}</span>
-        <span class="uppercase">{{ props.sale.amount_details.currency }}</span>
+        <span class="text-xs uppercase">{{ props.sale.amount_details.currency }}</span>
       </div>
 
       <!-- Features -->
@@ -138,12 +138,12 @@
         </div>
 
         <!-- Sell -->
-        <button
+        <!-- <button
           v-if="!props.favorite"
           class="gradient w-full rounded-md bg-sigma py-[3px] text-sm font-semibold"
         >
           <span class="text-shadow text-white">VENDIDA</span>
-        </button>
+        </button> -->
       </div>
     </div>
   </div>
