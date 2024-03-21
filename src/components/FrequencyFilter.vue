@@ -32,7 +32,7 @@
   />
   <label for="frequency-none" class="flex flex-row items-center gap-1">
     <CheckboxIcon :status="checkNone" />
-    <span class="font-medium lg:text-lg">Cualquiera</span>
+    <span class="font-medium text-sblue-500">Cualquiera</span>
   </label>
 
   <!-- Daily -->
@@ -48,7 +48,7 @@
   />
   <label for="frequency-daily" class="flex flex-row items-center gap-1">
     <CheckboxIcon :status="checkDaily" />
-    <span class="font-medium lg:text-lg">Diario</span>
+    <span class="font-medium text-sblue-500">Diario</span>
   </label>
 
   <!-- Monthly -->
@@ -64,6 +64,6 @@
   />
   <label for="frequency-monthly" class="flex flex-row items-center gap-1">
     <CheckboxIcon :status="checkMonthly" />
-    <span class="font-medium lg:text-lg">Mensual</span>
+    <span class="font-medium text-sblue-500">Mensual</span>
   </label>
 </template>

@@ -22,13 +22,8 @@
 
 <template>
   <div
-    class="relative flex h-full w-full grid-cols-16 flex-col place-items-center items-center justify-start max-[1023px]:px-[10%] max-[499px]:px-[5%] lg:-top-6 lg:grid lg:gap-0 lg:px-24 xl:px-32 2xl:px-44"
+    class="flex h-full w-full flex-col items-center justify-start py-10 max-[1023px]:px-[10%] max-[499px]:px-[5%]"
   >
-    <!-- Logo -->
-    <div class="text-shadow col-span-6">
-      <SigmaIsotypeIcon class="h-[100px] w-[320px] fill-sgray-200 lg:hidden" />
-    </div>
-
     <!-- Filter -->
     <FilterWindow @scroll="scrollView" />
 
@@ -36,11 +31,20 @@
     <!-- <div class="mb-7 w-[90%] border-b border-sgray-100"></div> -->
 
     <!-- Results Info -->
-    <div ref="scrollElement" class="mb-7 flex w-full items-center gap-1 pl-5 pt-7">
-      <img src="../assets/filter-icon.svg" class="w-[24px]" />
-      <span class="text-shadow w-full text-left text-lg"
+    <div ref="scrollElement" class="flex w-full items-center gap-1 py-7 pl-5">
+      <img src="../assets/down-arrow-icon.svg" class="w-8" />
+
+      <!-- 0 Results -->
+      <span
+        v-if="postStore.findedPostsState.total_posts === 0"
+        class="text-shadow w-full text-left text-lg text-sblue-500"
+        >Sin Resultados</span
+      >
+
+      <!-- Any Result -->
+      <span v-else class="text-shadow w-full text-left text-lg text-sblue-500"
         >{{ postStore.findedPostsState.total_posts }}
-        {{ postStore.findedPostsState.total_posts === 1 ? "Resultado" : "Resultados" }}</span
+        {{ postStore.findedPostsState.total_posts === 1 ? "Resultado:" : "Resultados:" }}</span
       >
     </div>
 

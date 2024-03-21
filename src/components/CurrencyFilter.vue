@@ -32,7 +32,7 @@
   />
   <label for="currency-none" class="flex flex-row items-center gap-1">
     <CheckboxIcon :status="checkNone" />
-    <span class="font-medium lg:text-lg">Cualquiera</span>
+    <span class="font-medium text-sblue-500">Cualquiera</span>
   </label>
 
   <!-- USD -->
@@ -48,7 +48,7 @@
   />
   <label for="currency-usd" class="flex flex-row items-center gap-1">
     <CheckboxIcon :status="checkUSD" />
-    <span class="font-medium lg:text-lg">USD</span>
+    <span class="font-medium text-sblue-500">USD</span>
   </label>
 
   <!-- CUP -->
@@ -64,6 +64,6 @@
   />
   <label for="currency-cup" class="flex flex-row items-center gap-1">
     <CheckboxIcon :status="checkCUP" />
-    <span class="font-medium lg:text-lg">CUP</span>
+    <span class="font-medium text-sblue-500">CUP</span>
   </label>
 </template>

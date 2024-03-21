@@ -219,7 +219,7 @@
 <template>
   <form
     @submit.prevent="findPosts"
-    class="text-shadow flex w-full flex-col items-center justify-center gap-3 rounded-md border border-sgray-100 p-5"
+    class="text-shadow flex w-full flex-col items-center justify-center gap-3 rounded-md border border-sgray-200 p-5"
   >
     <!-- Type -->
     <div class="flex w-full flex-row items-center justify-start gap-3">
@@ -237,7 +237,7 @@
       <!-- Currency -->
       <div class="flex w-full flex-col">
         <!-- Label -->
-        <span class="mb-1 pl-2 font-medium">Moneda</span>
+        <span class="mb-1 pl-2 font-medium text-sblue-500">Moneda</span>
 
         <!-- Input -->
         <div class="p flex w-full items-center justify-start gap-3">
@@ -266,7 +266,7 @@
       <!-- Currency -->
       <div class="flex w-full flex-col">
         <!-- Label -->
-        <span class="mb-1 pl-2 font-medium">Moneda</span>
+        <span class="mb-1 pl-2 font-medium text-sblue-500">Moneda</span>
 
         <!-- Input -->
         <div class="p flex w-full items-center justify-start gap-3">
@@ -277,7 +277,7 @@
       <!-- Frequency -->
       <div class="flex w-full flex-col">
         <!-- Label -->
-        <span class="mb-1 pl-2 font-medium">Frecuencia</span>
+        <span class="mb-1 pl-2 font-medium text-sblue-500">Frecuencia</span>
 
         <!-- Input -->
         <div class="p flex w-full items-center justify-start gap-3">
@@ -312,17 +312,16 @@
 
     <!-- Actions -->
     <div class="flex w-full items-center justify-center gap-2">
-      <!-- Find -->
-      <button type="submit" class="w-1/2 rounded-md bg-sgray-400 py-[7px] text-white">
-        Buscar
-      </button>
       <!-- Reset -->
       <button
         @click.prevent="reset"
-        class="flex w-1/2 items-center justify-center gap-2 rounded-md py-[6px]"
+        class="bg-sgblue-400 w-1/2 rounded-md bg-sblue-500 py-[7px] text-white"
       >
-        <img src="../assets/close-icon.svg" class="w-3" />
-        <span class="relative -top-[1px] underline underline-offset-4">Restablecer</span>
+        Restablecer
+      </button>
+      <!-- Find -->
+      <button type="submit" class="bg-sgblue-400 w-1/2 rounded-md bg-sigma py-[7px] text-white">
+        Buscar
       </button>
     </div>
   </form>

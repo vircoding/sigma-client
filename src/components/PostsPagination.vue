@@ -8,7 +8,7 @@
 
   const postStore = usePostStore();
   const layoutStore = useLayoutStore();
-  const activeStyles = "bg-sgray-400 font-semibold text-white";
+  const activeStyles = "bg-sblue-500 text-white";
 
   const pagesBuck = ref(1);
   const activePage = ref(1);
@@ -60,7 +60,7 @@
 
 <template>
   <!-- Pages -->
-  <div class="mb-10 mt-3 h-8">
+  <div class="mt-3 h-8">
     <ul class="flex h-full items-center justify-center px-4">
       <div class="flex h-full items-center justify-center rounded-lg bg-sgray-100 shadow-md">
         <li

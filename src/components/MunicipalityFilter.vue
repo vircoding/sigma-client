@@ -7,13 +7,13 @@
 
 <template>
   <div class="flex flex-col">
-    <label for="municipality" class="pl-2 font-medium">Municipio</label>
+    <label for="municipality" class="pl-2 font-medium text-sblue-500">Municipio</label>
     <select
       name="municipality"
       id="municipality"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
-      class="w-full appearance-none rounded-md border border-sgray-100 bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:border-sgray-300 focus:bg-white"
+      class="w-full appearance-none rounded-lg border border-sgray-200 bg-transparent px-4 pb-[5px] pt-[7px] outline-none transition-colors duration-200 focus:border-sigma focus:bg-white"
     >
       <option value="none">Sin especificar</option>
       <option v-for="(item, index) in municipalityList[province]" :key="index" :value="item">
@@ -22,3 +22,9 @@
     </select>
   </div>
 </template>
+
+<style scoped>
+  select {
+    color: #011b33;
+  }
+</style>
