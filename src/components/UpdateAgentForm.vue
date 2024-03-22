@@ -174,7 +174,7 @@
         <div class="relative w-full">
           <!-- Image -->
           <img
-            class="text-shadow w-full rounded-full border border-sgray-100"
+            class="w-full rounded-full border border-sgray-100"
             :src="newAgent.avatar"
             alt="Avatar del agente"
           />
@@ -209,9 +209,14 @@
 
     <!-- Whatsapp -->
     <div class="mb-4 flex w-full flex-col">
-      <label v-if="codeError || phoneError" for="phone" class="pl-2 font-medium italic text-alert"
-        >Whatsapp no válido</label
+      <label
+        v-if="codeError || phoneError"
+        for="phone"
+        class="flex items-center gap-[3px] pl-2 font-medium text-alert"
       >
+        <img src="../assets/warning-icon.svg" class="relative bottom-[1px] w-[19px]" />
+        <span>Whatsapp no válido</span>
+      </label>
       <label
         v-else
         for="phone"

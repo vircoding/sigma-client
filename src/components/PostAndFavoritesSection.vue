@@ -3,15 +3,12 @@
   import { useUserStore } from "../stores/userStore.js";
   import { useLayoutStore } from "../stores/layoutStore.js";
   import SmallPostCard from "./SmallPostCard.vue";
-  import Popup from "./Popup.vue";
 
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
 
   const postsActive = ref(true);
   // const alertVisibility = ref(false);
-  const deletePostId = ref(null);
-  const startPositionY = ref(null);
 
   const switchEvent = (isPost) => {
     if (!layoutStore.tableSpinner) {
@@ -122,13 +119,10 @@
 <template>
   <section class="w-full bg-white px-5 pb-10 pt-8 text-base">
     <!-- Hero -->
-    <!-- Hero -->
-    <div class="mb-6 flex w-full flex-col gap-2 px-5 text-center">
-      <h2 class="text-shadow w-full text-2xl font-extrabold uppercase text-sblue-500">
-        Publicaciones
-      </h2>
-      <p class="text-shadow w-full px-2 text-sm text-sgray-300">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione.
+    <div class="mb-6 flex w-full flex-col gap-2 text-center">
+      <h2 class="text-shadow w-full font-ubuntu text-3xl font-bold text-sblue-500">Tu catálogo</h2>
+      <p class="text-shadow w-full text-sm text-sgray-300">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, natus!
       </p>
     </div>
 
@@ -176,7 +170,7 @@
         <!-- Pages -->
         <div
           v-if="!(userStore.myAccountState.posts.total_posts === 0)"
-          class="relative top-4 flex w-full items-center justify-center gap-2"
+          class="flex w-full items-center justify-center gap-2 pb-2 pt-8"
         >
           <button @click.prevent="prevPostsPageEvent" class="select-none">{{ "<" }}</button>
           <div>
@@ -218,7 +212,7 @@
         <!-- Pages -->
         <div
           v-if="!(userStore.myAccountState.favorites.total_favorites === 0)"
-          class="relative top-4 flex w-full items-center justify-center gap-2"
+          class="flex w-full items-center justify-center gap-2 pb-2 pt-8"
         >
           <button @click.prevent="prevFavoritesPageEvent" class="select-none">{{ "<" }}</button>
           <div>
