@@ -4,6 +4,8 @@
   import { useLayoutStore } from "../stores/layoutStore.js";
   import SmallPostCard from "./SmallPostCard.vue";
 
+  const props = defineProps(["role"]);
+
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
 
@@ -120,7 +122,9 @@
   <section class="w-full bg-white px-5 pb-10 pt-8 text-base">
     <!-- Hero -->
     <div class="mb-6 flex w-full flex-col gap-2 text-center">
-      <h2 class="text-shadow w-full font-ubuntu text-3xl font-bold text-sblue-500">Tu catálogo</h2>
+      <h2 class="text-shadow w-full font-ubuntu text-3xl font-bold text-sblue-500">
+        Publicaciones
+      </h2>
       <p class="text-shadow w-full text-sm text-sgray-300">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, natus!
       </p>
@@ -134,7 +138,15 @@
         :class="postsActive ? 'bg-sblue-500 text-white' : 'bg-transparent'"
         @click.prevent="switchEvent(true)"
       >
-        <h3 :class="layoutStore.tableSpinner ? 'scoped-blur' : ''">Publicaciones</h3>
+        <h3 v-if="props.role === 'agent'" :class="layoutStore.tableSpinner ? 'scoped-blur' : ''">
+          Publicaciones
+        </h3>
+        <h3
+          v-else-if="props.role === 'client'"
+          :class="layoutStore.tableSpinner ? 'scoped-blur' : ''"
+        >
+          Publicación
+        </h3>
       </div>
 
       <!-- Favorites Table Button -->
@@ -161,9 +173,10 @@
         </li>
         <li
           v-if="userStore.myAccountState.posts.total_posts === 0"
-          class="flex h-[282px] w-full flex-col items-center justify-center gap-2 text-sblue-500"
+          class="flex h-[162px] w-full flex-col items-center justify-center gap-2 text-sblue-500"
         >
-          <span>Aún no tienes publicaciones</span>
+          <span v-if="props.role === 'agent'">Aún no tienes publicaciones</span>
+          <span v-else-if="props.role === 'client'">Aún no haces tu publicación</span>
           <RouterLink to="/insert" class="underline">Publica</RouterLink>
         </li>
 
@@ -204,7 +217,7 @@
         </li>
         <li
           v-if="userStore.myAccountState.favorites.total_favorites === 0"
-          class="flex h-[282px] w-full flex-col items-center justify-center gap-2 text-sblue-500"
+          class="flex h-[162px] w-full flex-col items-center justify-center gap-2 text-sblue-500"
         >
           <span>Aún no tienes favoritos</span>
         </li>

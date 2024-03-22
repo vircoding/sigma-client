@@ -13,6 +13,9 @@
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
 
+  const fileInput = ref(null);
+  const changedAvatar = ref(false);
+
   const newAgent = ref({
     role: "agent",
     avatar: userStore.userState.avatar,
@@ -28,6 +31,29 @@
         phone: userStore.userState.contact_details.whatsapp.phone,
       },
     },
+  });
+
+  const openImageDialog = () => {
+    fileInput.value.click();
+  };
+
+  const loadImage = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageURL = URL.createObjectURL(file);
+      layoutStore.setSingleAvatarURLState(imageURL);
+      layoutStore.unhideImageCropper();
+    }
+    event.target.value = null;
+  };
+
+  const newAvatar = computed(() => {
+    return layoutStore.avatarURLState?.cropped;
+  });
+
+  watch(newAvatar, () => {
+    newAgent.value.avatar = newAvatar.value;
+    changedAvatar.value = true;
   });
 
   const firstnameError = computed(() => {
@@ -100,6 +126,7 @@
 
   const anyModific = computed(() => {
     if (
+      changedAvatar.value ||
       newAgent.value.info.firstname !== userStore.userState.info.firstname ||
       newAgent.value.info.lastname !== userStore.userState.info.lastname ||
       formattedPhone.value !==
@@ -180,7 +207,9 @@
           />
 
           <!-- Edit -->
+          <input type="file" @change="loadImage" class="hidden" ref="fileInput" accept="image/*" />
           <div
+            @click.prevent="openImageDialog"
             class="text-shadow absolute bottom-0 right-0 rounded-full border border-sgray-100 bg-white p-2"
           >
             <img src="../assets/edit-icon.svg" class="w-[15px]" />

@@ -58,4 +58,3 @@
     z-index: 20;
   }
 </style>
-../components/OLDRegisterAgentForm.vue/index.js

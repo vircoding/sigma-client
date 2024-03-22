@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, computed, watch } from "vue";
+  import { ref, computed } from "vue";
   import { useUserStore } from "../stores/userStore.js";
   import { useLayoutStore } from "../stores/layoutStore.js";
   import UsernameInput from "./UsernameInput.vue";

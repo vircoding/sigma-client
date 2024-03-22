@@ -12,6 +12,6 @@
     <div class="w-full border-b border-sgray-100"></div>
 
     <!-- Post/Favorites Section -->
-    <PostAndFavoritesSection />
+    <PostAndFavoritesSection role="agent" />
   </div>
 </template>
