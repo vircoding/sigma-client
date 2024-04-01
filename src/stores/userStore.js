@@ -171,9 +171,16 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const updateUser = async (user) => {
+  const updateUser = async (user, avatar) => {
     try {
-      const res = await accountServices.updateUser(user);
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(user));
+
+      if (user.role === "agent" && avatar) {
+        formData.append("avatar", avatar, "avatar.jpg");
+      }
+
+      const res = await accountServices.updateUser(formData);
       credentialsState.value.role = res.data.credentials.role;
       if (res.data.credentials.role === "client") {
         userState.value = { info: res.data.info };

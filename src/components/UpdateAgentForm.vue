@@ -52,6 +52,7 @@
   });
 
   watch(newAvatar, () => {
+    console.log("Watch hereeeeee");
     newAgent.value.avatar = newAvatar.value;
     changedAvatar.value = true;
   });
@@ -163,10 +164,37 @@
     };
   };
 
+  const buildUser = () => {
+    return {
+      role: "agent",
+      info: {
+        firstname: newAgent.value.info.firstname,
+        lastname: newAgent.value.info.lastname,
+        bio: newAgent.value.info.bio,
+      },
+      contact_details: {
+        public_email: newAgent.value.contact_details.public_email,
+        whatsapp: {
+          code: newAgent.value.contact_details.whatsapp.code,
+          phone: newAgent.value.contact_details.whatsapp.phone,
+        },
+      },
+    };
+  };
+
   const formSubmit = async () => {
     layoutStore.unhideSpinnerLoading();
     try {
-      await userStore.updateUser(newAgent.value);
+      if (changedAvatar.value) {
+        const avatar = layoutStore.avatarURLState.file;
+        await userStore.updateUser(buildUser(), avatar);
+
+        resetComponent();
+        changedAvatar.value = false;
+      } else {
+        await userStore.updateUser(buildUser());
+      }
+
       layoutStore.hideSpinnerLoading();
     } catch (error) {
       console.log(error);
@@ -276,7 +304,7 @@
       <!-- Logout -->
       <button
         @click.prevent="logout"
-        class="text-shadow flex h-[38px] w-full items-center justify-center rounded-md border border-sblue-500 bg-sblue-500 pt-[2px] text-center text-white transition-all duration-200 ease-out hover:bg-black hover:text-white lg:h-10 lg:w-44 lg:text-lg"
+        class="text-shadow flex h-[38px] w-full items-center justify-center rounded-md border border-sblue-500 bg-sblue-500 pt-[2px] text-center text-white transition-all duration-200 ease-out"
       >
         Cerrar Sesión
       </button>
@@ -285,7 +313,7 @@
       <button
         type="submit"
         :disabled="disableSubmit"
-        class="text-shadow flex h-[38px] w-full items-center justify-center rounded-md border border-sigma bg-sigma pt-[2px] text-center text-white transition-all duration-200 ease-out hover:bg-black hover:text-white disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200 lg:h-10 lg:w-44 lg:text-lg"
+        class="text-shadow flex h-[38px] w-full items-center justify-center rounded-md border border-sigma bg-sigma pt-[2px] text-center text-white transition-all duration-200 ease-out disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200"
       >
         Guardar
       </button>

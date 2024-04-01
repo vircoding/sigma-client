@@ -23,8 +23,20 @@ export default {
     return authorizedAPI().get("account/favorites");
   },
 
-  updateUser(user) {
-    return authorizedAPI().patch("/account", user);
+  updateUser(formData) {
+    const userStore = useUserStore();
+    return axios.patch(
+      import.meta.env.MODE === "development"
+        ? "http://localhost:5000/api/v1/account"
+        : "https://sigmacuba.com/api/v1/account",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${userStore.credentialsState.token}`,
+        },
+      }
+    );
   },
 
   updatePost(post, id) {
