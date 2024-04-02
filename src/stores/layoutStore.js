@@ -23,6 +23,7 @@ export const useLayoutStore = defineStore("layout", () => {
     index: null,
   });
   const editAvatar = ref(false);
+  const activeImageIndex = ref(0);
 
   // Getters
   const isPopup = computed(() => {
@@ -90,6 +91,10 @@ export const useLayoutStore = defineStore("layout", () => {
 
   const setEditAvatar = () => {
     editAvatar.value = true;
+  };
+
+  const setActiveImageIndex = (index) => {
+    activeImageIndex.value = index;
   };
 
   // Actions
@@ -199,6 +204,10 @@ export const useLayoutStore = defineStore("layout", () => {
     avatarURLState.value = undefined;
   };
 
+  const resetActiveImageIndex = () => {
+    activeImageIndex.value = 0;
+  };
+
   const $reset = () => {
     sideMenu.value = false;
     logoLoading.value = false;
@@ -214,6 +223,7 @@ export const useLayoutStore = defineStore("layout", () => {
     resetEditImage();
     resetSingleImageURLState();
     resetDeletePostId();
+    resetActiveImageIndex();
   };
 
   return {
@@ -229,6 +239,7 @@ export const useLayoutStore = defineStore("layout", () => {
     singleAvatarURLState,
     postImagesURLState,
     avatarURLState,
+    activeImageIndex,
     isPopup,
     getSingleImageURLState,
     getSingleAvatarURLState,
@@ -241,6 +252,7 @@ export const useLayoutStore = defineStore("layout", () => {
     setAvatarImageURL,
     setEditImage,
     setEditAvatar,
+    setActiveImageIndex,
     removePostImageURL,
     editPostImageURL,
     editAvatarURL,
@@ -265,6 +277,7 @@ export const useLayoutStore = defineStore("layout", () => {
     resetEditAvatar,
     resetSingleAvatarURLState,
     resetEditImage,
+    resetActiveImageIndex,
     $reset,
   };
 });

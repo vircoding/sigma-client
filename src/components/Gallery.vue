@@ -1,31 +1,34 @@
 <script setup>
-  import { ref } from "vue";
+  import { ref, watch, computed } from "vue";
   import { useLayoutStore } from "../stores/layoutStore.js";
-  import cardImg from "../assets/card-img.jpg";
-  import cardImg2 from "../assets/card-img2.jpg";
-  import cardImg3 from "../assets/card-img3.jpg";
-  import cardImg4 from "../assets/card-img4.jpg";
-  import cardImg5 from "../assets/card-img5.jpg";
-  import cardImg6 from "../assets/card-img6.jpg";
-  import cardImg7 from "../assets/card-img7.jpg";
-  import cardImg8 from "../assets/card-img8.jpg";
-  import cardImg9 from "../assets/card-img9.jpg";
-  import cardImg10 from "../assets/card-img10.jpg";
+  import { usePostStore } from "../stores/postStore.js";
+  // import cardImg from "../assets/card-img.jpg";
+  // import cardImg2 from "../assets/card-img2.jpg";
+  // import cardImg3 from "../assets/card-img3.jpg";
+  // import cardImg4 from "../assets/card-img4.jpg";
+  // import cardImg5 from "../assets/card-img5.jpg";
+  // import cardImg6 from "../assets/card-img6.jpg";
+  // import cardImg7 from "../assets/card-img7.jpg";
+  // import cardImg8 from "../assets/card-img8.jpg";
+  // import cardImg9 from "../assets/card-img9.jpg";
+  // import cardImg10 from "../assets/card-img10.jpg";
   import GalleryIndicator from "./GalleryIndicator.vue";
 
   const layoutStore = useLayoutStore();
+  const postStore = usePostStore();
 
   const images = [
-    cardImg,
-    cardImg2,
-    cardImg3,
-    cardImg4,
-    cardImg5,
-    cardImg6,
-    cardImg7,
-    cardImg8,
-    cardImg9,
-    cardImg10,
+    ...postStore.postState.images,
+    // cardImg,
+    // cardImg2,
+    // cardImg3,
+    // cardImg4,
+    // cardImg5,
+    // cardImg6,
+    // cardImg7,
+    // cardImg8,
+    // cardImg9,
+    // cardImg10,
   ];
 
   const activeIndex = ref(0);
@@ -89,6 +92,21 @@
       transitionEnable.value = "";
     }, 250);
   };
+
+  watch(activeIndex, () => {
+    layoutStore.setActiveImageIndex(activeIndex.value);
+  });
+
+  const activeIndexState = computed(() => layoutStore.activeImageIndex);
+
+  watch(activeIndexState, () => {
+    transitionEnable.value = "transition-transform duration-250";
+    activeIndex.value = activeIndexState.value;
+    translationLength.value = -(activeIndex.value * window.innerWidth);
+    setTimeout(() => {
+      transitionEnable.value = "";
+    }, 250);
+  });
 
   const directMove = (index) => {
     transitionEnable.value = "transition-transform duration-250";

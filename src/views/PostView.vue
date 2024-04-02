@@ -15,6 +15,7 @@
   onBeforeUnmount(() => {
     postStore.resetPost();
     agentStore.resetAuthor();
+    layoutStore.resetActiveImageIndex();
   });
 </script>
 
