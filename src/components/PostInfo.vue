@@ -52,7 +52,10 @@
     <div class="flex items-center justify-between">
       <!-- Amount or Offer -->
       <!-- Sale Amount -->
-      <h2 v-if="postStore.postState.type === 'sale'" class="text-shadow text-2xl font-extrabold">
+      <h2
+        v-if="postStore.postState.type === 'sale'"
+        class="text-shadow text-2xl font-extrabold text-sblue-500"
+      >
         {{ formatAmount(postStore.postState.amount_details.amount) }}
         <span class="text-xl font-semibold uppercase">{{
           postStore.postState.amount_details.currency
@@ -61,7 +64,7 @@
       <!-- Rent Amount -->
       <h2
         v-else-if="postStore.postState.type === 'rent'"
-        class="text-shadow text-2xl font-extrabold"
+        class="text-shadow text-2xl font-extrabold text-sblue-500"
       >
         {{ formatAmount(postStore.postState.amount_details.amount) }}
         <span class="text-xl font-semibold uppercase">{{
@@ -74,7 +77,7 @@
       <!-- Offer -->
       <h2
         v-else-if="postStore.postState.type === 'exchange'"
-        class="text-shadow text-2xl font-extrabold"
+        class="text-shadow text-2xl font-extrabold text-sblue-500"
       >
         {{
           formatOffer(
@@ -128,7 +131,7 @@
       <div class="grid w-4/5 grid-cols-3 grid-rows-2 gap-y-[10px]">
         <!-- Bed Room -->
         <div class="text-shadow flex flex-col gap-[3px] font-semibold">
-          <span>Cuartos</span>
+          <span class="text-sblue-500">Cuartos</span>
           <div class="flex items-center gap-2">
             <FeatureIcon :classes="defineFeatureStyles(item.features.bed_room)" icon="bed_room" />
             <span
@@ -140,7 +143,7 @@
         </div>
         <!-- Bath Room -->
         <div class="text-shadow flex flex-col gap-[3px] font-semibold">
-          <span>Baños</span>
+          <span class="text-sblue-500">Baños</span>
           <div class="flex items-center gap-2">
             <FeatureIcon :classes="defineFeatureStyles(item.features.bath_room)" icon="bath_room" />
             <span
@@ -152,7 +155,7 @@
         </div>
         <!-- Garage -->
         <div class="text-shadow flex flex-col gap-[3px] font-semibold">
-          <span>Garage</span>
+          <span class="text-sblue-500">Garage</span>
           <div class="flex items-center gap-2">
             <FeatureIcon :classes="defineFeatureStyles(item.features.garage)" icon="garage" />
             <BooleanIcon :icon="item.features.garage" :weigth="'bold'" />
@@ -160,7 +163,7 @@
         </div>
         <!-- Garden -->
         <div class="text-shadow flex flex-col gap-[3px] font-semibold">
-          <span>Jardín</span>
+          <span class="text-sblue-500">Jardín</span>
           <div class="flex items-center gap-2">
             <FeatureIcon :classes="defineFeatureStyles(item.features.garden)" icon="garden" />
             <BooleanIcon :icon="item.features.garden" :weigth="'bold'" />
@@ -168,7 +171,7 @@
         </div>
         <!-- Pool -->
         <div class="text-shadow flex flex-col gap-[3px] font-semibold">
-          <span>Piscina</span>
+          <span class="text-sblue-500">Piscina</span>
           <div class="flex items-center gap-2">
             <FeatureIcon :classes="defineFeatureStyles(item.features.pool)" icon="pool" />
             <BooleanIcon :icon="item.features.pool" :weigth="'bold'" />
@@ -176,7 +179,7 @@
         </div>
         <!-- Furnished -->
         <div class="text-shadow flex flex-col gap-[3px] font-semibold">
-          <span>Amueblada</span>
+          <span class="text-sblue-500">Amueblada</span>
           <div class="flex items-center gap-2">
             <FeatureIcon :classes="defineFeatureStyles(item.features.furnished)" icon="furnished" />
             <BooleanIcon :icon="item.features.furnished" :weigth="'bold'" />
@@ -224,7 +227,7 @@
             <RouterLink :to="`/agents/${agentStore.authorState.id}`">
               <h4 class="text-shadow">
                 Por
-                <span class="font-semibold">{{
+                <span class="font-semibold text-sblue-500">{{
                   agentStore.authorState.info.firstname + " " + agentStore.authorState.info.lastname
                 }}</span>
               </h4>
