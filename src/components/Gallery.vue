@@ -140,20 +140,32 @@
           @touchend="endSwipe($event)"
         />
       </div>
-      <img
-        @click.prevent="EnterFullScreen"
-        class="custom-shadow absolute bottom-0 right-0 mb-[10px] mr-3 h-5 w-5"
-        src="../assets/fullscreen-icon.svg"
-      />
-    </div>
-    <div class="mt-2 flex justify-center gap-[2px] py-4">
-      <GalleryIndicator
-        v-for="(image, index) in images"
-        :key="index"
-        @click="directMove(index)"
-        size="min"
-        :enable="index === activeIndex ? true : false"
-      />
+      <div class="absolute bottom-0 flex w-screen items-center justify-between px-3 pb-3">
+        <div
+          class="icon-container flex justify-center gap-[2px] rounded-lg px-[10px] py-[5px]"
+          :class="images.length > 1 ? '' : 'invisible'"
+        >
+          <GalleryIndicator
+            v-for="(image, index) in images"
+            :key="index"
+            @click="directMove(index)"
+            size="min"
+            :enable="index === activeIndex ? true : false"
+          />
+        </div>
+        <div
+          @click.prevent="EnterFullScreen"
+          class="icon-container rounded-md pb-[1px] pl-[3px] pr-[2px]"
+        >
+          <img class="w-6" src="../assets/fullscreen-icon.svg" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+  .icon-container {
+    background-color: rgb(0, 0, 0, 0.7);
+  }
+</style>

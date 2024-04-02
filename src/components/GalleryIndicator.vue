@@ -7,7 +7,7 @@
   <div
     v-if="props.size === 'min'"
     class="h-2 w-2 rounded-full border"
-    :class="props.enable ? 'border-sblue-500 bg-sblue-500' : 'border-sblue-500 bg-transparent'"
+    :class="props.enable ? 'border-white-500 bg-white' : 'border-white bg-transparent'"
   ></div>
 
   <!-- Max -->

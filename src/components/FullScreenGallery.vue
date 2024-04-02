@@ -28,19 +28,19 @@
     <nav class="flex h-[68px] justify-end space-x-4 p-4">
       <img
         @click.prevent="$refs.zoomer.zoomIn()"
-        class="custom-shadow w-6 -translate-x-[2px]"
+        class="w-7 -translate-x-[2px]"
         src="../assets/zoom-in-icon.svg"
         alt="Zoom In"
       />
       <img
         @click.prevent="$refs.zoomer.zoomOut()"
-        class="custom-shadow w-6 -translate-x-[2px]"
+        class="w-7 -translate-x-[2px]"
         src="../assets/zoom-out-icon.svg"
         alt="Zoom Out"
       />
       <img
         @click.prevent="closeFullScreen"
-        class="custom-shadow w-5"
+        class="w-5"
         src="../assets/exit-fullscreen-icon.svg"
         alt="Exit Fullscreen"
       />
@@ -62,7 +62,10 @@
   </VueZoomer>
 
   <!-- Indicators -->
-  <div class="sticky top-full flex w-full items-center justify-center pb-14">
+  <div
+    v-if="images.length > 1"
+    class="sticky top-full flex w-full items-center justify-center pb-14"
+  >
     <div class="flex justify-center gap-[6px] rounded-full bg-stransparent px-5 py-2">
       <div @click="directMove(index)" v-for="(image, index) in images" :key="index">
         <GalleryIndicator :enable="layoutStore.activeImageIndex === index" size="max" />

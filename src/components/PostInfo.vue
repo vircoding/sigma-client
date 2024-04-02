@@ -45,8 +45,9 @@
   <section>
     <Gallery />
   </section>
+  
   <!-- Details -->
-  <div class="flex w-full flex-col gap-1 px-5 pb-4">
+  <div class="mt-5 flex w-full flex-col gap-1 px-5 pb-4">
     <!-- Top -->
     <!-- Amount or Offer + Buttons -->
     <div class="flex items-center justify-between">
@@ -115,13 +116,13 @@
       <div>
         <h4
           v-if="postStore.postState.property_details.length !== 1"
-          class="text-shadow font-semibold"
+          class="text-shadow font-semibold text-sblue-500"
         >
           Propiedad - {{ index + 1 }}
         </h4>
       </div>
       <!-- Address -->
-      <h3 class="text-shadow font-normal text-sgray-300">
+      <h3 class="text-shadow relative bottom-1 font-normal text-sgray-300">
         {{ item.address.municipality }},
         {{ item.address.province }}
       </h3>
