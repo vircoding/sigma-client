@@ -281,7 +281,7 @@ const routes = [
         layoutStore.unhideSpinnerLoading();
       }
       try {
-        await postStore.loadPost(to.params.id);
+        await postStore.getPost(to.params.id);
 
         if (!from.name) {
           layoutStore.hideLogoLoading();
