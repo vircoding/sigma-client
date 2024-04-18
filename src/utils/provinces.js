@@ -220,7 +220,7 @@ export const municipalityList = {
 
 export const defaultMunicipality = (province) => {
   switch (province) {
-    case "Pinar del Rio":
+    case "Pinar del Río":
       return "Pinar del Río";
     case "Artemisa":
       return "Artemisa";

@@ -1,7 +1,8 @@
 <script setup>
-  import { ref } from "vue";
+  import { ref, computed, watch } from "vue";
   import { usePostStore } from "../stores/postStore.js";
   import { useLayoutStore } from "../stores/layoutStore.js";
+  import { defaultMunicipality } from "../utils/provinces.js";
   import CurrencyRadioInput from "./CurrencyRadioInput.vue";
   import AmountInput from "./AmountInput.vue";
   import FrequencyRadioInput from "./FrequencyRadioInput.vue";
@@ -14,6 +15,63 @@
   const layoutStore = useLayoutStore();
 
   const newPost = ref(null);
+
+  // First Province
+  const firstLoad = ref(true);
+
+  const getFirstProvince = computed(() => {
+    return newPost.value?.property_details[0]?.address.province;
+  });
+
+  watch(getFirstProvince, () => {
+    if (!firstLoad.value) {
+      if (newPost.value.property_details[0]?.address.province) {
+        newPost.value.property_details[0].address.municipality = defaultMunicipality(
+          newPost.value.property_details[0].address.province
+        );
+      }
+    } else {
+      firstLoad.value = !firstLoad.value;
+    }
+  });
+
+  // Second Province
+  const secondLoad = ref(true);
+
+  const getSecondProvince = computed(() => {
+    return newPost.value?.property_details[1]?.address.province;
+  });
+
+  watch(getSecondProvince, () => {
+    if (!secondLoad.value) {
+      if (newPost.value.property_details[1]?.address.province) {
+        newPost.value.property_details[1].address.municipality = defaultMunicipality(
+          newPost.value.property_details[1].address.province
+        );
+      }
+    } else {
+      secondLoad.value = !secondLoad.value;
+    }
+  });
+
+  // Third Province
+  const thirdLoad = ref(true);
+
+  const getThirdProvince = computed(() => {
+    return newPost.value?.property_details[2]?.address.province;
+  });
+
+  watch(getThirdProvince, () => {
+    if (!thirdLoad.value) {
+      if (newPost.value.property_details[2]?.address.province) {
+        newPost.value.property_details[2].address.municipality = defaultMunicipality(
+          newPost.value.property_details[2].address.province
+        );
+      }
+    } else {
+      thirdLoad.value = !thirdLoad.value;
+    }
+  });
 
   const buildNewPost = () => {
     newPost.value = {
