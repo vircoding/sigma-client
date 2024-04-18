@@ -25,7 +25,7 @@
 <template>
   <div class="flex h-full w-full flex-col items-center">
     <!-- Hero -->
-    <div class="flex w-full flex-col gap-2 pt-10 text-center">
+    <div class="flex w-full flex-col gap-2 px-5 pt-10 text-center">
       <h2 class="text-shadow w-full font-ubuntu text-3xl font-bold text-sblue-500">
         ¿Quieres publicar más anuncios?
       </h2>
