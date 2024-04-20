@@ -160,6 +160,106 @@
   });
 
   // Methods
+  const anyModific = computed(() => {
+    // Avoid First Load
+    if (newPost.value) {
+      // Common Cases
+      if (
+        newPost.value.description !== postStore.postState.description ||
+        newPost.value.contact_details.contact_types.phone !==
+          postStore.postState.contact_details.contact_types.phone ||
+        newPost.value.contact_details.contact_types.whatsapp !==
+          postStore.postState.contact_details.contact_types.whatsapp ||
+        formattedPhone.value !==
+          postStore.postState.contact_details.contact.code +
+            postStore.postState.contact_details.contact.phone
+      )
+        return true;
+      else {
+        if (postStore.postState.type === "sale") {
+          if (
+            newPost.value.amount_details.amount !== postStore.postState.amount_details.amount ||
+            newPost.value.amount_details.currency !== postStore.postState.amount_details.currency ||
+            newPost.value.property_details[0].address.province !==
+              postStore.postState.property_details[0].address.province ||
+            newPost.value.property_details[0].address.municipality !==
+              postStore.postState.property_details[0].address.municipality ||
+            newPost.value.property_details[0].features.bed_room !==
+              postStore.postState.property_details[0].features.bed_room ||
+            newPost.value.property_details[0].features.bath_room !==
+              postStore.postState.property_details[0].features.bath_room ||
+            newPost.value.property_details[0].features.garage !==
+              postStore.postState.property_details[0].features.garage ||
+            newPost.value.property_details[0].features.garden !==
+              postStore.postState.property_details[0].features.garden ||
+            newPost.value.property_details[0].features.pool !==
+              postStore.postState.property_details[0].features.pool ||
+            newPost.value.property_details[0].features.furnished !==
+              postStore.postState.property_details[0].features.furnished
+          )
+            return true;
+          else return false;
+        } else if (postStore.postState.type === "rent") {
+          if (
+            newPost.value.amount_details.amount !== postStore.postState.amount_details.amount ||
+            newPost.value.amount_details.currency !== postStore.postState.amount_details.currency ||
+            newPost.value.amount_details.frequency !==
+              postStore.postState.amount_details.frequency ||
+            newPost.value.property_details[0].address.province !==
+              postStore.postState.property_details[0].address.province ||
+            newPost.value.property_details[0].address.municipality !==
+              postStore.postState.property_details[0].address.municipality ||
+            newPost.value.property_details[0].features.bed_room !==
+              postStore.postState.property_details[0].features.bed_room ||
+            newPost.value.property_details[0].features.bath_room !==
+              postStore.postState.property_details[0].features.bath_room ||
+            newPost.value.property_details[0].features.garage !==
+              postStore.postState.property_details[0].features.garage ||
+            newPost.value.property_details[0].features.garden !==
+              postStore.postState.property_details[0].features.garden ||
+            newPost.value.property_details[0].features.pool !==
+              postStore.postState.property_details[0].features.pool ||
+            newPost.value.property_details[0].features.furnished !==
+              postStore.postState.property_details[0].features.furnished
+          )
+            return true;
+          else return false;
+        } else if (postStore.postState.type === "exchange") {
+          if (
+            newPost.value.offer_details.offers !== postStore.postState.offer_details.offers ||
+            newPost.value.offer_details.needs.count !==
+              postStore.postState.offer_details.needs.count
+          )
+            return true;
+          else {
+            for (let i = 0; i < newPost.value.offer_details.offers; i++) {
+              if (
+                newPost.value.property_details[i].address.province !==
+                  postStore.postState.property_details[i].address.province ||
+                newPost.value.property_details[i].address.municipality !==
+                  postStore.postState.property_details[i].address.municipality ||
+                newPost.value.property_details[i].features.bed_room !==
+                  postStore.postState.property_details[i].features.bed_room ||
+                newPost.value.property_details[i].features.bath_room !==
+                  postStore.postState.property_details[i].features.bath_room ||
+                newPost.value.property_details[i].features.garage !==
+                  postStore.postState.property_details[i].features.garage ||
+                newPost.value.property_details[i].features.garden !==
+                  postStore.postState.property_details[i].features.garden ||
+                newPost.value.property_details[i].features.pool !==
+                  postStore.postState.property_details[i].features.pool ||
+                newPost.value.property_details[i].features.furnished !==
+                  postStore.postState.property_details[i].features.furnished
+              )
+                return true;
+            }
+            return false;
+          }
+        } else return false;
+      }
+    } else return false;
+  });
+
   const buildNewPost = () => {
     newPost.value = {
       type: postStore.postState.type,
@@ -205,6 +305,9 @@
 </script>
 
 <template>
+  {{ anyModific }}
+  {{ newPost.property_details[0].features.bed_room }}
+  {{ postStore.postState.property_details[0].features.bed_room }}
   <div
     class="flex h-full w-full flex-col items-center gap-7 py-10 max-[1023px]:px-[10%] max-[499px]:px-[5%]"
   >

@@ -1,6 +1,8 @@
 <script setup>
   import NavBar from "../components/NavBar.vue";
-  import UpdatePostForm from "../components/UpdatePostForm.vue";
+  import UpdateSaleForm from "../components/UpdateSaleForm.vue";
+  import UpdateRentForm from "../components/UpdateRentForm.vue";
+  import UpdateExchangeForm from "../components/UpdateExchangeForm.vue";
   import FooterSection from "../components/FooterSection.vue";
   import ImageCropper from "../components/ImageCropper.vue";
   import { usePostStore } from "../stores/postStore.js";
@@ -32,7 +34,9 @@
 
         <!-- Form -->
         <main class="flex grow flex-col items-center justify-center">
-          <UpdatePostForm />
+          <UpdateSaleForm v-if="postStore.postState.type === 'sale'" />
+          <UpdateRentForm v-if="postStore.postState.type === 'rent'" />
+          <UpdateExchangeForm v-if="postStore.postState.type === 'exchange'" />
         </main>
       </div>
 
