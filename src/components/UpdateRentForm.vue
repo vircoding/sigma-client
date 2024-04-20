@@ -109,6 +109,53 @@
       newPost.value.property_details[0].address.province
     );
   });
+
+  const anyModif = computed(() => {
+    if (
+      newPost.value.description !== postStore.postState.description ||
+      newPost.value.contact_details.contact_types.phone !==
+        postStore.postState.contact_details.contact_types.phone ||
+      newPost.value.contact_details.contact_types.whatsapp !==
+        postStore.postState.contact_details.contact_types.whatsapp ||
+      formattedPhone.value !==
+        postStore.postState.contact_details.contact.code +
+          postStore.postState.contact_details.contact.phone ||
+      newPost.value.amount_details.amount !== postStore.postState.amount_details.amount ||
+      newPost.value.amount_details.currency !== postStore.postState.amount_details.currency ||
+      newPost.value.amount_details.frequency !== postStore.postState.amount_details.frequency ||
+      newPost.value.property_details[0].address.province !==
+        postStore.postState.property_details[0].address.province ||
+      newPost.value.property_details[0].address.municipality !==
+        postStore.postState.property_details[0].address.municipality ||
+      newPost.value.property_details[0].features.bed_room !==
+        postStore.postState.property_details[0].features.bed_room ||
+      newPost.value.property_details[0].features.bath_room !==
+        postStore.postState.property_details[0].features.bath_room ||
+      newPost.value.property_details[0].features.garage !==
+        postStore.postState.property_details[0].features.garage ||
+      newPost.value.property_details[0].features.garden !==
+        postStore.postState.property_details[0].features.garden ||
+      newPost.value.property_details[0].features.pool !==
+        postStore.postState.property_details[0].features.pool ||
+      newPost.value.property_details[0].features.furnished !==
+        postStore.postState.property_details[0].features.furnished
+    )
+      return true;
+    else return false;
+  });
+
+  const anyError = computed(() => {
+    if (
+      amountError.value ||
+      bedRoomError.value ||
+      bathRoomError.value ||
+      descriptionError.value ||
+      codeError.value ||
+      phoneError.value
+    )
+      return true;
+    else return false;
+  });
 </script>
 
 <template>
@@ -260,6 +307,7 @@
 
       <!-- Submit Button -->
       <button
+        :disabled="!anyModif || anyError"
         type="submit"
         class="mb-4 flex h-[38px] w-full items-center justify-center rounded-lg border border-sigma bg-sigma pt-[2px] text-center text-white transition-all duration-200 ease-out disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200"
       >
