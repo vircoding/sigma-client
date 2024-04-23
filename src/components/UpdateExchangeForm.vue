@@ -228,6 +228,68 @@
       newPost.value.property_details[2].address.province
     );
   });
+
+  const anyError = computed(() => {
+    if (
+      bedRoomError.value.slice(0, newPost.value.offer_details.offers).includes(true) ||
+      bathRoomError.value.slice(0, newPost.value.offer_details.offers).includes(true) ||
+      descriptionError.value ||
+      codeError.value ||
+      phoneError.value
+    )
+      return true;
+    else return false;
+  });
+
+  const anyModif = computed(() => {
+    if (
+      newPost.value.description !== postStore.postState.description ||
+      newPost.value.contact_details.contact_types.phone !==
+        postStore.postState.contact_details.contact_types.phone ||
+      newPost.value.contact_details.contact_types.whatsapp !==
+        postStore.postState.contact_details.contact_types.whatsapp ||
+      formattedPhone.value !==
+        postStore.postState.contact_details.contact.code +
+          postStore.postState.contact_details.contact.phone
+    )
+      return true;
+    else {
+      if (newPost.value.offer_details.offers !== postStore.postState.offer_details.offers)
+        return true;
+      else {
+        if (
+          propertyModif(0) ||
+          (newPost.value.offer_details.offers >= 2 && propertyModif(1)) ||
+          (newPost.value.offer_details.offers === 3 && propertyModif(2))
+        )
+          return true;
+        else return false;
+      }
+    }
+  });
+
+  const propertyModif = (index) => {
+    if (
+      newPost.value.property_details[index].address.province !==
+        postStore.postState.property_details[index]?.address.province ||
+      newPost.value.property_details[index].address.municipality !==
+        postStore.postState.property_details[index]?.address.municipality ||
+      newPost.value.property_details[index].features.bed_room !==
+        postStore.postState.property_details[index]?.features.bed_room ||
+      newPost.value.property_details[index].features.bath_room !==
+        postStore.postState.property_details[index]?.features.bath_room ||
+      newPost.value.property_details[index].features.garage !==
+        postStore.postState.property_details[index]?.features.garage ||
+      newPost.value.property_details[index].features.garden !==
+        postStore.postState.property_details[index]?.features.garden ||
+      newPost.value.property_details[index].features.pool !==
+        postStore.postState.property_details[index]?.features.pool ||
+      newPost.value.property_details[index].features.furnished !==
+        postStore.postState.property_details[index]?.features.furnished
+    )
+      return true;
+    else return false;
+  };
 </script>
 
 <template>
@@ -364,6 +426,7 @@
 
       <!-- Submit Button -->
       <button
+        :disabled="!anyModif || anyError"
         type="submit"
         class="mb-4 flex h-[38px] w-full items-center justify-center rounded-lg border border-sigma bg-sigma pt-[2px] text-center text-white transition-all duration-200 ease-out disabled:border disabled:border-sgray-100 disabled:bg-transparent disabled:font-normal disabled:text-sgray-200"
       >
