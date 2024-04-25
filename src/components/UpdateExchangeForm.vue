@@ -1,8 +1,10 @@
 <script setup>
   import { ref, computed, watch } from "vue";
+  import { useUserStore } from "../stores/userStore.js";
   import { usePostStore } from "../stores/postStore.js";
   import { useLayoutStore } from "../stores/layoutStore.js";
   import { defaultMunicipality } from "../utils/provinces.js";
+  import router from "../router";
   import parsePhoneNumber from "libphonenumber-js";
   import OffersSelectInput from "./OffersSelectInput.vue";
   import NeedsSelectInput from "./NeedsSelectInput.vue";
@@ -17,121 +19,163 @@
   import UpdatePhotoInput from "./UpdatePhotoInput.vue";
   import PhotoBoxInput from "./PhotoBoxInput.vue";
 
+  const userStore = useUserStore();
   const postStore = usePostStore();
   const layoutStore = useLayoutStore();
 
   const newPost = ref({
-    description: postStore.postState.description,
+    description: postStore.updatePostState.description,
     contact_details: {
       contact: {
-        code: postStore.postState.contact_details.contact.code,
-        phone: postStore.postState.contact_details.contact.phone,
+        code: postStore.updatePostState.contact_details.contact.code,
+        phone: postStore.updatePostState.contact_details.contact.phone,
       },
       contact_types: {
-        phone: postStore.postState.contact_details.contact_types.phone,
-        whatsapp: postStore.postState.contact_details.contact_types.whatsapp,
+        phone: postStore.updatePostState.contact_details.contact_types.phone,
+        whatsapp: postStore.updatePostState.contact_details.contact_types.whatsapp,
       },
     },
     offer_details: {
-      offers: postStore.postState.offer_details.offers,
+      offers: postStore.updatePostState.offer_details.offers,
       needs: {
-        count: postStore.postState.offer_details.needs.count,
-        enable: postStore.postState.offer_details.needs.enable,
+        count: postStore.updatePostState.offer_details.needs.count,
+        enable: postStore.updatePostState.offer_details.needs.enable,
       },
     },
     property_details: [
       {
         address: {
-          municipality: postStore.postState.property_details[0].address.municipality,
-          province: postStore.postState.property_details[0].address.province,
+          municipality: postStore.updatePostState.property_details[0].address.municipality,
+          province: postStore.updatePostState.property_details[0].address.province,
         },
         features: {
-          bed_room: postStore.postState.property_details[0].features.bed_room,
-          bath_room: postStore.postState.property_details[0].features.bath_room,
-          garage: postStore.postState.property_details[0].features.garage,
-          garden: postStore.postState.property_details[0].features.garden,
-          pool: postStore.postState.property_details[0].features.pool,
-          furnished: postStore.postState.property_details[0].features.furnished,
+          bed_room: postStore.updatePostState.property_details[0].features.bed_room,
+          bath_room: postStore.updatePostState.property_details[0].features.bath_room,
+          garage: postStore.updatePostState.property_details[0].features.garage,
+          garden: postStore.updatePostState.property_details[0].features.garden,
+          pool: postStore.updatePostState.property_details[0].features.pool,
+          furnished: postStore.updatePostState.property_details[0].features.furnished,
         },
       },
       {
         address: {
           municipality:
-            postStore.postState.offer_details.offers >= 2
-              ? postStore.postState.property_details[1].address.municipality
+            postStore.updatePostState.offer_details.offers >= 2
+              ? postStore.updatePostState.property_details[1].address.municipality
               : "La Habana Vieja",
           province:
-            postStore.postState.offer_details.offers >= 2
-              ? postStore.postState.property_details[1].address.province
+            postStore.updatePostState.offer_details.offers >= 2
+              ? postStore.updatePostState.property_details[1].address.province
               : "La Habana",
         },
         features: {
           bed_room:
-            postStore.postState.offer_details.offers >= 2
-              ? postStore.postState.property_details[1].features.bed_room
+            postStore.updatePostState.offer_details.offers >= 2
+              ? postStore.updatePostState.property_details[1].features.bed_room
               : 0,
           bath_room:
-            postStore.postState.offer_details.offers >= 2
-              ? postStore.postState.property_details[1].features.bath_room
+            postStore.updatePostState.offer_details.offers >= 2
+              ? postStore.updatePostState.property_details[1].features.bath_room
               : 0,
           garage:
-            postStore.postState.offer_details.offers >= 2
-              ? postStore.postState.property_details[1].features.garage
+            postStore.updatePostState.offer_details.offers >= 2
+              ? postStore.updatePostState.property_details[1].features.garage
               : false,
           garden:
-            postStore.postState.offer_details.offers >= 2
-              ? postStore.postState.property_details[1].features.garden
+            postStore.updatePostState.offer_details.offers >= 2
+              ? postStore.updatePostState.property_details[1].features.garden
               : false,
           pool:
-            postStore.postState.offer_details.offers >= 2
-              ? postStore.postState.property_details[1].features.pool
+            postStore.updatePostState.offer_details.offers >= 2
+              ? postStore.updatePostState.property_details[1].features.pool
               : false,
           furnished:
-            postStore.postState.offer_details.offers >= 2
-              ? postStore.postState.property_details[1].features.furnished
+            postStore.updatePostState.offer_details.offers >= 2
+              ? postStore.updatePostState.property_details[1].features.furnished
               : false,
         },
       },
       {
         address: {
           municipality:
-            postStore.postState.offer_details.offers === 3
-              ? postStore.postState.property_details[2].address.municipality
+            postStore.updatePostState.offer_details.offers === 3
+              ? postStore.updatePostState.property_details[2].address.municipality
               : "La Habana Vieja",
           province:
-            postStore.postState.offer_details.offers === 3
-              ? postStore.postState.property_details[2].address.province
+            postStore.updatePostState.offer_details.offers === 3
+              ? postStore.updatePostState.property_details[2].address.province
               : "La Habana",
         },
         features: {
           bed_room:
-            postStore.postState.offer_details.offers === 3
-              ? postStore.postState.property_details[2].features.bed_room
+            postStore.updatePostState.offer_details.offers === 3
+              ? postStore.updatePostState.property_details[2].features.bed_room
               : 0,
           bath_room:
-            postStore.postState.offer_details.offers === 3
-              ? postStore.postState.property_details[2].features.bath_room
+            postStore.updatePostState.offer_details.offers === 3
+              ? postStore.updatePostState.property_details[2].features.bath_room
               : 0,
           garage:
-            postStore.postState.offer_details.offers === 3
-              ? postStore.postState.property_details[2].features.garage
+            postStore.updatePostState.offer_details.offers === 3
+              ? postStore.updatePostState.property_details[2].features.garage
               : false,
           garden:
-            postStore.postState.offer_details.offers === 3
-              ? postStore.postState.property_details[2].features.garden
+            postStore.updatePostState.offer_details.offers === 3
+              ? postStore.updatePostState.property_details[2].features.garden
               : false,
           pool:
-            postStore.postState.offer_details.offers === 3
-              ? postStore.postState.property_details[2].features.pool
+            postStore.updatePostState.offer_details.offers === 3
+              ? postStore.updatePostState.property_details[2].features.pool
               : false,
           furnished:
-            postStore.postState.offer_details.offers === 3
-              ? postStore.postState.property_details[2].features.furnished
+            postStore.updatePostState.offer_details.offers === 3
+              ? postStore.updatePostState.property_details[2].features.furnished
               : false,
         },
       },
     ],
   });
+
+  const newImages = ref(postStore.updatePostState.images.map((item) => item));
+
+  const fileInput = ref(null);
+
+  const openImageDialog = () => {
+    fileInput.value.click();
+  };
+
+  const imageError = computed(() => {
+    return !(newImages.value.length + layoutStore.postImagesURLState.length);
+  });
+
+  const loadImage = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageURL = URL.createObjectURL(file);
+      layoutStore.setSingleImageURLState(imageURL);
+      layoutStore.unhideImageCropper();
+    }
+    event.target.value = null;
+  };
+
+  const editImage = (index) => {
+    layoutStore.setEditImage(index);
+    layoutStore.setSingleImageURLState(layoutStore.postImagesURLState[index].original);
+    layoutStore.unhideImageCropper();
+  };
+
+  const removeCroppedImage = (index) => {
+    layoutStore.removePostImageURL(index);
+  };
+
+  const removeImage = (newIndex, stateIndex) => {
+    if (newIndex >= 0 && newIndex < newImages.value.length) {
+      newImages.value.splice(newIndex, 1);
+      removedIndex.value.push(stateIndex);
+    }
+  };
+
+  const removedIndex = ref([]);
 
   // Errors
   const bedRoomError = computed(() => {
@@ -234,7 +278,8 @@
       bathRoomError.value.slice(0, newPost.value.offer_details.offers).includes(true) ||
       descriptionError.value ||
       codeError.value ||
-      phoneError.value
+      phoneError.value ||
+      imageError.value
     )
       return true;
     else return false;
@@ -242,18 +287,18 @@
 
   const anyModif = computed(() => {
     if (
-      newPost.value.description !== postStore.postState.description ||
+      newPost.value.description !== postStore.updatePostState.description ||
       newPost.value.contact_details.contact_types.phone !==
-        postStore.postState.contact_details.contact_types.phone ||
+        postStore.updatePostState.contact_details.contact_types.phone ||
       newPost.value.contact_details.contact_types.whatsapp !==
-        postStore.postState.contact_details.contact_types.whatsapp ||
+        postStore.updatePostState.contact_details.contact_types.whatsapp ||
       formattedPhone.value !==
-        postStore.postState.contact_details.contact.code +
-          postStore.postState.contact_details.contact.phone
+        postStore.updatePostState.contact_details.contact.code +
+          postStore.updatePostState.contact_details.contact.phone
     )
       return true;
     else {
-      if (newPost.value.offer_details.offers !== postStore.postState.offer_details.offers)
+      if (newPost.value.offer_details.offers !== postStore.updatePostState.offer_details.offers)
         return true;
       else {
         if (
@@ -270,24 +315,70 @@
   const propertyModif = (index) => {
     if (
       newPost.value.property_details[index].address.province !==
-        postStore.postState.property_details[index]?.address.province ||
+        postStore.updatePostState.property_details[index]?.address.province ||
       newPost.value.property_details[index].address.municipality !==
-        postStore.postState.property_details[index]?.address.municipality ||
+        postStore.updatePostState.property_details[index]?.address.municipality ||
       newPost.value.property_details[index].features.bed_room !==
-        postStore.postState.property_details[index]?.features.bed_room ||
+        postStore.updatePostState.property_details[index]?.features.bed_room ||
       newPost.value.property_details[index].features.bath_room !==
-        postStore.postState.property_details[index]?.features.bath_room ||
+        postStore.updatePostState.property_details[index]?.features.bath_room ||
       newPost.value.property_details[index].features.garage !==
-        postStore.postState.property_details[index]?.features.garage ||
+        postStore.updatePostState.property_details[index]?.features.garage ||
       newPost.value.property_details[index].features.garden !==
-        postStore.postState.property_details[index]?.features.garden ||
+        postStore.updatePostState.property_details[index]?.features.garden ||
       newPost.value.property_details[index].features.pool !==
-        postStore.postState.property_details[index]?.features.pool ||
+        postStore.updatePostState.property_details[index]?.features.pool ||
       newPost.value.property_details[index].features.furnished !==
-        postStore.postState.property_details[index]?.features.furnished
+        postStore.updatePostState.property_details[index]?.features.furnished
     )
       return true;
     else return false;
+  };
+
+  const buildUpdatedPost = () => {
+    const post = {
+      type: "exchange",
+      description: newPost.value.description,
+      contact_details: {
+        contact_types: {
+          phone: newPost.value.contact_details.contact_types.phone,
+          whatsapp: newPost.value.contact_details.contact_types.whatsapp,
+        },
+        contact: {
+          code: newPost.value.contact_details.contact.code,
+          phone: newPost.value.contact_details.contact.phone,
+        },
+      },
+      offer_details: {
+        offers: newPost.value.offer_details.offers,
+        needs: {
+          count: newPost.value.offer_details.needs.count,
+          enable: newPost.value.offer_details.needs.count === 0 ? false : true,
+        },
+      },
+      property_details: newPost.value.property_details
+        .slice(0, newPost.value.offer_details.offers)
+        .map((item) => item),
+      removed_images: removedIndex.value,
+    };
+
+    return post;
+  };
+
+  const formSubmit = async () => {
+    layoutStore.unhideSpinnerLoading();
+    try {
+      const images = layoutStore.postImagesURLState.map((item) => item.file);
+      const post = buildUpdatedPost();
+      const id = await userStore.updatePost(post, images, postStore.updatePostState.id);
+
+      await router.push(`/post/${id}`);
+
+      layoutStore.hideSpinnerLoading();
+    } catch (error) {
+      console.log(error);
+      layoutStore.hideSpinnerLoading();
+    }
   };
 </script>
 
@@ -309,7 +400,7 @@
     <form @submit.prevent="formSubmit" novalidate class="flex w-full flex-col text-base">
       <!-- Exchange Details -->
       <div
-        v-if="postStore.postState.type === 'exchange'"
+        v-if="postStore.updatePostState.type === 'exchange'"
         class="mb-4 flex h-[160px] w-full flex-col items-center justify-center rounded-lg border border-sgray-200 px-5 py-3 max-[345px]:px-3"
       >
         <OffersSelectInput v-model="newPost.offer_details.offers" class="mb-1 w-full" />
@@ -430,30 +521,35 @@
         <!-- File Input (Hidden) -->
         <input type="file" @change="loadImage" class="hidden" ref="fileInput" accept="image/*" />
 
-        <span class="mb-1 pl-2 font-medium text-sblue-500"
+        <div v-if="imageError" class="flex items-center gap-[3px] pl-2 font-medium text-alert">
+          <img src="../assets/warning-icon.svg" class="relative bottom-[1px] w-[19px]" />
+          <span>Fotos (Mín. 1)</span>
+        </div>
+        <span v-else class="mb-1 pl-2 font-medium text-sblue-500"
           >Fotos
-          <span v-if="!layoutStore.postImagesURLState.length" class="text-xs">(Mín. 1)</span>
-          <span v-else class="text-xs">{{ layoutStore.postImagesURLState.length }}/10</span></span
+          <span class="text-xs"
+            >{{ layoutStore.postImagesURLState.length + newImages.length }}/10</span
+          ></span
         >
         <div class="flex w-full flex-wrap gap-y-2">
           <UpdatePhotoInput
-            v-for="(item, index) in postStore.postState.images"
+            v-for="(item, index) in newImages"
             :key="index"
             :url="item"
-            @remove="removeImage(index)"
+            @remove="removeImage(index, postStore.updatePostState.images.indexOf(item))"
           />
 
           <PhotoBoxInput
             v-for="(item, index) in layoutStore.postImagesURLState"
             :key="index"
             :url="item.cropped"
-            @remove="removeImage(index)"
+            @remove="removeCroppedImage(index)"
             @edit="editImage(index)"
           />
 
           <!-- Add -->
           <button
-            v-if="!layoutStore.postImagesURLState.length < 10"
+            v-if="layoutStore.postImagesURLState.length + newImages.length < 10"
             class="flex w-full items-center justify-center gap-[10px] rounded-lg bg-sblue-500 px-2 py-[7px]"
             @click.prevent="openImageDialog"
           >

@@ -75,7 +75,6 @@
   };
 
   const removeImage = (newIndex, stateIndex) => {
-    console.log(stateIndex);
     if (newIndex >= 0 && newIndex < newImages.value.length) {
       newImages.value.splice(newIndex, 1);
       removedIndex.value.push(stateIndex);
@@ -437,7 +436,6 @@
       </div>
 
       <!-- Submit Button -->
-      {{ !anyModif }} {{ anyError }}
       <button
         :disabled="!anyModif || anyError"
         type="submit"

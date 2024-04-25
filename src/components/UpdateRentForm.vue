@@ -1,12 +1,14 @@
 <script setup>
   import { ref, computed, watch } from "vue";
+  import { useUserStore } from "../stores/userStore.js";
   import { usePostStore } from "../stores/postStore.js";
   import { useLayoutStore } from "../stores/layoutStore.js";
   import { defaultMunicipality } from "../utils/provinces.js";
+  import router from "../router";
   import parsePhoneNumber from "libphonenumber-js";
   import CurrencyRadioInput from "./CurrencyRadioInput.vue";
-  import AmountInput from "./AmountInput.vue";
   import FrequencyRadioInput from "./FrequencyRadioInput.vue";
+  import AmountInput from "./AmountInput.vue";
   import ProvinceSelectInput from "./ProvinceSelectInput.vue";
   import MunicipalitySelectInput from "./MunicipalitySelectInput.vue";
   import FeatureNumberInput from "./FeatureNumberInput.vue";
@@ -18,28 +20,70 @@
   import UpdatePhotoInput from "./UpdatePhotoInput.vue";
   import PhotoBoxInput from "./PhotoBoxInput.vue";
 
+  const userStore = useUserStore();
   const postStore = usePostStore();
   const layoutStore = useLayoutStore();
 
   const newPost = ref({
-    description: postStore.postState.description,
+    description: postStore.updatePostState.description,
     contact_details: {
       contact: {
-        code: postStore.postState.contact_details.contact.code,
-        phone: postStore.postState.contact_details.contact.phone,
+        code: postStore.updatePostState.contact_details.contact.code,
+        phone: postStore.updatePostState.contact_details.contact.phone,
       },
       contact_types: {
-        phone: postStore.postState.contact_details.contact_types.phone,
-        whatsapp: postStore.postState.contact_details.contact_types.whatsapp,
+        phone: postStore.updatePostState.contact_details.contact_types.phone,
+        whatsapp: postStore.updatePostState.contact_details.contact_types.whatsapp,
       },
     },
     amount_details: {
-      amount: postStore.postState.amount_details.amount,
-      currency: postStore.postState.amount_details.currency,
-      frequency: postStore.postState.amount_details.frequency,
+      amount: postStore.updatePostState.amount_details.amount,
+      currency: postStore.updatePostState.amount_details.currency,
+      frequency: postStore.updatePostState.amount_details.frequency,
     },
-    property_details: postStore.postState.property_details.map((item) => item),
+    property_details: postStore.updatePostState.property_details.map((item) => item),
   });
+
+  const newImages = ref(postStore.updatePostState.images.map((item) => item));
+
+  const fileInput = ref(null);
+
+  const openImageDialog = () => {
+    fileInput.value.click();
+  };
+
+  const imageError = computed(() => {
+    return !(newImages.value.length + layoutStore.postImagesURLState.length);
+  });
+
+  const loadImage = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageURL = URL.createObjectURL(file);
+      layoutStore.setSingleImageURLState(imageURL);
+      layoutStore.unhideImageCropper();
+    }
+    event.target.value = null;
+  };
+
+  const editImage = (index) => {
+    layoutStore.setEditImage(index);
+    layoutStore.setSingleImageURLState(layoutStore.postImagesURLState[index].original);
+    layoutStore.unhideImageCropper();
+  };
+
+  const removeCroppedImage = (index) => {
+    layoutStore.removePostImageURL(index);
+  };
+
+  const removeImage = (newIndex, stateIndex) => {
+    if (newIndex >= 0 && newIndex < newImages.value.length) {
+      newImages.value.splice(newIndex, 1);
+      removedIndex.value.push(stateIndex);
+    }
+  };
+
+  const removedIndex = ref([]);
 
   // Errors
   const amountError = computed(() => {
@@ -111,37 +155,40 @@
   });
 
   const anyModif = computed(() => {
-    if (
-      newPost.value.description !== postStore.postState.description ||
-      newPost.value.contact_details.contact_types.phone !==
-        postStore.postState.contact_details.contact_types.phone ||
-      newPost.value.contact_details.contact_types.whatsapp !==
-        postStore.postState.contact_details.contact_types.whatsapp ||
-      formattedPhone.value !==
-        postStore.postState.contact_details.contact.code +
-          postStore.postState.contact_details.contact.phone ||
-      newPost.value.amount_details.amount !== postStore.postState.amount_details.amount ||
-      newPost.value.amount_details.currency !== postStore.postState.amount_details.currency ||
-      newPost.value.amount_details.frequency !== postStore.postState.amount_details.frequency ||
-      newPost.value.property_details[0].address.province !==
-        postStore.postState.property_details[0].address.province ||
-      newPost.value.property_details[0].address.municipality !==
-        postStore.postState.property_details[0].address.municipality ||
-      newPost.value.property_details[0].features.bed_room !==
-        postStore.postState.property_details[0].features.bed_room ||
-      newPost.value.property_details[0].features.bath_room !==
-        postStore.postState.property_details[0].features.bath_room ||
-      newPost.value.property_details[0].features.garage !==
-        postStore.postState.property_details[0].features.garage ||
-      newPost.value.property_details[0].features.garden !==
-        postStore.postState.property_details[0].features.garden ||
-      newPost.value.property_details[0].features.pool !==
-        postStore.postState.property_details[0].features.pool ||
-      newPost.value.property_details[0].features.furnished !==
-        postStore.postState.property_details[0].features.furnished
-    )
-      return true;
-    else return false;
+    if (!!layoutStore.postImagesURLState.length || !!removedIndex.value.length) return true;
+    else {
+      if (
+        newPost.value.description !== postStore.updatePostState.description ||
+        newPost.value.contact_details.contact_types.phone !==
+          postStore.updatePostState.contact_details.contact_types.phone ||
+        newPost.value.contact_details.contact_types.whatsapp !==
+          postStore.updatePostState.contact_details.contact_types.whatsapp ||
+        formattedPhone.value !==
+          postStore.updatePostState.contact_details.contact.code +
+            postStore.updatePostState.contact_details.contact.phone ||
+        newPost.value.amount_details.amount !== postStore.updatePostState.amount_details.amount ||
+        newPost.value.amount_details.currency !==
+          postStore.updatePostState.amount_details.currency ||
+        newPost.value.property_details[0].address.province !==
+          postStore.updatePostState.property_details[0].address.province ||
+        newPost.value.property_details[0].address.municipality !==
+          postStore.updatePostState.property_details[0].address.municipality ||
+        newPost.value.property_details[0].features.bed_room !==
+          postStore.updatePostState.property_details[0].features.bed_room ||
+        newPost.value.property_details[0].features.bath_room !==
+          postStore.updatePostState.property_details[0].features.bath_room ||
+        newPost.value.property_details[0].features.garage !==
+          postStore.updatePostState.property_details[0].features.garage ||
+        newPost.value.property_details[0].features.garden !==
+          postStore.updatePostState.property_details[0].features.garden ||
+        newPost.value.property_details[0].features.pool !==
+          postStore.updatePostState.property_details[0].features.pool ||
+        newPost.value.property_details[0].features.furnished !==
+          postStore.updatePostState.property_details[0].features.furnished
+      )
+        return true;
+      else return false;
+    }
   });
 
   const anyError = computed(() => {
@@ -151,11 +198,54 @@
       bathRoomError.value ||
       descriptionError.value ||
       codeError.value ||
-      phoneError.value
+      phoneError.value ||
+      imageError.value
     )
       return true;
     else return false;
   });
+
+  const buildUpdatedPost = () => {
+    const post = {
+      type: "rent",
+      description: newPost.value.description,
+      contact_details: {
+        contact_types: {
+          phone: newPost.value.contact_details.contact_types.phone,
+          whatsapp: newPost.value.contact_details.contact_types.whatsapp,
+        },
+        contact: {
+          code: newPost.value.contact_details.contact.code,
+          phone: newPost.value.contact_details.contact.phone,
+        },
+      },
+      amount_details: {
+        amount: newPost.value.amount_details.amount,
+        currency: newPost.value.amount_details.currency,
+        frequency: newPost.value.amount_details.frequency,
+      },
+      property_details: newPost.value.property_details.map((item) => item),
+      removed_images: removedIndex.value,
+    };
+
+    return post;
+  };
+
+  const formSubmit = async () => {
+    layoutStore.unhideSpinnerLoading();
+    try {
+      const images = layoutStore.postImagesURLState.map((item) => item.file);
+      const post = buildUpdatedPost();
+      const id = await userStore.updatePost(post, images, postStore.updatePostState.id);
+
+      await router.push(`/post/${id}`);
+
+      layoutStore.hideSpinnerLoading();
+    } catch (error) {
+      console.log(error);
+      layoutStore.hideSpinnerLoading();
+    }
+  };
 </script>
 
 <template>
@@ -312,30 +402,35 @@
         <!-- File Input (Hidden) -->
         <input type="file" @change="loadImage" class="hidden" ref="fileInput" accept="image/*" />
 
-        <span class="mb-1 pl-2 font-medium text-sblue-500"
+        <div v-if="imageError" class="flex items-center gap-[3px] pl-2 font-medium text-alert">
+          <img src="../assets/warning-icon.svg" class="relative bottom-[1px] w-[19px]" />
+          <span>Fotos (Mín. 1)</span>
+        </div>
+        <span v-else class="mb-1 pl-2 font-medium text-sblue-500"
           >Fotos
-          <span v-if="!layoutStore.postImagesURLState.length" class="text-xs">(Mín. 1)</span>
-          <span v-else class="text-xs">{{ layoutStore.postImagesURLState.length }}/10</span></span
+          <span class="text-xs"
+            >{{ layoutStore.postImagesURLState.length + newImages.length }}/10</span
+          ></span
         >
         <div class="flex w-full flex-wrap gap-y-2">
           <UpdatePhotoInput
-            v-for="(item, index) in postStore.postState.images"
+            v-for="(item, index) in newImages"
             :key="index"
             :url="item"
-            @remove="removeImage(index)"
+            @remove="removeImage(index, postStore.updatePostState.images.indexOf(item))"
           />
 
           <PhotoBoxInput
             v-for="(item, index) in layoutStore.postImagesURLState"
             :key="index"
             :url="item.cropped"
-            @remove="removeImage(index)"
+            @remove="removeCroppedImage(index)"
             @edit="editImage(index)"
           />
 
           <!-- Add -->
           <button
-            v-if="!layoutStore.postImagesURLState.length < 10"
+            v-if="layoutStore.postImagesURLState.length + newImages.length < 10"
             class="flex w-full items-center justify-center gap-[10px] rounded-lg bg-sblue-500 px-2 py-[7px]"
             @click.prevent="openImageDialog"
           >
