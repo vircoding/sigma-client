@@ -1,19 +1,22 @@
 <script setup>
+  import { usePostStore } from "../stores/postStore.js";
+  import { useLayoutStore } from "../stores/layoutStore.js";
+  import { onBeforeUnmount } from "vue";
   import NavBar from "../components/NavBar.vue";
   import UpdateSaleForm from "../components/UpdateSaleForm.vue";
   import UpdateRentForm from "../components/UpdateRentForm.vue";
   import UpdateExchangeForm from "../components/UpdateExchangeForm.vue";
   import FooterSection from "../components/FooterSection.vue";
   import ImageCropper from "../components/ImageCropper.vue";
-  import { usePostStore } from "../stores/postStore.js";
-  import { useLayoutStore } from "../stores/layoutStore.js";
-  import { onBeforeUnmount, ref } from "vue";
 
   const postStore = usePostStore();
   const layoutStore = useLayoutStore();
 
   onBeforeUnmount(() => {
-    postStore.resetPost();
+    layoutStore.resetEditImage();
+    layoutStore.resetSingleImageURLState();
+    layoutStore.resetPostImagesURL();
+    postStore.resetUpdatePost();
   });
 </script>
 
@@ -34,9 +37,9 @@
 
         <!-- Form -->
         <main class="flex grow flex-col items-center justify-center">
-          <UpdateSaleForm v-if="postStore.postState.type === 'sale'" />
-          <UpdateRentForm v-if="postStore.postState.type === 'rent'" />
-          <UpdateExchangeForm v-if="postStore.postState.type === 'exchange'" />
+          <UpdateSaleForm v-if="postStore.updatePostState.type === 'sale'" />
+          <UpdateRentForm v-if="postStore.updatePostState.type === 'rent'" />
+          <UpdateExchangeForm v-if="postStore.updatePostState.type === 'exchange'" />
         </main>
       </div>
 

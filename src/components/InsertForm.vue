@@ -285,7 +285,7 @@
     layoutStore.removePostImageURL(index);
   };
 
-  const buildPost = (urls) => {
+  const buildPost = () => {
     const post = {
       type: type.value,
       description: postDetails.value.description,

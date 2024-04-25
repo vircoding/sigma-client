@@ -308,10 +308,19 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const updatePost = async (post, id) => {
+  const updatePost = async (post, images, id) => {
     try {
-      const res = await accountServices.updatePost(post, id);
-      postStore.setPost(res.data);
+      const formData = new FormData();
+      images.forEach((item, index) => {
+        formData.append("images", item, `img_${index + 1}.jpg`);
+      });
+      formData.append("data", JSON.stringify(post));
+
+      const res = await accountServices.updatePost(formData, id);
+      userPostsState.value = res.data;
+
+      console.log(res.data);
+      return res.data.id;
     } catch (error) {
       console.log(error);
     }

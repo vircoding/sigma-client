@@ -39,8 +39,21 @@ export default {
     );
   },
 
-  updatePost(post, id) {
-    return authorizedAPI().patch(`/account/posts/${id}`, post);
+  updatePost(formData, id) {
+    // return authorizedAPI().patch(`/account/posts/${id}`, post);
+    const userStore = useUserStore();
+    return axios.patch(
+      import.meta.env.MODE === "development"
+        ? `http://localhost:5000/api/v1/account/posts/${id}`
+        : `https://sigmacuba.com/api/v1/account/posts/${id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${userStore.credentialsState.token}`,
+        },
+      }
+    );
   },
 
   addToFavorites(id) {

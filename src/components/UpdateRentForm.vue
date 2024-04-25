@@ -7,8 +7,6 @@
   import CurrencyRadioInput from "./CurrencyRadioInput.vue";
   import AmountInput from "./AmountInput.vue";
   import FrequencyRadioInput from "./FrequencyRadioInput.vue";
-  import OffersSelectInput from "./OffersSelectInput.vue";
-  import NeedsSelectInput from "./NeedsSelectInput.vue";
   import ProvinceSelectInput from "./ProvinceSelectInput.vue";
   import MunicipalitySelectInput from "./MunicipalitySelectInput.vue";
   import FeatureNumberInput from "./FeatureNumberInput.vue";
@@ -17,6 +15,8 @@
   import CodeInput from "./CodeInput.vue";
   import PhoneInput from "./PhoneInput.vue";
   import WhatsappCheckboxInput from "./WhatsappCheckboxInput.vue";
+  import UpdatePhotoInput from "./UpdatePhotoInput.vue";
+  import PhotoBoxInput from "./PhotoBoxInput.vue";
 
   const postStore = usePostStore();
   const layoutStore = useLayoutStore();
@@ -303,6 +303,49 @@
           <PhoneInput v-model="newPost.contact_details.contact.phone" :error="phoneError" />
         </div>
         <WhatsappCheckboxInput v-model="newPost.contact_details.contact_types.whatsapp" />
+      </div>
+
+      <!-- Photos -->
+      <div
+        class="mb-4 flex w-full flex-col rounded-lg border border-sgray-200 px-5 py-4 max-[345px]:px-3"
+      >
+        <!-- File Input (Hidden) -->
+        <input type="file" @change="loadImage" class="hidden" ref="fileInput" accept="image/*" />
+
+        <span class="mb-1 pl-2 font-medium text-sblue-500"
+          >Fotos
+          <span v-if="!layoutStore.postImagesURLState.length" class="text-xs">(Mín. 1)</span>
+          <span v-else class="text-xs">{{ layoutStore.postImagesURLState.length }}/10</span></span
+        >
+        <div class="flex w-full flex-wrap gap-y-2">
+          <UpdatePhotoInput
+            v-for="(item, index) in postStore.postState.images"
+            :key="index"
+            :url="item"
+            @remove="removeImage(index)"
+          />
+
+          <PhotoBoxInput
+            v-for="(item, index) in layoutStore.postImagesURLState"
+            :key="index"
+            :url="item.cropped"
+            @remove="removeImage(index)"
+            @edit="editImage(index)"
+          />
+
+          <!-- Add -->
+          <button
+            v-if="!layoutStore.postImagesURLState.length < 10"
+            class="flex w-full items-center justify-center gap-[10px] rounded-lg bg-sblue-500 px-2 py-[7px]"
+            @click.prevent="openImageDialog"
+          >
+            <span class="relative top-[1px] text-sgray-100">Añadir foto</span>
+            <img
+              src="../assets/exit-fullscreen-icon.svg"
+              class="h-[14px] w-[14px] rotate-[135deg]"
+            />
+          </button>
+        </div>
       </div>
 
       <!-- Submit Button -->
