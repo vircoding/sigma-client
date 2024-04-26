@@ -52,7 +52,6 @@
   });
 
   watch(newAvatar, () => {
-    console.log("Watch hereeeeee");
     newAgent.value.avatar = newAvatar.value;
     changedAvatar.value = true;
   });
