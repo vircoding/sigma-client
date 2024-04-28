@@ -101,7 +101,7 @@
     <div class="flex w-full items-center justify-evenly">
       <button
         @click.prevent="deletePost"
-        class="flex min-w-[120px] items-center justify-center gap-1 rounded-md bg-sgray-400 px-1 py-[5px] font-semibold text-white"
+        class="flex min-w-[120px] items-center justify-center gap-1 rounded-md bg-sblue-500 px-1 py-[5px] font-semibold text-white"
       >
         <span>CONFIRMAR</span>
       </button>
