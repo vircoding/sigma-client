@@ -188,7 +188,6 @@
         const avatar = layoutStore.avatarURLState.file;
         await userStore.updateUser(buildUser(), avatar);
 
-        resetComponent();
         changedAvatar.value = false;
       } else {
         await userStore.updateUser(buildUser());
