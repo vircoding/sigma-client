@@ -21,6 +21,12 @@
     repassword: false,
   });
 
+  const repasswordVisibility = ref(false);
+
+  const toggleRepasswordVisibility = () => {
+    repasswordVisibility.value = !repasswordVisibility.value;
+  };
+
   // Errors
   const emailError = computed(() => {
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value)) return true;
@@ -138,6 +144,7 @@
           :error="filledInputs.password && passwordError"
           class="mb-4 w-full"
           @focused="fillInput('password')"
+          @visibility="toggleRepasswordVisibility"
         />
 
         <!-- Repassword -->
@@ -146,6 +153,7 @@
           type="repassword"
           :error="filledInputs.repassword && repasswordError"
           class="mb-4 w-full"
+          :show="repasswordVisibility"
           @focused="fillInput('repassword')"
         />
       </div>

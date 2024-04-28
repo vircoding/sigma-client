@@ -35,6 +35,12 @@
     },
   });
 
+  const repasswordVisibility = ref(false);
+
+  const toggleRepasswordVisibility = () => {
+    repasswordVisibility.value = !repasswordVisibility.value;
+  };
+
   const filledInputs = ref({
     email: false,
     password: false,
@@ -289,6 +295,7 @@
           :error="filledInputs.password && passwordError"
           class="mb-4 w-full"
           @focused="fillInput('password')"
+          @visibility="toggleRepasswordVisibility"
         />
 
         <!-- Repassword -->
@@ -297,6 +304,7 @@
           type="repassword"
           :error="filledInputs.repassword && repasswordError"
           class="mb-4 w-full"
+          :show="repasswordVisibility"
           @focused="fillInput('repassword')"
         />
 

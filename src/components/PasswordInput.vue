@@ -1,6 +1,23 @@
 <script setup>
-  const props = defineProps(["modelValue", "type", "error", "edit"]);
-  defineEmits(["update:modelValue", "focused"]);
+  import { ref, computed } from "vue";
+
+  const props = defineProps(["modelValue", "type", "error", "edit", "show"]);
+  const emits = defineEmits(["update:modelValue", "focused", "visibility"]);
+
+  const showValue = ref(false);
+
+  const toggleVisibility = () => {
+    emits("visibility");
+    showValue.value = !showValue.value;
+  };
+
+  const valueVisibility = computed(() => {
+    if (props.type !== "repassword") {
+      return showValue.value ? "text" : "password";
+    } else {
+      return props.show ? "text" : "password";
+    }
+  });
 </script>
 
 <template>
@@ -18,16 +35,32 @@
       <span v-if="props.type === 'password'">Contraseña inválida</span>
       <span v-else-if="props.type === 'repassword'">Las contraseñas deben coincidir</span>
     </label>
-    <input
-      type="password"
-      :id="props.type"
-      :name="props.type"
-      :value="props.modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
-      @focus="$emit('focused')"
-      class="w-full rounded-lg border bg-transparent px-4 pb-[5px] pt-[7px] text-sgray-400 outline-none transition-colors duration-200 focus:bg-white"
-      :class="props.error ? 'border-alert' : 'border-sgray-200 focus:border-sigma'"
-    />
+
+    <!-- Input -->
+    <div class="relative w-full bg-transparent">
+      <input
+        :type="valueVisibility"
+        :id="props.type"
+        :name="props.type"
+        :value="props.modelValue"
+        @input="$emit('update:modelValue', $event.target.value)"
+        @focus="$emit('focused')"
+        class="w-full rounded-lg border bg-transparent px-4 pb-[5px] pt-[7px] text-sgray-400 outline-none transition-colors duration-200 focus:bg-white"
+        :class="props.error ? 'border-alert' : 'border-sgray-200 focus:border-sigma'"
+      />
+      <figure
+        v-if="props.type !== 'repassword'"
+        @click.prevent="toggleVisibility"
+        class="absolute right-4 top-[9px] z-50"
+      >
+        <img
+          v-if="props.type === 'repassword' ? props.show : !showValue"
+          src="../assets/show-password-icon.svg"
+          class="w-5"
+        />
+        <img v-else src="../assets/hide-password-icon.svg" class="relative top-[2px] w-5" />
+      </figure>
+    </div>
   </div>
 </template>
 
