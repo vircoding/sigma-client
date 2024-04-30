@@ -221,15 +221,26 @@
   });
 
   watch(formattedPhone, () => {
-    try {
-      const parsedPhoneNumber = parsePhoneNumber(formattedPhone.value);
-      if (!parsedPhoneNumber.isValid()) {
-        throw new Error("Non-valid Phone Number");
+    if (newPost.value.contact_details.contact.code === "+53") {
+      // Cuba
+      const regex = /^[56].{7}$/;
+      if (!regex.test(newPost.value.contact_details.contact.phone)) {
+        phoneError.value = true;
       } else {
         phoneError.value = false;
       }
-    } catch (error) {
-      phoneError.value = true;
+    } else {
+      // World
+      try {
+        const parsedPhoneNumber = parsePhoneNumber(formattedPhone.value);
+        if (!parsedPhoneNumber.isValid()) {
+          throw new Error("Non-valid Phone Number");
+        } else {
+          phoneError.value = false;
+        }
+      } catch (error) {
+        phoneError.value = true;
+      }
     }
   });
 
