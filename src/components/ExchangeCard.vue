@@ -47,12 +47,12 @@
     <div class="relative flex h-[60px] w-full items-center bg-white">
       <!-- Clip -->
       <div class="clip flex h-44 w-[85px] flex-shrink-0 flex-col items-center bg-sviolet pt-[45px]">
-        <h2 class="font-extrabold text-white">PERMUTA</h2>
+        <h2 class="text-base font-extrabold text-white">PERMUTA</h2>
         <div
           v-if="props.exchange.offer_details.needs.enable"
           class="flex flex-col items-center gap-[2px]"
         >
-          <span class="relative top-[1px] text-lg font-semibold leading-tight text-white">
+          <span class="text-lg font-semibold leading-none text-white">
             {{ props.exchange.offer_details.offers }} x
             {{ props.exchange.offer_details.needs.count }}
           </span>
@@ -62,10 +62,12 @@
           v-else-if="!props.exchange.offer_details.needs.enable"
           class="flex flex-col items-center gap-[2px]"
         >
-          <span class="relative top-[1px] text-lg font-semibold leading-tight text-white">
+          <span class="text-lg font-semibold leading-none text-white">
             {{ props.exchange.offer_details.offers }}
           </span>
-          <span class="text-xs text-white">propiedades</span>
+          <span class="text-xs text-white">{{
+            props.exchange.offer_details.offers === 1 ? "propiedad" : "propiedades"
+          }}</span>
         </div>
       </div>
 

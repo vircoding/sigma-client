@@ -25,8 +25,8 @@
     <div class="flex h-[60px] w-full items-center">
       <!-- Clip -->
       <div class="clip flex h-44 w-[85px] flex-shrink-0 flex-col items-center bg-sigma pt-[45px]">
-        <h2 class="font-extrabold text-white">VENTA</h2>
-        <span class="relative top-[1px] text-lg font-semibold leading-tight text-white">{{
+        <h2 class="text-lg font-extrabold text-white">VENTA</h2>
+        <span class="relative text-lg font-semibold leading-none text-white">{{
           formatAmount(props.sale.amount_details.amount, true)
         }}</span>
         <span class="uppercase text-white">{{ props.sale.amount_details.currency }}</span>

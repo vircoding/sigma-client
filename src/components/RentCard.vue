@@ -27,13 +27,13 @@
       <div
         class="clip flex h-44 w-[85px] flex-shrink-0 flex-col items-center bg-sgreen-300 pt-[45px]"
       >
-        <h2 class="font-extrabold text-white">RENTA</h2>
-        <span class="relative top-[1px] text-lg font-semibold leading-tight text-white">{{
+        <h2 class="text-lg font-extrabold text-white">RENTA</h2>
+        <span class="text-lg font-semibold leading-none text-white">{{
           formatAmount(props.rent.amount_details.amount, true)
         }}</span>
         <span class="text-white"
-          ><span class="uppercase">{{ props.rent.amount_details.currency }}</span> /
-          {{ props.rent.amount_details.frequency === "daily" ? "día" : "mes" }}</span
+          ><span class="uppercase">{{ props.rent.amount_details.currency }}</span
+          >/{{ props.rent.amount_details.frequency === "daily" ? "día" : "mes" }}</span
         >
       </div>
       <div class="flex h-[60px] flex-grow items-center py-[6px] pl-[5px]">
