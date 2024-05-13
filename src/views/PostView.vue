@@ -7,6 +7,7 @@
   import { useLayoutStore } from "../stores/layoutStore.js";
   import { usePostStore } from "../stores/postStore.js";
   import { useAgentStore } from "../stores/agentStore.js";
+  import { onBeforeRouteLeave } from "vue-router";
 
   const postStore = usePostStore();
   const agentStore = useAgentStore();
@@ -16,6 +17,14 @@
     postStore.resetPost();
     agentStore.resetAuthor();
     layoutStore.resetActiveImageIndex();
+  });
+
+  onBeforeRouteLeave((to, from, next) => {
+    if (to.name !== "find") {
+      postStore.resetFindedPosts();
+      postStore.resetFilterOptions();
+    }
+    next();
   });
 </script>
 

@@ -9,40 +9,6 @@ const routes = [
     path: "/",
     name: "home",
     component: () => import("../views/HomeView.vue"),
-    // beforeEnter: async (to, from, next) => {
-    //   const layoutStore = useLayoutStore();
-    //   const postStore = usePostStore();
-
-    //   if (!from.name) {
-    //     layoutStore.unhideLogoLoading();
-    //   } else {
-    //     if (!layoutStore.logoLoading) layoutStore.unhideSpinnerLoading();
-    //   }
-
-    //   try {
-    //     await postStore.getPopularSales();
-    //     await postStore.getPopularRents();
-    //     await postStore.getPopularExchanges();
-
-    //     if (!from.name) {
-    //       layoutStore.hideLogoLoading();
-    //     } else {
-    //       layoutStore.hideSpinnerLoading();
-    //     }
-
-    //     next();
-    //   } catch (error) {
-    //     console.log(error);
-
-    //     if (!from.name) {
-    //       layoutStore.hideLogoLoading();
-    //     } else {
-    //       layoutStore.hideSpinnerLoading();
-    //     }
-
-    //     next("/");
-    //   }
-    // },
   },
   {
     path: "/support/help",
@@ -112,42 +78,66 @@ const routes = [
         layoutStore.unhideSpinnerLoading();
       }
 
-      try {
-        if (postStore.filterTypeState === "rent") {
-          await postStore.findPosts(
-            "rent",
-            1,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined
-          );
-        } else if (postStore.filterTypeState === "exchange") {
-          await postStore.findPosts(
-            "exchange",
-            1,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined
-          );
-        } else {
-          await postStore.findPosts(
-            "sale",
-            1,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined
-          );
-        }
+      if (postStore.findedPostsState === null) {
+        try {
+          if (postStore.filterTypeState === "rent") {
+            await postStore.findPosts(
+              "rent",
+              1,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined
+            );
+          } else if (postStore.filterTypeState === "exchange") {
+            await postStore.findPosts(
+              "exchange",
+              1,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined
+            );
+          } else {
+            await postStore.findPosts(
+              "sale",
+              1,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined
+            );
+          }
 
+          if (!from.name) {
+            layoutStore.hideLogoLoading();
+          } else {
+            layoutStore.hideSpinnerLoading();
+          }
+
+          next();
+        } catch (error) {
+          console.log(error);
+
+          // Prevent reset
+          postStore.resetFilterOptions();
+          postStore.resetFindedPosts();
+
+          if (!from.name) {
+            layoutStore.hideLogoLoading();
+          } else {
+            layoutStore.hideSpinnerLoading();
+          }
+
+          next("/");
+        }
+      } else {
         if (!from.name) {
           layoutStore.hideLogoLoading();
         } else {
@@ -155,19 +145,6 @@ const routes = [
         }
 
         next();
-      } catch (error) {
-        console.log(error);
-
-        // Prevent reset
-        postStore.resetFilterType();
-
-        if (!from.name) {
-          layoutStore.hideLogoLoading();
-        } else {
-          layoutStore.hideSpinnerLoading();
-        }
-
-        next("/");
       }
     },
   },

@@ -9,12 +9,13 @@
   import FrequencyFilter from "./FrequencyFilter.vue";
   import LimitsFilter from "./LimitsFilter.vue";
 
-  const emits = defineEmits(["scroll"]);
+  const emits = defineEmits(["hide-window"]);
 
   const postStore = usePostStore();
   const layoutStore = useLayoutStore();
 
-  const type = ref(postStore.filterTypeState);
+  const type = ref(postStore.filterOptions.type);
+  const stopWatches = ref(false);
 
   const saleFilters = ref({
     province: "none",
@@ -82,7 +83,7 @@
     exchangeFilters.value.municipality = "none";
   });
 
-  const reset = () => {
+  const resetButton = () => {
     if (type.value === "sale") {
       saleFilters.value = {
         province: "none",
@@ -193,6 +194,7 @@
         );
 
       layoutStore.hideSpinnerLoading();
+      emits("hide-window");
       emits("scroll");
     } catch (error) {
       console.log(error);
@@ -200,26 +202,93 @@
     }
   };
 
-  const pendingRefreshType = computed(() => {
-    return postStore.pendingRefreshFilterTypeState;
+  const pendingRefresh = computed(() => {
+    return postStore.pendingRefreshFilterState;
   });
 
-  watch(pendingRefreshType, () => {
-    if (pendingRefreshType.value) {
-      type.value = postStore.filterTypeState;
-      postStore.resetFilterType();
-      postStore.resetPendingRefreshFilterType();
+  watch(pendingRefresh, () => {
+    if (pendingRefresh) {
+      updateFilters();
+      postStore.resetPendingRefreshFilter();
     }
   });
 
   // Reset Filter State After Load
-  postStore.setFilterType("sale");
+  // postStore.setFilterType("sale");
+
+  const updateFilters = () => {
+    reset();
+
+    stopWatches.value = true;
+
+    if (postStore.filterOptions.type === "sale") {
+      saleFilters.value = {
+        province: postStore.filterOptions.province ? postStore.filterOptions.province : "none",
+        municipality: postStore.filterOptions.municipality
+          ? postStore.filterOptions.municipality
+          : "none",
+        currency: postStore.filterOptions.currency ? postStore.filterOptions.currency : "none",
+        supl: postStore.filterOptions.supl ? postStore.filterOptions.supl : "",
+        infl: postStore.filterOptions.infl ? postStore.filterOptions.infl : "",
+      };
+    } else if (postStore.filterOptions.type === "rent") {
+      rentFilters.value = {
+        province: postStore.filterOptions.province ? postStore.filterOptions.province : "none",
+        municipality: postStore.filterOptions.municipality
+          ? postStore.filterOptions.municipality
+          : "none",
+        currency: postStore.filterOptions.currency ? postStore.filterOptions.currency : "none",
+        frequency: postStore.filterOptions.frequency ? postStore.filterOptions.frequency : "none",
+        supl: postStore.filterOptions.supl ? postStore.filterOptions.supl : "",
+        infl: postStore.filterOptions.infl ? postStore.filterOptions.infl : "",
+      };
+    } else if (postStore.filterOptions.type === "exchange") {
+      exchangeFilters.value = {
+        province: postStore.filterOptions.province ? postStore.filterOptions.province : "none",
+        municipality: postStore.filterOptions.municipality
+          ? postStore.filterOptions.municipality
+          : "none",
+      };
+    }
+
+    stopWatches.value = false;
+  };
+
+  const reset = () => {
+    stopWatches.value = true;
+
+    type.value = postStore.filterOptions.type;
+
+    saleFilters.value = {
+      province: "none",
+      municipality: "none",
+      currency: "none",
+      infl: "",
+      supl: "",
+    };
+
+    rentFilters.value = {
+      province: "none",
+      municipality: "none",
+      currency: "none",
+      frequency: "none",
+      infl: "",
+      supl: "",
+    };
+
+    exchangeFilters.value = {
+      province: "none",
+      municipality: "none",
+    };
+
+    stopWatches.value = false;
+  };
 </script>
 
 <template>
   <form
     @submit.prevent="findPosts"
-    class="text-shadow flex w-full flex-col items-center justify-center gap-3 rounded-md border border-sgray-200 p-5"
+    class="text-shadow z-50 flex w-full flex-col items-center justify-center gap-3 rounded-md border border-sgray-200 bg-white px-5 py-7"
   >
     <!-- Type -->
     <div class="flex w-full flex-row items-center justify-start gap-3">
@@ -314,7 +383,7 @@
     <div class="flex w-full items-center justify-center gap-2">
       <!-- Reset -->
       <button
-        @click.prevent="reset"
+        @click.prevent="resetButton"
         class="bg-sgblue-400 w-1/2 rounded-md bg-sblue-500 py-[7px] text-white"
       >
         Restablecer

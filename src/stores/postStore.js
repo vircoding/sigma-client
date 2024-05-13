@@ -24,8 +24,19 @@ export const usePostStore = defineStore("post", () => {
   });
   const filterTypeState = ref("sale");
   const insertTypeState = ref("sale");
-  const pendingRefreshFilterTypeState = ref(false);
+  const pendingRefreshFilterState = ref(false);
   const pendingRefreshInsertTypeState = ref(false);
+  const saveFilterDataState = ref(false);
+  const filterOptions = ref({
+    type: "sale",
+    page: 1,
+    province: undefined,
+    municipality: undefined,
+    supl: undefined,
+    infl: undefined,
+    currency: undefined,
+    frequency: undefined,
+  });
 
   // Computed
   const isPostState = computed(() => !!postState.value);
@@ -64,7 +75,7 @@ export const usePostStore = defineStore("post", () => {
         res = await postsServices.getExchanges(page, province, municipality);
       }
       findedPostsState.value = res.data;
-      lastFilterState.value = {
+      filterOptions.value = {
         type,
         page,
         province,
@@ -165,15 +176,23 @@ export const usePostStore = defineStore("post", () => {
     insertTypeState.value = type;
   };
 
-  const setPendingRefreshFilterType = () => {
-    pendingRefreshFilterTypeState.value = true;
+  const setPendingRefreshFilter = () => {
+    pendingRefreshFilterState.value = true;
   };
 
   const setPendingRefreshInsertType = () => {
     pendingRefreshInsertTypeState.value = true;
   };
 
+  const setSaveFilterData = () => {
+    saveFilterDataState.value = true;
+  };
+
   // Resets
+  const resetSaveFilterData = () => {
+    saveFilterDataState.value = false;
+  };
+
   const resetUserPosts = () => {
     userPostsState.value = null;
   };
@@ -218,16 +237,16 @@ export const usePostStore = defineStore("post", () => {
     insertTypeState.value = "sale";
   };
 
-  const resetPendingRefreshFilterType = () => {
-    pendingRefreshFilterTypeState.value = false;
+  const resetPendingRefreshFilter = () => {
+    pendingRefreshFilterState.value = false;
   };
 
   const resetPendingRefreshInsertType = () => {
     pendingRefreshInsertTypeState.value = false;
   };
 
-  const resetLastFilter = () => {
-    lastFilterState.value = {
+  const resetFilterOptions = () => {
+    filterOptions.value = {
       type: "sale",
       province: undefined,
       municipality: undefined,
@@ -250,9 +269,9 @@ export const usePostStore = defineStore("post", () => {
     resetFindedPosts();
     resetFilterType();
     resetInsertType();
-    resetPendingRefreshFilterType();
+    resetPendingRefreshFilter();
     resetPendingRefreshInsertType();
-    resetLastFilter();
+    resetFilterOptions();
   };
 
   return {
@@ -268,8 +287,10 @@ export const usePostStore = defineStore("post", () => {
     lastFilterState,
     filterTypeState,
     insertTypeState,
-    pendingRefreshFilterTypeState,
+    pendingRefreshFilterState,
     pendingRefreshInsertTypeState,
+    filterOptions,
+    saveFilterDataState,
     isPostState,
     findPosts,
     getPost,
@@ -283,9 +304,11 @@ export const usePostStore = defineStore("post", () => {
     setPost,
     setFilterType,
     setInsertType,
-    setPendingRefreshFilterType,
+    setPendingRefreshFilter,
     setPendingRefreshInsertType,
     setUpdatePost,
+    setSaveFilterData,
+    resetSaveFilterData,
     resetUserPosts,
     resetUserFavorites,
     resetUpdatePost,
@@ -295,10 +318,10 @@ export const usePostStore = defineStore("post", () => {
     resetPost,
     resetAgentPosts,
     resetFindedPosts,
-    resetLastFilter,
+    resetFilterOptions,
     resetFilterType,
     resetInsertType,
-    resetPendingRefreshFilterType,
+    resetPendingRefreshFilter,
     resetPendingRefreshInsertType,
     $reset,
   };

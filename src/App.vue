@@ -2,6 +2,7 @@
   import { RouterView } from "vue-router";
   import { useUserStore } from "./stores/userStore.js";
   import { useLayoutStore } from "./stores/layoutStore.js";
+  import { usePostStore } from "./stores/postStore.js";
   import SideMenu from "./components/SideMenu.vue";
   import Loading from "./components/Loading.vue";
   import FormSpinner from "./components/FormSpinner.vue";
@@ -9,6 +10,13 @@
 
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
+  const postStore = usePostStore();
+
+  window.addEventListener("popstate", (event) => {
+    if (event.state.current.slice(0, 6) === "/post/" && event.state.back === "/find") {
+      postStore.setSaveFilterData();
+    }
+  });
 
   const cancelMove = (event) => {
     if (

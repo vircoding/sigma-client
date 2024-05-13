@@ -25,60 +25,57 @@
   };
 
   const goFind = async (type) => {
-    postStore.setFilterType(type);
-    if (route.name === "find") {
-      layoutStore.hideSideMenu();
-      layoutStore.unhideSpinnerLoading();
-      try {
-        if (postStore.filterTypeState === "rent") {
-          await postStore.findPosts(
-            "rent",
-            1,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined
-          );
-        } else if (postStore.filterTypeState === "exchange") {
-          await postStore.findPosts(
-            "exchange",
-            1,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined
-          );
-        } else {
-          await postStore.findPosts(
-            "sale",
-            1,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined
-          );
-        }
-
-        postStore.setPendingRefreshFilterType();
-        layoutStore.hideSpinnerLoading();
-      } catch (error) {
-        console.log(error);
-
-        // Prevent Reset
-        postStore.resetFilterType();
-
-        layoutStore.hideSpinnerLoading();
+    // postStore.setFilterType(type);
+    layoutStore.hideSideMenu();
+    layoutStore.unhideSpinnerLoading();
+    try {
+      if (type === "rent") {
+        await postStore.findPosts(
+          "rent",
+          1,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined
+        );
+      } else if (type === "exchange") {
+        await postStore.findPosts(
+          "exchange",
+          1,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined
+        );
+      } else {
+        await postStore.findPosts(
+          "sale",
+          1,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined
+        );
       }
-    } else {
-      router.push("/find");
-      layoutStore.hideSideMenu();
+    } catch (error) {
+      console.log(error);
+
+      // Prevent Reset
+      postStore.resetFilterOptions();
+      postStore.resetFindedPosts();
+
+      layoutStore.hideSpinnerLoading();
     }
+
+    if (route.name === "find") postStore.setPendingRefreshFilter();
+    else router.push("/find");
+    layoutStore.hideSpinnerLoading();
   };
 </script>
 
