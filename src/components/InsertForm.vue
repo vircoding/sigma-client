@@ -613,7 +613,7 @@
 
         <span class="mb-1 pl-2 font-medium text-sblue-500"
           >Fotos
-          <span v-if="!layoutStore.postImagesURLState.length" class="text-xs">(Mín. 1)</span>
+          <span v-if="!layoutStore.postImagesURLState.length" class="text-xs">(Mínimo 1)</span>
           <span v-else class="text-xs">{{ layoutStore.postImagesURLState.length }}/10</span></span
         >
         <div class="flex w-full flex-wrap gap-y-2">

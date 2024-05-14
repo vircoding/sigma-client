@@ -430,7 +430,7 @@
 
         <div v-if="imageError" class="flex items-center gap-[3px] pl-2 font-medium text-alert">
           <img src="../assets/warning-icon.svg" class="relative bottom-[1px] w-[19px]" />
-          <span>Fotos (Mín. 1)</span>
+          <span>Mínimo una foto</span>
         </div>
         <span v-else class="mb-1 pl-2 font-medium text-sblue-500"
           >Fotos
