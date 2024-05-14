@@ -41,7 +41,22 @@
       currency: postStore.updatePostState.amount_details.currency,
       frequency: postStore.updatePostState.amount_details.frequency,
     },
-    property_details: postStore.updatePostState.property_details.map((item) => item),
+    property_details: postStore.updatePostState.property_details.map((item) => {
+      return {
+        address: {
+          province: item.address.province,
+          municipality: item.address.municipality,
+        },
+        features: {
+          bed_room: item.features.bed_room,
+          bath_room: item.features.bath_room,
+          garage: item.features.garage,
+          garden: item.features.garden,
+          pool: item.features.pool,
+          furnished: item.features.furnished,
+        },
+      };
+    }),
   });
 
   const newImages = ref(postStore.updatePostState.images.map((item) => item));

@@ -319,7 +319,6 @@ export const useUserStore = defineStore("user", () => {
       const res = await accountServices.updatePost(formData, id);
       userPostsState.value = res.data;
 
-      console.log(res.data);
       return res.data.id;
     } catch (error) {
       console.log(error);
