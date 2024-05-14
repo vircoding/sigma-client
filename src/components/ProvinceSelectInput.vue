@@ -6,7 +6,7 @@
 </script>
 
 <template>
-  <div class="flex flex-col">
+  <div class="relative flex flex-col">
     <label :for="'province-' + index" class="pl-2 font-medium text-sblue-500">Provincia</label>
     <select
       name="province"
@@ -17,6 +17,7 @@
     >
       <option v-for="(item, index) in provinceList" :key="index" :value="item">{{ item }}</option>
     </select>
+    <img src="../assets/down-arrow-icon.svg" class="absolute right-4 top-[34px] w-5" />
   </div>
 </template>
 

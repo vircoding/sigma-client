@@ -6,7 +6,7 @@
 </script>
 
 <template>
-  <div class="flex flex-col">
+  <div class="relative flex flex-col">
     <label for="municipality" class="pl-2 font-medium text-sblue-500">Municipio</label>
     <select
       name="municipality"
@@ -20,6 +20,7 @@
         {{ item }}
       </option>
     </select>
+    <img src="../assets/down-arrow-icon.svg" class="absolute right-4 top-[34px] w-5" />
   </div>
 </template>
 
