@@ -39,9 +39,9 @@
 
     <div class="flex w-full items-center justify-center gap-2 px-5 pb-10 pt-5">
       <button @click.prevent="logout" class="h-[40px] w-[50%] rounded-lg bg-sblue-500 text-white">
-        Cerrar Sesion
+        Cerrar Sesión
       </button>
-      <button class="h-[40px] w-[50%] rounded-lg bg-sigma text-white">Agente</button>
+      <button class="h-[40px] w-[50%] rounded-lg bg-sigma text-white">Soy Agente</button>
     </div>
 
     <!-- Horizontal Line -->
