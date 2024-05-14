@@ -188,7 +188,7 @@
         <div
           class="flex h-6 w-7 items-center justify-center"
           :class="activeProperty[0] ? 'bg-white' : 'bg-sgray-200'"
-          @click.prevent="switchProperty(0)"
+          @click.stop="switchProperty(0)"
         >
           <span class="text-shadow relative top-[1px]">1</span>
         </div>
@@ -197,7 +197,7 @@
         <div
           class="flex h-6 w-7 items-center justify-center"
           :class="activeProperty[1] ? 'bg-white' : 'bg-sgray-200'"
-          @click.prevent="switchProperty(1)"
+          @click.stop="switchProperty(1)"
         >
           <span class="text-shadow relative top-[1px]">2</span>
         </div>
@@ -207,7 +207,7 @@
           v-if="props.exchange.property_details.length > 2"
           class="flex h-6 w-7 items-center justify-center"
           :class="activeProperty[2] ? 'bg-white' : 'bg-sgray-200'"
-          @click.prevent="switchProperty(2)"
+          @click.stop="switchProperty(2)"
         >
           <span class="text-shadow relative top-[1px]">3</span>
         </div>
