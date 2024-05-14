@@ -7,7 +7,9 @@
 
 <template>
   <div class="relative flex flex-col">
-    <label :for="'municipality-' + index" class="pl-2 font-medium text-sblue-500">Municipio</label>
+    <label :for="'municipality-' + index" class="pl-2 font-medium text-sblue-500"
+      >Seleccione municipio</label
+    >
     <select
       name="municipality"
       :id="'municipality-' + index"

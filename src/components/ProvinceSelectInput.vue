@@ -7,7 +7,9 @@
 
 <template>
   <div class="relative flex flex-col">
-    <label :for="'province-' + index" class="pl-2 font-medium text-sblue-500">Provincia</label>
+    <label :for="'province-' + index" class="pl-2 font-medium text-sblue-500"
+      >Seleccione provincia</label
+    >
     <select
       name="province"
       :id="'province-' + index"
