@@ -1,7 +1,7 @@
-import { defineStore } from "pinia";
-import { ref, computed } from "vue";
+import { defineStore } from 'pinia';
+import { ref, computed } from 'vue';
 
-export const useLayoutStore = defineStore("layout", () => {
+export const useLayoutStore = defineStore('layout', () => {
   // State
   const sideMenu = ref(false);
   const logoLoading = ref(false);
@@ -12,7 +12,12 @@ export const useLayoutStore = defineStore("layout", () => {
   const popup = ref({
     preInsert: false,
     deletePost: false,
+    serverError: false,
+    invalidCredentials: false,
+    userExists: false,
+    badRequest: false,
   });
+
   const deletePostId = ref(null);
   const singleImageURLState = ref(null);
   const singleAvatarURLState = ref(null);
@@ -154,11 +159,20 @@ export const useLayoutStore = defineStore("layout", () => {
 
   const unhidePopup = (key) => {
     switch (key) {
-      case "pre-insert":
+      case 'pre-insert':
         popup.value.preInsert = true;
         break;
-      case "delete-post":
+      case 'delete-post':
         popup.value.deletePost = true;
+        break;
+      case 'server-error':
+        popup.value.serverError = true;
+        break;
+      case 'invalid-credentials':
+        popup.value.invalidCredentials = true;
+        break;
+      case 'bad-request':
+        popup.value.badRequest = true;
         break;
       default:
         break;
@@ -169,6 +183,9 @@ export const useLayoutStore = defineStore("layout", () => {
     popup.value = {
       preInsert: false,
       deletePost: false,
+      serverError: false,
+      invalidCredentials: false,
+      badRequest: false,
     };
   };
 

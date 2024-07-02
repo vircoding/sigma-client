@@ -1,7 +1,7 @@
 <script setup>
-  import { ref } from "vue";
-  import { useUserStore } from "../stores/userStore.js";
-  import { useLayoutStore } from "../stores/layoutStore.js";
+  import { ref } from 'vue';
+  import { useUserStore } from '../stores/userStore.js';
+  import { useLayoutStore } from '../stores/layoutStore.js';
 
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
@@ -109,5 +109,72 @@
         CANCELAR
       </button>
     </div>
+  </div>
+
+  <!-- Invalid Credentials -->
+  <div
+    v-if="layoutStore.popup.invalidCredentials"
+    @touchstart="startSwipe($event)"
+    @touchmove="moveSwipe($event)"
+    :class="layoutStore.isPopup ? 'inline-block' : 'hidden'"
+    class="text-shadow fixed left-[50vw] top-[50vh] z-50 flex w-[85vw] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-1 rounded-md bg-white px-5 py-6"
+  >
+    <h4 class="mb-1 w-full text-2xl font-semibold text-alert">Credenciales Incorrectas</h4>
+
+    <p class="mb-2 leading-tight text-sgray-300">
+      El correo electrónico o la contraseña son incorrectos
+    </p>
+
+    <button
+      @click.prevent="cancel"
+      class="mr-3 place-self-end rounded-lg border border-alert bg-alert px-3 py-1 font-semibold text-white"
+    >
+      Aceptar
+    </button>
+  </div>
+
+  <!-- Bad Request -->
+  <div
+    v-if="layoutStore.popup.badRequest"
+    @touchstart="startSwipe($event)"
+    @touchmove="moveSwipe($event)"
+    :class="layoutStore.isPopup ? 'inline-block' : 'hidden'"
+    class="text-shadow fixed left-[50vw] top-[50vh] z-50 flex w-[85vw] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-1 rounded-md bg-white px-5 py-6"
+  >
+    <h4 class="mb-1 w-full text-2xl font-semibold text-alert">Datos Incorrectos</h4>
+
+    <p class="mb-2 leading-tight text-sgray-300">
+      Se detectaron errores en los datos que proporcionaste, por favor, revisálos antes de
+      reenviarlos
+    </p>
+
+    <button
+      @click.prevent="cancel"
+      class="mr-3 place-self-end rounded-lg border border-alert bg-alert px-3 py-1 font-semibold text-white"
+    >
+      Aceptar
+    </button>
+  </div>
+
+  <!-- Server Error -->
+  <div
+    v-if="layoutStore.popup.serverError"
+    @touchstart="startSwipe($event)"
+    @touchmove="moveSwipe($event)"
+    :class="layoutStore.isPopup ? 'inline-block' : 'hidden'"
+    class="text-shadow fixed left-[50vw] top-[50vh] z-50 flex w-[85vw] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-1 rounded-md bg-white px-5 py-6"
+  >
+    <h4 class="mb-1 w-full text-2xl font-semibold text-alert">Error de servidor</h4>
+
+    <p class="mb-2 leading-tight text-sgray-300">
+      Estamos afrontando problemas en nuestros servidores, por favor, pruebe más tarde
+    </p>
+
+    <button
+      @click.prevent="cancel"
+      class="mr-3 place-self-end rounded-lg border border-alert bg-alert px-3 py-1 font-semibold text-white"
+    >
+      Aceptar
+    </button>
   </div>
 </template>

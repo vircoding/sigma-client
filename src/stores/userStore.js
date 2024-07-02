@@ -1,11 +1,11 @@
-import { defineStore } from "pinia";
-import { computed, onMounted, ref } from "vue";
-import authServices from "../services/authServices.js";
-import accountServices from "../services/accountServices.js";
-import postsServices from "../services/postsServices.js";
-import { usePostStore } from "./postStore.js";
+import { defineStore } from 'pinia';
+import { computed, onMounted, ref } from 'vue';
+import authServices from '../services/authServices.js';
+import accountServices from '../services/accountServices.js';
+import postsServices from '../services/postsServices.js';
+import { usePostStore } from './postStore.js';
 
-export const useUserStore = defineStore("user", () => {
+export const useUserStore = defineStore('user', () => {
   // Settings
   const postStore = usePostStore();
 
@@ -19,9 +19,9 @@ export const useUserStore = defineStore("user", () => {
 
   // States
   const credentialsState = ref({
-    token: "",
-    tokenExpiration: "",
-    role: "reader",
+    token: '',
+    tokenExpiration: '',
+    role: 'reader',
   });
 
   const userState = ref({});
@@ -37,8 +37,8 @@ export const useUserStore = defineStore("user", () => {
 
   // Actions
   const refresh = async (firstLoad = false) => {
-    if (localStorage.getItem("activeSession")) {
-      const expiresIn = JSON.parse(localStorage.getItem("activeSession")).expiresIn;
+    if (localStorage.getItem('activeSession')) {
+      const expiresIn = JSON.parse(localStorage.getItem('activeSession')).expiresIn;
       if (Date.now() < expiresIn) {
         try {
           const res = await authServices.refresh();
@@ -51,22 +51,22 @@ export const useUserStore = defineStore("user", () => {
           if (firstLoad) await getUser();
         } catch (error) {
           if (error.response.status === 401) {
-            if (localStorage.getItem("activeSession")) {
-              localStorage.removeItem("activeSession");
+            if (localStorage.getItem('activeSession')) {
+              localStorage.removeItem('activeSession');
             }
             console.log(error);
           } else if (error.response.status === 500) {
-            console.log("Server Error");
+            console.log('Server Error');
           } else {
-            console.log("Untracked Error");
-            if (localStorage.getItem("activeSession")) {
-              localStorage.removeItem("activeSession");
+            console.log('Untracked Error');
+            if (localStorage.getItem('activeSession')) {
+              localStorage.removeItem('activeSession');
             }
             console.log(error);
           }
         }
       } else {
-        localStorage.removeItem("activeSession");
+        localStorage.removeItem('activeSession');
         $reset();
       }
     }
@@ -81,9 +81,9 @@ export const useUserStore = defineStore("user", () => {
         credentialsState.value.tokenExpiration.getSeconds() + res.data.credentials.expiresIn
       );
       credentialsState.value.role = res.data.credentials.role;
-      if (res.data.credentials.role === "client") {
+      if (res.data.credentials.role === 'client') {
         userState.value = { info: res.data.info };
-      } else if (res.data.credentials.role === "agent") {
+      } else if (res.data.credentials.role === 'agent') {
         userState.value = {
           info: res.data.info,
           contact_details: res.data.contact_details,
@@ -94,7 +94,7 @@ export const useUserStore = defineStore("user", () => {
       userFavoritesState.value = res.data.favorites;
 
       localStorage.setItem(
-        "activeSession",
+        'activeSession',
         JSON.stringify({
           expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000, // 30 Days
         })
@@ -103,13 +103,13 @@ export const useUserStore = defineStore("user", () => {
       $reset();
       console.log(error);
       if (error.response.status === 400) {
-        throw new Error("Request Error");
+        throw new Error('Bad Request');
       } else if (error.response.status === 403) {
-        throw new Error("Invalid Credentials");
+        throw new Error('Invalid Credentials');
       } else if (error.response.status === 500) {
-        throw new Error("Server Error");
+        throw new Error('Server Error');
       } else {
-        throw new Error("Untracked Error");
+        throw new Error('Untracked Error');
       }
     }
   };
@@ -117,10 +117,10 @@ export const useUserStore = defineStore("user", () => {
   const register = async (user, avatar) => {
     try {
       const formData = new FormData();
-      formData.append("data", JSON.stringify(user));
+      formData.append('data', JSON.stringify(user));
 
-      if (user.role === "agent") {
-        formData.append("avatar", avatar, "avatar.jpg");
+      if (user.role === 'agent') {
+        formData.append('avatar', avatar, 'avatar.jpg');
       }
 
       const res = await authServices.register(formData);
@@ -130,9 +130,9 @@ export const useUserStore = defineStore("user", () => {
         credentialsState.value.tokenExpiration.getSeconds() + res.data.credentials.expiresIn
       );
       credentialsState.value.role = res.data.credentials.role;
-      if (res.data.credentials.role === "client") {
+      if (res.data.credentials.role === 'client') {
         userState.value = { info: res.data.info };
-      } else if (res.data.credentials.role === "agent") {
+      } else if (res.data.credentials.role === 'agent') {
         userState.value = {
           info: res.data.info,
           contact_details: res.data.contact_details,
@@ -141,7 +141,7 @@ export const useUserStore = defineStore("user", () => {
       }
 
       localStorage.setItem(
-        "activeSession",
+        'activeSession',
         JSON.stringify({
           expiresIn: Date.now() + 30 * 24 * 60 * 60 * 1000, // 30 Days
         })
@@ -150,13 +150,13 @@ export const useUserStore = defineStore("user", () => {
       $reset();
       console.log(error);
       if (error.response.status === 400) {
-        throw new Error("Request Error");
+        throw new Error('Request Error');
       } else if (error.response.status === 403) {
-        throw new Error("User Exists Already");
+        throw new Error('User Exists Already');
       } else if (error.response.status === 500) {
-        throw new Error("Server Error");
+        throw new Error('Server Error');
       } else {
-        throw new Error("Untracked Error");
+        throw new Error('Untracked Error');
       }
     }
   };
@@ -164,7 +164,7 @@ export const useUserStore = defineStore("user", () => {
   const logout = async () => {
     try {
       await authServices.logout();
-      localStorage.removeItem("activeSession");
+      localStorage.removeItem('activeSession');
       $reset();
     } catch (error) {
       console.log(error);
@@ -174,17 +174,17 @@ export const useUserStore = defineStore("user", () => {
   const updateUser = async (user, avatar) => {
     try {
       const formData = new FormData();
-      formData.append("data", JSON.stringify(user));
+      formData.append('data', JSON.stringify(user));
 
-      if (user.role === "agent" && avatar) {
-        formData.append("avatar", avatar, "avatar.jpg");
+      if (user.role === 'agent' && avatar) {
+        formData.append('avatar', avatar, 'avatar.jpg');
       }
 
       const res = await accountServices.updateUser(formData);
       credentialsState.value.role = res.data.credentials.role;
-      if (res.data.credentials.role === "client") {
+      if (res.data.credentials.role === 'client') {
         userState.value = { info: res.data.info };
-      } else if (res.data.credentials.role === "agent") {
+      } else if (res.data.credentials.role === 'agent') {
         userState.value = {
           info: res.data.info,
           contact_details: res.data.contact_details,
@@ -202,9 +202,9 @@ export const useUserStore = defineStore("user", () => {
     try {
       const res = await accountServices.getUser();
       credentialsState.value.role = res.data.credentials.role;
-      if (res.data.credentials.role === "client") {
+      if (res.data.credentials.role === 'client') {
         userState.value = { info: res.data.info };
-      } else if (res.data.credentials.role === "agent") {
+      } else if (res.data.credentials.role === 'agent') {
         userState.value = {
           info: res.data.info,
           contact_details: res.data.contact_details,
@@ -239,9 +239,9 @@ export const useUserStore = defineStore("user", () => {
   const getMyAccount = async () => {
     const myAccount = {};
 
-    if (credentialsState.value.role === "client") {
+    if (credentialsState.value.role === 'client') {
       myAccount.info = { username: userState.value.info.username };
-    } else if (credentialsState.value.role === "agent") {
+    } else if (credentialsState.value.role === 'agent') {
       myAccount.info = {
         bio: userState.value.info.bio,
         firstname: userState.value.info.firstname,
@@ -294,9 +294,9 @@ export const useUserStore = defineStore("user", () => {
     try {
       const formData = new FormData();
       images.forEach((item, index) => {
-        formData.append("images", item, `img_${index + 1}.jpg`);
+        formData.append('images', item, `img_${index + 1}.jpg`);
       });
-      formData.append("data", JSON.stringify(post));
+      formData.append('data', JSON.stringify(post));
 
       const res = await accountServices.insertPost(formData);
       userPostsState.value = res.data.posts;
@@ -312,9 +312,9 @@ export const useUserStore = defineStore("user", () => {
     try {
       const formData = new FormData();
       images.forEach((item, index) => {
-        formData.append("images", item, `img_${index + 1}.jpg`);
+        formData.append('images', item, `img_${index + 1}.jpg`);
       });
-      formData.append("data", JSON.stringify(post));
+      formData.append('data', JSON.stringify(post));
 
       const res = await accountServices.updatePost(formData, id);
       userPostsState.value = res.data;
@@ -346,9 +346,9 @@ export const useUserStore = defineStore("user", () => {
   // Resets
   const resetCredentials = () => {
     credentialsState.value = {
-      token: "",
-      tokenExpiration: "",
-      role: "reader",
+      token: '',
+      tokenExpiration: '',
+      role: 'reader',
     };
   };
 

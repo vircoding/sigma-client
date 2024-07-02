@@ -1,18 +1,18 @@
 <script setup>
-  import { computed, ref } from "vue";
-  import { useUserStore } from "../stores/userStore.js";
-  import { useLayoutStore } from "../stores/layoutStore";
-  import EmailInput from "./EmailInput.vue";
-  import PasswordInput from "./PasswordInput.vue";
-  import router from "../router";
+  import { computed, ref } from 'vue';
+  import { useUserStore } from '../stores/userStore.js';
+  import { useLayoutStore } from '../stores/layoutStore';
+  import EmailInput from './EmailInput.vue';
+  import PasswordInput from './PasswordInput.vue';
+  import router from '../router';
 
   // Stores
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
 
   // Refs
-  const email = ref("");
-  const password = ref("");
+  const email = ref('');
+  const password = ref('');
 
   const filledInputs = ref({
     email: false,
@@ -43,10 +43,10 @@
   const fillInput = (input) => {
     setTimeout(() => {
       switch (input) {
-        case "email":
+        case 'email':
           filledInputs.value.email = true;
           break;
-        case "password":
+        case 'password':
           filledInputs.value.password = true;
           break;
       }
@@ -60,8 +60,8 @@
   });
 
   const resetComponent = () => {
-    email.value = "";
-    password.value = "";
+    email.value = '';
+    password.value = '';
 
     filledInputs.value.email = false;
     filledInputs.value.password = false;
@@ -74,13 +74,19 @@
 
       await userStore.login(user);
 
-      await router.push("/");
+      await router.push('/');
 
       resetComponent();
 
       layoutStore.hideSpinnerLoading();
     } catch (error) {
-      console.log(error);
+      if (error.message === 'Invalid Credentials') {
+        layoutStore.unhidePopup('invalid-credentials');
+      } else if (error.message === 'Bad Request') {
+        layoutStore.unhidePopup('bad-request');
+      } else {
+        layoutStore.unhidePopup('server-error');
+      }
       layoutStore.hideSpinnerLoading();
     }
   };
