@@ -1,15 +1,15 @@
 <script setup>
-  import { ref } from "vue";
-  import SigmaVerticalIcon from "./icons/SigmaVerticalIcon.vue";
-  import FeatureIcon from "./icons/FeatureIcon.vue";
-  import BooleanIcon from "./icons/BooleanIcon.vue";
+  import { ref } from 'vue';
+  import SigmaVerticalIcon from './icons/SigmaVerticalIcon.vue';
+  import FeatureIcon from './icons/FeatureIcon.vue';
+  import BooleanIcon from './icons/BooleanIcon.vue';
 
-  const props = defineProps(["exchange"]);
+  const props = defineProps(['exchange']);
 
   const defineFeatureStyles = (count) => {
     let fill;
-    if (Boolean(count)) fill = "fill-sviolet";
-    else fill = "fill-sgray-200";
+    if (Boolean(count)) fill = 'fill-sviolet';
+    else fill = 'fill-sgray-200';
     return `h-[15px] w-[15px] min-[400px]:h-[18px] min-[400px]:w-[18px] ${fill}`;
   };
 
@@ -46,8 +46,10 @@
     </div>
     <div class="relative flex h-[60px] w-full items-center bg-white">
       <!-- Clip -->
-      <div class="clip flex h-44 w-[85px] flex-shrink-0 flex-col items-center bg-sviolet pt-[45px]">
-        <h2 class="text-base font-extrabold text-white">PERMUTA</h2>
+      <div
+        class="clip relative top-1 flex h-44 w-[85px] flex-shrink-0 flex-col items-center bg-sviolet pt-[45px]"
+      >
+        <h2 class="text-sm font-extrabold text-white">PERMUTA</h2>
         <div
           v-if="props.exchange.offer_details.needs.enable"
           class="flex flex-col items-center gap-[2px]"
@@ -66,7 +68,7 @@
             {{ props.exchange.offer_details.offers }}
           </span>
           <span class="text-xs text-white">{{
-            props.exchange.offer_details.offers === 1 ? "propiedad" : "propiedades"
+            props.exchange.offer_details.offers === 1 ? 'propiedad' : 'propiedades'
           }}</span>
         </div>
       </div>
