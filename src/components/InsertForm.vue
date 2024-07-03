@@ -1,26 +1,26 @@
 <script setup>
-  import { ref, computed, watch } from "vue";
-  import { useLayoutStore } from "../stores/layoutStore.js";
-  import { useUserStore } from "../stores/userStore.js";
-  import { usePostStore } from "../stores/postStore.js";
-  import { defaultMunicipality } from "../utils/provinces.js";
-  import TypeRadioInput from "./TypeRadioInput.vue";
-  import CurrencyRadioInput from "./CurrencyRadioInput.vue";
-  import FrequencyRadioInput from "./FrequencyRadioInput.vue";
-  import AmountInput from "./AmountInput.vue";
-  import OffersSelectInput from "./OffersSelectInput.vue";
-  import NeedsSelectInput from "./NeedsSelectInput.vue";
-  import ProvinceSelectInput from "./ProvinceSelectInput.vue";
-  import MunicipalitySelectInput from "./MunicipalitySelectInput.vue";
-  import FeatureNumberInput from "./FeatureNumberInput.vue";
-  import FeatureCheckboxInput from "./FeatureCheckboxInput.vue";
-  import DescriptionTextAreaInput from "./DescriptionTextAreaInput.vue";
-  import CodeInput from "./CodeInput.vue";
-  import PhoneInput from "./PhoneInput.vue";
-  import WhatsappCheckboxInput from "./WhatsappCheckboxInput.vue";
-  import PhotoBoxInput from "./PhotoBoxInput.vue";
-  import parsePhoneNumber from "libphonenumber-js";
-  import router from "../router";
+  import { ref, computed, watch } from 'vue';
+  import { useLayoutStore } from '../stores/layoutStore.js';
+  import { useUserStore } from '../stores/userStore.js';
+  import { usePostStore } from '../stores/postStore.js';
+  import { defaultMunicipality } from '../utils/provinces.js';
+  import TypeRadioInput from './TypeRadioInput.vue';
+  import CurrencyRadioInput from './CurrencyRadioInput.vue';
+  import FrequencyRadioInput from './FrequencyRadioInput.vue';
+  import AmountInput from './AmountInput.vue';
+  import OffersSelectInput from './OffersSelectInput.vue';
+  import NeedsSelectInput from './NeedsSelectInput.vue';
+  import ProvinceSelectInput from './ProvinceSelectInput.vue';
+  import MunicipalitySelectInput from './MunicipalitySelectInput.vue';
+  import FeatureNumberInput from './FeatureNumberInput.vue';
+  import FeatureCheckboxInput from './FeatureCheckboxInput.vue';
+  import DescriptionTextAreaInput from './DescriptionTextAreaInput.vue';
+  import CodeInput from './CodeInput.vue';
+  import PhoneInput from './PhoneInput.vue';
+  import WhatsappCheckboxInput from './WhatsappCheckboxInput.vue';
+  import PhotoBoxInput from './PhotoBoxInput.vue';
+  import parsePhoneNumber from 'libphonenumber-js';
+  import router from '../router';
 
   // Stores
   const layoutStore = useLayoutStore();
@@ -30,13 +30,13 @@
   // Refs
   const type = ref(postStore.insertTypeState);
   const saleDetails = ref({
-    amount: "",
-    currency: "usd",
+    amount: '',
+    currency: 'usd',
   });
   const rentDetails = ref({
-    amount: "",
-    currency: "usd",
-    frequency: "daily",
+    amount: '',
+    currency: 'usd',
+    frequency: 'daily',
   });
   const exchangeDetails = ref({
     offers: 1,
@@ -45,8 +45,8 @@
   const propertyDetails = ref([
     {
       address: {
-        municipality: "La Habana Vieja",
-        province: "La Habana",
+        municipality: 'La Habana Vieja',
+        province: 'La Habana',
       },
       features: {
         bed_room: 0,
@@ -59,8 +59,8 @@
     },
     {
       address: {
-        municipality: "La Habana Vieja",
-        province: "La Habana",
+        municipality: 'La Habana Vieja',
+        province: 'La Habana',
       },
       features: {
         bed_room: 0,
@@ -73,8 +73,8 @@
     },
     {
       address: {
-        municipality: "La Habana Vieja",
-        province: "La Habana",
+        municipality: 'La Habana Vieja',
+        province: 'La Habana',
       },
       features: {
         bed_room: 0,
@@ -87,11 +87,11 @@
     },
   ]);
   const postDetails = ref({
-    description: "",
+    description: '',
     contact_details: {
       contact: {
-        code: "+53",
-        phone: "",
+        code: '+53',
+        phone: '',
       },
       contact_types: {
         phone: true,
@@ -134,9 +134,9 @@
 
   // Comps
   const propertyLength = computed(() => {
-    if (type.value === "sale") return 1;
-    else if (type.value === "rent") return 1;
-    else if (type.value === "exchange") return parseInt(exchangeDetails.value.offers);
+    if (type.value === 'sale') return 1;
+    else if (type.value === 'rent') return 1;
+    else if (type.value === 'exchange') return parseInt(exchangeDetails.value.offers);
   });
 
   const getFirstProvince = computed(() => propertyDetails.value[0].address.province);
@@ -152,7 +152,7 @@
 
   const disableSubmit = computed(() => {
     if (imageError.value) return true;
-    if (type.value === "sale") {
+    if (type.value === 'sale') {
       if (
         saleAmountError.value ||
         BedRoomError.value[0] ||
@@ -162,7 +162,7 @@
         phoneError.value
       )
         return true;
-    } else if (type.value === "rent") {
+    } else if (type.value === 'rent') {
       if (
         rentAmountError.value ||
         BedRoomError.value[0] ||
@@ -172,7 +172,7 @@
         phoneError.value
       )
         return true;
-    } else if (type.value === "exchange") {
+    } else if (type.value === 'exchange') {
       if (descriptionError.value || codeError.value || phoneError.value) return true;
       else {
         if (
@@ -187,14 +187,14 @@
 
   // Errors
   const saleAmountError = computed(() => {
-    if (saleDetails.value.amount === "") return true;
+    if (saleDetails.value.amount === '') return true;
     if (!saleDetails.value.amount) return true;
     else if (saleDetails.value.amount < 1 || saleDetails.value.amount > 999999999) return true;
     else return false;
   });
 
   const rentAmountError = computed(() => {
-    if (rentDetails.value.amount === "") return true;
+    if (rentDetails.value.amount === '') return true;
     else if (!rentDetails.value.amount) return true;
     else if (rentDetails.value.amount < 1 || rentDetails.value.amount > 999999999) return true;
     else return false;
@@ -203,7 +203,7 @@
   const BedRoomError = computed(() => {
     const errors = [false, false, false];
     propertyDetails.value.forEach((item, index) => {
-      if (item.features.bed_room === "" || item.features.bed_room < 0 || item.features.bed_room > 9)
+      if (item.features.bed_room === '' || item.features.bed_room < 0 || item.features.bed_room > 9)
         errors[index] = true;
     });
 
@@ -214,7 +214,7 @@
     const errors = [false, false, false];
     propertyDetails.value.forEach((item, index) => {
       if (
-        item.features.bath_room === "" ||
+        item.features.bath_room === '' ||
         item.features.bath_room < 0 ||
         item.features.bath_room > 9
       )
@@ -252,9 +252,12 @@
   });
 
   watch(formattedPhone, () => {
-    if (postDetails.value.contact_details.contact.code === "+53") {
+    if (
+      postDetails.value.contact_details.contact.code === '+53' &&
+      postDetails.value.contact_details.contact.phone[0] === '6'
+    ) {
       // Cuba
-      const regex = /^[56].{7}$/;
+      const regex = /^[567].{7}$/;
       if (!regex.test(postDetails.value.contact_details.contact.phone)) {
         phoneError.value = true;
       } else {
@@ -265,7 +268,7 @@
       try {
         const parsedPhoneNumber = parsePhoneNumber(formattedPhone.value);
         if (!parsedPhoneNumber.isValid()) {
-          throw new Error("Non-valid Phone Number");
+          throw new Error('Non-valid Phone Number');
         } else {
           phoneError.value = false;
         }
@@ -279,13 +282,13 @@
   const fillInput = (input) => {
     setTimeout(() => {
       switch (input) {
-        case "saleAmount":
+        case 'saleAmount':
           filledInputs.value.saleAmount = true;
           break;
-        case "rentAmount":
+        case 'rentAmount':
           filledInputs.value.rentAmount = true;
           break;
-        case "phone":
+        case 'phone':
           filledInputs.value.phone = true;
           break;
       }
@@ -312,20 +315,20 @@
       },
     };
 
-    if (type.value === "sale") {
+    if (type.value === 'sale') {
       post.amount_details = {
         amount: saleDetails.value.amount,
         currency: saleDetails.value.currency,
       };
       post.property_details = [propertyDetails.value[0]];
-    } else if (type.value === "rent") {
+    } else if (type.value === 'rent') {
       post.amount_details = {
         amount: rentDetails.value.amount,
         currency: rentDetails.value.currency,
         frequency: rentDetails.value.frequency,
       };
       post.property_details = [propertyDetails.value[0]];
-    } else if (type.value === "exchange") {
+    } else if (type.value === 'exchange') {
       post.offer_details = {
         offers: exchangeDetails.value.offers,
         needs: {
@@ -340,21 +343,21 @@
   };
 
   const resetComponent = () => {
-    type.value = "sale";
+    type.value = 'sale';
 
-    saleDetails.value.amount = "";
-    saleDetails.value.currency = "usd";
+    saleDetails.value.amount = '';
+    saleDetails.value.currency = 'usd';
 
-    rentDetails.value.amount = "";
-    rentDetails.value.currency = "usd";
-    rentDetails.value.frequency = "daily";
+    rentDetails.value.amount = '';
+    rentDetails.value.currency = 'usd';
+    rentDetails.value.frequency = 'daily';
 
     exchangeDetails.value.offers = 1;
     exchangeDetails.value.needs = 1;
 
     propertyDetails.value.forEach((item) => {
-      item.address.municipality = "La Habana Vieja";
-      item.address.province = "La Habana";
+      item.address.municipality = 'La Habana Vieja';
+      item.address.province = 'La Habana';
       item.features.bed_room = 0;
       item.features.bath_room = 0;
       item.features.garage = false;
@@ -363,9 +366,9 @@
       item.features.furnished = false;
     });
 
-    postDetails.value.description = "";
-    postDetails.value.contact_details.contact.code = "+53";
-    postDetails.value.contact_details.contact.phone = "";
+    postDetails.value.description = '';
+    postDetails.value.contact_details.contact.code = '+53';
+    postDetails.value.contact_details.contact.phone = '';
     postDetails.value.contact_details.contact_types.phone = true;
     postDetails.value.contact_details.contact_types.whatsapp = true;
 
@@ -399,7 +402,7 @@
   };
 
   setTimeout(() => {
-    layoutStore.unhidePopup("pre-insert");
+    layoutStore.unhidePopup('pre-insert');
   }, 750);
 
   const pendingRefreshType = computed(() => {
@@ -415,7 +418,7 @@
   });
 
   // Reset Insert Type State After Load
-  postStore.setInsertType("sale");
+  postStore.setInsertType('sale');
 </script>
 
 <template>
