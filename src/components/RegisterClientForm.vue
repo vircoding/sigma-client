@@ -1,19 +1,19 @@
 <script setup>
-  import { computed, ref } from "vue";
-  import { useUserStore } from "../stores/userStore.js";
-  import { useLayoutStore } from "../stores/layoutStore";
-  import EmailInput from "./EmailInput.vue";
-  import PasswordInput from "./PasswordInput.vue";
-  import router from "../router";
+  import { computed, ref } from 'vue';
+  import { useUserStore } from '../stores/userStore.js';
+  import { useLayoutStore } from '../stores/layoutStore';
+  import EmailInput from './EmailInput.vue';
+  import PasswordInput from './PasswordInput.vue';
+  import router from '../router';
 
   // Stores
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
 
   // Refs
-  const email = ref("");
-  const password = ref("");
-  const repassword = ref("");
+  const email = ref('');
+  const password = ref('');
+  const repassword = ref('');
 
   const filledInputs = ref({
     email: false,
@@ -55,12 +55,12 @@
 
   const buildUser = () => {
     return {
-      role: "client",
+      role: 'client',
       email: email.value,
       password: password.value,
       repassword: repassword.value,
       info: {
-        username: "new user",
+        username: 'new user',
       },
     };
   };
@@ -68,13 +68,13 @@
   const fillInput = (input) => {
     setTimeout(() => {
       switch (input) {
-        case "email":
+        case 'email':
           filledInputs.value.email = true;
           break;
-        case "password":
+        case 'password':
           filledInputs.value.password = true;
           break;
-        case "repassword":
+        case 'repassword':
           filledInputs.value.repassword = true;
           break;
       }
@@ -82,9 +82,9 @@
   };
 
   const resetComponent = () => {
-    email.value = "";
-    password.value = "";
-    repassword.value = "";
+    email.value = '';
+    password.value = '';
+    repassword.value = '';
 
     filledInputs.value.email = false;
     filledInputs.value.password = false;
@@ -98,13 +98,19 @@
 
       await userStore.register(user);
 
-      await router.push("/");
+      await router.push('/');
 
       resetComponent();
 
       layoutStore.hideSpinnerLoading();
     } catch (error) {
-      console.log(error);
+      if (error.message === 'User Exists Already') {
+        layoutStore.unhidePopup('user-exists');
+      } else if (error.message === 'Bad Request') {
+        layoutStore.unhidePopup('bad-request');
+      } else {
+        layoutStore.unhidePopup('server-error');
+      }
       layoutStore.hideSpinnerLoading();
     }
   };

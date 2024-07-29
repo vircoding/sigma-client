@@ -144,8 +144,30 @@
     <h4 class="mb-1 w-full text-2xl font-semibold text-alert">Datos Incorrectos</h4>
 
     <p class="mb-2 leading-tight text-sgray-300">
-      Se detectaron errores en los datos que proporcionaste, por favor, revisálos antes de
+      Se detectaron errores en los datos que proporcionaste, por favor, revísalos antes de
       reenviarlos
+    </p>
+
+    <button
+      @click.prevent="cancel"
+      class="mr-3 place-self-end rounded-lg border border-alert bg-alert px-3 py-1 font-semibold text-white"
+    >
+      Aceptar
+    </button>
+  </div>
+
+  <!-- User Already Exists -->
+  <div
+    v-if="layoutStore.popup.userExists"
+    @touchstart="startSwipe($event)"
+    @touchmove="moveSwipe($event)"
+    :class="layoutStore.isPopup ? 'inline-block' : 'hidden'"
+    class="text-shadow fixed left-[50vw] top-[50vh] z-50 flex w-[85vw] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-1 rounded-md bg-white px-5 py-6"
+  >
+    <h4 class="mb-1 w-full text-2xl font-semibold text-alert">Este usuario ya existe</h4>
+
+    <p class="mb-2 leading-tight text-sgray-300">
+      Intentas registrarte con una dirección de correo ya registrada
     </p>
 
     <button

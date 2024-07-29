@@ -1,73 +1,83 @@
-import { createRouter, createWebHistory } from "vue-router";
-import { useUserStore } from "../stores/userStore.js";
-import { usePostStore } from "../stores/postStore.js";
-import { useAgentStore } from "../stores/agentStore.js";
-import { useLayoutStore } from "../stores/layoutStore.js";
+import { createRouter, createWebHistory } from 'vue-router';
+import { useUserStore } from '../stores/userStore.js';
+import { usePostStore } from '../stores/postStore.js';
+import { useAgentStore } from '../stores/agentStore.js';
+import { useLayoutStore } from '../stores/layoutStore.js';
 
 const routes = [
   {
-    path: "/",
-    name: "home",
-    component: () => import("../views/HomeView.vue"),
+    path: '/',
+    name: 'home',
+    component: () => import('../views/HomeView.vue'),
   },
   {
-    path: "/support/help",
-    name: "help",
-    component: () => import("../views/HelpView.vue"),
+    path: '/support/help',
+    name: 'help',
+    component: () => import('../views/HelpView.vue'),
   },
   {
-    path: "/support/contact",
-    name: "contact",
-    component: () => import("../views/ContactView.vue"),
+    path: '/support/contact',
+    name: 'contact',
+    component: () => import('../views/ContactView.vue'),
   },
   {
-    path: "/support/about",
-    name: "about",
-    component: () => import("../views/AboutView.vue"),
+    path: '/support/about',
+    name: 'about',
+    component: () => import('../views/AboutView.vue'),
   },
   {
-    path: "/auth/register/client",
-    name: "register-client",
-    component: () => import("../views/RegisterClientView.vue"),
+    path: '/support/privacy',
+    name: 'privacy',
+    component: () => import('../views/PrivacyView.vue'),
+  },
+  {
+    path: '/support/terms',
+    name: 'terms',
+    component: () => import('../views/AgentTermsView.vue'),
+  },
+  {
+    path: '/auth/register/client',
+    name: 'register-client',
+    component: () => import('../views/RegisterClientView.vue'),
     beforeEnter: (to, from, next) => {
       const userStore = useUserStore();
       if (userStore.isLoggedIn) {
-        next("/");
+        next('/');
       } else {
         next();
       }
     },
   },
   {
-    path: "/auth/register/agent",
-    name: "register-agent",
-    component: () => import("../views/RegisterAgentView.vue"),
+    path: '/auth/register/agent',
+    name: 'register-agent',
+    component: () => import('../views/RegisterAgentView.vue'),
     beforeEnter: (to, from, next) => {
       const userStore = useUserStore();
       if (userStore.isLoggedIn) {
-        next("/");
+        next('/');
       } else {
         next();
       }
     },
   },
   {
-    path: "/auth/login",
-    name: "login",
-    component: () => import("../views/LoginView.vue"),
+    path: '/auth/login',
+    name: 'login',
+    component: () => import('../views/LoginView.vue'),
     beforeEnter: (to, from, next) => {
       const userStore = useUserStore();
       if (userStore.isLoggedIn) {
-        next("/");
+        next('/');
       } else {
         next();
       }
     },
   },
   {
-    path: "/find",
-    name: "find",
-    component: () => import("../views/FindView.vue"),
+    path: '/find',
+    name: 'find',
+    component: () => import('../views/FindView.vue'),
     beforeEnter: async (to, from, next) => {
       const layoutStore = useLayoutStore();
       const postStore = usePostStore();
@@ -80,9 +90,9 @@ const routes = [
 
       if (postStore.findedPostsState === null) {
         try {
-          if (postStore.filterTypeState === "rent") {
+          if (postStore.filterTypeState === 'rent') {
             await postStore.findPosts(
-              "rent",
+              'rent',
               1,
               undefined,
               undefined,
@@ -91,9 +101,9 @@ const routes = [
               undefined,
               undefined
             );
-          } else if (postStore.filterTypeState === "exchange") {
+          } else if (postStore.filterTypeState === 'exchange') {
             await postStore.findPosts(
-              "exchange",
+              'exchange',
               1,
               undefined,
               undefined,
@@ -104,7 +114,7 @@ const routes = [
             );
           } else {
             await postStore.findPosts(
-              "sale",
+              'sale',
               1,
               undefined,
               undefined,
@@ -135,7 +145,7 @@ const routes = [
             layoutStore.hideSpinnerLoading();
           }
 
-          next("/");
+          next('/');
         }
       } else {
         if (!from.name) {
@@ -149,15 +159,15 @@ const routes = [
     },
   },
   {
-    path: "/insert",
-    name: "insert",
-    component: () => import("../views/InsertView.vue"),
+    path: '/insert',
+    name: 'insert',
+    component: () => import('../views/InsertView.vue'),
     meta: { requiresAuth: true },
   },
   {
-    path: "/account",
-    name: "account",
-    component: () => import("../views/MyAccountView.vue"),
+    path: '/account',
+    name: 'account',
+    component: () => import('../views/MyAccountView.vue'),
     meta: { requiresAuth: true },
     beforeEnter: async (to, from, next) => {
       const userStore = useUserStore();
@@ -190,14 +200,14 @@ const routes = [
           layoutStore.hideSpinnerLoading();
         }
 
-        next("/");
+        next('/');
       }
     },
   },
   {
-    path: "/post/:id",
-    name: "post",
-    component: () => import("../views/PostView.vue"),
+    path: '/post/:id',
+    name: 'post',
+    component: () => import('../views/PostView.vue'),
     beforeEnter: async (to, from, next) => {
       const postStore = usePostStore();
       const agentStore = useAgentStore();
@@ -214,7 +224,7 @@ const routes = [
           await postStore.getPost(to.params.id);
         }
 
-        if (postStore.postState.author_role === "agent")
+        if (postStore.postState.author_role === 'agent')
           await agentStore.getAuthor(postStore.postState.uid);
 
         if (!from.name) {
@@ -231,22 +241,22 @@ const routes = [
           layoutStore.hideSpinnerLoading();
         }
 
-        if (error.message === "Post not founded") {
-          next({ name: "404" });
-        } else if (error.message === "Agent not founded") {
+        if (error.message === 'Post not founded') {
+          next({ name: '404' });
+        } else if (error.message === 'Agent not founded') {
           postStore.setIsClient();
           next();
         } else {
           console.log(error);
-          next("/");
+          next('/');
         }
       }
     },
   },
   {
-    path: "/post/edit/:id",
-    name: "edit-post",
-    component: () => import("../views/EditPostView.vue"),
+    path: '/post/edit/:id',
+    name: 'edit-post',
+    component: () => import('../views/EditPostView.vue'),
     meta: { requiresAuth: true },
     beforeEnter: async (to, from, next) => {
       const postStore = usePostStore();
@@ -276,14 +286,14 @@ const routes = [
           layoutStore.hideSpinnerLoading();
         }
 
-        next("/");
+        next('/');
       }
     },
   },
   {
-    path: "/agents/:id",
-    name: "agent",
-    component: () => import("../views/AgentInfoView.vue"),
+    path: '/agents/:id',
+    name: 'agent',
+    component: () => import('../views/AgentInfoView.vue'),
     beforeEnter: async (to, from, next) => {
       const userStore = useUserStore();
       const layoutStore = useLayoutStore();
@@ -313,19 +323,19 @@ const routes = [
           layoutStore.hideSpinnerLoading();
         }
 
-        next("/");
+        next('/');
       }
     },
   },
   {
-    path: "/:catchAll(.*)",
-    name: "not_found",
-    component: () => import("../views/NotFoundView.vue"),
+    path: '/:catchAll(.*)',
+    name: 'not_found',
+    component: () => import('../views/NotFoundView.vue'),
   },
   {
-    path: "/404",
-    name: "404",
-    component: () => import("../views/NotFoundView.vue"),
+    path: '/404',
+    name: '404',
+    component: () => import('../views/NotFoundView.vue'),
   },
 ];
 
@@ -336,7 +346,7 @@ const router = createRouter({
     if (to.hash) {
       return {
         el: to.hash,
-        behavior: "smooth",
+        behavior: 'smooth',
       };
     } else if (savedPosition) {
       return savedPosition;
@@ -362,7 +372,7 @@ router.beforeEach(async (to, from, next) => {
     const targetElement = document.getElementById(to.hash.slice(1));
     if (targetElement) {
       // Utiliza el método scrollIntoView para desplazar la ventana a la sección deseada
-      targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
       next(false); // Detiene temporalmente la navegación para permitir el desplazamiento
       return;
     }
@@ -372,7 +382,7 @@ router.beforeEach(async (to, from, next) => {
     if (userStore.isLoggedIn) {
       next();
     } else {
-      next("/auth/login");
+      next('/auth/login');
     }
   } else {
     next();

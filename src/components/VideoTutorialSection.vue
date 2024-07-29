@@ -6,8 +6,8 @@
         Video Tutorial
       </h2>
       <p class="text-shadow w-full px-2 text-sm text-sgray-300">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt, pariatur? Aliquid, similique
-        aperiam!
+        Aprende con este tutorial a utilizar nuestra plataforma y sacar el máximo provecho de la
+        misma.
       </p>
     </div>
 

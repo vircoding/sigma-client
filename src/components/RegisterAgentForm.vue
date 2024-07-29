@@ -1,15 +1,15 @@
 <script setup>
-  import { computed, ref, watch } from "vue";
-  import { useUserStore } from "../stores/userStore.js";
-  import { useLayoutStore } from "../stores/layoutStore";
-  import EmailInput from "./EmailInput.vue";
-  import PasswordInput from "./PasswordInput.vue";
-  import CodeInput from "./CodeInput.vue";
-  import PhoneInput from "./PhoneInput.vue";
-  import TextInput from "./TextInput.vue";
-  import BioTextAreaInput from "./BioTextAreaInput.vue";
-  import parsePhoneNumber from "libphonenumber-js";
-  import router from "../router";
+  import { computed, ref, watch } from 'vue';
+  import { useUserStore } from '../stores/userStore.js';
+  import { useLayoutStore } from '../stores/layoutStore';
+  import EmailInput from './EmailInput.vue';
+  import PasswordInput from './PasswordInput.vue';
+  import CodeInput from './CodeInput.vue';
+  import PhoneInput from './PhoneInput.vue';
+  import TextInput from './TextInput.vue';
+  import BioTextAreaInput from './BioTextAreaInput.vue';
+  import parsePhoneNumber from 'libphonenumber-js';
+  import router from '../router';
 
   // Stores
   const userStore = useUserStore();
@@ -17,20 +17,20 @@
 
   // Refs
   const fileInput = ref(null);
-  const email = ref("");
-  const password = ref("");
-  const repassword = ref("");
+  const email = ref('');
+  const password = ref('');
+  const repassword = ref('');
   const agent = ref({
     info: {
-      firstname: "",
-      lastname: "",
-      bio: "",
+      firstname: '',
+      lastname: '',
+      bio: '',
     },
     contact_details: {
-      public_email: "",
+      public_email: '',
       whatsapp: {
-        code: "+53",
-        phone: "",
+        code: '+53',
+        phone: '',
       },
     },
   });
@@ -106,7 +106,7 @@
   });
 
   watch(formattedPhone, () => {
-    if (agent.value.contact_details.whatsapp.code === "+53") {
+    if (agent.value.contact_details.whatsapp.code === '+53') {
       // Cuba
       const regex = /^[56].{7}$/;
       if (!regex.test(agent.value.contact_details.whatsapp.phone)) {
@@ -119,7 +119,7 @@
       try {
         const parsedPhoneNumber = parsePhoneNumber(formattedPhone.value);
         if (!parsedPhoneNumber.isValid()) {
-          throw new Error("Non-valid Phone Number");
+          throw new Error('Non-valid Phone Number');
         } else {
           phoneError.value = false;
         }
@@ -178,7 +178,7 @@
 
   const buildUser = () => {
     return {
-      role: "agent",
+      role: 'agent',
       email: email.value,
       password: password.value,
       repassword: repassword.value,
@@ -200,25 +200,25 @@
   const fillInput = (input) => {
     setTimeout(() => {
       switch (input) {
-        case "email":
+        case 'email':
           filledInputs.value.email = true;
           break;
-        case "password":
+        case 'password':
           filledInputs.value.password = true;
           break;
-        case "repassword":
+        case 'repassword':
           filledInputs.value.repassword = true;
           break;
-        case "firstname":
+        case 'firstname':
           filledInputs.value.firstname = true;
           break;
-        case "lastname":
+        case 'lastname':
           filledInputs.value.lastname = true;
           break;
-        case "public_email":
+        case 'public_email':
           filledInputs.value.public_email = true;
           break;
-        case "phone":
+        case 'phone':
           filledInputs.value.phone = true;
           break;
       }
@@ -226,20 +226,20 @@
   };
 
   const resetComponent = () => {
-    email.value = "";
-    password.value = "";
-    repassword.value = "";
+    email.value = '';
+    password.value = '';
+    repassword.value = '';
     agent.value = {
       info: {
-        firstname: "",
-        lastname: "",
-        bio: "",
+        firstname: '',
+        lastname: '',
+        bio: '',
       },
       contact_details: {
-        public_email: "",
+        public_email: '',
         whatsapp: {
-          code: "+53",
-          phone: "",
+          code: '+53',
+          phone: '',
         },
       },
     };
@@ -260,13 +260,19 @@
       const avatar = layoutStore.avatarURLState.file;
       await userStore.register(buildUser(), avatar);
 
-      await router.push("/");
+      await router.push('/');
 
       resetComponent();
 
       layoutStore.hideSpinnerLoading();
     } catch (error) {
-      console.log(error);
+      if (error.message === 'User Exists Already') {
+        layoutStore.unhidePopup('user-exists');
+      } else if (error.message === 'Bad Request') {
+        layoutStore.unhidePopup('bad-request');
+      } else {
+        layoutStore.unhidePopup('server-error');
+      }
       layoutStore.hideSpinnerLoading();
     }
   };
@@ -430,9 +436,12 @@
           <!-- Terms -->
           <span class="block text-center text-xs text-sgray-300"
             >Al registrarte en nuestro sitio, aceptas nuestras
-            <a class="font-semibold text-sblue-500" href="#">políticas de cookies</a> y
-            <a class="font-semibold text-sblue-500" href="#">privacidad</a>, así como nuestros
-            <a class="font-semibold text-sblue-500" href="#">términos de agente</a></span
+            <a class="font-semibold text-sblue-500" href="/support/privacy">políticas de cookies</a>
+            y <a class="font-semibold text-sblue-500" href="/support/privacy">privacidad</a>, así
+            como nuestros
+            <a class="font-semibold text-sblue-500" href="/support/terms"
+              >términos de agente</a
+            ></span
           >
         </div>
 

@@ -171,6 +171,9 @@ export const useLayoutStore = defineStore('layout', () => {
       case 'invalid-credentials':
         popup.value.invalidCredentials = true;
         break;
+      case 'user-exists':
+        popup.value.userExists = true;
+        break;
       case 'bad-request':
         popup.value.badRequest = true;
         break;

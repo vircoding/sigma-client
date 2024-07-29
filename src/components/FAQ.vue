@@ -1,5 +1,5 @@
 <script setup>
-  import { ref } from "vue";
+  import { ref } from 'vue';
 
   const activeIndex = ref(0);
 
@@ -17,8 +17,8 @@
         Preguntas frecuentes
       </h2>
       <p class="text-shadow w-full px-2 text-sm text-sgray-300">
-        Crea tu cuenta como Propietario si deseas vender o rentar tu casa. Crea tu cuenta como
-        Agente si deseas vender o rentar hasta 10 casas
+        A continuación te presentamos una serie de preguntas que nuestros usuarios han presentado y
+        te podrían servir de utilidad.
       </p>
     </div>
 

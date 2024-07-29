@@ -1,15 +1,15 @@
 <script setup>
-  import { computed } from "vue";
-  import { RouterLink } from "vue-router";
-  import SigmaIcon from "./icons/SigmaIcon.vue";
-  import BrandIcon from "./icons/BrandIcon.vue";
-  import WhatsappIcon from "./icons/WhatsappIcon.vue";
+  import { computed } from 'vue';
+  import { RouterLink } from 'vue-router';
+  import SigmaIcon from './icons/SigmaIcon.vue';
+  import BrandIcon from './icons/BrandIcon.vue';
+  import WhatsappIcon from './icons/WhatsappIcon.vue';
 
-  const props = defineProps(["background", "title", "text"]);
+  const props = defineProps(['background', 'title', 'text']);
 
   const sigmaIconFill = computed(() => {
-    if (props.title === "#333333") return "fill-sgray-400";
-    else return "fill-white";
+    if (props.title === '#333333') return 'fill-sgray-400';
+    else return 'fill-white';
   });
 
   const year = new Date().getFullYear();
@@ -33,9 +33,9 @@
             >
             <RouterLink to="/support/about#who" class="hover:underline">¿Quiénes somos?</RouterLink>
             <RouterLink to="/support/about#team" class="hover:underline">Nuestro equipo</RouterLink>
-            <RouterLink to="/support/about#agent" class="hover:underline"
+            <!-- <RouterLink to="/support/about#agent" class="hover:underline"
               >¿Quieres ser agente?</RouterLink
-            >
+            > -->
           </div>
 
           <!-- Help -->

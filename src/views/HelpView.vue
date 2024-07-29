@@ -1,11 +1,11 @@
 <script setup>
-  import NavBar from "../components/NavBar.vue";
-  import HelpIndexSection from "../components/HelpIndexSection.vue";
-  import VideoTutorialSection from "../components/VideoTutorialSection.vue";
-  import TextTutorialSection from "../components/TextTutorialSection.vue";
-  import HelpAgentSection from "../components/HelpAgentSection.vue";
-  import FAQ from "../components/FAQ.vue";
-  import FooterSection from "../components/FooterSection.vue";
+  import NavBar from '../components/NavBar.vue';
+  import HelpIndexSection from '../components/HelpIndexSection.vue';
+  import VideoTutorialSection from '../components/VideoTutorialSection.vue';
+  import TextTutorialSection from '../components/TextTutorialSection.vue';
+  import HelpAgentSection from '../components/HelpAgentSection.vue';
+  import FAQ from '../components/FAQ.vue';
+  import FooterSection from '../components/FooterSection.vue';
 </script>
 
 <template>
@@ -18,10 +18,6 @@
     <!-- Hero -->
     <div class="flex w-full flex-col gap-2 px-5 py-10 text-center">
       <h2 class="text-shadow w-full font-ubuntu text-4xl font-bold text-sblue-500">Ayuda</h2>
-      <p class="text-shadow w-full px-2 text-sm text-sgray-300">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam delectus officia
-        repudiandae dignissimos!
-      </p>
     </div>
 
     <!-- Index -->

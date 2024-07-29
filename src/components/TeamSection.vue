@@ -92,7 +92,7 @@
           <h6 class="mt-[1px] text-base text-sgray-300">Community Manager & CMO</h6>
           <a href="" class="flex items-center justify-center gap-[2px]">
             <img src="../assets/instagram-icon.svg" />
-            <span class="text-sgray-300">isabela.diaz</span>
+            <span class="text-sgray-300">lavidaesbellaoui</span>
           </a>
         </div>
       </li>

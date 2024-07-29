@@ -50,19 +50,18 @@ export const useUserStore = defineStore('user', () => {
 
           if (firstLoad) await getUser();
         } catch (error) {
+          console.log(error);
           if (error.response.status === 401) {
             if (localStorage.getItem('activeSession')) {
               localStorage.removeItem('activeSession');
             }
-            console.log(error);
           } else if (error.response.status === 500) {
-            console.log('Server Error');
+            throw new Error('Server Error');
           } else {
-            console.log('Untracked Error');
             if (localStorage.getItem('activeSession')) {
               localStorage.removeItem('activeSession');
             }
-            console.log(error);
+            throw new Error('Untracked Error');
           }
         }
       } else {
@@ -168,6 +167,11 @@ export const useUserStore = defineStore('user', () => {
       $reset();
     } catch (error) {
       console.log(error);
+      if (error.response.status === 500) {
+        throw new Error('Server Error');
+      } else {
+        throw new Error('Untracked Error');
+      }
     }
   };
 
@@ -195,6 +199,11 @@ export const useUserStore = defineStore('user', () => {
       userFavoritesState.value = res.data.favorites;
     } catch (error) {
       console.log(error);
+      if (error.response.status === 500) {
+        throw new Error('Server Error');
+      } else {
+        throw new Error('Untracked Error');
+      }
     }
   };
 

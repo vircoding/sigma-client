@@ -6,8 +6,8 @@
         Tutorial Paso a Paso
       </h2>
       <p class="text-shadow w-full px-2 text-sm text-sgray-300">
-        Crea tu cuenta como Propietario si deseas vender o rentar tu casa. Crea tu cuenta como
-        Agente si deseas vender o rentar hasta 10 casas
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, magnam! Incidunt, molestiae
+        rem.
       </p>
     </div>
 
@@ -16,7 +16,7 @@
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-shadow text-lg font-semibold text-sblue-500">1. Inicia Sesión</h6>
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">1. Regístrate</h6>
         <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.
@@ -26,7 +26,7 @@
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-shadow text-lg font-semibold text-sblue-500">2. Inicia Sesión</h6>
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">2. ¿Eres agente?</h6>
         <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.
@@ -46,7 +46,7 @@
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-shadow text-lg font-semibold text-sblue-500">4. Inicia Sesión</h6>
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">4. Publica tu anuncio</h6>
         <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.
@@ -56,7 +56,7 @@
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-shadow text-lg font-semibold text-sblue-500">5. Inicia Sesión</h6>
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">5. Agrega los datos</h6>
         <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.
@@ -66,7 +66,7 @@
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-shadow text-lg font-semibold text-sblue-500">6. Inicia Sesión</h6>
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">6. Inserta tus fotos</h6>
         <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.
@@ -76,7 +76,7 @@
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-shadow text-lg font-semibold text-sblue-500">7. Inicia Sesión</h6>
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">7. Gestiona tus anuncios</h6>
         <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.
@@ -86,7 +86,7 @@
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-shadow text-lg font-semibold text-sblue-500">8. Inicia Sesión</h6>
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">8. Descubre</h6>
         <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.
@@ -96,7 +96,9 @@
       <!-- Item -->
       <div class="flex w-full flex-col items-center justify-center space-y-2">
         <div class="text-shadow aspect-[9/16] w-4/5 bg-sgray-400"></div>
-        <h6 class="text-shadow text-lg font-semibold text-sblue-500">9. Inicia Sesión</h6>
+        <h6 class="text-shadow text-lg font-semibold text-sblue-500">
+          9. Filtra según tus necesidades
+        </h6>
         <p class="text-shadow block text-center text-sm text-sgray-300 lg:text-left lg:text-lg">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis facilis molestias,
           consequatur earum amet accusantium sequi.

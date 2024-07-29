@@ -1,5 +1,5 @@
 <script setup>
-  import WhatsappIcon from "./icons/WhatsappIcon.vue";
+  import WhatsappIcon from './icons/WhatsappIcon.vue';
 </script>
 
 <template>
@@ -10,7 +10,8 @@
         Contratar un agente
       </h2>
       <p class="text-shadow w-full px-2 text-sm text-sgray-300">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe ut dolores quo numquam!
+        Si deseas que Sigma gestione tu anuncio por ti, escríbenos y te pondremos en contacto con
+        alguno de nuestros agentes.
       </p>
     </div>
 

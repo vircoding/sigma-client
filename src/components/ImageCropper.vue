@@ -1,7 +1,14 @@
 <script setup>
-  import { ref, onMounted, onUnmounted } from "vue";
-  import { useLayoutStore } from "../stores/layoutStore.js";
-  import Cropper from "cropperjs";
+  import { ref, onMounted, onUnmounted } from 'vue';
+  import { useLayoutStore } from '../stores/layoutStore.js';
+  import Cropper from 'cropperjs';
+
+  // const resetZoom = () => {
+  //   console.log('jhafdhagjhagdf');
+  //   document.documentElement.style.zoom = '100%';
+  // };
+
+  // resetZoom();
 
   const layoutStore = useLayoutStore();
 
@@ -14,7 +21,7 @@
       aspectRatio: 16 / 9,
       viewMode: 3,
       minCropBoxWidth: 160,
-      dragMode: "move",
+      dragMode: 'move',
       background: false,
       autoCrop: true,
       autoCropArea: 1,
@@ -46,7 +53,7 @@
         }
         layoutStore.resetSingleImageURLState();
       },
-      "image/jpeg",
+      'image/jpeg',
       0.5
     );
     layoutStore.hideImageCropper();
