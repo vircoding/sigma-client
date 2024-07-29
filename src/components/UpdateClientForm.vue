@@ -1,15 +1,15 @@
 <script setup>
-  import { ref, computed } from "vue";
-  import { useUserStore } from "../stores/userStore.js";
-  import { useLayoutStore } from "../stores/layoutStore.js";
-  import UsernameInput from "./UsernameInput.vue";
-  import router from "../router";
+  import { ref, computed } from 'vue';
+  import { useUserStore } from '../stores/userStore.js';
+  import { useLayoutStore } from '../stores/layoutStore.js';
+  import UsernameInput from './UsernameInput.vue';
+  import router from '../router';
 
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
 
   const newClient = ref({
-    role: "client",
+    role: 'client',
     info: {
       username: userStore.userState.info.username,
     },
@@ -45,7 +45,13 @@
       await userStore.updateUser(newClient.value);
       layoutStore.hideSpinnerLoading();
     } catch (error) {
-      console.log(error);
+      if (error.message === 'User Not Founded') {
+        layoutStore.unhidePopup('source-not-founded');
+      } else if (error.message === 'Bad Request') {
+        layoutStore.unhidePopup('bad-request');
+      } else {
+        layoutStore.unhidePopup('server-error');
+      }
       layoutStore.hideSpinnerLoading();
     }
   };
@@ -55,11 +61,13 @@
     try {
       await userStore.logout();
 
-      await router.push("/");
+      await router.push('/');
 
       layoutStore.hideLogoLoading();
     } catch (error) {
-      console.log(error);
+      if (error.message === 'Server Error') {
+        layoutStore.unhidePopup('server-error');
+      }
       layoutStore.hideLogoLoading();
     }
   };

@@ -1,14 +1,14 @@
 <script setup>
-  import { ref, computed, watch } from "vue";
-  import { useUserStore } from "../stores/userStore.js";
-  import { useLayoutStore } from "../stores/layoutStore.js";
-  import parsePhoneNumber from "libphonenumber-js";
-  import TextInput from "./TextInput.vue";
-  import CodeInput from "./CodeInput.vue";
-  import PhoneInput from "./PhoneInput.vue";
-  import EmailInput from "./EmailInput.vue";
-  import BioTextAreaInput from "./BioTextAreaInput.vue";
-  import router from "../router";
+  import { ref, computed, watch } from 'vue';
+  import { useUserStore } from '../stores/userStore.js';
+  import { useLayoutStore } from '../stores/layoutStore.js';
+  import parsePhoneNumber from 'libphonenumber-js';
+  import TextInput from './TextInput.vue';
+  import CodeInput from './CodeInput.vue';
+  import PhoneInput from './PhoneInput.vue';
+  import EmailInput from './EmailInput.vue';
+  import BioTextAreaInput from './BioTextAreaInput.vue';
+  import router from '../router';
 
   const userStore = useUserStore();
   const layoutStore = useLayoutStore();
@@ -17,7 +17,7 @@
   const changedAvatar = ref(false);
 
   const newAgent = ref({
-    role: "agent",
+    role: 'agent',
     avatar: userStore.userState.avatar,
     info: {
       firstname: userStore.userState.info.firstname,
@@ -94,7 +94,7 @@
   });
 
   watch(formattedPhone, () => {
-    if (newAgent.value.contact_details.whatsapp.code === "+53") {
+    if (newAgent.value.contact_details.whatsapp.code === '+53') {
       // Cuba
       const regex = /^[56].{7}$/;
       if (!regex.test(newAgent.value.contact_details.whatsapp.phone)) {
@@ -107,7 +107,7 @@
       try {
         const parsedPhoneNumber = parsePhoneNumber(formattedPhone.value);
         if (!parsedPhoneNumber.isValid()) {
-          throw new Error("Non-valid Phone Number");
+          throw new Error('Non-valid Phone Number');
         } else {
           phoneError.value = false;
         }
@@ -176,7 +176,7 @@
 
   const buildUser = () => {
     return {
-      role: "agent",
+      role: 'agent',
       info: {
         firstname: newAgent.value.info.firstname,
         lastname: newAgent.value.info.lastname,
@@ -206,7 +206,13 @@
 
       layoutStore.hideSpinnerLoading();
     } catch (error) {
-      console.log(error);
+      if (error.message === 'User Not Founded') {
+        layoutStore.unhidePopup('source-not-founded');
+      } else if (error.message === 'Bad Request') {
+        layoutStore.unhidePopup('bad-request');
+      } else {
+        layoutStore.unhidePopup('server-error');
+      }
       layoutStore.hideSpinnerLoading();
     }
   };
@@ -216,11 +222,13 @@
     try {
       await userStore.logout();
 
-      await router.push("/");
+      await router.push('/');
 
       layoutStore.hideLogoLoading();
     } catch (error) {
-      console.log(error);
+      if (error.message === 'Server Error') {
+        layoutStore.unhidePopup('server-error');
+      }
       layoutStore.hideLogoLoading();
     }
   };

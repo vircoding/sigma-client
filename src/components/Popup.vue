@@ -178,6 +178,28 @@
     </button>
   </div>
 
+  <!-- Source Not Founded -->
+  <div
+    v-if="layoutStore.popup.sourceNotFounded"
+    @touchstart="startSwipe($event)"
+    @touchmove="moveSwipe($event)"
+    :class="layoutStore.isPopup ? 'inline-block' : 'hidden'"
+    class="text-shadow fixed left-[50vw] top-[50vh] z-50 flex w-[85vw] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-1 rounded-md bg-white px-5 py-6"
+  >
+    <h4 class="mb-1 w-full text-2xl font-semibold text-alert">Recurso no encontrado</h4>
+
+    <p class="mb-2 leading-tight text-sgray-300">
+      Se intenta acceder a un recurso que ya no existe
+    </p>
+
+    <button
+      @click.prevent="cancel"
+      class="mr-3 place-self-end rounded-lg border border-alert bg-alert px-3 py-1 font-semibold text-white"
+    >
+      Aceptar
+    </button>
+  </div>
+
   <!-- Server Error -->
   <div
     v-if="layoutStore.popup.serverError"

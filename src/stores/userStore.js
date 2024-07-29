@@ -199,7 +199,11 @@ export const useUserStore = defineStore('user', () => {
       userFavoritesState.value = res.data.favorites;
     } catch (error) {
       console.log(error);
-      if (error.response.status === 500) {
+      if (error.response.status === 400) {
+        throw new Error('Request Error');
+      } else if (error.response.status === 404) {
+        throw new Error('User Not Founded');
+      } else if (error.response.status === 500) {
         throw new Error('Server Error');
       } else {
         throw new Error('Untracked Error');

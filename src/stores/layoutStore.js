@@ -16,6 +16,7 @@ export const useLayoutStore = defineStore('layout', () => {
     invalidCredentials: false,
     userExists: false,
     badRequest: false,
+    sourceNotFounded: false,
   });
 
   const deletePostId = ref(null);
@@ -173,6 +174,9 @@ export const useLayoutStore = defineStore('layout', () => {
         break;
       case 'user-exists':
         popup.value.userExists = true;
+        break;
+      case 'source-not-founded':
+        popup.value.sourceNotFounded = true;
         break;
       case 'bad-request':
         popup.value.badRequest = true;
